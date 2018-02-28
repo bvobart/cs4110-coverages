@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DatabaseConnection.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Team Free Pizza</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.contextproject.databaseConnection</a> &gt; <span class="el_source">DatabaseConnection.java</span></div><h1>DatabaseConnection.java</h1><pre class="source lang-java linenums">package nl.tudelft.contextproject.databaseConnection;
+
+import nl.tudelft.contextproject.camera.Camera;
+import nl.tudelft.contextproject.camera.CameraSettings;
+import nl.tudelft.contextproject.gui.AlertDialog;
+import nl.tudelft.contextproject.presets.InstantPreset;
+import nl.tudelft.contextproject.presets.Preset;
+import nl.tudelft.contextproject.saveLoad.ApplicationSettings;
+import nl.tudelft.contextproject.script.Script;
+import nl.tudelft.contextproject.script.Shot;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javafx.application.Platform;
+
+/**
+ * Class to create a database connection. 
+ * The connection information is stored in the application settings.
+ * 
+ * @since 0.8
+ */
+
+public final class DatabaseConnection extends Observable {
+
+    private static final String COUNTER_TABLE = &quot;counter&quot;;
+    private static final String SCRIPT_TABLE = &quot;script&quot;;
+    private static final String PRESET_TABLE = &quot;preset&quot;;
+<span class="nc" id="L38">    private static final DatabaseConnection INSTANCE = new DatabaseConnection();</span>
+    
+    private int counter;
+<span class="nc" id="L41">    private Connection conn = null;</span>
+    private ApplicationSettings settings; 
+    private Timer timer;
+
+    /**
+     * Initializes a database connection object. 
+     * Private constructor since this is a singeleton class.
+     */
+<span class="nc" id="L49">    private DatabaseConnection() {</span>
+<span class="nc" id="L50">        settings = ApplicationSettings.getInstance();</span>
+<span class="nc" id="L51">        counter = -1;</span>
+
+        try {
+<span class="nc" id="L54">            Class.forName(settings.getJdbcDriver());   </span>
+<span class="nc" id="L55">        } catch (ClassNotFoundException e) {</span>
+<span class="nc" id="L56">            e.printStackTrace();</span>
+        }
+<span class="nc" id="L58">    }</span>
+
+    /**
+     * Returns the singleton instance of this class.
+     * @return the singleton instance of this class.
+     */
+    public static DatabaseConnection getInstance() {
+<span class="nc" id="L65">        return INSTANCE;</span>
+    }
+
+    /**
+     * Creates a MySQL database connection with the properties specified in the settings.
+     * @throws SQLException When no connection can be made, a SQLException will be thrown.
+     */
+    public void connect() throws SQLException {
+<span class="nc" id="L73">        String url = &quot;jdbc:mysql://&quot; + settings.getDatabaseUrl() + &quot;:&quot; </span>
+<span class="nc" id="L74">                + settings.getDatabasePort() + &quot;/&quot; + settings.getDatabaseName();</span>
+<span class="nc" id="L75">        conn = DriverManager.getConnection(url, settings.getDatabaseUsername(), settings.getDatabasePassword());</span>
+<span class="nc" id="L76">    }</span>
+
+    /**
+     * Apply the (changed) settings to the connection.
+     * @throws SQLException When the settings are invalid, an SQLException will be thrown.
+     */
+    public void updateSettings() throws SQLException {
+<span class="nc" id="L83">        settings = ApplicationSettings.getInstance();</span>
+
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        if (conn != null) {</span>
+<span class="nc" id="L86">            conn.close();</span>
+        }
+
+<span class="nc" id="L89">        connect();</span>
+<span class="nc" id="L90">    }</span>
+
+    /**
+     * Add an observer for the current counter. 
+     * This will start the timer that will update the counter every 200 ms.
+     */
+    @Override
+    public void addObserver(Observer o) {
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        if (countObservers() == 0) {</span>
+<span class="nc" id="L99">            timer = new Timer();</span>
+<span class="nc" id="L100">            timer.schedule(new TimerTask() {</span>
+                @Override
+                public void run() {
+                    try {
+<span class="nc" id="L104">                        int actualCounter = getCounter();</span>
+                        
+<span class="nc bnc" id="L106" title="All 2 branches missed.">                        if (actualCounter != counter) {</span>
+<span class="nc" id="L107">                            counter = actualCounter;</span>
+<span class="nc" id="L108">                            setChanged();</span>
+<span class="nc" id="L109">                            notifyObservers(actualCounter);</span>
+                        }
+<span class="nc" id="L111">                    } catch (SQLException e) {</span>
+<span class="nc" id="L112">                        Platform.runLater(() -&gt; {</span>
+<span class="nc" id="L113">                            AlertDialog.noConnection();</span>
+<span class="nc" id="L114">                        });</span>
+<span class="nc" id="L115">                        timer.cancel();</span>
+                    }
+<span class="nc" id="L117">                }</span>
+<span class="nc" id="L118">            }, 0, 200);            </span>
+        }
+<span class="nc" id="L120">        super.addObserver(o);</span>
+<span class="nc" id="L121">    }</span>
+    
+    @Override
+    public void deleteObserver(Observer o) {
+<span class="nc" id="L125">        super.deleteObserver(o);</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">        if (countObservers() == 0) {</span>
+<span class="nc" id="L127">            timer.cancel();</span>
+        }
+<span class="nc" id="L129">    }</span>
+    
+    @Override
+    public void deleteObservers() {
+<span class="nc" id="L133">        super.deleteObservers();</span>
+<span class="nc" id="L134">        timer.cancel();</span>
+<span class="nc" id="L135">    }</span>
+    
+    /**
+     * Used to check whether a connection is valid.
+     * 
+     * @param timeout The timeout used before declaring a connection invalid.
+     * @return True if the connection is valid, otherwise false.
+     */
+    public boolean isValid(int timeout) {
+<span class="nc bnc" id="L144" title="All 2 branches missed.">        if (conn == null) {</span>
+<span class="nc" id="L145">            return false;</span>
+        }
+
+        try {
+<span class="nc" id="L149">            return conn.isValid(timeout);</span>
+<span class="nc" id="L150">        } catch (SQLException e) {</span>
+<span class="nc" id="L151">            return false;</span>
+        } 
+    }
+
+    /**
+     * If there is no valid connection, reconnect.
+     * @throws SQLException When no connection can be made, this exception will be thrown.
+     */
+    private void revalidate() throws SQLException {
+<span class="nc bnc" id="L160" title="All 4 branches missed.">        if (conn == null || !isValid(200)) {</span>
+<span class="nc" id="L161">            connect();</span>
+        }
+<span class="nc" id="L163">    }</span>
+
+    /**
+     * Updates the counter by adding 1 to it.
+     * @throws SQLException When no connection can be made, this exception will be thrown.
+     */
+    public void updateCounter() throws SQLException {
+<span class="nc" id="L170">        revalidate();</span>
+<span class="nc" id="L171">        setCounter(getCounter() + 1);</span>
+<span class="nc" id="L172">    }</span>
+
+    /**
+     * Sets the counter to 0.
+     * @throws SQLException When no connection can be made, this exception will be thrown.
+     */
+    public void resetCounter() throws SQLException {
+<span class="nc" id="L179">        revalidate();</span>
+<span class="nc" id="L180">        setCounter(0);    </span>
+<span class="nc" id="L181">    }</span>
+
+    /**
+     * Set the counter in the database.
+     * 
+     * @param number The new value for the counter.
+     * @throws SQLException When no connection can be made, this exception will be thrown.
+     */
+    private void setCounter(int number) throws SQLException {
+<span class="nc" id="L190">        revalidate();</span>
+
+<span class="nc" id="L192">        Statement stmt = conn.createStatement();</span>
+<span class="nc" id="L193">        String query = &quot;UPDATE &quot; + COUNTER_TABLE + &quot; set number='&quot; + number + &quot;'&quot;;</span>
+<span class="nc" id="L194">        stmt.executeUpdate(query);</span>
+<span class="nc" id="L195">        stmt.close();</span>
+<span class="nc" id="L196">    }</span>
+
+    /**
+     * Returns the current value of the counter in the database.
+     * 
+     * @return The current value of the counter in the database.
+     * @throws SQLException When no connection can be made, this exception will be thrown.
+     */
+    public int getCounter() throws SQLException {
+<span class="nc" id="L205">        revalidate();</span>
+
+<span class="nc" id="L207">        Statement stmt = conn.createStatement();</span>
+<span class="nc" id="L208">        String query = &quot;SELECT number FROM &quot; + COUNTER_TABLE;</span>
+<span class="nc" id="L209">        ResultSet rs = stmt.executeQuery(query);</span>
+<span class="nc" id="L210">        rs.next();</span>
+
+<span class="nc" id="L212">        int res = rs.getInt(&quot;number&quot;);</span>
+
+<span class="nc" id="L214">        rs.close();</span>
+<span class="nc" id="L215">        stmt.close();</span>
+
+<span class="nc" id="L217">        return res;</span>
+    }
+
+    /**
+     * Clears the script in the database and uploads a new script.
+     * 
+     * &lt;p&gt;Uses @SuppressWarnings for the PMD warning about appending consecutive String
+     * literals. Fixing these would compromise the readability of the code.
+     * 
+     * @param script The script to upload.
+     * @throws SQLException When no connection can be made, this exception will be thrown.
+     */
+    @SuppressWarnings(&quot;PMD.ConsecutiveLiteralAppends&quot;)
+    public void uploadScript(Script script) throws SQLException {
+<span class="nc" id="L231">        revalidate();</span>
+<span class="nc" id="L232">        clearScript();</span>
+
+<span class="nc" id="L234">        Statement stmt = conn.createStatement();</span>
+<span class="nc" id="L235">        Iterator&lt;Shot&gt; iterator = script.getShots().iterator();</span>
+
+<span class="nc bnc" id="L237" title="All 2 branches missed.">        while (iterator.hasNext()) {</span>
+<span class="nc" id="L238">            Shot shot = iterator.next();</span>
+<span class="nc" id="L239">            StringBuilder sBuilder = new StringBuilder(50);</span>
+<span class="nc" id="L240">            sBuilder.append(&quot;INSERT INTO &quot; + SCRIPT_TABLE + &quot; VALUES (&quot;)</span>
+<span class="nc" id="L241">                .append(&quot;'&quot; + shot.getNumber() + &quot;',&quot;)</span>
+<span class="nc" id="L242">                .append(&quot;'&quot; + shot.getShotId() + &quot;',&quot;)</span>
+<span class="nc" id="L243">                .append(&quot;'&quot; + shot.getCamera().getNumber() + &quot;',&quot;)</span>
+<span class="nc" id="L244">                .append(&quot;'&quot; + shot.getPreset().getId() + &quot;',&quot;)</span>
+<span class="nc" id="L245">                .append(&quot;'&quot; + shot.getDescription() + &quot;',&quot;)</span>
+<span class="nc" id="L246">                .append(&quot;'&quot; + shot.getAction() + &quot;');&quot;);</span>
+<span class="nc" id="L247">            stmt.executeUpdate(sBuilder.toString());</span>
+        }
+
+<span class="nc" id="L250">        stmt.close();</span>
+<span class="nc" id="L251">    }</span>
+
+    /**
+     * Clears the script table in the database.
+     * @throws SQLException When no connection can be made, this exception will be thrown.
+     */
+    private void clearScript() throws SQLException {
+<span class="nc" id="L258">        Statement stmt = conn.createStatement();</span>
+<span class="nc" id="L259">        String query = &quot;DELETE FROM &quot; + SCRIPT_TABLE;</span>
+<span class="nc" id="L260">        stmt.executeUpdate(query);</span>
+<span class="nc" id="L261">        stmt.close();</span>
+<span class="nc" id="L262">    }</span>
+
+    /**
+     * Returns the script currently stored in the database.
+     * 
+     * @return The script currently stored in the database.
+     * @throws SQLException When no connection can be made, this exception will be thrown.
+     */
+    public Script getScript() throws SQLException {
+<span class="nc" id="L271">        Script script = new Script(new ArrayList&lt;Shot&gt;());</span>
+<span class="nc" id="L272">        revalidate();</span>
+<span class="nc" id="L273">        Statement stmt = conn.createStatement();</span>
+
+<span class="nc" id="L275">        String query = &quot;SELECT * FROM &quot; + SCRIPT_TABLE;</span>
+<span class="nc" id="L276">        ResultSet rs = stmt.executeQuery(query);</span>
+
+<span class="nc bnc" id="L278" title="All 2 branches missed.">        while (rs.next()) {</span>
+<span class="nc" id="L279">            int number = rs.getInt(&quot;number&quot;);</span>
+<span class="nc" id="L280">            int cameraId = rs.getInt(&quot;camera&quot;);</span>
+<span class="nc" id="L281">            int presetId = rs.getInt(&quot;preset&quot;);</span>
+
+<span class="nc" id="L283">            String shotId = rs.getString(&quot;shotId&quot;);</span>
+<span class="nc" id="L284">            String description = rs.getString(&quot;description&quot;);</span>
+<span class="nc" id="L285">            String action = rs.getString(&quot;action&quot;);</span>
+
+<span class="nc" id="L287">            Camera cam = Camera.getCamera(cameraId);</span>
+<span class="nc" id="L288">            Preset preset = cam.getPreset(presetId);</span>
+<span class="nc" id="L289">            Shot shot = new Shot(number, shotId, cam, preset, description, action);</span>
+<span class="nc" id="L290">            script.addShot(shot);</span>
+        }
+
+<span class="nc" id="L293">        rs.close();</span>
+<span class="nc" id="L294">        stmt.close();</span>
+
+<span class="nc" id="L296">        return script;</span>
+    }
+
+    /**
+     * Clears all preset currently in the Database.
+     * 
+     * @throws SQLException When no connection can be made, this exception will be thrown.
+     */
+    public void clearPresets() throws SQLException {
+<span class="nc" id="L305">        revalidate();</span>
+
+<span class="nc" id="L307">        Statement stmt = conn.createStatement();</span>
+<span class="nc" id="L308">        String query = &quot;DELETE FROM &quot; + PRESET_TABLE;</span>
+<span class="nc" id="L309">        stmt.executeUpdate(query);</span>
+<span class="nc" id="L310">        stmt.close();</span>
+<span class="nc" id="L311">    }</span>
+
+    /**
+     * Upload a preset to the database.
+     * 
+     * @param preset The preset to upload.
+     * @param camera The camera of the preset.
+     * @throws SQLException When no connection can be made, this exception will be thrown.
+     */
+    public void uploadPreset(Preset preset, Camera camera) throws SQLException {
+<span class="nc" id="L321">        revalidate();</span>
+
+<span class="nc" id="L323">        Statement stmt = conn.createStatement();</span>
+<span class="nc" id="L324">        String query = &quot;SELECT * FROM &quot; + PRESET_TABLE + &quot; WHERE id='&quot; + preset.getId() </span>
+<span class="nc" id="L325">            + &quot;' AND camera='&quot; + camera.getNumber() + &quot;';&quot;;</span>
+<span class="nc" id="L326">        ResultSet rs = stmt.executeQuery(query);</span>
+
+<span class="nc bnc" id="L328" title="All 2 branches missed.">        if (!rs.next()) {</span>
+<span class="nc" id="L329">            stmt.executeUpdate(insertPreset(preset, camera));</span>
+<span class="nc" id="L330">        } else {</span>
+<span class="nc" id="L331">            stmt.executeUpdate(updatePreset(preset, camera));</span>
+        }
+
+<span class="nc" id="L334">        rs.close();</span>
+<span class="nc" id="L335">        stmt.close();</span>
+<span class="nc" id="L336">    }</span>
+
+    /**
+     * Creates the query to insert a preset in the database.
+     * 
+     * &lt;p&gt;Uses @SuppressWarnings for the PMD warning about appending consecutive String
+     * literals. Fixing these would compromise the readability of the code.
+     * 
+     * @param preset The preset to create the query for.
+     * @param camera The camera of the preset.
+     * @return A query inserting the preset in the database.
+     */
+    @SuppressWarnings(&quot;PMD.ConsecutiveLiteralAppends&quot;)
+    private String insertPreset(Preset preset, Camera camera) {
+<span class="nc" id="L350">        String type = &quot;&quot;;</span>
+
+<span class="nc bnc" id="L352" title="All 2 branches missed.">        if (preset instanceof InstantPreset) {</span>
+<span class="nc" id="L353">            type = &quot;InstantPreset&quot;;</span>
+        }
+
+<span class="nc" id="L356">        StringBuilder sBuilder = new StringBuilder(50);</span>
+<span class="nc" id="L357">        sBuilder.append(&quot;INSERT INTO &quot; + PRESET_TABLE + &quot; VALUES (&quot;)</span>
+<span class="nc" id="L358">            .append(&quot;'&quot; + preset.getId() + &quot;',&quot;)</span>
+<span class="nc" id="L359">            .append(&quot;'&quot; + camera.getNumber() + &quot;',&quot;)</span>
+<span class="nc" id="L360">            .append(&quot;'&quot; + type + &quot;',&quot;)</span>
+<span class="nc" id="L361">            .append(&quot;'&quot; + preset.getDescription() + &quot;',&quot;)</span>
+<span class="nc" id="L362">            .append(&quot;'&quot; + preset.getImage() + &quot;',&quot;)</span>
+<span class="nc" id="L363">            .append(&quot;'&quot; + preset.getToSet().getPan() + &quot;',&quot;)</span>
+<span class="nc" id="L364">            .append(&quot;'&quot; + preset.getToSet().getTilt() + &quot;',&quot;)</span>
+<span class="nc" id="L365">            .append(&quot;'&quot; + preset.getToSet().getZoom() + &quot;',&quot;)</span>
+<span class="nc" id="L366">            .append(&quot;'&quot; + preset.getToSet().getFocus() + &quot;');&quot;);</span>
+
+<span class="nc" id="L368">        return sBuilder.toString();</span>
+    }
+
+    /**
+     * Creates the query to update (overwrite) an already existing preset in the database.
+     * 
+     * &lt;p&gt;Uses @SuppressWarnings for the PMD warning about appending consecutive String
+     * literals. Fixing these would compromise the readability of the code.
+     * 
+     * @param preset The preset to create the query for.
+     * @param camera The camera of the preset.
+     * @return A query updating the preset in the database.
+     */
+    @SuppressWarnings(&quot;PMD.ConsecutiveLiteralAppends&quot;)
+    private String updatePreset(Preset preset, Camera camera) {
+<span class="nc" id="L383">        String type = &quot;&quot;;</span>
+
+<span class="nc bnc" id="L385" title="All 2 branches missed.">        if (preset instanceof InstantPreset) {</span>
+<span class="nc" id="L386">            type = &quot;InstantPreset&quot;;</span>
+        }
+
+<span class="nc" id="L389">        StringBuilder sBuilder = new StringBuilder(130);</span>
+<span class="nc" id="L390">        sBuilder</span>
+<span class="nc" id="L391">            .append(&quot;UPDATE &quot; + PRESET_TABLE + &quot; SET &quot;)</span>
+<span class="nc" id="L392">            .append(&quot;id='&quot; + preset.getId() + &quot;',&quot;)</span>
+<span class="nc" id="L393">            .append(&quot;camera='&quot; + camera.getNumber() + &quot;',&quot;)</span>
+<span class="nc" id="L394">            .append(&quot;type='&quot; + type + &quot;',&quot;)</span>
+<span class="nc" id="L395">            .append(&quot;description='&quot; + preset.getDescription() + &quot;',&quot;)</span>
+<span class="nc" id="L396">            .append(&quot;imageLocation='&quot; + preset.getImage() + &quot;',&quot;)</span>
+<span class="nc" id="L397">            .append(&quot;pan='&quot; + preset.getToSet().getPan() + &quot;',&quot;)</span>
+<span class="nc" id="L398">            .append(&quot;tilt='&quot; + preset.getToSet().getTilt() + &quot;',&quot;)</span>
+<span class="nc" id="L399">            .append(&quot;zoom='&quot; + preset.getToSet().getZoom() + &quot;',&quot;)</span>
+<span class="nc" id="L400">            .append(&quot;focus='&quot; + preset.getToSet().getFocus() + &quot;' &quot;)</span>
+<span class="nc" id="L401">            .append(&quot;WHERE id='&quot; + preset.getId() + &quot;' AND camera='&quot; + camera.getNumber() + &quot;';&quot;);</span>
+
+<span class="nc" id="L403">        return sBuilder.toString();</span>
+    }
+
+    /**
+     * Updates the presets by getting them from the database and adding them to the cameras.
+     * 
+     * @param overwrite True if you want to overwrite already existing presets, otherwise false.
+     * @throws SQLException When no connection can be made, this exception will be thrown.
+     */
+    public void updatePresets(boolean overwrite) throws SQLException {
+<span class="nc" id="L413">        revalidate();</span>
+<span class="nc" id="L414">        Statement stmt = conn.createStatement();</span>
+
+<span class="nc" id="L416">        String query = &quot;SELECT * FROM &quot; + PRESET_TABLE;</span>
+<span class="nc" id="L417">        ResultSet rs = stmt.executeQuery(query);</span>
+
+<span class="nc bnc" id="L419" title="All 2 branches missed.">        while (rs.next()) {</span>
+<span class="nc" id="L420">            int presetId = rs.getInt(&quot;id&quot;);</span>
+<span class="nc" id="L421">            int cameraId = rs.getInt(&quot;camera&quot;);</span>
+<span class="nc" id="L422">            int pan = rs.getInt(&quot;pan&quot;);</span>
+<span class="nc" id="L423">            int tilt = rs.getInt(&quot;tilt&quot;);</span>
+<span class="nc" id="L424">            int zoom = rs.getInt(&quot;zoom&quot;);</span>
+<span class="nc" id="L425">            int focus = rs.getInt(&quot;focus&quot;);</span>
+
+<span class="nc" id="L427">            String desc = rs.getString(&quot;description&quot;);</span>
+<span class="nc" id="L428">            String imageLoc = rs.getString(&quot;imageLocation&quot;);</span>
+<span class="nc" id="L429">            String type = rs.getString(&quot;type&quot;);</span>
+
+<span class="nc bnc" id="L431" title="All 2 branches missed.">            if (type.equals(&quot;InstantPreset&quot;)) {</span>
+<span class="nc" id="L432">                Preset preset = new InstantPreset(new CameraSettings(pan, tilt, zoom, focus), presetId);</span>
+<span class="nc" id="L433">                preset.setDescription(desc);</span>
+<span class="nc" id="L434">                preset.setImageLocation(imageLoc);</span>
+<span class="nc" id="L435">                Camera cam = Camera.getCamera(cameraId);</span>
+<span class="nc bnc" id="L436" title="All 2 branches missed.">                if (overwrite) {</span>
+<span class="nc" id="L437">                    cam.overwritePreset(preset);</span>
+<span class="nc" id="L438">                } else {</span>
+<span class="nc" id="L439">                    cam.addPreset(preset);</span>
+                }
+            }
+        }
+
+<span class="nc" id="L444">        rs.close();</span>
+<span class="nc" id="L445">        stmt.close(); </span>
+<span class="nc" id="L446">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

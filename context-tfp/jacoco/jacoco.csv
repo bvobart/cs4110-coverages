@@ -1,0 +1,36 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Team Free Pizza,nl.tudelft.contextproject.databaseConnection,DatabaseConnection,801,0,28,0,178,0,36,0,22,0
+Team Free Pizza,nl.tudelft.contextproject.databaseConnection,DatabaseConnection.new TimerTask() {...},38,0,2,0,12,0,4,0,3,0
+Team Free Pizza,nl.tudelft.contextproject.camera,CameraSettings,38,127,5,5,8,41,6,16,1,16
+Team Free Pizza,nl.tudelft.contextproject.camera,MockedCameraConnection,49,127,7,3,14,36,7,20,3,19
+Team Free Pizza,nl.tudelft.contextproject.camera,LiveCameraConnection,857,62,84,2,182,17,71,4,28,4
+Team Free Pizza,nl.tudelft.contextproject.camera,CameraConnection,0,3,0,0,0,1,0,1,0,1
+Team Free Pizza,nl.tudelft.contextproject.camera,Camera,58,423,11,35,14,123,12,46,3,32
+Team Free Pizza,nl.tudelft.contextproject.camera,LiveCameraConnectionAWHE40,45,4,2,0,12,2,3,1,2,1
+Team Free Pizza,nl.tudelft.contextproject.camera,MockedCameraConnection.new TimerTask() {...},33,0,0,0,5,0,2,0,2,0
+Team Free Pizza,nl.tudelft.contextproject.camera,MockedCameraConnection.new TimerTask() {...},11,0,0,0,3,0,2,0,2,0
+Team Free Pizza,nl.tudelft.contextproject,ContextTFP,145,0,4,0,49,0,14,0,12,0
+Team Free Pizza,nl.tudelft.contextproject.gui,CameramanLiveController,325,0,20,0,81,0,28,0,18,0
+Team Free Pizza,nl.tudelft.contextproject.gui,CameraFeedsController,413,0,30,0,114,0,33,0,18,0
+Team Free Pizza,nl.tudelft.contextproject.gui,LiveScript,15,0,0,0,4,0,2,0,2,0
+Team Free Pizza,nl.tudelft.contextproject.gui,Animation,124,0,6,0,42,0,12,0,9,0
+Team Free Pizza,nl.tudelft.contextproject.gui,CreateScriptController.new TableCell() {...},63,0,2,0,17,0,3,0,2,0
+Team Free Pizza,nl.tudelft.contextproject.gui,PresetController,722,0,51,0,200,0,60,0,33,0
+Team Free Pizza,nl.tudelft.contextproject.gui,CreateScriptController.new TableCell() {...},40,0,2,0,11,0,4,0,3,0
+Team Free Pizza,nl.tudelft.contextproject.gui,DirectorLiveController,692,0,38,0,187,0,54,0,35,0
+Team Free Pizza,nl.tudelft.contextproject.gui,LiveScript.new TableRow() {...},29,0,2,0,7,0,3,0,2,0
+Team Free Pizza,nl.tudelft.contextproject.gui,DirectorLiveController.new Runnable() {...},23,0,0,0,5,0,2,0,2,0
+Team Free Pizza,nl.tudelft.contextproject.gui,AlertDialog,480,0,16,0,134,0,25,0,17,0
+Team Free Pizza,nl.tudelft.contextproject.gui,LiveStreamHandler,147,0,10,0,35,0,16,0,11,0
+Team Free Pizza,nl.tudelft.contextproject.gui,MenuController,1039,0,54,0,273,0,77,0,50,0
+Team Free Pizza,nl.tudelft.contextproject.gui,CreateScriptController,1234,0,100,0,311,0,98,0,48,0
+Team Free Pizza,nl.tudelft.contextproject.gui,LiveStreamHandler.new DirectMediaPlayerComponent() {...},40,0,0,0,8,0,2,0,2,0
+Team Free Pizza,nl.tudelft.contextproject.script,Script.new TimerTask() {...},21,9,2,0,4,1,2,1,1,1
+Team Free Pizza,nl.tudelft.contextproject.script,Timeline,11,165,5,15,4,39,7,17,2,12
+Team Free Pizza,nl.tudelft.contextproject.script,Shot,52,186,8,16,5,60,11,23,3,19
+Team Free Pizza,nl.tudelft.contextproject.script,Script,147,305,19,23,31,64,18,27,7,17
+Team Free Pizza,nl.tudelft.contextproject.presets,Preset,27,68,4,6,2,20,5,9,1,8
+Team Free Pizza,nl.tudelft.contextproject.presets,InstantPreset,0,22,0,0,0,8,0,3,0,3
+Team Free Pizza,nl.tudelft.contextproject.saveLoad,SaveScript,15,477,0,8,5,78,2,14,2,10
+Team Free Pizza,nl.tudelft.contextproject.saveLoad,ApplicationSettings,815,0,87,0,153,0,83,0,35,0
+Team Free Pizza,nl.tudelft.contextproject.saveLoad,LoadScript,137,592,33,81,28,151,35,37,2,13

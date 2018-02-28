@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ContextTFP.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Team Free Pizza</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.contextproject</a> &gt; <span class="el_source">ContextTFP.java</span></div><h1>ContextTFP.java</h1><pre class="source lang-java linenums">/**
+ * This product is licensed under the CC BY 4.0 license and
+ * may be modified without notice of the original creators. This modified version may
+ * be distributed for commercial use when appropriate credit is given where due.
+ * 
+ * &lt;p&gt;See http://creativecommons.org/licenses/by/4.0/
+ */
+
+package nl.tudelft.contextproject;
+
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+import nl.tudelft.contextproject.databaseConnection.DatabaseConnection;
+import nl.tudelft.contextproject.gui.AlertDialog;
+import nl.tudelft.contextproject.gui.MenuController;
+import nl.tudelft.contextproject.saveLoad.ApplicationSettings;
+import nl.tudelft.contextproject.script.Script;
+import nl.tudelft.contextproject.script.Shot;
+import uk.co.caprica.vlcj.discovery.NativeDiscovery;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+/**
+ * This is the main file for the Multimedia Contextproject of Team Free Pizza.
+ * The main purpose of this project is to allow PolyCast Productions B.V. to
+ * easily digitize their script and to improve their digital environment.
+ * 
+ * &lt;p&gt;This file should be used to initialize the program.
+ * 
+ * @author Team Free Pizza
+ * @version %I%, %G%
+ * @since 0.1
+ */
+<span class="nc" id="L41">public class ContextTFP extends Application {</span>
+
+    private static boolean hasVLC;
+    private static BorderPane rootLayout;
+    private static Script script;
+
+    private Stage primaryStage;
+
+    @Override
+    public void start(Stage pStage) throws Exception {
+<span class="nc" id="L51">        primaryStage = pStage;</span>
+<span class="nc" id="L52">        primaryStage.setTitle(&quot;TFP Camera Control&quot;);</span>
+<span class="nc" id="L53">        primaryStage.minWidthProperty().set(800);</span>
+<span class="nc" id="L54">        primaryStage.minHeightProperty().set(575);</span>
+<span class="nc" id="L55">        primaryStage.getIcons().add(new Image(ContextTFP.class.getResourceAsStream(&quot;/icon.png&quot;)));</span>
+
+        // Create the script to be used by the application.
+<span class="nc" id="L58">        script = new Script(new ArrayList&lt;Shot&gt;());</span>
+
+        // Statically initialize ApplicationSettings class.
+<span class="nc" id="L61">        File dir = new File(&quot;src/main/resources/snapShots&quot;);</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">        if (!dir.exists()) {</span>
+<span class="nc" id="L63">            dir.mkdir();</span>
+        }
+<span class="nc" id="L65">        ApplicationSettings.getInstance();</span>
+
+<span class="nc" id="L67">        initRootLayout();</span>
+
+<span class="nc" id="L69">        new Thread(() -&gt; initVLCj()).start();</span>
+
+<span class="nc" id="L71">        MenuController.show();</span>
+<span class="nc" id="L72">    }</span>
+
+    /**
+     * Initializes the root layout of the application.
+     */
+    public void initRootLayout() {
+        try {
+<span class="nc" id="L79">            FXMLLoader loader = new FXMLLoader();</span>
+<span class="nc" id="L80">            loader.setLocation(ContextTFP.class.getResource(&quot;view/RootLayout.fxml&quot;));</span>
+<span class="nc" id="L81">            rootLayout = (BorderPane) loader.load();</span>
+
+<span class="nc" id="L83">            Scene scene = new Scene(rootLayout);</span>
+<span class="nc" id="L84">            primaryStage.setScene(scene);</span>
+<span class="nc" id="L85">            primaryStage.show();</span>
+<span class="nc" id="L86">            primaryStage.setOnCloseRequest(e -&gt; {</span>
+                try {
+<span class="nc" id="L88">                    ApplicationSettings.getInstance().save();</span>
+<span class="nc" id="L89">                } catch (IOException ex) {</span>
+<span class="nc" id="L90">                    ex.printStackTrace();</span>
+                }
+
+                try {
+<span class="nc" id="L94">                    DatabaseConnection.getInstance().resetCounter();</span>
+<span class="nc" id="L95">                } catch (Exception e1) {</span>
+                    //If we can't reset the counter, just ignore it.
+                }
+<span class="nc" id="L98">                Platform.exit(); </span>
+<span class="nc" id="L99">                System.exit(0);</span>
+<span class="nc" id="L100">            });</span>
+<span class="nc" id="L101">        } catch (IOException e) {</span>
+<span class="nc" id="L102">            e.printStackTrace();</span>
+        }
+<span class="nc" id="L104">    }</span>
+
+    /**
+     * Tries to load VLC using the VLC native discovery tactics.
+     * If it cannot find VLC installed, it will ask for the location of the
+     * VLC installation.
+     */
+    public void initVLCj() {
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        if (!new NativeDiscovery().discover()) {</span>
+            try {
+<span class="nc" id="L114">                AlertDialog.errorVlcNotFound(primaryStage);</span>
+<span class="nc" id="L115">                hasVLC = true;</span>
+<span class="nc" id="L116">            } catch (RuntimeException e) {</span>
+<span class="nc" id="L117">                hasVLC = false;</span>
+            }
+<span class="nc" id="L119">        } else {</span>
+<span class="nc" id="L120">            hasVLC = true;</span>
+        }
+<span class="nc" id="L122">    }</span>
+
+    /**
+     * The main class of the project. Calling this method will start the program.
+     * @param args Environment arguments for the main method.
+     */
+    public static void main(String[] args) {
+<span class="nc" id="L129">        launch(args);</span>
+<span class="nc" id="L130">    }</span>
+
+    /**
+     * Get method for the primary stage of the application.
+     * @return The main stage.
+     */
+    public Stage getPrimaryStage() {
+<span class="nc" id="L137">        return primaryStage;</span>
+    }
+
+    /**
+     * Get the active script used by the application.
+     * @return The script.
+     */
+    public static Script getScript() {
+<span class="nc" id="L145">        return script;</span>
+    }
+
+    /**
+     * Sets the active script used by the application.
+     * @param script The script to be used.
+     */
+    public static void setScript(Script script) {
+<span class="nc" id="L153">        ContextTFP.script = script;</span>
+<span class="nc" id="L154">    }</span>
+
+    /**
+     * Retrieves the root layout of the application.
+     * @return The root layout
+     */
+    public static BorderPane getRootLayout() {
+<span class="nc" id="L161">        return rootLayout;</span>
+    }
+
+    /**
+     * Checks of the user has VLC.
+     * @return True if the program could find VLC.
+     */
+    public static boolean hasVLC() {
+<span class="nc" id="L169">        return hasVLC;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

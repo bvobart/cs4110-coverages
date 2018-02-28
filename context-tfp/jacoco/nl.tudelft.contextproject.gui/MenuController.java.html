@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MenuController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Team Free Pizza</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.contextproject.gui</a> &gt; <span class="el_source">MenuController.java</span></div><h1>MenuController.java</h1><pre class="source lang-java linenums">package nl.tudelft.contextproject.gui;
+
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
+
+import nl.tudelft.contextproject.ContextTFP;
+import nl.tudelft.contextproject.camera.Camera;
+import nl.tudelft.contextproject.camera.CameraConnection;
+import nl.tudelft.contextproject.camera.LiveCameraConnection;
+import nl.tudelft.contextproject.camera.MockedCameraConnection;
+import nl.tudelft.contextproject.databaseConnection.DatabaseConnection;
+import nl.tudelft.contextproject.saveLoad.ApplicationSettings;
+import nl.tudelft.contextproject.saveLoad.LoadScript;
+import nl.tudelft.contextproject.saveLoad.SaveScript;
+import nl.tudelft.contextproject.script.Script;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * Controller class for the main menu. This class controls the actions to be taken
+ * when one of the menu buttons is clicked. Additionally, this class is responsible
+ * for the displaying of the logo and the label that indicates the active {@link Script}.
+ * 
+ * @since 0.1
+ */
+<span class="nc" id="L54">public class MenuController {</span>
+
+    @FXML private Pane settingsFront;
+    @FXML private Pane clickPane;
+
+    @FXML private AnchorPane settingsBack;
+
+    @FXML private GridPane settingsGrid;
+
+    @FXML private Button btnCameraman;
+    @FXML private Button btnCameras;
+    @FXML private Button btnCreateScript;
+    @FXML private Button btnDirector;
+    @FXML private Button btnEditScript;
+    @FXML private Button btnPre;
+    @FXML private Button btnPresets;
+    @FXML private Button btnLive;
+    @FXML private Button btnLoadScript;
+    @FXML private Button btnChangeVlcLoc;
+    @FXML private Button btnSettingsAddCamera;
+    @FXML private Button btnSettingsCancel;
+    @FXML private Button btnSettingsClearCameras;
+    @FXML private Button btnSettingsSave;
+    @FXML private Button btnSettingsTest;
+
+    @FXML private ChoiceBox&lt;String&gt; settingsVlcBox;
+
+    @FXML private ImageView imgSettings;
+
+    @FXML private Label lblPre;
+    @FXML private Label lblLive;
+    @FXML private Label lblVersion;
+    @FXML private Label lblScript;
+    @FXML private Label lblDbSettingStatus;
+
+    @FXML private TableView&lt;Camera&gt; settingsIpTable;
+    @FXML private TableColumn&lt;Camera, Integer&gt; settingsIdColumn;
+    @FXML private TableColumn&lt;Camera, String&gt; settingsAddressColumn;
+
+    @FXML private PasswordField settingsDbPassword;
+    @FXML private TextField settingsDbAddress;
+    @FXML private TextField settingsDbName;
+    @FXML private TextField settingsDbPort;
+    @FXML private TextField settingsDbUsername;
+    @FXML private TextField settingsVlcLoc;
+
+    private List&lt;Node&gt; preNodes;
+    private List&lt;Node&gt; liveNodes;
+
+<span class="nc" id="L103">    private boolean isPreVisible = false;</span>
+<span class="nc" id="L104">    private boolean isLiveVisible = false;</span>
+
+    /**
+     * Initialize method used by JavaFX.
+     */
+    @FXML private void initialize() {
+<span class="nc" id="L110">        final String name = ContextTFP.getScript().getName();</span>
+
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        if (name.equals(&quot;&quot;)) {</span>
+<span class="nc" id="L113">            setScriptLabel(&quot;None&quot;);</span>
+<span class="nc" id="L114">        } else {</span>
+<span class="nc" id="L115">            setScriptLabel(name);</span>
+        }
+
+<span class="nc" id="L118">        setVersionLabel(&quot;1.0&quot;);</span>
+
+<span class="nc" id="L120">        preNodes = new ArrayList&lt;Node&gt;();</span>
+<span class="nc" id="L121">        liveNodes = new ArrayList&lt;Node&gt;();</span>
+<span class="nc" id="L122">        preNodes.addAll(Arrays.asList(lblPre, btnCreateScript, </span>
+<span class="nc" id="L123">                btnEditScript, btnPresets, btnLoadScript));</span>
+<span class="nc" id="L124">        liveNodes.addAll(Arrays.asList(lblLive, btnCameraman, btnDirector));</span>
+
+<span class="nc" id="L126">        settingsIpTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);</span>
+
+<span class="nc" id="L128">        initLoadButton();</span>
+<span class="nc" id="L129">        initSubButtons();</span>
+<span class="nc" id="L130">        initOtherButtons();</span>
+<span class="nc" id="L131">        initSettingsImg();</span>
+<span class="nc" id="L132">        initCameraViewButton();</span>
+<span class="nc" id="L133">    }</span>
+
+    /**
+     * Initializes the onAction events for the buttons that display
+     * the sub menus.
+     */
+    private void initSubButtons() {
+<span class="nc" id="L140">        btnPre.setOnAction(event -&gt; {</span>
+<span class="nc" id="L141">            animate(true);</span>
+
+<span class="nc bnc" id="L143" title="All 2 branches missed.">            isPreVisible = !isPreVisible;</span>
+<span class="nc" id="L144">            isLiveVisible = false;</span>
+
+<span class="nc" id="L146">            toggleNodeVisibility(preNodes, liveNodes);</span>
+<span class="nc" id="L147">        });</span>
+
+<span class="nc" id="L149">        btnLive.setOnAction(event -&gt; {</span>
+<span class="nc" id="L150">            animate(false);</span>
+
+<span class="nc bnc" id="L152" title="All 2 branches missed.">            isLiveVisible = !isLiveVisible;</span>
+<span class="nc" id="L153">            isPreVisible = false;</span>
+
+<span class="nc" id="L155">            toggleNodeVisibility(liveNodes, preNodes);</span>
+<span class="nc" id="L156">        });</span>
+<span class="nc" id="L157">    }</span>
+
+    /**
+     * Animates the sub buttons up or down.
+     * 
+     * @param pre Should be true if the pre button was clicked,
+     *      false if the live button was clicked.
+     */
+    private void animate(boolean pre) {
+<span class="nc bnc" id="L166" title="All 4 branches missed.">        if (!isPreVisible &amp;&amp; !isLiveVisible) {</span>
+<span class="nc" id="L167">            Animation.animNodeUp(btnPre);</span>
+<span class="nc" id="L168">            Animation.animNodeUp(btnLive);</span>
+<span class="nc bnc" id="L169" title="All 6 branches missed.">        } else if (isPreVisible &amp;&amp; !isLiveVisible &amp;&amp; pre) {</span>
+<span class="nc" id="L170">            Animation.animNodeDown(btnPre);</span>
+<span class="nc" id="L171">            Animation.animNodeDown(btnLive);</span>
+<span class="nc bnc" id="L172" title="All 6 branches missed.">        } else if (!isPreVisible &amp;&amp; isLiveVisible &amp;&amp; !pre) {</span>
+<span class="nc" id="L173">            Animation.animNodeDown(btnPre);</span>
+<span class="nc" id="L174">            Animation.animNodeDown(btnLive);</span>
+        }
+<span class="nc" id="L176">    }</span>
+
+    /**
+     * Initializes the load button, to enable the user to select a file
+     * location of a script, and load it in.
+     */
+    private void initLoadButton() {
+<span class="nc" id="L183">        btnLoadScript.setOnAction(event -&gt; {</span>
+<span class="nc" id="L184">            FileChooser fileChooser = new FileChooser();</span>
+<span class="nc" id="L185">            fileChooser.setTitle(&quot;Select script to use&quot;);</span>
+<span class="nc" id="L186">            fileChooser.getExtensionFilters().add(new ExtensionFilter(&quot;XML (*.xml)&quot;, &quot;*.xml&quot;));</span>
+
+<span class="nc" id="L188">            File file = fileChooser.showOpenDialog(((Node) event.getTarget()).getScene().getWindow());</span>
+
+<span class="nc bnc" id="L190" title="All 2 branches missed.">            if (file != null) {</span>
+                try {
+<span class="nc" id="L192">                    LoadScript.setLoadLocation(file.getAbsolutePath());</span>
+<span class="nc" id="L193">                    SaveScript.setSaveLocation(file.getAbsolutePath());</span>
+
+<span class="nc" id="L195">                    ContextTFP.setScript(LoadScript.load());</span>
+<span class="nc" id="L196">                    ContextTFP.getScript().setName(file.getName());</span>
+<span class="nc" id="L197">                    setScriptLabel(file.getName());</span>
+
+<span class="nc" id="L199">                    AlertDialog.infoSuccesfulLoading(file);</span>
+<span class="nc" id="L200">                    CreateScriptController.showValid(ContextTFP.getScript(), 2);</span>
+<span class="nc" id="L201">                } catch (Exception e) {</span>
+<span class="nc" id="L202">                    AlertDialog.errorSaveUnsuccesful(e, file);</span>
+                }
+            }
+<span class="nc" id="L205">        });</span>
+<span class="nc" id="L206">    }</span>
+
+    /**
+     * Toggles the visibility of the nodes of the sub menu.
+     * 
+     * @param clicked The nodes of the button the user clicked on.
+     * @param hidden The nodes of the button the user did not click on.
+     */
+    private void toggleNodeVisibility(List&lt;Node&gt; clicked, List&lt;Node&gt; hidden) {
+<span class="nc bnc" id="L215" title="All 2 branches missed.">        for (Node b : clicked) {</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">            if (b.isVisible()) {</span>
+<span class="nc" id="L217">                Animation.animNodeOut(b, true);</span>
+<span class="nc" id="L218">            } else {</span>
+<span class="nc" id="L219">                Animation.animNodeIn(b);</span>
+            }
+        }
+
+<span class="nc bnc" id="L223" title="All 2 branches missed.">        for (Node b : hidden) {</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">            if (b.isVisible()) {</span>
+<span class="nc" id="L225">                Animation.animNodeOut(b, true);</span>
+            }
+        }
+<span class="nc" id="L228">    }</span>
+
+    /**
+     * Initializes the rest of the buttons.
+     */
+    private void initOtherButtons() {
+<span class="nc" id="L234">        btnCreateScript.setOnAction(event -&gt; {</span>
+<span class="nc" id="L235">            Animation.animNodeOut(ContextTFP.getRootLayout(), false).setOnFinished(f -&gt; {</span>
+<span class="nc" id="L236">                CreateScriptController.show();</span>
+<span class="nc" id="L237">                Animation.animNodeIn(ContextTFP.getRootLayout());</span>
+<span class="nc" id="L238">            });</span>
+<span class="nc" id="L239">        });</span>
+
+<span class="nc" id="L241">        btnPresets.setOnAction(event -&gt; {</span>
+<span class="nc" id="L242">            PresetController.setToCameramanView(false);</span>
+
+<span class="nc" id="L244">            Animation.animNodeOut(ContextTFP.getRootLayout(), false).setOnFinished(f -&gt; {</span>
+<span class="nc" id="L245">                PresetController.show();</span>
+<span class="nc" id="L246">                Animation.animNodeIn(ContextTFP.getRootLayout());</span>
+<span class="nc" id="L247">            });</span>
+<span class="nc" id="L248">        });</span>
+
+<span class="nc" id="L250">        btnDirector.setOnAction(event -&gt; {</span>
+<span class="nc" id="L251">            Animation.animNodeOut(ContextTFP.getRootLayout(), false).setOnFinished(f -&gt; {</span>
+<span class="nc" id="L252">                DirectorLiveController.show();</span>
+<span class="nc" id="L253">                Animation.animNodeIn(ContextTFP.getRootLayout());</span>
+<span class="nc" id="L254">            });</span>
+<span class="nc" id="L255">        });</span>
+
+<span class="nc" id="L257">        btnCameraman.setOnAction(event -&gt; {</span>
+<span class="nc" id="L258">            Animation.animNodeOut(ContextTFP.getRootLayout(), false).setOnFinished(f -&gt; {</span>
+<span class="nc" id="L259">                CameramanLiveController.show();</span>
+<span class="nc" id="L260">                Animation.animNodeIn(ContextTFP.getRootLayout());</span>
+<span class="nc" id="L261">            });</span>
+<span class="nc" id="L262">        });</span>
+
+<span class="nc" id="L264">        btnEditScript.setOnAction(event -&gt; {</span>
+<span class="nc" id="L265">            Animation.animNodeOut(ContextTFP.getRootLayout(), false).setOnFinished(f -&gt; {</span>
+<span class="nc" id="L266">                CreateScriptController.setFill(true);</span>
+<span class="nc" id="L267">                CreateScriptController.show();</span>
+<span class="nc" id="L268">                Animation.animNodeIn(ContextTFP.getRootLayout());</span>
+<span class="nc" id="L269">            });</span>
+<span class="nc" id="L270">        });</span>
+<span class="nc" id="L271">    }</span>
+
+    /**
+     * Initialises the 'Camera views' button, which opens a new window 
+     * with live camera feeds.
+     */
+    private void initCameraViewButton() {
+<span class="nc" id="L278">        btnCameras.setOnAction(event -&gt; {</span>
+<span class="nc" id="L279">            Stage secondaryStage = new Stage();</span>
+<span class="nc" id="L280">            secondaryStage.show();</span>
+
+            try {
+<span class="nc" id="L283">                FXMLLoader loader = new FXMLLoader();</span>
+<span class="nc" id="L284">                loader.setLocation(ContextTFP.class.getResource(&quot;view/CameraFeedsView.fxml&quot;));</span>
+
+<span class="nc" id="L286">                AnchorPane rootLayout = (AnchorPane) loader.load();</span>
+
+<span class="nc" id="L288">                Scene scene = new Scene(rootLayout);</span>
+<span class="nc" id="L289">                secondaryStage.setScene(scene);</span>
+<span class="nc" id="L290">                secondaryStage.show();</span>
+<span class="nc" id="L291">                secondaryStage.setOnCloseRequest(e -&gt; {</span>
+<span class="nc" id="L292">                    CameraFeedsController.closeStreams();</span>
+<span class="nc" id="L293">                });</span>
+<span class="nc" id="L294">            } catch (IOException e) {</span>
+<span class="nc" id="L295">                e.printStackTrace();</span>
+            }
+<span class="nc" id="L297">        });</span>
+<span class="nc" id="L298">    }</span>
+
+    /**
+     * Sets the hover and click action for the settings icon.
+     */
+    private void initSettingsImg() {
+<span class="nc" id="L304">        imgSettings.setOnMouseEntered(event -&gt; {</span>
+<span class="nc" id="L305">            imgSettings.setImage(new Image(&quot;settings_active.png&quot;));</span>
+<span class="nc" id="L306">        });</span>
+
+<span class="nc" id="L308">        imgSettings.setOnMouseExited(event -&gt; {</span>
+<span class="nc" id="L309">            imgSettings.setImage(new Image(&quot;settings.png&quot;));</span>
+<span class="nc" id="L310">        });</span>
+
+<span class="nc" id="L312">        imgSettings.setOnMouseClicked(event -&gt; {</span>
+<span class="nc bnc" id="L313" title="All 2 branches missed.">            if (settingsFront.isVisible()) {</span>
+<span class="nc" id="L314">                settingsOnClose();</span>
+<span class="nc" id="L315">            } else {</span>
+<span class="nc" id="L316">                settingsOnOpen();</span>
+            }
+<span class="nc" id="L318">        });</span>
+
+<span class="nc" id="L320">        clickPane.setOnMouseClicked(event -&gt; {</span>
+<span class="nc" id="L321">            settingsOnClose();</span>
+<span class="nc" id="L322">        });</span>
+<span class="nc" id="L323">    }</span>
+
+    /**
+     * Opens Settings menu.
+     */
+    private void settingsOnOpen() {
+<span class="nc" id="L329">        BoxBlur boxBlur = new BoxBlur(15, 10, 3);</span>
+<span class="nc" id="L330">        settingsBack.setEffect(boxBlur);</span>
+<span class="nc" id="L331">        settingsBack.setVisible(true);</span>
+<span class="nc" id="L332">        settingsFront.setVisible(true);</span>
+<span class="nc" id="L333">        settingsGrid.disableProperty().set(false); </span>
+
+<span class="nc" id="L335">        ApplicationSettings settings = ApplicationSettings.getInstance();</span>
+<span class="nc" id="L336">        settingsInitVlcSettings(settings);</span>
+<span class="nc" id="L337">        settingsInitDbSettings(settings);</span>
+<span class="nc" id="L338">        settingsInitIpTable(settings); </span>
+
+<span class="nc" id="L340">        btnSettingsSave.setOnAction(event -&gt; {</span>
+<span class="nc" id="L341">            settingsOnClose();</span>
+<span class="nc" id="L342">        });</span>
+
+<span class="nc" id="L344">        btnSettingsCancel.setOnAction(event -&gt; {</span>
+<span class="nc" id="L345">            settingsFront.setVisible(false);</span>
+<span class="nc" id="L346">            settingsBack.setVisible(false);</span>
+<span class="nc" id="L347">            settingsGrid.disableProperty().set(true);</span>
+<span class="nc" id="L348">        });</span>
+<span class="nc" id="L349">    }</span>
+
+    /**
+     * Closes settings menu.
+     */
+    private void settingsOnClose() {
+        try {
+<span class="nc" id="L356">            btnSettingsTest.fire();</span>
+<span class="nc" id="L357">            ApplicationSettings.getInstance().save();</span>
+
+<span class="nc" id="L359">            settingsFront.setVisible(false);</span>
+<span class="nc" id="L360">            settingsBack.setVisible(false);</span>
+<span class="nc" id="L361">            settingsGrid.disableProperty().set(true);</span>
+<span class="nc" id="L362">        } catch (IOException e) {</span>
+<span class="nc" id="L363">            AlertDialog.errorSavingSettings(e);</span>
+        }
+<span class="nc" id="L365">    }</span>
+
+    /**
+     * Initialises the VLC settings section of the settings menu.
+     * 
+     * @param settings The instance of ApplicationSettings
+     */
+    private void settingsInitVlcSettings(ApplicationSettings settings) {
+<span class="nc" id="L373">        settingsVlcBox.setItems(FXCollections.observableArrayList(</span>
+<span class="nc" id="L374">                &quot;1080p&quot;, &quot;720p&quot;, &quot;480p&quot;));</span>
+<span class="nc" id="L375">        settingsVlcBox.setTooltip(new Tooltip(</span>
+<span class="nc" id="L376">                &quot;Select the preferred quality for rendering VLC live views&quot;));</span>
+<span class="nc" id="L377">        settingsVlcBox.getSelectionModel().select(settings.getRenderResY() + &quot;p&quot;);</span>
+<span class="nc" id="L378">        settingsVlcBox.setOnAction(event -&gt; {</span>
+<span class="nc" id="L379">            String selected = settingsVlcBox.getValue();</span>
+<span class="nc bnc" id="L380" title="All 2 branches missed.">            if (selected != null) {</span>
+<span class="nc" id="L381">                int resY = Integer.parseInt(selected.substring(0, selected.length() - 1));</span>
+                int resX;
+<span class="nc bnc" id="L383" title="All 2 branches missed.">                if (resY == 1080) {</span>
+<span class="nc" id="L384">                    resX = 1920;</span>
+<span class="nc bnc" id="L385" title="All 2 branches missed.">                } else if (resY == 720) {</span>
+<span class="nc" id="L386">                    resX = 1280;</span>
+<span class="nc" id="L387">                } else {</span>
+<span class="nc" id="L388">                    resX = 720;</span>
+                }
+<span class="nc" id="L390">                settings.setRenderResolution(resX, resY);</span>
+            }
+<span class="nc" id="L392">        });</span>
+
+<span class="nc" id="L394">        settingsVlcLoc.setTooltip(new Tooltip(&quot;Current VLC installation location&quot;));</span>
+<span class="nc bnc" id="L395" title="All 2 branches missed.">        if (!ContextTFP.hasVLC()) {</span>
+<span class="nc" id="L396">            settingsVlcLoc.setText(&quot;No VLC found.&quot;);</span>
+<span class="nc bnc" id="L397" title="All 2 branches missed.">        } else if (settings.getVlcLocation().equals(&quot;&quot;)) {</span>
+<span class="nc" id="L398">            settingsVlcLoc.setText(&quot;Default location&quot;);</span>
+<span class="nc" id="L399">            btnChangeVlcLoc.setDisable(true);</span>
+<span class="nc" id="L400">        } else {</span>
+<span class="nc" id="L401">            settingsVlcLoc.setText(settings.getVlcLocation());</span>
+        }
+
+<span class="nc" id="L404">        btnChangeVlcLoc.setOnAction(event -&gt; {</span>
+            try {
+<span class="nc" id="L406">                AlertDialog.findVlc(((Node) event.getTarget()).getScene().getWindow());</span>
+<span class="nc" id="L407">            } catch (RuntimeException e) {</span>
+                //No VLC has been set.
+            }
+<span class="nc" id="L410">        });</span>
+<span class="nc" id="L411">    }</span>
+
+    /**
+     * Initialises the database settings section of the settings menu.
+     * 
+     * @param settings The instance of ApplicationSettings
+     */
+    private void settingsInitDbSettings(ApplicationSettings settings) {
+<span class="nc" id="L419">        settingsDbAddress.setTooltip(new Tooltip(&quot;Address of the database used for synchronisation&quot;));</span>
+<span class="nc" id="L420">        settingsDbPort.setTooltip(new Tooltip(&quot;Port associated with the address&quot;));</span>
+<span class="nc" id="L421">        settingsDbName.setTooltip(new Tooltip(&quot;Name of the database&quot;));</span>
+<span class="nc" id="L422">        settingsDbUsername.setTooltip(new Tooltip(&quot;Username used to log in to database&quot;));</span>
+<span class="nc" id="L423">        settingsDbPassword.setTooltip(new Tooltip(&quot;Password used to log in to database&quot;));</span>
+
+<span class="nc" id="L425">        settingsDbAddress.setText(settings.getDatabaseUrl());</span>
+<span class="nc" id="L426">        settingsDbPort.setText(settings.getDatabasePort() + &quot;&quot;);</span>
+<span class="nc" id="L427">        settingsDbName.setText(settings.getDatabaseName());</span>
+<span class="nc" id="L428">        settingsDbUsername.setText(settings.getDatabaseUsername());</span>
+<span class="nc" id="L429">        settingsDbPassword.setText(settings.getDatabasePassword());</span>
+
+<span class="nc" id="L431">        settingsDbPort.addEventFilter(KeyEvent.KEY_TYPED, event -&gt; {</span>
+<span class="nc bnc" id="L432" title="All 2 branches missed.">            if (!event.getCharacter().matches(&quot;[0-9]&quot;)) {</span>
+<span class="nc" id="L433">                event.consume();</span>
+            }
+<span class="nc" id="L435">        });</span>
+
+<span class="nc" id="L437">        settingsInitTestButton(settings);</span>
+<span class="nc" id="L438">    }</span>
+
+    /**
+     * Initialises the 'Test Connection' button in the database settings
+     * section of the settings menu.
+     * 
+     * @param settings The instance of ApplicationSettings
+     */
+    private void settingsInitTestButton(ApplicationSettings settings) {
+<span class="nc" id="L447">        btnSettingsTest.setOnAction(event -&gt; {</span>
+<span class="nc" id="L448">            settings.setDatabaseInfo(settingsDbAddress.getText(), </span>
+<span class="nc" id="L449">                    Integer.parseInt(settingsDbPort.getText()),</span>
+<span class="nc" id="L450">                    settingsDbName.getText(),</span>
+<span class="nc" id="L451">                    settingsDbUsername.getText(), </span>
+<span class="nc" id="L452">                    settingsDbPassword.getText());</span>
+
+<span class="nc" id="L454">            DatabaseConnection dbConnect = DatabaseConnection.getInstance();</span>
+            try {
+<span class="nc" id="L456">                dbConnect.connect();</span>
+<span class="nc" id="L457">            } catch (Exception e) {</span>
+                // If exceptions occur, then that will reflect in the isValid method.
+            }
+
+<span class="nc bnc" id="L461" title="All 2 branches missed.">            if (dbConnect.isValid(200)) {</span>
+<span class="nc" id="L462">                lblDbSettingStatus.setText(&quot;Connection Verified!&quot;);</span>
+<span class="nc" id="L463">                lblDbSettingStatus.setStyle(&quot;-fx-text-fill: green&quot;);</span>
+<span class="nc" id="L464">                lblDbSettingStatus.setVisible(true);</span>
+<span class="nc" id="L465">            } else {</span>
+<span class="nc" id="L466">                lblDbSettingStatus.setText(&quot;Connection Failed!&quot;);</span>
+<span class="nc" id="L467">                lblDbSettingStatus.setStyle(&quot;-fx-text-fill: red&quot;);</span>
+<span class="nc" id="L468">                lblDbSettingStatus.setVisible(true);</span>
+            }
+<span class="nc" id="L470">        });</span>
+<span class="nc" id="L471">    }</span>
+
+    /**
+     * Initialises the camera IPs section of the settings menu.
+     * 
+     * @param settings The instance of ApplicationSettings
+     */
+    private void settingsInitIpTable(ApplicationSettings settings) {
+<span class="nc" id="L479">        btnSettingsAddCamera.setTooltip(new Tooltip(&quot;Adds a camera to the table&quot;));</span>
+<span class="nc" id="L480">        btnSettingsAddCamera.setOnAction(event -&gt; {</span>
+<span class="nc" id="L481">            Camera newCam = new Camera();</span>
+<span class="nc" id="L482">            newCam.setConnection(new MockedCameraConnection());</span>
+<span class="nc" id="L483">            settingsIpTable.getItems().add(newCam);</span>
+<span class="nc" id="L484">        });</span>
+
+<span class="nc" id="L486">        btnSettingsClearCameras.setTooltip(new Tooltip(&quot;Clears all cameras from the table&quot;));</span>
+<span class="nc" id="L487">        btnSettingsClearCameras.setOnAction(event -&gt; {</span>
+<span class="nc bnc" id="L488" title="All 2 branches missed.">            if (AlertDialog.confirmClearCameras()) {</span>
+<span class="nc" id="L489">                settingsIpTable.getItems().clear();</span>
+<span class="nc" id="L490">                Camera.clearAllCameras();</span>
+<span class="nc" id="L491">                ApplicationSettings.getInstance().clearAllCameraIPs();</span>
+            }
+<span class="nc" id="L493">        });</span>
+
+<span class="nc" id="L495">        settingsIdColumn.setCellValueFactory(cellData -&gt;</span>
+<span class="nc" id="L496">            new ReadOnlyObjectWrapper&lt;Integer&gt;(cellData.getValue().getNumber() + 1)</span>
+        );
+
+<span class="nc" id="L499">        settingsAddressColumn.setCellValueFactory(cellData -&gt;</span>
+<span class="nc" id="L500">            new SimpleStringProperty(settings.getCameraIP(cellData.getValue().getNumber()))</span>
+        );
+
+<span class="nc" id="L503">        settingsAddressColumn.setCellFactory(TextFieldTableCell.forTableColumn());</span>
+<span class="nc" id="L504">        settingsAddressColumn.setOnEditCommit(editEvent -&gt; {</span>
+<span class="nc" id="L505">            Camera cam = editEvent.getTableView().getItems()</span>
+<span class="nc" id="L506">                    .get(editEvent.getTablePosition().getRow());</span>
+<span class="nc" id="L507">            settings.addCameraIP(cam.getNumber(), editEvent.getNewValue());</span>
+<span class="nc" id="L508">            new Thread(() -&gt; {</span>
+<span class="nc" id="L509">                CameraConnection oldConnection = cam.getConnection();</span>
+<span class="nc" id="L510">                cam.setConnection(new LiveCameraConnection(settings.getCameraIP(cam.getNumber())));</span>
+<span class="nc bnc" id="L511" title="All 2 branches missed.">                if (!cam.getConnection().setUpConnection()) {</span>
+<span class="nc bnc" id="L512" title="All 2 branches missed.">                    cam.setConnection(oldConnection == null ? new MockedCameraConnection() : oldConnection);</span>
+                }
+<span class="nc" id="L514">            }).start();</span>
+<span class="nc" id="L515">        });</span>
+
+<span class="nc" id="L517">        settingsIpTable.setPlaceholder(new Label(&quot;No cameras in settings. Add one!&quot;));</span>
+<span class="nc" id="L518">        settingsIpTable.getItems().clear();</span>
+<span class="nc" id="L519">        settingsIpTable.getItems().addAll(Camera.getAllCameras());</span>
+<span class="nc" id="L520">    }</span>
+
+    /**
+     * Sets the text of the script label on the menu.
+     * 
+     * @param text The text to set to the label. This will be appended to the
+     *      string: &quot;Current script: &quot; 
+     */
+    private void setScriptLabel(String text) {
+<span class="nc" id="L529">        lblScript.setText(&quot;Current script: &quot; + text);</span>
+<span class="nc" id="L530">    }</span>
+
+    /**
+     * Sets the text of the version label on the menu.
+     * 
+     * @param text The text to set to the label. This will be appended to the
+     *      string: &quot;Current version: &quot; 
+     */
+    private void setVersionLabel(String text) {
+<span class="nc" id="L539">        lblVersion.setText(&quot;Current version: &quot; + text);</span>
+<span class="nc" id="L540">    }</span>
+
+    /**
+     * Calling this method shows this view in the middle of the rootLayout,
+     * forcing the current view to disappear.
+     */
+    public static void show() {
+        try {
+<span class="nc" id="L548">            FXMLLoader loader = new FXMLLoader();</span>
+<span class="nc" id="L549">            loader.setLocation(ContextTFP.class.getResource(&quot;view/MenuOverview.fxml&quot;));</span>
+<span class="nc" id="L550">            AnchorPane menuOverview = (AnchorPane) loader.load();</span>
+
+<span class="nc" id="L552">            Animation.animNodeOut(ContextTFP.getRootLayout(), false).setOnFinished(f -&gt; {</span>
+<span class="nc" id="L553">                ContextTFP.getRootLayout().setCenter(menuOverview);</span>
+<span class="nc" id="L554">                Animation.animNodeIn(ContextTFP.getRootLayout());</span>
+<span class="nc" id="L555">            });</span>
+<span class="nc" id="L556">        } catch (IOException e) {</span>
+<span class="nc" id="L557">            e.printStackTrace();</span>
+        }
+<span class="nc" id="L559">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

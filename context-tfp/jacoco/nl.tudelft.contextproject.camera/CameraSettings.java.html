@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CameraSettings.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Team Free Pizza</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.contextproject.camera</a> &gt; <span class="el_source">CameraSettings.java</span></div><h1>CameraSettings.java</h1><pre class="source lang-java linenums">package nl.tudelft.contextproject.camera;
+
+/**
+ * Class to represent camera settings. Can be extended with color
+ * settings etc.
+ * 
+ * @since 0.2
+ */
+public class CameraSettings {
+
+    private int pan;
+    private int tilt;
+    private int zoom;
+    private int focus;
+
+    /**
+     * Constructs a camera settings object with orientation,
+     * zoom level and focus level initialized to 0.
+     */
+<span class="fc" id="L20">    public CameraSettings() {</span>
+<span class="fc" id="L21">        pan = 0;</span>
+<span class="fc" id="L22">        tilt = 0;</span>
+<span class="fc" id="L23">        zoom = 0;</span>
+<span class="fc" id="L24">        focus = 0;</span>
+<span class="fc" id="L25">    }</span>
+
+    /**
+     * Constructs a camera settings object with a certain orientation, 
+     * zoom level and focus.
+     * 
+     * @param panPos Horizontal orientation level.
+     * @param tiltPos Vertical orientation level.
+     * @param zoomPos Zoom level.
+     * @param focusPos Focus level.
+     */
+<span class="fc" id="L36">    public CameraSettings(int panPos, int tiltPos, int zoomPos, int focusPos) {</span>
+<span class="fc" id="L37">        pan = panPos;</span>
+<span class="fc" id="L38">        tilt = tiltPos;</span>
+<span class="fc" id="L39">        zoom = zoomPos;</span>
+<span class="fc" id="L40">        focus = focusPos;</span>
+<span class="fc" id="L41">    }</span>
+
+    /**
+     * Gets the pan level (horizontal orientation).
+     * @return Pan level (horizontal orientation).
+     */
+    public int getPan() {
+<span class="fc" id="L48">        return pan;</span>
+    }
+
+    /**
+     * Sets the pan level of the camera settings to a specified value.
+     * @param panPos the zoom value to set the camera to.
+     */
+    public void setPan(int panPos) {
+<span class="fc" id="L56">        this.pan = panPos;</span>
+<span class="fc" id="L57">    }</span>
+
+    /**
+     * Sets the tilt level of the camera settings to a specified value.
+     * @param tiltPos the tilt value to set the camera to.
+     */
+    public void setTilt(int tiltPos) {
+<span class="fc" id="L64">        this.tilt = tiltPos;</span>
+<span class="fc" id="L65">    }</span>
+
+    /**
+     * Sets the zoom level of the camera settings to a specified value.
+     * @param zoomPos the zoom value to set the camera to.
+     */
+    public void setZoom(int zoomPos) {
+<span class="fc" id="L72">        this.zoom = zoomPos;</span>
+<span class="fc" id="L73">    }</span>
+
+    /**
+     * Sets the focus level of the camera settings to a specified value.
+     * @param focusPos the focus value to set the camera to.
+     */
+    public void setFocus(int focusPos) {
+<span class="fc" id="L80">        this.focus = focusPos;</span>
+<span class="fc" id="L81">    }</span>
+
+    /**
+     * Gets the tilt level (vertical orientation).
+     * @return Tilt level (vertical orientation).
+     */
+    public int getTilt() {
+<span class="fc" id="L88">        return tilt;</span>
+    }
+
+    /**
+     * Gets the zoom level.
+     * @return Zoom level.
+     */
+    public int getZoom() {
+<span class="fc" id="L96">        return zoom;</span>
+    }
+
+    /**
+     * Gets the focus level.
+     * @return focus level.
+     */
+    public int getFocus() {
+<span class="fc" id="L104">        return focus; </span>
+    }
+
+    /**
+     * Pans the camera settings a certain offset.
+     * @param offset The offset to pan the camera.
+     */
+    protected void pan(int offset) {
+<span class="fc" id="L112">        pan += offset;</span>
+<span class="fc" id="L113">    }</span>
+
+    /**
+     * Tilts the camera settings a certain offset.
+     * @param offset The offset to tilt the camera.
+     */
+    protected void tilt(int offset) {
+<span class="fc" id="L120">        tilt += offset;</span>
+<span class="fc" id="L121">    }</span>
+
+    /**
+     * Pans and Tilts the Camera Settings a certain pan and tilt offset.
+     *
+     * @param panOffset The offset to pan the camera.
+     * @param tiltOffset The offset to tilt the camera.
+     */
+    protected void panTilt(int panOffset, int tiltOffset) {
+<span class="fc" id="L130">        pan += panOffset;</span>
+<span class="fc" id="L131">        tilt += tiltOffset;</span>
+<span class="fc" id="L132">    }</span>
+
+    /**
+     * Zooms the camera settings a certain offset.
+     * @param offset The offset to zoom the camera.
+     */
+    protected void zoom(int offset) {
+<span class="fc" id="L139">        zoom += offset;</span>
+<span class="fc" id="L140">    }</span>
+
+    /**
+     * Focuses the camera settings to a certain offset.
+     * @param offset The offset to focus the camera.
+     */
+    protected void focus(int offset) {
+<span class="fc" id="L147">        focus += offset;</span>
+<span class="fc" id="L148">    }</span>
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L152">        final int prime = 31;</span>
+<span class="nc" id="L153">        int result = 1;</span>
+
+<span class="nc" id="L155">        result = prime * result + focus;</span>
+<span class="nc" id="L156">        result = prime * result + pan;</span>
+<span class="nc" id="L157">        result = prime * result + tilt;</span>
+<span class="nc" id="L158">        result = prime * result + zoom;</span>
+
+<span class="nc" id="L160">        return result;</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">        if (obj instanceof CameraSettings) {</span>
+<span class="fc" id="L166">            CameraSettings other = (CameraSettings) obj;</span>
+
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">            return focus == other.focus</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">                    &amp;&amp; pan == other.pan</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">                    &amp;&amp; tilt == other.tilt</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">                    &amp;&amp; zoom == other.zoom;</span>
+        }
+
+<span class="nc" id="L174">        return false;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

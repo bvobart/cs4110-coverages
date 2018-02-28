@@ -1,0 +1,778 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CreateScriptController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Team Free Pizza</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.contextproject.gui</a> &gt; <span class="el_source">CreateScriptController.java</span></div><h1>CreateScriptController.java</h1><pre class="source lang-java linenums">package nl.tudelft.contextproject.gui;
+
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.util.Callback;
+
+import nl.tudelft.contextproject.ContextTFP;
+import nl.tudelft.contextproject.camera.Camera;
+import nl.tudelft.contextproject.presets.Preset;
+import nl.tudelft.contextproject.saveLoad.SaveScript;
+import nl.tudelft.contextproject.script.Script;
+import nl.tudelft.contextproject.script.Shot;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.regex.Pattern;
+
+/**
+ * Controller class for the script creation screen.
+ * This class is responsible for the functions of the create script screen, to
+ * allow for easy creation and saving of a new script, and editing of an existing
+ * script.
+ * 
+ * &lt;p&gt;The view section is defined under view/CreateScriptView.fxml
+ * 
+ * @since 0.2
+ */
+<span class="nc" id="L64">public class CreateScriptController {</span>
+
+    private static final String REDBORDER = &quot;-fx-border-color: red;&quot;;
+<span class="nc" id="L67">    private static boolean fill = false;</span>
+
+    private ObjectProperty&lt;TableRow&lt;Shot&gt;&gt; lastSelectedRow;
+    private List&lt;Shot&gt; backupList;
+<span class="nc" id="L71">    private int maximumId = 0;</span>
+
+    @FXML private Button btnAdd;
+    @FXML private Button btnBack;
+    @FXML private Button btnEditConfirm;
+    @FXML private Button btnEditRemove;
+    @FXML private Button btnSave;
+    @FXML private Button btnSaveAs;
+
+    @FXML private ChoiceBox&lt;Number&gt; addCamera;
+    @FXML private ChoiceBox&lt;String&gt; addPreset;
+    @FXML private ChoiceBox&lt;Number&gt; editCamera;
+    @FXML private ChoiceBox&lt;String&gt; editPreset;
+
+    @FXML private HBox editBox;
+
+    @FXML private Pane editBlockScroll;
+
+    @FXML private TableView&lt;Shot&gt; tableEvents;
+    @FXML private TableColumn&lt;Shot, Shot&gt; columnAction;
+    @FXML private TableColumn&lt;Shot, Number&gt; columnCamera;
+    @FXML private TableColumn&lt;Shot, String&gt; columnSubject;
+    @FXML private TableColumn&lt;Shot, String&gt; columnShotAction;
+    @FXML private TableColumn&lt;Shot, Number&gt; columnID;
+    @FXML private TableColumn&lt;Shot, String&gt; columnPreset;
+    @FXML private TableColumn&lt;Shot, Image&gt; columnReorder;
+    @FXML private TableColumn&lt;Shot, String&gt; columnShot;
+
+    @FXML private TextField addShot;
+    @FXML private TextField addSubject;
+    @FXML private TextField addAction;
+    @FXML private TextField editAction;
+    @FXML private TextField editShot;
+    @FXML private TextField editSubject;
+
+    /**
+     * Initialize method used by JavaFX.
+     */
+    @FXML private void initialize() {
+
+        // Set the current script as backup.
+<span class="nc" id="L112">        backupList = new ArrayList&lt;Shot&gt;();</span>
+<span class="nc" id="L113">        backupList.addAll(0, ContextTFP.getScript().getShots());</span>
+
+<span class="nc" id="L115">        setFactories();</span>
+<span class="nc" id="L116">        setAddButton();</span>
+<span class="nc" id="L117">        setBackButton();</span>
+<span class="nc" id="L118">        setSaveButton();</span>
+
+<span class="nc" id="L120">        initCamera();</span>
+<span class="nc" id="L121">        initPreset(&quot;add&quot;);</span>
+<span class="nc" id="L122">        initPreset(&quot;pres&quot;);</span>
+
+<span class="nc" id="L124">        allowEditing();</span>
+<span class="nc" id="L125">        allowRowReordering();</span>
+
+        // Disallow horizontal scrolling.
+<span class="nc" id="L128">        tableEvents.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);</span>
+
+        // Allows the user to press ENTER to add a shot.
+<span class="nc" id="L131">        btnAdd.setDefaultButton(true);</span>
+
+        // Changes the &quot;No content in table&quot; label.
+<span class="nc" id="L134">        tableEvents.setPlaceholder(new Label(&quot;The script is empty. &quot;</span>
+                + &quot;Add some shots below&quot;));
+
+<span class="nc bnc" id="L137" title="All 2 branches missed.">        if (fill) {</span>
+<span class="nc" id="L138">            fillTable(ContextTFP.getScript().getShots());</span>
+<span class="nc" id="L139">            fill = false;</span>
+        }
+
+        // Makes sure there are no duplicate ID's of the shots in the table.
+<span class="nc bnc" id="L143" title="All 2 branches missed.">        for (Shot s : tableEvents.getItems()) {</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">            if (s.getNumber() &gt; maximumId) {</span>
+<span class="nc" id="L145">                maximumId = s.getNumber();</span>
+            }
+        }
+<span class="nc" id="L148">    }</span>
+
+    /**
+     * Sets if the table should be filled beforehand. This method is used to 
+     * enable editing of the currently active script.
+     * 
+     * &lt;p&gt;When the argument is {@code true}, the {@link #fillTable(List)} method
+     * is called after this view is loaded.
+     * 
+     * @param bFill If the table should be filled.
+     */
+    public static void setFill(boolean bFill) {
+<span class="nc" id="L160">        fill = bFill;</span>
+<span class="nc" id="L161">    }</span>
+
+    /**
+     * Fills the tableView of the create script screen with the shots
+     * listed in the argument. It makes sure these elements get displayed
+     * in the table.
+     * 
+     * @param shots A {@link List} of shots that the tableView should be
+     *      filled with.
+     */
+    private void fillTable(List&lt;Shot&gt; shots) {
+<span class="nc" id="L172">        tableEvents.getItems().addAll(shots);</span>
+<span class="nc" id="L173">    }</span>
+
+    /**
+     * Fills the choiceboxes for selecting a camera, both the box that
+     * adds a new camera as the box that is shown when editing a shot.
+     */
+    private void initCamera() {
+<span class="nc" id="L180">        final List&lt;Number&gt; cameraList = new ArrayList&lt;Number&gt;();</span>
+
+<span class="nc bnc" id="L182" title="All 2 branches missed.">        for (int i = 0; i &lt; Camera.getCameraAmount(); ++i) {</span>
+<span class="nc" id="L183">            cameraList.add(i + 1);</span>
+        }
+
+<span class="nc" id="L186">        addCamera.setItems(FXCollections.observableArrayList(cameraList));</span>
+<span class="nc" id="L187">        editCamera.setItems(FXCollections.observableArrayList(cameraList));</span>
+<span class="nc" id="L188">    }</span>
+
+    /**
+     * Fills the choiceboxes for selecting a preset, given the selection
+     * of a certain camera.
+     */
+    private void initPreset(String prepend) {
+<span class="nc" id="L195">        final List&lt;String&gt; presetList = new ArrayList&lt;String&gt;();</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">        final ChoiceBox&lt;Number&gt; cam = (prepend.equals(&quot;add&quot;)) ? addCamera : editCamera;</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">        final ChoiceBox&lt;String&gt; preset = (prepend.equals(&quot;add&quot;)) ? addPreset : editPreset;</span>
+
+<span class="nc" id="L199">        cam.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -&gt; {</span>
+<span class="nc" id="L200">            presetList.clear();</span>
+<span class="nc" id="L201">            presetList.add(&quot;None&quot;);</span>
+
+<span class="nc bnc" id="L203" title="All 2 branches missed.">            if (newV != null) {</span>
+<span class="nc" id="L204">                preset.setDisable(false);</span>
+                
+<span class="nc" id="L206">                ArrayList&lt;Preset&gt; presets = new ArrayList&lt;Preset&gt;(</span>
+<span class="nc" id="L207">                        Camera.getCamera(cam.getSelectionModel().getSelectedIndex()).getAllPresets());</span>
+                
+<span class="nc bnc" id="L209" title="All 2 branches missed.">                for (int i = 0; i &lt; presets.size(); ++i) {</span>
+<span class="nc" id="L210">                    Preset p = presets.get(i);</span>
+                    
+<span class="nc" id="L212">                    presetList.add(Integer.toString(p.getId()) </span>
+<span class="nc" id="L213">                            + &quot; - &quot;</span>
+<span class="nc" id="L214">                            + p.getDescription());</span>
+                }
+
+<span class="nc" id="L217">                preset.setItems(FXCollections.observableArrayList(presetList));</span>
+<span class="nc" id="L218">            } else {</span>
+<span class="nc" id="L219">                preset.setDisable(true);</span>
+            }
+<span class="nc" id="L221">        });</span>
+
+<span class="nc" id="L223">        addPreset.setDisable(true);</span>
+<span class="nc" id="L224">    }</span>
+
+    /**
+     * Sets the factories of the table columns, aka where they should
+     * get their value from.
+     */
+    private void setFactories() {
+<span class="nc" id="L231">        columnID.setCellValueFactory(</span>
+<span class="nc" id="L232">            new PropertyValueFactory&lt;Shot, Number&gt;(&quot;number&quot;));</span>
+
+<span class="nc" id="L234">        columnShot.setCellValueFactory(</span>
+<span class="nc" id="L235">            new PropertyValueFactory&lt;Shot, String&gt;(&quot;shotId&quot;));</span>
+
+<span class="nc" id="L237">        columnCamera.setCellValueFactory(cellData -&gt;</span>
+<span class="nc" id="L238">            new ReadOnlyObjectWrapper&lt;&gt;(cellData.getValue().getCamera().getNumber() + 1));</span>
+
+<span class="nc" id="L240">        columnPreset.setCellValueFactory(cellData -&gt; {</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">            if (cellData.getValue().getPreset() == null) {</span>
+<span class="nc" id="L242">                return new ReadOnlyObjectWrapper&lt;&gt;();</span>
+            } else {
+<span class="nc" id="L244">                return new ReadOnlyObjectWrapper&lt;&gt;(</span>
+<span class="nc" id="L245">                        Integer.toString(cellData.getValue().getPreset().getId()));</span>
+            }
+        });
+
+<span class="nc" id="L249">        columnSubject.setCellValueFactory(</span>
+<span class="nc" id="L250">            new PropertyValueFactory&lt;Shot, String&gt;(&quot;description&quot;));</span>
+
+<span class="nc" id="L252">        columnShotAction.setCellValueFactory(</span>
+<span class="nc" id="L253">            new PropertyValueFactory&lt;Shot, String&gt;(&quot;action&quot;));</span>
+
+<span class="nc" id="L255">        columnAction.setCellValueFactory(cellData -&gt; </span>
+<span class="nc" id="L256">            new ReadOnlyObjectWrapper&lt;&gt;(cellData.getValue()));</span>
+
+<span class="nc" id="L258">        columnAction.setCellFactory(cellData -&gt; new TableCell&lt;Shot, Shot&gt;() {</span>
+<span class="nc" id="L259">            final Button btnRemove = new Button(&quot;Remove&quot;);</span>
+
+            @Override
+            protected void updateItem(Shot shot, boolean empty) {
+<span class="nc" id="L263">                super.updateItem(shot, empty);</span>
+
+<span class="nc bnc" id="L265" title="All 2 branches missed.">                if (shot == null) {</span>
+<span class="nc" id="L266">                    setGraphic(null);</span>
+<span class="nc" id="L267">                    return;</span>
+                }
+
+<span class="nc" id="L270">                setGraphic(btnRemove);</span>
+
+<span class="nc" id="L272">                btnRemove.setOnAction(event -&gt; {</span>
+<span class="nc" id="L273">                    getTableView().getItems().remove(shot);</span>
+<span class="nc" id="L274">                });</span>
+<span class="nc" id="L275">            }</span>
+<span class="nc" id="L276">        });</span>
+<span class="nc" id="L277">    }</span>
+
+    /**
+     * Sets the onAction for the add new camera button.
+     */
+    private void setAddButton() {
+<span class="nc" id="L283">        final ObservableList&lt;Shot&gt; data = FXCollections.observableArrayList();</span>
+
+<span class="nc" id="L285">        tableEvents.setItems(data);</span>
+
+<span class="nc" id="L287">        btnAdd.setOnAction(event -&gt; {</span>
+<span class="nc bnc" id="L288" title="All 2 branches missed.">            if (isValidInput()) {</span>
+<span class="nc" id="L289">                addCamera.setStyle(&quot;&quot;);</span>
+<span class="nc" id="L290">                addPreset.setStyle(&quot;&quot;);</span>
+
+<span class="nc bnc" id="L292" title="All 2 branches missed.">                if (!validateScript(data)</span>
+<span class="nc" id="L293">                        &amp;&amp; !AlertDialog.confirmInvalidScriptAdding(</span>
+<span class="nc bnc" id="L294" title="All 2 branches missed.">                                addCamera.getSelectionModel().getSelectedItem())) {</span>
+<span class="nc" id="L295">                    return;</span>
+                }
+
+<span class="nc" id="L298">                Shot newShot = createNewShot();</span>
+<span class="nc" id="L299">                data.add(newShot);</span>
+
+<span class="nc" id="L301">                addShot.clear();</span>
+<span class="nc" id="L302">                addCamera.getSelectionModel().clearSelection();</span>
+<span class="nc" id="L303">                addPreset.getSelectionModel().clearSelection();</span>
+<span class="nc" id="L304">                addSubject.clear();</span>
+<span class="nc" id="L305">                addAction.clear();</span>
+            }
+<span class="nc" id="L307">        });</span>
+<span class="nc" id="L308">    }</span>
+
+    /**
+     * Checks if the new shot being added to the script
+     * is valid.
+     * 
+     * @return True iff it has no errors.
+     */
+    private boolean isValidInput() {
+<span class="nc" id="L317">        boolean isValid = true;</span>
+
+<span class="nc bnc" id="L319" title="All 2 branches missed.">        if (addCamera.getSelectionModel().isEmpty()) {</span>
+<span class="nc" id="L320">            addCamera.setStyle(REDBORDER);</span>
+<span class="nc" id="L321">            isValid = false;</span>
+        }
+
+<span class="nc bnc" id="L324" title="All 2 branches missed.">        if (addPreset.getSelectionModel().isEmpty()) {</span>
+<span class="nc" id="L325">            addPreset.setStyle(REDBORDER);</span>
+<span class="nc" id="L326">            isValid = false;</span>
+        }
+
+<span class="nc" id="L329">        return isValid;</span>
+    }
+
+    /**
+     * Checks if a newly created shot does not create an
+     * invalid script.
+     * 
+     * @param data The table data.
+     * @return True if the script is valid, false otherwise.
+     */
+    private boolean validateScript(List&lt;Shot&gt; data) {
+<span class="nc bnc" id="L340" title="All 2 branches missed.">        if (data.isEmpty()) {</span>
+<span class="nc" id="L341">            return true;</span>
+        }
+
+<span class="nc" id="L344">        Shot last = data.get(data.size() - 1);</span>
+<span class="nc bnc" id="L345" title="All 2 branches missed.">        return last.getCamera().getNumber() != addCamera.getSelectionModel().getSelectedIndex();</span>
+    }
+
+    /**
+     * Creates a new shot based on the users' input.
+     * @return The newly created shot.
+     */
+    private Shot createNewShot() {
+<span class="nc" id="L353">        maximumId++;</span>
+
+<span class="nc bnc" id="L355" title="All 2 branches missed.">        if (addPreset.getSelectionModel().getSelectedItem().equals(&quot;None&quot;)) {</span>
+<span class="nc" id="L356">            final Shot newShot = new Shot(</span>
+<span class="nc" id="L357">                    maximumId,</span>
+<span class="nc" id="L358">                    addShot.getText(),</span>
+<span class="nc" id="L359">                    Camera.getCamera(addCamera.getSelectionModel().getSelectedIndex()),</span>
+<span class="nc" id="L360">                    addSubject.getText(),</span>
+<span class="nc" id="L361">                    addAction.getText()</span>
+                    );
+
+<span class="nc" id="L364">            return newShot;</span>
+        } else {
+<span class="nc" id="L366">            Camera camera = Camera.getCamera(addCamera.getSelectionModel().getSelectedIndex());</span>
+<span class="nc" id="L367">            final Shot newShot = new Shot(</span>
+<span class="nc" id="L368">                    maximumId,</span>
+<span class="nc" id="L369">                    addShot.getText(),</span>
+<span class="nc" id="L370">                    camera,</span>
+<span class="nc" id="L371">                    camera.getPreset(</span>
+<span class="nc" id="L372">                            new Integer(addPreset.getValue().substring(0, addPreset.getValue().indexOf(&quot; &quot;)))),</span>
+<span class="nc" id="L373">                    addSubject.getText(),</span>
+<span class="nc" id="L374">                    addAction.getText()</span>
+                    );
+
+<span class="nc" id="L377">            return newShot;</span>
+        }
+    }
+
+    /**
+     * Sets the onAction for the back button.
+     */
+    private void setBackButton() {
+<span class="nc" id="L385">        btnBack.setOnAction(event -&gt; {</span>
+<span class="nc bnc" id="L386" title="All 4 branches missed.">            if (!tableEvents.getItems().isEmpty() &amp;&amp; !AlertDialog.confirmExiting()) {</span>
+<span class="nc" id="L387">                return;</span>
+            }
+
+<span class="nc" id="L390">            Script backup = new Script(backupList);</span>
+<span class="nc" id="L391">            backup.setName(ContextTFP.getScript().getName());</span>
+
+<span class="nc" id="L393">            ContextTFP.setScript(backup);</span>
+<span class="nc" id="L394">            MenuController.show();</span>
+<span class="nc" id="L395">        });</span>
+<span class="nc" id="L396">    }</span>
+
+    /**
+     * Sets the onAction for the save buttons.
+     */
+    private void setSaveButton() {
+<span class="nc bnc" id="L402" title="All 2 branches missed.">        if (backupList.isEmpty()) {</span>
+<span class="nc" id="L403">            btnSave.setDisable(true);</span>
+        }
+
+<span class="nc" id="L406">        btnSave.setOnAction(event -&gt; {</span>
+<span class="nc" id="L407">            setSaveAction(event, false);</span>
+<span class="nc" id="L408">        });</span>
+
+<span class="nc" id="L410">        btnSaveAs.setOnAction(event -&gt; {</span>
+<span class="nc" id="L411">            setSaveAction(event, true);</span>
+<span class="nc" id="L412">        });</span>
+<span class="nc" id="L413">    }</span>
+
+    /**
+     * Handles the saving of a file.
+     */
+    private void setSaveAction(ActionEvent event, boolean showDialog) {
+<span class="nc" id="L419">        final Script script = new Script(tableEvents.getItems());</span>
+
+<span class="nc bnc" id="L421" title="All 2 branches missed.">        if (!showValid(script, 1)) {</span>
+<span class="nc" id="L422">            return;</span>
+        }
+
+        File file;
+
+<span class="nc bnc" id="L427" title="All 2 branches missed.">        if (showDialog) {</span>
+<span class="nc" id="L428">            FileChooser fileChooser = new FileChooser();</span>
+<span class="nc" id="L429">            fileChooser.setTitle(&quot;Save script&quot;);</span>
+<span class="nc" id="L430">            fileChooser.setInitialFileName(&quot;script&quot;);</span>
+<span class="nc" id="L431">            fileChooser.getExtensionFilters().add(new ExtensionFilter(&quot;XML (*.xml)&quot;, &quot;*.xml&quot;));</span>
+
+<span class="nc" id="L433">            file = fileChooser.showSaveDialog(((Node) event.getTarget()).getScene().getWindow());</span>
+<span class="nc" id="L434">        } else {</span>
+<span class="nc" id="L435">            file = new File(SaveScript.getSaveLocation());</span>
+        }
+
+<span class="nc bnc" id="L438" title="All 2 branches missed.">        if (file != null) {</span>
+            try {
+<span class="nc" id="L440">                SaveScript.setSaveLocation(file.getAbsolutePath());</span>
+<span class="nc" id="L441">                SaveScript.save(script);</span>
+
+<span class="nc" id="L443">                script.setName(file.getName());</span>
+<span class="nc" id="L444">                ContextTFP.setScript(script);</span>
+
+<span class="nc" id="L446">                AlertDialog.confirmExitingAfterSaving(file);</span>
+<span class="nc" id="L447">            } catch (Exception e) {</span>
+<span class="nc" id="L448">                AlertDialog.errorSaveUnsuccesful(e, file);</span>
+            }
+        }
+<span class="nc" id="L451">    }</span>
+
+    /**
+     * Checks if a script is valid and gives an error message when it isn't.
+     * 
+     * @param level The level of alert. Should be 1 for CONFIRMATION
+     *      or 2 for WARNING. Other values are ignored.
+     * @return True if the user wants to continue and ignore the error.
+     */
+    public static boolean showValid(Script script, int level) {
+<span class="nc" id="L461">        Shot error = script.isValid();</span>
+
+<span class="nc bnc" id="L463" title="All 2 branches missed.">        if (error != null) {</span>
+<span class="nc" id="L464">            Alert alert = null;</span>
+
+<span class="nc bnc" id="L466" title="All 2 branches missed.">            if (level == 1) {</span>
+<span class="nc" id="L467">                alert = AlertDialog.confirmInvalidScriptSaving(error);</span>
+<span class="nc bnc" id="L468" title="All 2 branches missed.">            } else if (level == 2) {</span>
+<span class="nc" id="L469">                alert = AlertDialog.warningInvalidScriptLoading(error);</span>
+<span class="nc" id="L470">            } else {</span>
+<span class="nc" id="L471">                return true;</span>
+            }
+
+<span class="nc" id="L474">            Optional&lt;ButtonType&gt; result = alert.showAndWait();</span>
+
+<span class="nc bnc" id="L476" title="All 2 branches missed.">            if (result.get() == ButtonType.CANCEL) {</span>
+<span class="nc" id="L477">                return false;</span>
+            }
+        }
+
+<span class="nc" id="L481">        return true;</span>
+    }
+
+    /**
+     * Allows for editable rows in the table. This method defines the
+     * necessary components for row by row editing of the table.
+     */
+    private void allowEditing() {
+<span class="nc" id="L489">        editBox.setVisible(false);</span>
+<span class="nc" id="L490">        editBox.toBack();</span>
+
+        // Allows for getting the last selected row.
+<span class="nc" id="L493">        lastSelectedRow = new SimpleObjectProperty&lt;&gt;();</span>
+<span class="nc" id="L494">        tableEvents.setRowFactory(tableView -&gt; {</span>
+<span class="nc" id="L495">            TableRow&lt;Shot&gt; row = new TableRow&lt;Shot&gt;();</span>
+
+<span class="nc" id="L497">            row.selectedProperty().addListener((obs, wasSelected, isNowSelected) -&gt; {</span>
+<span class="nc bnc" id="L498" title="All 2 branches missed.">                if (isNowSelected) {</span>
+<span class="nc" id="L499">                    lastSelectedRow.set(row);</span>
+                }
+<span class="nc" id="L501">            });</span>
+
+<span class="nc" id="L503">            return row;</span>
+        });
+
+<span class="nc" id="L506">        editBlockScroll.setOnMouseClicked(event -&gt; {</span>
+<span class="nc" id="L507">            editBlockScroll.setVisible(false);</span>
+<span class="nc" id="L508">            editConfirmAction(lastSelectedRow.get().getItem());</span>
+<span class="nc" id="L509">        });</span>
+
+<span class="nc" id="L511">        initEditButtons();</span>
+
+<span class="nc" id="L513">        EventHandler&lt;KeyEvent&gt; addResourceHandler = event -&gt; {</span>
+<span class="nc bnc" id="L514" title="All 4 branches missed.">            if (lastSelectedRow.get() != null &amp;&amp; event.getCode() == KeyCode.ENTER) {</span>
+<span class="nc" id="L515">                editConfirmAction(lastSelectedRow.get().getItem());</span>
+            }
+<span class="nc" id="L517">        };</span>
+
+<span class="nc" id="L519">        editBox.setOnKeyPressed(addResourceHandler);</span>
+<span class="nc" id="L520">        editShot.setOnKeyReleased(addResourceHandler);</span>
+<span class="nc" id="L521">        editCamera.setOnKeyReleased(addResourceHandler);</span>
+<span class="nc" id="L522">        editPreset.setOnKeyReleased(addResourceHandler);</span>
+<span class="nc" id="L523">        editSubject.setOnKeyReleased(addResourceHandler);</span>
+<span class="nc" id="L524">        editAction.setOnKeyReleased(addResourceHandler);</span>
+
+<span class="nc" id="L526">        initTable();</span>
+<span class="nc" id="L527">    }</span>
+
+    /**
+     * Sets the onAction for the edit confirm and
+     * edit remove buttons that show up when editing
+     * a shot.
+     */
+    private void initEditButtons() {
+<span class="nc" id="L535">        btnEditConfirm.setOnAction(event -&gt; {</span>
+<span class="nc" id="L536">            boolean isValid = true;</span>
+
+<span class="nc bnc" id="L538" title="All 2 branches missed.">            if (editCamera.getSelectionModel().isEmpty()) {</span>
+<span class="nc" id="L539">                editCamera.setStyle(REDBORDER);</span>
+<span class="nc" id="L540">                isValid = false;</span>
+            }
+
+<span class="nc bnc" id="L543" title="All 2 branches missed.">            if (editPreset.getSelectionModel().isEmpty()) {</span>
+<span class="nc" id="L544">                editPreset.setStyle(REDBORDER);</span>
+<span class="nc" id="L545">                isValid = false;</span>
+            }
+
+<span class="nc bnc" id="L548" title="All 2 branches missed.">            if (isValid) {</span>
+<span class="nc" id="L549">                editCamera.setStyle(&quot;&quot;);</span>
+<span class="nc" id="L550">                editPreset.setStyle(&quot;&quot;);</span>
+
+<span class="nc" id="L552">                editConfirmAction(lastSelectedRow.get().getItem());</span>
+            }
+<span class="nc" id="L554">        });</span>
+
+<span class="nc" id="L556">        btnEditRemove.setOnAction(event -&gt; {</span>
+<span class="nc" id="L557">            Shot shot = lastSelectedRow.get().getItem();</span>
+<span class="nc" id="L558">            tableEvents.getItems().remove(shot);</span>
+
+<span class="nc" id="L560">            editDoneAction();</span>
+<span class="nc" id="L561">        });</span>
+<span class="nc" id="L562">    }</span>
+
+    /**
+     * Sets listeners and actions on the table.
+     */
+    private void initTable() {
+<span class="nc" id="L568">        tableEvents.getSelectionModel().selectedItemProperty().addListener((obs, ov, nv) -&gt; {</span>
+<span class="nc bnc" id="L569" title="All 2 branches missed.">            if (nv != null) {                </span>
+<span class="nc" id="L570">                editShot.setText(nv.getShotId());</span>
+<span class="nc" id="L571">                editCamera.getSelectionModel().select(nv.getCamera().getNumber());</span>
+
+<span class="nc bnc" id="L573" title="All 2 branches missed.">                if (nv.getPreset() != null) {</span>
+<span class="nc" id="L574">                    Preset p = nv.getPreset();</span>
+<span class="nc" id="L575">                    editPreset.getSelectionModel().select(p.getId() </span>
+<span class="nc" id="L576">                            + &quot; - &quot; + p.getDescription());</span>
+<span class="nc" id="L577">                } else {</span>
+<span class="nc" id="L578">                    editPreset.getSelectionModel().select(0);</span>
+                }
+
+<span class="nc" id="L581">                editSubject.setText(nv.getDescription());</span>
+<span class="nc" id="L582">                editAction.setText(nv.getAction());</span>
+
+<span class="nc bnc" id="L584" title="All 4 branches missed.">                if (ov != nv &amp;&amp; ov != null) {</span>
+<span class="nc" id="L585">                    editDoneAction();</span>
+                }
+            }
+<span class="nc" id="L588">        });</span>
+
+<span class="nc" id="L590">        tableEvents.setOnMouseClicked(event -&gt; {</span>
+<span class="nc bnc" id="L591" title="All 4 branches missed.">            if (event.getClickCount() == 2 &amp;&amp; lastSelectedRow.get() != null) {</span>
+                // Make sure the HBox is drawn over the selected row.
+<span class="nc" id="L593">                editBox.setLayoutY(lastSelectedRow.get().getLayoutY()</span>
+<span class="nc" id="L594">                        + editBox.getTranslateY()</span>
+<span class="nc" id="L595">                        + 40);</span>
+
+<span class="nc" id="L597">                editBlockScroll.setVisible(true);</span>
+<span class="nc" id="L598">                editBox.toFront();</span>
+<span class="nc" id="L599">                editBox.setVisible(true);</span>
+            }
+<span class="nc" id="L601">        });</span>
+<span class="nc" id="L602">    }</span>
+
+    /**
+     * Sets the action to be taken when an edit is complete.
+     * @param shot The shot that is edited.
+     */
+    private void editConfirmAction(Shot shot) {
+<span class="nc" id="L609">        Shot backup = new Shot(shot.getNumber(), shot.getShotId(), </span>
+<span class="nc" id="L610">                shot.getCamera(), shot.getPreset(), shot.getDescription(), shot.getAction());</span>
+
+<span class="nc" id="L612">        shot.setShotId(editShot.getText());</span>
+<span class="nc" id="L613">        shot.setCamera(Camera.getCamera(editCamera.getSelectionModel().getSelectedIndex()));</span>
+
+<span class="nc bnc" id="L615" title="All 2 branches missed.">        if (!editPreset.getSelectionModel().getSelectedItem().equals(&quot;None&quot;)) {</span>
+<span class="nc" id="L616">            shot.setPreset(Camera.getCamera(editCamera.getSelectionModel().getSelectedIndex())</span>
+<span class="nc" id="L617">                    .getPreset(new Integer(editPreset.getValue().substring(0, editPreset.getValue().indexOf(&quot; &quot;)))));</span>
+<span class="nc" id="L618">        } else {</span>
+<span class="nc" id="L619">            shot.setPreset(null);</span>
+        }
+
+<span class="nc" id="L622">        shot.setDescription(editSubject.getText());</span>
+<span class="nc" id="L623">        shot.setAction(editAction.getText());</span>
+
+<span class="nc bnc" id="L625" title="All 2 branches missed.">        if (lastSelectedRow.get().getIndex() &lt; backupList.size()) {</span>
+<span class="nc" id="L626">            backupList.set(lastSelectedRow.get().getIndex(), backup);</span>
+        }
+
+<span class="nc" id="L629">        editDoneAction();</span>
+<span class="nc" id="L630">    }</span>
+
+    /**
+     * Sets the actions to be done when editing a row is finished.
+     */
+    private void editDoneAction() {
+<span class="nc" id="L636">        editBox.setVisible(false);</span>
+<span class="nc" id="L637">        editBlockScroll.setVisible(false);</span>
+<span class="nc" id="L638">        editBox.toBack();</span>
+<span class="nc" id="L639">        tableEvents.refresh();</span>
+<span class="nc" id="L640">    }</span>
+
+    /**
+     * Allows the reordering of rows. This uses a special column in the tableView,
+     * that is filled with an image.
+     */
+    private void allowRowReordering() {
+<span class="nc" id="L647">        final Callback&lt;TableColumn&lt;Shot, Image&gt;, TableCell&lt;Shot, Image&gt;&gt; cellFactory = callback -&gt; {</span>
+<span class="nc" id="L648">            return new TableCell&lt;Shot, Image&gt;() {</span>
+                {
+<span class="nc" id="L650">                    setOnDragDetected(createDragDetectedHandler(this));</span>
+<span class="nc" id="L651">                    setOnDragOver(createDragOverHandler(this, tableEvents));</span>
+<span class="nc" id="L652">                    setOnDragDropped(createDragDroppedHandler(this, tableEvents));</span>
+<span class="nc" id="L653">                    fixIds();</span>
+<span class="nc" id="L654">                    tableEvents.refresh();</span>
+                }
+
+                @Override
+                public void updateItem(Image item, boolean empty) {
+<span class="nc" id="L659">                    super.updateItem(item, empty);</span>
+
+<span class="nc bnc" id="L661" title="All 2 branches missed.">                    if (empty) {</span>
+<span class="nc" id="L662">                        setText(null);</span>
+<span class="nc" id="L663">                    } else {</span>
+<span class="nc" id="L664">                        ImageView imageview = new ImageView();</span>
+<span class="nc" id="L665">                        imageview.setImage(new Image(&quot;reorder.png&quot;));</span>
+<span class="nc" id="L666">                        imageview.setFitHeight(20);</span>
+<span class="nc" id="L667">                        imageview.setFitWidth(10);</span>
+<span class="nc" id="L668">                        setGraphic(imageview);</span>
+<span class="nc" id="L669">                        setItem(item);</span>
+                    }
+<span class="nc" id="L671">                }</span>
+            };
+        };
+
+<span class="nc" id="L675">        columnReorder.setCellFactory(cellFactory);</span>
+<span class="nc" id="L676">    }</span>
+
+    /**
+     * The next three methods define the functionality of the drag and drop actions that can
+     * be called by initializing a drag and drop action on the image that is intended for this
+     * functionality.
+     * 
+     * &lt;p&gt;Most credits go to James_D for creating the original code.
+     * 
+     * @param cell The cell in the tableView.
+     * @return Returns an event that holds the start of a Drag and Drop action.
+     * @see &lt;a href=&quot;https://community.oracle.com/message/11057757#11057757&quot;&gt;Oracle Community&lt;/a&gt;
+     */
+    private EventHandler&lt;MouseEvent&gt; createDragDetectedHandler(TableCell&lt;Shot, ?&gt; cell) {
+<span class="nc" id="L690">        return event -&gt; {</span>
+<span class="nc" id="L691">            final Dragboard db = cell.startDragAndDrop(TransferMode.MOVE);</span>
+<span class="nc" id="L692">            final ClipboardContent content = new ClipboardContent();</span>
+
+<span class="nc" id="L694">            content.putString(String.valueOf(cell.getIndex()));</span>
+<span class="nc" id="L695">            db.setContent(content);</span>
+<span class="nc" id="L696">        };</span>
+    }
+
+    /**
+     * @param cell The cell in the tableView.
+     * @param table The table itself.
+     * @return Returns an event that contains the drag action.
+     * @see #createDragDetectedHandler(TableCell)
+     */
+    private EventHandler&lt;DragEvent&gt; createDragOverHandler(TableCell&lt;Shot, ?&gt; cell, final TableView&lt;Shot&gt; table) {
+<span class="nc" id="L706">        return event -&gt; {</span>
+<span class="nc" id="L707">            final String INTEGER_REGEX = &quot;-?\\d+&quot;;</span>
+<span class="nc" id="L708">            final Dragboard dragboard = event.getDragboard();</span>
+
+<span class="nc bnc" id="L710" title="All 2 branches missed.">            if (dragboard.hasString()) {</span>
+<span class="nc" id="L711">                final String value = dragboard.getString();</span>
+
+<span class="nc bnc" id="L713" title="All 2 branches missed.">                if (Pattern.matches(INTEGER_REGEX, value)) {</span>
+                    try {
+<span class="nc" id="L715">                        final int index = Integer.parseInt(value);</span>
+
+<span class="nc bnc" id="L717" title="All 2 branches missed.">                        if (index != cell.getIndex()</span>
+<span class="nc bnc" id="L718" title="All 2 branches missed.">                                &amp;&amp; index != -1</span>
+<span class="nc bnc" id="L719" title="All 4 branches missed.">                                &amp;&amp; (index &lt; table.getItems().size() - 1 || cell.getIndex() != -1)) {</span>
+<span class="nc" id="L720">                            event.acceptTransferModes(TransferMode.MOVE);</span>
+                        }
+<span class="nc" id="L722">                    } catch (NumberFormatException e) {</span>
+<span class="nc" id="L723">                        e.printStackTrace();</span>
+                    }
+                }
+            }
+<span class="nc" id="L727">        };</span>
+    }
+
+    /**
+     * @param cell The cell in the tableView.
+     * @param table The table itself.
+     * @return Returns an event that handles the dropped action.
+     * @see #createDragDetectedHandler(TableCell)
+     */
+    private EventHandler&lt;DragEvent&gt; createDragDroppedHandler(TableCell&lt;Shot, ?&gt; cell, TableView&lt;Shot&gt; table) {
+<span class="nc" id="L737">        return event -&gt; {</span>
+<span class="nc" id="L738">            final Dragboard db = event.getDragboard();</span>
+<span class="nc" id="L739">            int myIndex = cell.getIndex();</span>
+
+<span class="nc bnc" id="L741" title="All 4 branches missed.">            if (myIndex &lt; 0 || myIndex &gt;= table.getItems().size()) {</span>
+<span class="nc" id="L742">                myIndex = table.getItems().size() - 1;</span>
+            }
+
+<span class="nc" id="L745">            final int incomingIndex = Integer.parseInt(db.getString());</span>
+<span class="nc" id="L746">            table.getItems().add(myIndex, table.getItems().remove(incomingIndex));</span>
+<span class="nc" id="L747">            event.setDropCompleted(true);</span>
+<span class="nc" id="L748">        };</span>
+    }
+
+    /**
+     * Makes sure the IDs of the shots are always in ascending order.
+     */
+    private void fixIds() {
+<span class="nc bnc" id="L755" title="All 2 branches missed.">        for (int i = 0; i &lt; tableEvents.getItems().size(); ++i) {</span>
+<span class="nc" id="L756">            tableEvents.getItems().get(i).setNumber(i + 1);</span>
+        }
+
+<span class="nc" id="L759">        tableEvents.refresh();</span>
+<span class="nc" id="L760">    }</span>
+
+    /**
+     * Calling this method shows this view in the middle of the rootLayout,
+     * forcing the current view to disappear.
+     */
+    public static void show() {
+        try {
+<span class="nc" id="L768">            FXMLLoader loader = new FXMLLoader();</span>
+<span class="nc" id="L769">            loader.setLocation(ContextTFP.class.getResource(&quot;view/CreateScriptView.fxml&quot;));</span>
+<span class="nc" id="L770">            AnchorPane createScriptView = (AnchorPane) loader.load();</span>
+
+<span class="nc" id="L772">            ContextTFP.getRootLayout().setCenter(createScriptView);</span>
+<span class="nc" id="L773">        } catch (IOException e) {</span>
+<span class="nc" id="L774">            e.printStackTrace();</span>
+        }
+<span class="nc" id="L776">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

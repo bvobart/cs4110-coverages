@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SaveScript.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Team Free Pizza</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.contextproject.saveLoad</a> &gt; <span class="el_source">SaveScript.java</span></div><h1>SaveScript.java</h1><pre class="source lang-java linenums">package nl.tudelft.contextproject.saveLoad;
+
+import nl.tudelft.contextproject.camera.Camera;
+import nl.tudelft.contextproject.camera.CameraSettings;
+import nl.tudelft.contextproject.presets.Preset;
+import nl.tudelft.contextproject.script.Script;
+import nl.tudelft.contextproject.script.Shot;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import javax.xml.stream.XMLEventFactory;
+import javax.xml.stream.XMLEventWriter;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
+
+/**
+ * Utility class for saving a script to an XML file.
+ * The location this file is to be saved to is stored in the private
+ * variable {@link #saveLocation}, which can be set using {@link #setSaveLocation}.
+ * 
+ * @since 0.3
+ */
+public final class SaveScript {
+
+    /**
+     * Location of the save file to save to.
+     * This is set to savefile.xml per default.
+     */
+<span class="fc" id="L30">    private static String saveLocation = &quot;savefile.xml&quot;;</span>
+    
+    private static final String TAG_CAMERA = &quot;camera&quot;;
+    private static final String TAG_CAMERAID = &quot;cameraId&quot;;
+    private static final String TAG_CAMERAS = &quot;cameras&quot;;
+    private static final String TAG_CAMERASETTINGS = &quot;cameraSettings&quot;;
+    private static final String TAG_DESCRIPTION = &quot;description&quot;;
+    private static final String TAG_ID = &quot;id&quot;;
+    private static final String TAG_IMGLOC = &quot;imgLoc&quot;;
+    private static final String TAG_PRESET = &quot;preset&quot;;
+    private static final String TAG_PRESETID = &quot;presetId&quot;;
+    private static final String TAG_PRESETS = &quot;presets&quot;;
+    private static final String TAG_SCRIPT = &quot;script&quot;;
+    private static final String TAG_SHOT = &quot;shot&quot;;
+    private static final String TAG_SHOTID = &quot;shotId&quot;;
+    private static final String TAG_SHOTS = &quot;shots&quot;;
+    private static final String TAG_ACTION = &quot;action&quot;;
+
+    /**
+     * XMLEventWriter that writes everything away to an XML file.
+     */
+    private static XMLEventWriter writer;
+<span class="fc" id="L52">    private static XMLEventFactory eventFactory = XMLEventFactory.newFactory();</span>
+
+<span class="fc" id="L54">    private static final Object MUTEX = new Object();</span>
+
+    /**
+     * Since this is a utility class, the constructor may not be called.
+     */
+<span class="nc" id="L59">    private SaveScript() {</span>
+<span class="nc" id="L60">        throw new UnsupportedOperationException();</span>
+    }
+
+    /**
+     * Returns the location of the save file this class saves to.
+     * @return The location of the save file this class saves to.
+     */
+    public static String getSaveLocation() {
+<span class="nc" id="L68">        return saveLocation;</span>
+    }
+
+    /**
+     * Sets the location of the save file this class saves to.
+     * Also creates a new instance of {@link #writer} so it may save to the
+     * new save location when {@link #save(Script)} is called.
+     * 
+     * @param s the new location of the save file this class should save to.
+     */
+    public static void setSaveLocation(String s) {
+<span class="fc" id="L79">        synchronized (MUTEX) {</span>
+<span class="fc" id="L80">            saveLocation = s;</span>
+        }
+<span class="fc" id="L82">    }</span>
+
+    /**
+     * Saves a script to an XML file at the location specified in
+     * {@link #saveLocation}. This also saves the cameras currently found in
+     * {@link Camera#CAMERAS}, including their defined presets.
+     * 
+     * @param script To be saved script.
+     * @throws XMLStreamException In the case anything goes wrong.
+     */
+    public static void save(Script script) throws XMLStreamException {
+<span class="fc" id="L93">        synchronized (MUTEX) {</span>
+<span class="fc" id="L94">            writer = createWriter();</span>
+<span class="fc" id="L95">            writer.add(eventFactory.createStartDocument());</span>
+<span class="fc" id="L96">            writer.add(eventFactory.createStartElement(&quot;&quot;, &quot;&quot;, TAG_SCRIPT));</span>
+<span class="fc" id="L97">            generateCamerasSection();</span>
+<span class="fc" id="L98">            generateShotsSection(script);</span>
+<span class="fc" id="L99">            writer.add(eventFactory.createEndElement(&quot;&quot;, &quot;&quot;, TAG_SCRIPT));</span>
+<span class="fc" id="L100">            writer.add(eventFactory.createEndDocument());</span>
+<span class="fc" id="L101">            writer.flush();</span>
+<span class="fc" id="L102">            writer.close();</span>
+        }
+<span class="fc" id="L104">    }</span>
+
+    /**
+     * Creates an XMLEventWriter object using the file location specified
+     * in {@link #saveLocation} for use as the writer class variable.
+     * May throw a RuntimeException in the case something goes wrong in 
+     * creating the save file.
+     * 
+     * @return An XMLEventWriter object for use as the writer class variable.
+     */
+    private static XMLEventWriter createWriter() {
+        try {
+<span class="fc" id="L116">            return (XMLOutputFactory.newFactory()).createXMLEventWriter(new FileOutputStream(saveLocation), &quot;UTF-8&quot;);</span>
+<span class="nc" id="L117">        } catch (IOException | XMLStreamException e) {</span>
+<span class="nc" id="L118">            throw new RuntimeException(&quot;Something went wrong in creating your save file&quot;, e);</span>
+        }
+    }
+
+    /**
+     * Generates and adds to the {@link #writer} the section of XML that
+     * represents the cameras.
+     * 
+     * &lt;p&gt;&lt;table border=&quot;2&quot; cellpadding=&quot;4&quot;&gt;
+     *    &lt;thead&gt;&lt;tr&gt;&lt;th&gt;WARNING&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+     *    &lt;tdata&gt;&lt;tr&gt;
+     *       &lt;td&gt;This method should only be called from within {@link #save(Script)}!!!&lt;/td&gt;
+     *    &lt;/tr&gt;&lt;/tdata&gt;
+     * &lt;/table&gt;
+     * @throws XMLStreamException Thrown from {@link #writer}
+     */
+    private static void generateCamerasSection() throws XMLStreamException {
+<span class="fc" id="L135">        writer.add(eventFactory.createStartElement(&quot;&quot;, &quot;&quot;, TAG_CAMERAS));</span>
+        
+<span class="fc bfc" id="L137" title="All 2 branches covered.">        for (Camera cam : Camera.getAllCameras()) {</span>
+<span class="fc" id="L138">            generateCameraXML(cam);</span>
+        }
+        
+<span class="fc" id="L141">        writer.add(eventFactory.createEndElement(&quot;&quot;, &quot;&quot;, TAG_CAMERAS));</span>
+<span class="fc" id="L142">    }</span>
+
+    /**
+     * Generates and adds to the {@link #writer} the section of XML that
+     * represents the list of shots found within a script.
+     * 
+     * &lt;p&gt;&lt;table border=&quot;2&quot; cellpadding=&quot;4&quot;&gt;
+     *    &lt;thead&gt;&lt;tr&gt;&lt;th&gt;WARNING&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+     *    &lt;tdata&gt;&lt;tr&gt;
+     *       &lt;td&gt;This method should only be called from within {@link #save(Script)}!!!&lt;/td&gt;
+     *    &lt;/tr&gt;&lt;/tdata&gt;
+     * &lt;/table&gt;
+     * @throws XMLStreamException Thrown from {@link #writer}
+     */
+    private static void generateShotsSection(Script script) throws XMLStreamException {
+<span class="fc" id="L157">        writer.add(eventFactory.createStartElement(&quot;&quot;, &quot;&quot;, TAG_SHOTS));</span>
+        
+<span class="fc bfc" id="L159" title="All 2 branches covered.">        for (Shot shot1 : script.getShots()) {</span>
+<span class="fc" id="L160">            generateShotXML(shot1);</span>
+        }
+        
+<span class="fc" id="L163">        writer.add(eventFactory.createEndElement(&quot;&quot;, &quot;&quot;, TAG_SHOTS));</span>
+<span class="fc" id="L164">    }</span>
+
+    /**
+     * Generates and adds to the {@link #writer} the section of XML that
+     * represents the specified camera.
+     * 
+     * @param cam The camera specified for which its XML should be added to the writer.
+     * @throws XMLStreamException Thrown from {@link #writer}
+     */
+    private static void generateCameraXML(Camera cam) throws XMLStreamException {
+<span class="fc" id="L174">        writer.add(eventFactory.createStartElement(&quot;&quot;, &quot;&quot;, TAG_CAMERA));</span>
+<span class="fc" id="L175">        writer.add(eventFactory.createAttribute(&quot;id&quot;, cam.getNumber() + &quot;&quot;));</span>
+<span class="fc" id="L176">        generateCameraSettingsXML(cam.getSettings());</span>
+<span class="fc" id="L177">        writer.add(eventFactory.createStartElement(&quot;&quot;, &quot;&quot;, TAG_PRESETS));</span>
+        
+<span class="fc bfc" id="L179" title="All 2 branches covered.">        for (Preset p : cam.getAllPresets()) {</span>
+<span class="fc" id="L180">            generatePresetXML(p);</span>
+        }
+        
+<span class="fc" id="L183">        writer.add(eventFactory.createEndElement(&quot;&quot;, &quot;&quot;, TAG_PRESETS));</span>
+<span class="fc" id="L184">        writer.add(eventFactory.createEndElement(&quot;&quot;, &quot;&quot;, TAG_CAMERA));</span>
+<span class="fc" id="L185">    }</span>
+
+    /**
+     * Generates and adds to the {@link #writer} the section of XML that
+     * represents the specified camera settings .
+     * 
+     * @param camSet The camera settings specified for which its XML should be added to the writer.
+     * @throws XMLStreamException Thrown from {@link #writer}
+     */
+    private static void generateCameraSettingsXML(CameraSettings camSet) throws XMLStreamException {
+<span class="fc" id="L195">        writer.add(eventFactory.createStartElement(&quot;&quot;, &quot;&quot;, TAG_CAMERASETTINGS));</span>
+<span class="fc" id="L196">        writer.add(eventFactory.createAttribute(&quot;pan&quot;, camSet.getPan() + &quot;&quot;));</span>
+<span class="fc" id="L197">        writer.add(eventFactory.createAttribute(&quot;tilt&quot;, camSet.getTilt() + &quot;&quot;));</span>
+<span class="fc" id="L198">        writer.add(eventFactory.createAttribute(&quot;zoom&quot;, camSet.getZoom() + &quot;&quot;));</span>
+<span class="fc" id="L199">        writer.add(eventFactory.createAttribute(&quot;focus&quot;, camSet.getFocus() + &quot;&quot;));</span>
+<span class="fc" id="L200">        writer.add(eventFactory.createEndElement(&quot;&quot;, &quot;&quot;, TAG_CAMERASETTINGS));</span>
+<span class="fc" id="L201">    }</span>
+
+    /**
+     * Generates and adds to the {@link #writer} the section of XML that
+     * represents the specified preset.
+     * 
+     * @param preset The preset specified for which its XML should be added to the writer.
+     * @throws XMLStreamException Thrown from {@link #writer}
+     */
+    private static void generatePresetXML(Preset preset) throws XMLStreamException {
+<span class="fc" id="L211">        writer.add(eventFactory.createStartElement(&quot;&quot;, &quot;&quot;, TAG_PRESET));</span>
+<span class="fc" id="L212">        writer.add(eventFactory.createAttribute(&quot;type&quot;, preset.getClass().getName()));</span>
+<span class="fc" id="L213">        writer.add(eventFactory.createStartElement(&quot;&quot;, &quot;&quot;, TAG_ID));</span>
+<span class="fc" id="L214">        writer.add(eventFactory.createCharacters(preset.getId() + &quot;&quot;));</span>
+<span class="fc" id="L215">        writer.add(eventFactory.createEndElement(&quot;&quot;, &quot;&quot;, TAG_ID));</span>
+<span class="fc" id="L216">        writer.add(eventFactory.createStartElement(&quot;&quot;, &quot;&quot;, TAG_DESCRIPTION));</span>
+<span class="fc" id="L217">        writer.add(eventFactory.createCharacters(preset.getDescription()));</span>
+<span class="fc" id="L218">        writer.add(eventFactory.createEndElement(&quot;&quot;, &quot;&quot;, TAG_DESCRIPTION));</span>
+<span class="fc" id="L219">        writer.add(eventFactory.createStartElement(&quot;&quot;, &quot;&quot;, TAG_IMGLOC));</span>
+<span class="fc" id="L220">        writer.add(eventFactory.createCharacters(preset.getImage()));</span>
+<span class="fc" id="L221">        writer.add(eventFactory.createEndElement(&quot;&quot;, &quot;&quot;, TAG_IMGLOC));</span>
+<span class="fc" id="L222">        generateCameraSettingsXML(preset.getToSet());</span>
+<span class="fc" id="L223">        writer.add(eventFactory.createEndElement(&quot;&quot;, &quot;&quot;, TAG_PRESET));</span>
+<span class="fc" id="L224">    }</span>
+
+    /**
+     * Generates and adds to the {@link #writer} the section of XML that
+     * represents the specified shot.
+     * 
+     * @param shot The shot specified for which its XML should be added to the writer.
+     * @throws XMLStreamException Thrown from {@link #writer}
+     */
+    private static void generateShotXML(Shot shot) throws XMLStreamException {
+<span class="fc" id="L234">        writer.add(eventFactory.createStartElement(&quot;&quot;, &quot;&quot;, TAG_SHOT));</span>
+<span class="fc" id="L235">        writer.add(eventFactory.createAttribute(&quot;number&quot;, shot.getNumber() + &quot;&quot;));</span>
+<span class="fc" id="L236">        writer.add(eventFactory.createStartElement(&quot;&quot;, &quot;&quot;, TAG_SHOTID));</span>
+<span class="fc" id="L237">        writer.add(eventFactory.createCharacters(shot.getShotId()));</span>
+<span class="fc" id="L238">        writer.add(eventFactory.createEndElement(&quot;&quot;, &quot;&quot;, TAG_SHOTID));</span>
+<span class="fc" id="L239">        writer.add(eventFactory.createStartElement(&quot;&quot;, &quot;&quot;, TAG_DESCRIPTION));</span>
+<span class="fc" id="L240">        writer.add(eventFactory.createCharacters(shot.getDescription()));</span>
+<span class="fc" id="L241">        writer.add(eventFactory.createEndElement(&quot;&quot;, &quot;&quot;, TAG_DESCRIPTION));</span>
+<span class="fc" id="L242">        writer.add(eventFactory.createStartElement(&quot;&quot;, &quot;&quot;, TAG_ACTION));</span>
+<span class="fc" id="L243">        writer.add(eventFactory.createCharacters(shot.getAction()));</span>
+<span class="fc" id="L244">        writer.add(eventFactory.createEndElement(&quot;&quot;, &quot;&quot;, TAG_ACTION));</span>
+<span class="fc" id="L245">        writer.add(eventFactory.createStartElement(&quot;&quot;, &quot;&quot;, TAG_CAMERAID));</span>
+<span class="fc" id="L246">        writer.add(eventFactory.createCharacters(shot.getCamera().getNumber() + &quot;&quot;));</span>
+<span class="fc" id="L247">        writer.add(eventFactory.createEndElement(&quot;&quot;, &quot;&quot;, TAG_CAMERAID));</span>
+<span class="fc" id="L248">        writer.add(eventFactory.createStartElement(&quot;&quot;, &quot;&quot;, TAG_PRESETID));</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">        if (shot.getPreset() != null) {</span>
+<span class="fc" id="L250">            writer.add(eventFactory.createCharacters(shot.getPreset().getId() + &quot;&quot;));</span>
+        }
+<span class="fc" id="L252">        writer.add(eventFactory.createEndElement(&quot;&quot;, &quot;&quot;, TAG_PRESETID));</span>
+<span class="fc" id="L253">        writer.add(eventFactory.createEndElement(&quot;&quot;, &quot;&quot;, TAG_SHOT));</span>
+<span class="fc" id="L254">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

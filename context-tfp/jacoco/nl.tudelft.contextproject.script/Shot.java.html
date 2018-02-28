@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Shot.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Team Free Pizza</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.contextproject.script</a> &gt; <span class="el_source">Shot.java</span></div><h1>Shot.java</h1><pre class="source lang-java linenums">package nl.tudelft.contextproject.script;
+
+import nl.tudelft.contextproject.camera.Camera;
+import nl.tudelft.contextproject.presets.Preset;
+
+import java.util.Objects;
+
+/**
+ * Class to represent a shot to be taken by a {@link Camera}. A shot
+ * consists of an unique ID, a separate identifier, a camera that is
+ * assigned to a shot, an optional preset that is assigned to that camera,
+ * and a description of what should happen during the shot.
+ * 
+ * @since 0.2
+ */
+public class Shot {
+
+    private Camera camera;
+    private Preset preset;
+    private String shotId;
+    private String subject;
+    private String action;
+
+    private double duration;
+    private int number;
+
+    /**
+     * Creates a shot instance with each shot having a number,
+     * camera and preset.
+     * 
+     * @param num is the shot number
+     * @param shotId The identifier for the shot.
+     * @param cam is the camera used to make the shot.
+     * @param pres is the preset used for the shot.
+     * @param subject The subject of what happens during the shot.
+     * @param action The action associated to the shot.
+     */
+<span class="fc" id="L38">    public Shot(int num, String shotId, Camera cam, Preset pres, String subject, String action) {</span>
+<span class="fc" id="L39">        this.number = num;</span>
+<span class="fc" id="L40">        this.shotId = shotId;</span>
+<span class="fc" id="L41">        this.camera = cam;</span>
+<span class="fc" id="L42">        this.preset = pres;</span>
+<span class="fc" id="L43">        this.subject = subject;</span>
+<span class="pc bpc" id="L44" title="1 of 4 branches missed.">        if (cam != null &amp;&amp; pres != null) {</span>
+<span class="fc" id="L45">            cam.addPreset(pres);</span>
+        }
+<span class="fc" id="L47">        this.action = action;</span>
+<span class="fc" id="L48">        this.duration = -1;</span>
+<span class="fc" id="L49">    }</span>
+
+    /**
+     * Creates a shot instance with each shot having a number,
+     * camera and no preset.
+     * 
+     * @param num is the shot number
+     * @param shotId The identifier for the shot.
+     * @param cam is the camera used to make the shot.
+     * @param subject The subject of what happens during the shot.
+     * @param action The action associated to the shot.
+     */
+<span class="fc" id="L61">    public Shot(int num, String shotId, Camera cam, String subject, String action) {</span>
+<span class="fc" id="L62">        this.number = num;</span>
+<span class="fc" id="L63">        this.shotId = shotId;</span>
+<span class="fc" id="L64">        this.camera = cam;</span>
+<span class="fc" id="L65">        this.subject = subject;</span>
+<span class="fc" id="L66">        this.action = action;</span>
+<span class="fc" id="L67">        this.duration = -1;</span>
+<span class="fc" id="L68">    }</span>
+
+    /**
+     * Creates a shot instance with each shot having a number,
+     * camera and preset.
+     * 
+     * @param num is the shot number
+     * @param cam is the camera used to make the shot.
+     * @param pres is the preset used for the shot.
+     */
+<span class="fc" id="L78">    public Shot(int num, Camera cam, Preset pres) {</span>
+<span class="fc" id="L79">        this.number = num;</span>
+<span class="fc" id="L80">        this.shotId = &quot;&quot;;</span>
+<span class="fc" id="L81">        this.camera = cam;</span>
+<span class="fc" id="L82">        this.preset = pres;</span>
+<span class="fc" id="L83">        this.subject = &quot;&quot;;</span>
+<span class="fc" id="L84">        this.duration = -1;</span>
+<span class="fc" id="L85">        this.action = &quot;&quot;;</span>
+<span class="fc bfc" id="L86" title="All 4 branches covered.">        if (cam != null &amp;&amp; pres != null) {</span>
+<span class="fc" id="L87">            cam.addPreset(pres);</span>
+        }
+<span class="fc" id="L89">    }</span>
+
+    /**
+     * Used to tell a particular camera to take a shot.
+     * Makes use of {@link Preset#applyTo(Camera)}
+     */
+    public void execute() {
+<span class="fc" id="L96">        preset.applyTo(camera);</span>
+<span class="fc" id="L97">    }</span>
+
+    /**
+     * Returns the number of the shot.
+     * @return the number of the shot.
+     */
+    public int getNumber() {
+<span class="fc" id="L104">        return number;</span>
+    }
+
+    /**
+     * Sets the number of the to be taken shot.
+     * @param number the number of the to be taken shot.
+     */
+    public void setNumber(int number) {
+<span class="fc" id="L112">        this.number = number;</span>
+<span class="fc" id="L113">    }</span>
+
+    /**
+     * Returns the shot identifier of this shot.
+     * @return The shotId of this shot.
+     */
+    public String getShotId() {
+<span class="fc" id="L120">        return shotId;</span>
+    }
+
+    /**
+     * Sets the shotId of this shot.
+     * @param shotId The shotId to set.
+     */
+    public void setShotId(String shotId) {
+<span class="nc" id="L128">        this.shotId = shotId;</span>
+<span class="nc" id="L129">    }</span>
+
+    /**
+     * Returns the camera used to take the shot.
+     * @return the camera used to take the shot.
+     */
+    public Camera getCamera() {
+<span class="fc" id="L136">        return camera;</span>
+    }
+
+    /**
+     * Sets the camera used to take the shot.
+     * @param camera the camera used to take the shot.
+     */
+    public void setCamera(Camera camera) {
+<span class="fc" id="L144">        this.camera = camera;</span>
+<span class="fc" id="L145">    }</span>
+
+    /**
+     * Returns the preset assigned to this shot.
+     * @return the preset assigned to this shot.
+     */
+    public Preset getPreset() {
+<span class="fc" id="L152">        return preset;</span>
+    }
+
+    /**
+     * Sets the preset assigned to this shot.
+     * @param preset the preset assigned to this shot.
+     */
+    public void setPreset(Preset preset) {
+<span class="fc" id="L160">        this.preset = preset;</span>
+<span class="fc" id="L161">    }</span>
+    
+    public boolean hasPreset() {
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">        return (preset == null) ? false : true;</span>
+    }
+
+    /**
+     * Returns the subject of this shot.
+     * @return The subject of this shot.
+     */
+    public String getDescription() {
+<span class="fc" id="L172">        return subject;</span>
+    }
+
+    @Override
+    public boolean equals(Object o) {
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">        if (o instanceof Shot) {</span>
+<span class="fc" id="L178">            Shot shot = (Shot) o;</span>
+
+<span class="fc bfc" id="L180" title="All 2 branches covered.">            return getNumber() == shot.getNumber()</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">                    &amp;&amp; Objects.equals(getCamera(), shot.getCamera())</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">                    &amp;&amp; Objects.equals(getPreset(), shot.getPreset())</span>
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">                    &amp;&amp; Objects.equals(getShotId(), shot.getShotId())</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">                    &amp;&amp; Objects.equals(getDescription(), shot.getDescription())</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">                    &amp;&amp; Objects.equals(getAction(), shot.getAction());</span>
+        }
+
+<span class="nc" id="L188">        return false;</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L193">        return Objects.hash(getNumber(), getCamera(), getPreset(), getShotId(), getDescription(), getAction());</span>
+    }
+
+    /**
+     * Sets the subject of this shot.
+     * @param subject The subject of this shot.
+     */
+    public void setDescription(String subject) {
+<span class="fc" id="L201">        this.subject = subject;</span>
+<span class="fc" id="L202">    }</span>
+
+    /**
+     * Gets the duration of this shot in seconds.
+     * @return the duration of this shot in seconds..
+     */
+    public double getDuration() {
+<span class="fc" id="L209">        return duration;</span>
+    }
+
+    /**
+     * Gets the action to be performed by this shot.
+     * @return the action to be performed by the shot
+     */
+    public String getAction() {
+<span class="fc" id="L217">        return action;</span>
+    }
+
+    /**
+     * Sets the action to be performed by this shot.
+     * @param action The precise action performed by the shot.
+     */
+    public void setAction(String action) {
+<span class="fc" id="L225">        this.action = action;</span>
+<span class="fc" id="L226">    }</span>
+
+    /**
+     * Sets the duration of this shot in seconds.
+     * @param dur The duration of the shot in seconds.
+     */
+    public void setDuration(double dur) {
+<span class="fc" id="L233">        duration = dur;</span>
+<span class="fc" id="L234">    }</span>
+
+    /**
+     * Gives the shot and its number as a String.
+     * @return the particular shot and its number as a string.
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L242">        return &quot;Shot &quot; + number;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

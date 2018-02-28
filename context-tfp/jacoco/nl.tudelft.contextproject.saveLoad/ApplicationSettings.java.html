@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ApplicationSettings.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Team Free Pizza</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.contextproject.saveLoad</a> &gt; <span class="el_source">ApplicationSettings.java</span></div><h1>ApplicationSettings.java</h1><pre class="source lang-java linenums">package nl.tudelft.contextproject.saveLoad;
+
+import nl.tudelft.contextproject.camera.Camera;
+import nl.tudelft.contextproject.camera.CameraConnection;
+import nl.tudelft.contextproject.camera.LiveCameraConnection;
+import nl.tudelft.contextproject.camera.LiveCameraConnectionAWHE40;
+import nl.tudelft.contextproject.camera.MockedCameraConnection;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Scanner;
+
+import javax.crypto.Cipher;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.PBEParameterSpec;
+
+/**
+ * Class to hold settings for the application.
+ * Can write these settings to the settings file using {@link #save()}
+ * and load them from the file using {@link #load()}
+ * 
+ * &lt;p&gt;This class has high cyclomatic complexities due to the load method.
+ * We did not find any good way to get around this, without sacrificing
+ * code readability.
+ * 
+ * @since 0.7
+ */
+public final class ApplicationSettings {
+
+    public static final int DEFAULT_RESX = 1920;
+    public static final int DEFAULT_RESY = 1080;
+    public static final int DEFAULT_DB_PORT = 3306;
+    public static final String DEFAULT_JDBC_DRIVER = &quot;com.mysql.cj.jdbc.Driver&quot;;
+    public static final String DEFAULT_VLC_LOC = &quot;&quot;;
+
+<span class="nc" id="L44">    private static final byte[] KEY = &quot;a0@!a650&quot;.getBytes(StandardCharsets.UTF_8);</span>
+
+<span class="nc" id="L46">    private static final ApplicationSettings INSTANCE = new ApplicationSettings();</span>
+<span class="nc" id="L47">    private static final String PATH = &quot;settings.tfp&quot;;</span>
+
+    /**
+     * Resolution in X direction with which VLC will render.
+     */
+    private int resX;
+
+    /**
+     * Resolution in Y direction with which VLC will render.
+     */
+    private int resY;
+
+    /**
+     * Location of the VLC installation if this is non-default.
+     */
+    private String vlcLocation;
+
+    /**
+     * URL of the database used for synchronisation.
+     */
+    private String databaseUrl;
+
+    /**
+     * Port of used for the database connection.
+     */
+    private int databasePort;
+
+    /**
+     * Name of the database.
+     */
+    private String databaseName;
+
+    /**
+     * Username of the database.
+     */
+    private String databaseUsername;
+
+    /**
+     * Password of the database.
+     */
+    private String databasePassword;
+
+    /**
+     * Location of the JDBC driver used for the database connection.
+     */
+    private String jdbcDriver;
+
+    /**
+     * Map that maps camera IDs to known camera IPs.
+     */
+    private HashMap&lt;Integer, String&gt; cameraIPs;
+
+    /**
+     * Constructs a new ApplicationSettings object. Tries to load from 
+     * the settings file first, but if this is not present, it will load
+     * default settings.
+     * Private constructor since this is a singleton class.
+     */
+<span class="nc" id="L105">    private ApplicationSettings() {</span>
+<span class="nc" id="L106">        reset();</span>
+<span class="nc" id="L107">        load();</span>
+<span class="nc" id="L108">    }</span>
+
+    /**
+     * Resets the settings to their default values.
+     */
+    public void reset() {
+<span class="nc" id="L114">        resX = DEFAULT_RESX;</span>
+<span class="nc" id="L115">        resY = DEFAULT_RESY;</span>
+<span class="nc" id="L116">        databasePort = DEFAULT_DB_PORT;</span>
+<span class="nc" id="L117">        databaseUrl = &quot;&quot;;</span>
+<span class="nc" id="L118">        databaseUsername = &quot;&quot;;</span>
+<span class="nc" id="L119">        databasePassword = &quot;&quot;;</span>
+<span class="nc" id="L120">        databaseName = &quot;&quot;;</span>
+<span class="nc" id="L121">        jdbcDriver = DEFAULT_JDBC_DRIVER;</span>
+<span class="nc" id="L122">        vlcLocation = DEFAULT_VLC_LOC;</span>
+<span class="nc" id="L123">        cameraIPs = new HashMap&lt;Integer, String&gt;();</span>
+<span class="nc" id="L124">        Camera.clearAllCameras();</span>
+<span class="nc" id="L125">    }</span>
+
+    /**
+     * Returns the singleton instance of this class.
+     * @return the singleton instance of this class.
+     */
+    public static ApplicationSettings getInstance() {
+<span class="nc" id="L132">        return INSTANCE;</span>
+    }
+
+    /**
+     * Returns {@link #resX}.
+     * @return {@link #resX}
+     */
+    public int getRenderResX() {
+<span class="nc" id="L140">        return resX;</span>
+    }
+
+    /**
+     * Returns {@link #resY}.
+     * @return {@link #resY}
+     */
+    public int getRenderResY() {
+<span class="nc" id="L148">        return resY;</span>
+    }
+
+    /**
+     * Sets the render resolution setting with which VLC will will render 
+     * live camera views to the specified settings.
+     * 
+     * @param resX Resolution in X direction
+     * @param resY Resolution in Y direction
+     */
+    public void setRenderResolution(int resX, int resY) {
+<span class="nc" id="L159">        this.resX = resX;</span>
+<span class="nc" id="L160">        this.resY = resY;</span>
+<span class="nc" id="L161">    }</span>
+
+    /**
+     * Returns {@link #databasePort}.
+     * @return {@link #databasePort}
+     */
+    public int getDatabasePort() {
+<span class="nc" id="L168">        return databasePort;</span>
+    }
+
+    /**
+     * Sets {@link #databasePort}.
+     * @param port See {@link #databasePort}
+     */
+    public void setDatabasePort(int port) {
+<span class="nc" id="L176">        this.databasePort = port;</span>
+<span class="nc" id="L177">    }</span>
+
+    /**
+     * Return {@link #databaseUrl}.
+     * @return {@link #databaseUrl}
+     */
+    public String getDatabaseUrl() {
+<span class="nc" id="L184">        return databaseUrl;</span>
+    }
+
+    /**
+     * Sets {@link #databaseUrl}.
+     * @param url See {@link #databaseUrl}
+     */
+    public void setDatabaseUrl(String url) {
+<span class="nc" id="L192">        this.databaseUrl = url;</span>
+<span class="nc" id="L193">    }</span>
+
+    /**
+     * Return {@link #databaseUsername}.
+     * @return {@link #databaseUsername}
+     */
+    public String getDatabaseUsername() {
+<span class="nc" id="L200">        return databaseUsername;</span>
+    }
+
+    /**
+     * Return {@link #databasePassword}.
+     * @return {@link #databasePassword}
+     */
+    public String getDatabasePassword() {
+<span class="nc" id="L208">        return databasePassword;</span>
+    }
+
+    /**
+     * Return {@link #databaseName}.
+     * @return {@link #databaseName}
+     */
+    public String getDatabaseName() {
+<span class="nc" id="L216">        return databaseName;</span>
+    }
+
+    /**
+     * Sets {@link #databaseName}.
+     * @param name See {@link #databaseName}
+     */
+    public void setDatabaseName(String name) {
+<span class="nc" id="L224">        this.databaseName = name;</span>
+<span class="nc" id="L225">    }</span>
+
+    /**
+     * Return {@link #jdbcDriver}.
+     * @return {@link #jdbcDriver}
+     */
+    public String getJdbcDriver() {
+<span class="nc" id="L232">        return jdbcDriver;</span>
+    }
+
+    /**
+     * Sets {@link #jdbcDriver}.
+     * @param driver See {@link #jdbcDriver}
+     */
+    public void setJdbcDriver(String driver) {
+<span class="nc" id="L240">        this.jdbcDriver = driver;</span>
+<span class="nc" id="L241">    }</span>
+
+    /**
+     * Updates the information required for a database connection.
+     * 
+     * @param url The URL of the database.
+     * @param port The port of the database.
+     * @param name The name of the database.
+     * @param username The username to access the database.
+     * @param password The password to access the database.
+     */
+    public void setDatabaseInfo(String url, int port, String name, String username, String password) {
+<span class="nc" id="L253">        this.databaseUrl = url;</span>
+<span class="nc" id="L254">        this.databasePort = port;</span>
+<span class="nc" id="L255">        this.databaseName = name;</span>
+<span class="nc" id="L256">        this.databaseUsername = username;</span>
+<span class="nc" id="L257">        this.databasePassword = password;</span>
+<span class="nc" id="L258">    }</span>
+
+    /**
+     * Returns {@link #vlcLocation}.
+     * @return {@link #vlcLocation}
+     */
+    public String getVlcLocation() {
+<span class="nc" id="L265">        return vlcLocation;</span>
+    }
+
+    /**
+     * Sets {@link #vlcLocation}.
+     * @param loc New {@link #vlcLocation}
+     */
+    public void setVlcLocation(String loc) {
+<span class="nc" id="L273">        vlcLocation = loc;</span>
+<span class="nc" id="L274">    }</span>
+
+    /**
+     * Returns the IP of the camera with camera id camId
+     * or null if unknown.
+     * 
+     * @return the IP of the camera with camera id camId
+     *      or null if unknown.
+     */
+    public String getCameraIP(int camId) {
+<span class="nc" id="L284">        return cameraIPs.get(camId);</span>
+    }
+
+    /**
+     * Returns a HashMap containing all currently specified IPs for
+     * a given camera number.
+     * 
+     * @return a HashMap that maps a camera number to an IP address.
+     */
+    protected HashMap&lt;Integer, String&gt; getAllCameraIPs() {
+<span class="nc" id="L294">        return cameraIPs;</span>
+    }
+
+    /**
+     * Adds a camera IP to a camera number.
+     * @param camId Id of camera
+     * @param ip IP of the camera with id camId.
+     */
+    public void addCameraIP(int camId, String ip) {
+<span class="nc" id="L303">        cameraIPs.put(camId, ip);</span>
+<span class="nc" id="L304">    }</span>
+
+    /**
+     * Clears all camera IPs.
+     */
+    public void clearAllCameraIPs() {
+<span class="nc" id="L310">        cameraIPs.clear();</span>
+<span class="nc" id="L311">    }</span>
+    
+    /**
+     * (Re)sets the CameraConnection for every camera currently in the list of cameras.
+     * If an IP was loaded for a camera, then it will check if it can make a connection 
+     * to this camera. If it can, it will set its connection to a LiveCameraConnection. 
+     * If it cannot, it sets a MockedCameraConnection. 
+     * 
+     * &lt;p&gt;This will run in a separate thread, because setting up a connection may
+     * take a while to time out in case of failure.
+     */
+    public void initCameraConnections() {
+<span class="nc" id="L323">        new Thread(() -&gt; {</span>
+<span class="nc bnc" id="L324" title="All 2 branches missed.">            for (Camera cam : Camera.getAllCameras()) {</span>
+<span class="nc" id="L325">                String camIp = getCameraIP(cam.getNumber());</span>
+<span class="nc bnc" id="L326" title="All 4 branches missed.">                if (camIp != null &amp;&amp; !camIp.equals(&quot;&quot;)) {</span>
+<span class="nc" id="L327">                    CameraConnection connect = new LiveCameraConnection(camIp);</span>
+<span class="nc bnc" id="L328" title="All 2 branches missed.">                    if (connect.setUpConnection()) {</span>
+<span class="nc" id="L329">                        cam.setConnection(connect);</span>
+<span class="nc" id="L330">                        continue;</span>
+                    }
+                    
+<span class="nc" id="L333">                    connect = new LiveCameraConnectionAWHE40(camIp);</span>
+<span class="nc bnc" id="L334" title="All 2 branches missed.">                    if (connect.setUpConnection()) {</span>
+<span class="nc" id="L335">                        cam.setConnection(connect);</span>
+<span class="nc" id="L336">                        continue;</span>
+                    }
+                }
+
+<span class="nc" id="L340">                cam.setConnection(new MockedCameraConnection());</span>
+            }
+<span class="nc" id="L342">        }).start();</span>
+<span class="nc" id="L343">    }</span>
+
+    /**
+     * Encrypts a password.
+     * 
+     * @param password the password to encrypt.
+     * @return the encrypted password.
+     */
+    private String encrypt(String password) {
+        try {
+<span class="nc" id="L353">            final String meth = &quot;PBEWithMD5AndDES&quot;;</span>
+<span class="nc" id="L354">            char[] spec = new char[]{'!', '6', 'j', '9', 'n', 'R', 'b', 'S', 'n', '%'};</span>
+<span class="nc" id="L355">            Cipher pbeCipher = Cipher.getInstance(meth);</span>
+
+<span class="nc bnc" id="L357" title="All 2 branches missed.">            for (int i = 0; i &lt; spec.length; i++) {</span>
+<span class="nc" id="L358">                spec[i / 2 + 3] += 2;</span>
+            }
+
+<span class="nc" id="L361">            pbeCipher.init(Cipher.ENCRYPT_MODE, </span>
+<span class="nc" id="L362">                    SecretKeyFactory.getInstance(meth)</span>
+<span class="nc" id="L363">                    .generateSecret(new PBEKeySpec(spec)),</span>
+<span class="nc" id="L364">                    new PBEParameterSpec(KEY, 20));</span>
+<span class="nc" id="L365">            return Base64.getEncoder().encodeToString(pbeCipher.doFinal(password.getBytes(&quot;UTF-8&quot;)));</span>
+<span class="nc" id="L366">        } catch (Exception e) {</span>
+<span class="nc" id="L367">            e.printStackTrace();</span>
+<span class="nc" id="L368">            return null;</span>
+        }
+    }
+
+    /**
+     * Decrypts a password.
+     * 
+     * @param password password to decrypt.
+     * @return the decrypted password.
+     */
+    private String decrypt(String password) {
+        try {
+<span class="nc" id="L380">            final String meth = &quot;PBEWithMD5AndDES&quot;;</span>
+<span class="nc" id="L381">            char[] ciph = new char[]{'!', '6', 'j', '9', 'n', 'R', 'b', 'S', 'n', '%'};</span>
+<span class="nc" id="L382">            Cipher pbeCipher = Cipher.getInstance(meth);</span>
+
+<span class="nc bnc" id="L384" title="All 2 branches missed.">            for (int i = 0; i &lt; ciph.length; i++) {</span>
+<span class="nc" id="L385">                ciph[i / 2 + 3] += 2;</span>
+            }
+
+<span class="nc" id="L388">            pbeCipher.init(Cipher.DECRYPT_MODE, </span>
+<span class="nc" id="L389">                    SecretKeyFactory.getInstance(meth)</span>
+<span class="nc" id="L390">                    .generateSecret(new PBEKeySpec(ciph)),</span>
+<span class="nc" id="L391">                    new PBEParameterSpec(KEY, 20));</span>
+<span class="nc" id="L392">            return new String(pbeCipher.doFinal(Base64.getDecoder().decode(password)), &quot;UTF-8&quot;);</span>
+<span class="nc" id="L393">        } catch (Exception e) {</span>
+<span class="nc" id="L394">            e.printStackTrace();</span>
+<span class="nc" id="L395">            return null;</span>
+        }
+    }
+
+    /**
+     * Constructs a Scanner object to read the settings file.
+     * @return a Scanner object with the settings file as input.
+     * @throws FileNotFoundException When the file could not be found
+     */
+    private Scanner getScanner() throws FileNotFoundException {
+<span class="nc" id="L405">        return new Scanner(new File(PATH));</span>
+    }
+
+    /**
+     * Constructs a PrintWriter object to write to the settings file.
+     * @return a PrintWriter object with the settings file as output.
+     * @throws IOException When the file cannot be created or cannot be
+     *      opened for some reason.
+     */
+    private PrintWriter getWriter() throws IOException {
+<span class="nc" id="L415">        return new PrintWriter(new BufferedWriter(new FileWriter(PATH, false)));</span>
+    }
+
+    /**
+     * Returns true iff the current settings are valid, that is iff:
+     * &lt;blockquote&gt;{@link #resX} != 0
+     *      &lt;br&gt;{@link #resY} != 0
+     *      &lt;br&gt;{@link #vlcLocation} != null
+     *      &lt;br&gt;{@link #cameraIPs} != null
+     * &lt;/blockquote&gt;
+     * @return true iff the current settings are valid.
+     */
+    public boolean isLoaded() {
+<span class="nc bnc" id="L428" title="All 8 branches missed.">        return resX != 0 &amp;&amp; resY != 0 &amp;&amp; vlcLocation != null &amp;&amp; cameraIPs != null;</span>
+    }
+
+    /**
+     * Loads settings from the settings file, returns
+     * true was successful, returns false iff not.
+     * @return true iff settings were loaded from the
+     *      settings file.
+     */
+    public boolean load() {
+        try {
+<span class="nc" id="L439">            Scanner sc = getScanner();</span>
+<span class="nc bnc" id="L440" title="All 2 branches missed.">            while (sc.hasNext()) {</span>
+<span class="nc bnc" id="L441" title="All 31 branches missed.">                switch (sc.next()) {</span>
+                    case &quot;resX&quot;:
+<span class="nc bnc" id="L443" title="All 2 branches missed.">                        resX = sc.hasNextInt() ? sc.nextInt() : resX;</span>
+<span class="nc" id="L444">                        break;</span>
+                    case &quot;resY&quot;:
+<span class="nc bnc" id="L446" title="All 2 branches missed.">                        resY = sc.hasNextInt() ? sc.nextInt() : resY;</span>
+<span class="nc" id="L447">                        break;</span>
+                    case &quot;vlcLocation&quot;:
+<span class="nc bnc" id="L449" title="All 2 branches missed.">                        vlcLocation = sc.hasNext() ? sc.nextLine().trim() : vlcLocation;</span>
+<span class="nc" id="L450">                        break;</span>
+                    case &quot;cameraIPs&quot;:
+<span class="nc" id="L452">                        loadCameraIPs(sc);</span>
+<span class="nc" id="L453">                        break;</span>
+                    case &quot;databaseUrl&quot;:
+<span class="nc bnc" id="L455" title="All 2 branches missed.">                        databaseUrl = sc.hasNext() ? sc.nextLine().trim() : databaseUrl;</span>
+<span class="nc" id="L456">                        break;</span>
+                    case &quot;databasePort&quot;:
+<span class="nc bnc" id="L458" title="All 2 branches missed.">                        databasePort = sc.hasNextInt() ? sc.nextInt() : databasePort;</span>
+<span class="nc" id="L459">                        break;</span>
+                    case &quot;databaseUsername&quot;:
+<span class="nc bnc" id="L461" title="All 2 branches missed.">                        databaseUsername = sc.hasNext() ? sc.nextLine().trim() : databaseUsername;</span>
+<span class="nc" id="L462">                        break;</span>
+                    case &quot;databasePassword&quot;:
+<span class="nc bnc" id="L464" title="All 2 branches missed.">                        databasePassword = sc.hasNext() ? decrypt(sc.nextLine().trim()) : databasePassword;</span>
+<span class="nc" id="L465">                        break;</span>
+                    case &quot;databaseName&quot;:
+<span class="nc bnc" id="L467" title="All 2 branches missed.">                        databaseName = sc.hasNext() ? sc.nextLine().trim() : databaseName;</span>
+<span class="nc" id="L468">                        break;</span>
+                    case &quot;jdbcDriver&quot;:
+<span class="nc bnc" id="L470" title="All 2 branches missed.">                        jdbcDriver = sc.hasNext() ? sc.nextLine().trim() : jdbcDriver;</span>
+<span class="nc" id="L471">                        break;</span>
+                    default:
+                        break;
+                }
+            }
+<span class="nc" id="L476">            sc.close();</span>
+
+<span class="nc" id="L478">            initCameraConnections();</span>
+<span class="nc" id="L479">            return isLoaded();</span>
+<span class="nc" id="L480">        } catch (FileNotFoundException e) {</span>
+<span class="nc" id="L481">            return false;</span>
+        }
+    }
+
+    /**
+     * Loads the camera IP addresses in the cameraIPs section
+     * of the settings file.
+     * 
+     * @param sc Scanner at the position after reading the
+     *      cameraIPs section header.
+     */
+    private void loadCameraIPs(Scanner sc) {
+<span class="nc bnc" id="L493" title="All 2 branches missed.">        while (sc.hasNextInt()) {</span>
+<span class="nc" id="L494">            int camId = sc.nextInt();</span>
+<span class="nc bnc" id="L495" title="All 2 branches missed.">            Camera cam = Camera.getCamera(camId - 1) == null ? new Camera() : Camera.getCamera(camId - 1);</span>
+
+<span class="nc bnc" id="L497" title="All 4 branches missed.">            if (sc.hasNextLine() &amp;&amp; camId - 1 == cam.getNumber()) {</span>
+<span class="nc" id="L498">                cameraIPs.put(camId - 1, sc.nextLine().trim());</span>
+            }
+        }
+<span class="nc" id="L501">    }</span>
+
+    /**
+     * Saves the settings to the settings file.
+     * 
+     * @throws IOException in the case that the name of
+     *      the settings file is a directory rather than
+     *      a file, or cannot be opened for some other
+     *      reason.
+     */
+    public void save() throws IOException {
+<span class="nc" id="L512">        PrintWriter writer = getWriter();</span>
+<span class="nc" id="L513">        writer.println(&quot;resX &quot; + resX);</span>
+<span class="nc" id="L514">        writer.println(&quot;resY &quot; + resY);</span>
+
+<span class="nc bnc" id="L516" title="All 2 branches missed.">        if (!vlcLocation.equals(&quot;&quot;)) {</span>
+<span class="nc" id="L517">            writer.println(&quot;vlcLocation &quot; + vlcLocation);</span>
+        }
+
+<span class="nc" id="L520">        writer.println(&quot;cameraIPs&quot;);</span>
+<span class="nc bnc" id="L521" title="All 2 branches missed.">        for (Camera cam : Camera.getAllCameras()) {</span>
+<span class="nc" id="L522">            int key = cam.getNumber();</span>
+<span class="nc bnc" id="L523" title="All 2 branches missed.">            String ip = cameraIPs.get(key) == null ? &quot;&quot; : cameraIPs.get(key);</span>
+<span class="nc" id="L524">            writer.println((key + 1) + &quot; &quot; + ip);</span>
+        }
+
+<span class="nc" id="L527">        saveDatabaseInformation(writer);</span>
+<span class="nc" id="L528">        writer.flush();</span>
+<span class="nc" id="L529">        writer.close();</span>
+<span class="nc" id="L530">    }</span>
+
+    /**
+     * Saves the database information to a file using a writer.
+     * @param writer The writer that should be used for saving.
+     */
+    private void saveDatabaseInformation(PrintWriter writer) {
+<span class="nc" id="L537">        writer.println(&quot;databaseUrl &quot; + databaseUrl);</span>
+<span class="nc" id="L538">        writer.println(&quot;databasePort &quot; + databasePort);</span>
+<span class="nc" id="L539">        writer.println(&quot;databaseName &quot; + databaseName);</span>
+<span class="nc" id="L540">        writer.println(&quot;databaseUsername &quot; + databaseUsername);</span>
+<span class="nc" id="L541">        writer.println(&quot;databasePassword &quot; + encrypt(databasePassword));</span>
+<span class="nc" id="L542">        writer.println(&quot;jdbcDriver &quot; + jdbcDriver);</span>
+<span class="nc" id="L543">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

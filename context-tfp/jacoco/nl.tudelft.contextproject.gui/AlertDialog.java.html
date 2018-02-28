@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AlertDialog.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Team Free Pizza</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.contextproject.gui</a> &gt; <span class="el_source">AlertDialog.java</span></div><h1>AlertDialog.java</h1><pre class="source lang-java linenums">package nl.tudelft.contextproject.gui;
+
+import static uk.co.caprica.vlcj.version.LibVlcVersion.getVersion;
+
+import com.sun.jna.NativeLibrary;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Window;
+
+import nl.tudelft.contextproject.camera.Camera;
+import nl.tudelft.contextproject.presets.Preset;
+import nl.tudelft.contextproject.saveLoad.ApplicationSettings;
+import nl.tudelft.contextproject.script.Shot;
+import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+
+import java.io.File;
+import java.util.Optional;
+
+/**
+ * Utility class that holds all generated alert dialogs. This handles 
+ * the creation and showing of info, warning and error dialogs 
+ * across the entire application.
+ *
+ * @since 0.6
+ */
+public final class AlertDialog {
+
+    /**
+     * Abstract classes should not have a public constructor,
+     * so defining it as private below.
+     */
+<span class="nc" id="L36">    private AlertDialog() {</span>
+<span class="nc" id="L37">        throw new UnsupportedOperationException();</span>
+    }
+
+    /**
+     * Shows a confirmation dialog when trying to save a {@link Script}, when
+     * the script is invalid.
+     * 
+     * @param error The first shot that causes the invalid script.
+     * @return The alert.
+     */
+    public static Alert confirmInvalidScriptSaving(Shot error) {
+<span class="nc" id="L48">        Alert alert = new Alert(AlertType.CONFIRMATION);</span>
+<span class="nc" id="L49">        alert.setTitle(&quot;Confirm saving&quot;);</span>
+<span class="nc" id="L50">        alert.setHeaderText(&quot;Trying to save invalid script&quot;);</span>
+<span class="nc" id="L51">        alert.setContentText(&quot;Error at shot ID: &quot; </span>
+<span class="nc" id="L52">                + error.getNumber()</span>
+<span class="nc" id="L53">                + &quot;\nYou are trying to save an invalid script. &quot;</span>
+<span class="nc" id="L54">                + &quot;Are you sure you want to continue?&quot;);</span>
+
+<span class="nc" id="L56">        return alert;</span>
+    }
+
+    /**
+     * Shows a warning dialog when trying to load a {@link Script}, when
+     * the script is invalid.
+     * 
+     * @param error The first shot that causes the invalid script.
+     * @return The alert.
+     */
+    public static Alert warningInvalidScriptLoading(Shot error) {
+<span class="nc" id="L67">        Alert alert = new Alert(AlertType.WARNING);</span>
+<span class="nc" id="L68">        alert.setTitle(&quot;Script invalid&quot;);</span>
+<span class="nc" id="L69">        alert.setHeaderText(&quot;Loaded an invalid script&quot;);</span>
+<span class="nc" id="L70">        alert.setContentText(&quot;Error at shot ID: &quot; </span>
+<span class="nc" id="L71">                + error.getNumber()</span>
+<span class="nc" id="L72">                + &quot;\nThe script you loaded is invalid. You can change &quot;</span>
+<span class="nc" id="L73">                + &quot;it in the edit script menu&quot;);</span>
+
+<span class="nc" id="L75">        return alert;</span>
+    }
+
+    /**
+     * Displays a confirm to exit dialog when the 
+     * script has been saved.
+     * 
+     * @param file The file that has been saved.
+     */
+    public static void confirmExitingAfterSaving(File file) {
+<span class="nc" id="L85">        Alert alert = new Alert(AlertType.CONFIRMATION);</span>
+<span class="nc" id="L86">        alert.setTitle(&quot;Confirm exiting&quot;);</span>
+<span class="nc" id="L87">        alert.setHeaderText(&quot;Saving script was succesful!&quot;);</span>
+<span class="nc" id="L88">        alert.setContentText(&quot;Succesful save of script: &quot; </span>
+<span class="nc" id="L89">                + file.getName()</span>
+<span class="nc" id="L90">                + &quot; Do you want to quit to menu?&quot;);</span>
+
+<span class="nc" id="L92">        Optional&lt;ButtonType&gt; result = alert.showAndWait();</span>
+
+<span class="nc bnc" id="L94" title="All 2 branches missed.">        if (result.get() == ButtonType.OK) {</span>
+<span class="nc" id="L95">            MenuController.show();</span>
+        }
+<span class="nc" id="L97">    }</span>
+
+    /**
+     * Shows the dialog when an invalid script is detected.
+     * 
+     * @param number The camera that will have a consecutive shot.
+     * @return True if the user ignores the error, false otherwise.
+     */
+    public static boolean confirmInvalidScriptAdding(Number number) {
+<span class="nc" id="L106">        Alert alert = new Alert(AlertType.CONFIRMATION);</span>
+<span class="nc" id="L107">        alert.setTitle(&quot;Confirm adding shot&quot;);</span>
+<span class="nc" id="L108">        alert.setHeaderText(&quot;Invalid script!&quot;);</span>
+<span class="nc" id="L109">        alert.setContentText(&quot;Are you sure you want to add this &quot;</span>
+                + &quot;shot? It will create an invalid script since &quot;
+                + &quot;camera &quot;
+<span class="nc" id="L112">                + number</span>
+<span class="nc" id="L113">                + &quot; will have two presets in a row!&quot;);</span>
+
+<span class="nc" id="L115">        Optional&lt;ButtonType&gt; result = alert.showAndWait();</span>
+
+<span class="nc bnc" id="L117" title="All 2 branches missed.">        if (result.get() == ButtonType.OK) {</span>
+<span class="nc" id="L118">            return true;</span>
+        }
+
+<span class="nc" id="L121">        return false;</span>
+    }
+
+    /**
+     * Displays an error dialog when saving of the script
+     * was unsuccessful.
+     * 
+     * @param e The exception that was thrown.
+     * @param file The file that was supposed to be saved.
+     */
+    public static void errorSaveUnsuccesful(Exception e, File file) {
+<span class="nc" id="L132">        Alert alert = new Alert(AlertType.ERROR);</span>
+<span class="nc" id="L133">        alert.setTitle(e.getMessage());</span>
+<span class="nc" id="L134">        alert.setHeaderText(&quot;Saving script was unsuccesful!&quot;);</span>
+<span class="nc" id="L135">        alert.setContentText(&quot;Error when trying to save script at location: &quot; </span>
+<span class="nc" id="L136">                + file.getAbsolutePath()</span>
+<span class="nc" id="L137">                + &quot;\n\nError: &quot;</span>
+<span class="nc" id="L138">                + e.getCause());</span>
+
+<span class="nc" id="L140">        alert.showAndWait();</span>
+<span class="nc" id="L141">    }</span>
+
+    /**
+     * Displays an error when saving of the settings was unsuccessful.
+     * @param e The exception that was thrown.
+     */
+    public static void errorSavingSettings(Exception e) {
+<span class="nc" id="L148">        Alert alert = new Alert(AlertType.ERROR);</span>
+<span class="nc" id="L149">        alert.setTitle(&quot;Saving settings failed!&quot;);</span>
+<span class="nc" id="L150">        alert.setHeaderText(&quot;Error when trying to save the settings to file&quot;);</span>
+<span class="nc" id="L151">        alert.setContentText(&quot;An error occurred when trying to save the settings to &quot;</span>
+                + &quot;'settings.tfp'. \n\nError: &quot;
+<span class="nc" id="L153">                + e.getCause());</span>
+<span class="nc" id="L154">        alert.showAndWait();</span>
+<span class="nc" id="L155">    }</span>
+    
+    /**
+     * Displays an error which tells the user no database connection can be made.
+     */
+    public static void noConnection() {
+<span class="nc" id="L161">        Alert alert = new Alert(AlertType.ERROR);</span>
+<span class="nc" id="L162">        alert.setTitle(&quot;Database connection failed!&quot;);</span>
+<span class="nc" id="L163">        alert.setHeaderText(&quot;Error when trying to connect to the database.&quot;);</span>
+<span class="nc" id="L164">        alert.setContentText(&quot;An error occurred when trying to connect to the database.&quot;);</span>
+<span class="nc" id="L165">        alert.showAndWait();</span>
+<span class="nc" id="L166">    }</span>
+
+    /**
+     * Shows a dialog when exiting a screen without saving, thus
+     * not saving currently made changes.
+     * 
+     * @return True if the user wants to quit, false otherwise.
+     */
+    public static boolean confirmExiting() {
+<span class="nc" id="L175">        Alert alert = new Alert(AlertType.CONFIRMATION);</span>
+<span class="nc" id="L176">        alert.setTitle(&quot;Confirm quitting&quot;);</span>
+<span class="nc" id="L177">        alert.setHeaderText(&quot;Exiting will erase any unsaved changes&quot;);</span>
+<span class="nc" id="L178">        alert.setContentText(&quot;Are you sure you want to quit? Any unsaved changes &quot;</span>
+                + &quot;will not be kept.&quot;);
+
+<span class="nc" id="L181">        Optional&lt;ButtonType&gt; result = alert.showAndWait();</span>
+
+<span class="nc bnc" id="L183" title="All 2 branches missed.">        if (result.get() == ButtonType.CANCEL) {</span>
+<span class="nc" id="L184">            return false;</span>
+        }
+
+<span class="nc" id="L187">        return true;</span>
+    }
+
+    /**
+     * Shows the dialog that notifies the user that the loading
+     * of a script was successful.
+     * 
+     * @param file The location of the script that was loaded.
+     */
+    public static void infoSuccesfulLoading(File file) {
+<span class="nc" id="L197">        Alert alert = new Alert(AlertType.INFORMATION);</span>
+<span class="nc" id="L198">        alert.setTitle(&quot;Info Dialog&quot;);</span>
+<span class="nc" id="L199">        alert.setHeaderText(&quot;Loading script was succesful!&quot;);</span>
+<span class="nc" id="L200">        alert.setContentText(&quot;Successful load of script: &quot; + file.getName());</span>
+
+<span class="nc" id="L202">        alert.showAndWait();</span>
+<span class="nc" id="L203">    }</span>
+
+    /**
+     * Displays an error dialog when saving of the script
+     * was unsuccessful.
+     * 
+     * @param e The exception that was thrown.
+     * @param file The file that was supposed to be saved.
+     */
+    public static void errorLoadUnsuccesful(Exception e, File file) {
+<span class="nc bnc" id="L213" title="All 2 branches missed.">        String c = (e.getCause() == null) ? &quot;&quot; : &quot;\nCause: &quot;  + e.getCause();</span>
+
+<span class="nc" id="L215">        Alert alert = new Alert(AlertType.ERROR);</span>
+<span class="nc" id="L216">        alert.setTitle(&quot;Unsuccesful load!&quot;);</span>
+<span class="nc" id="L217">        alert.setHeaderText(&quot;Loading script was unsuccesful!&quot;);</span>
+<span class="nc" id="L218">        alert.setContentText(&quot;Error when trying to load script at location: &quot; </span>
+<span class="nc" id="L219">                + file.getAbsolutePath()</span>
+<span class="nc" id="L220">                + &quot;\n\nError: &quot;</span>
+<span class="nc" id="L221">                + e.getMessage()</span>
+<span class="nc" id="L222">                + c);</span>
+
+<span class="nc" id="L224">        alert.showAndWait();</span>
+<span class="nc" id="L225">    }</span>
+
+    /**
+     * Displays an error dialog when a VLC installation cannot be found.
+     * 
+     * @param window Only used with 
+     *      {@link nl.tudelft.contextproject.ContextTFP#primaryStage ContextTFP.primaryStage}
+     */
+    public static void errorVlcNotFound(Window window) {
+<span class="nc" id="L234">        Alert alert = new Alert(AlertType.ERROR);</span>
+<span class="nc" id="L235">        alert.setTitle(&quot;VLC not found!&quot;);</span>
+<span class="nc" id="L236">        alert.setHeaderText(&quot;VLC installation could not be found.&quot;);</span>
+<span class="nc" id="L237">        alert.setContentText(</span>
+<span class="nc" id="L238">                &quot;If you do have VLC installed, please select your VLC install directory. &quot;</span>
+                        + &quot;\n\nIf not, please install VLC to make use of live camera feeds.&quot;);
+<span class="nc" id="L240">        alert.showAndWait();</span>
+<span class="nc" id="L241">        findVlc(window);</span>
+<span class="nc" id="L242">    }</span>
+
+    /**
+     * Opens a file chooser dialog when a VLC installation cannot be found.
+     * 
+     * @param window Only used with 
+     *      {@link nl.tudelft.contextproject.ContextTFP#primaryStage ContextTFP.primaryStage}
+     */
+    public static void findVlc(Window window) {
+<span class="nc" id="L251">        FileChooser fileChooser = new FileChooser();</span>
+<span class="nc" id="L252">        fileChooser.setTitle(&quot;Locate VLC installation&quot;);</span>
+<span class="nc" id="L253">        fileChooser.setInitialFileName(&quot;libvlc.dll&quot;);</span>
+<span class="nc" id="L254">        fileChooser.getExtensionFilters().add(new ExtensionFilter(&quot;LibVLC&quot;, &quot;libvlc.dll&quot;));</span>
+<span class="nc" id="L255">        File libvlc = fileChooser.showOpenDialog(window);</span>
+
+<span class="nc bnc" id="L257" title="All 2 branches missed.">        if (libvlc != null) {</span>
+<span class="nc" id="L258">            NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), libvlc.getParent());</span>
+            try {
+<span class="nc" id="L260">                getVersion();</span>
+<span class="nc" id="L261">                ApplicationSettings.getInstance().setVlcLocation(libvlc.getParent());</span>
+<span class="nc" id="L262">                Alert alert = new Alert(AlertType.INFORMATION);</span>
+<span class="nc" id="L263">                alert.setTitle(&quot;VLC Found!&quot;);</span>
+<span class="nc" id="L264">                alert.setHeaderText(&quot;VLC installation found!&quot;);</span>
+<span class="nc" id="L265">                alert.setContentText(&quot;Press OK to continue&quot;);</span>
+<span class="nc" id="L266">                alert.show();</span>
+<span class="nc" id="L267">            } catch (UnsatisfiedLinkError e) {</span>
+<span class="nc" id="L268">                e.printStackTrace();</span>
+<span class="nc" id="L269">                errorVlcNotFound(window);</span>
+            }
+<span class="nc" id="L271">        } else {</span>
+<span class="nc" id="L272">            throw new RuntimeException(&quot;No VLC installed!&quot;);</span>
+        }
+<span class="nc" id="L274">    }</span>
+
+    /**
+     * Shows a dialog asking whether the user is sure if he or she
+     * wants to clear all cameras.
+     * @return true iff the user wants to clear, false otherwise.
+     */
+    public static boolean confirmClearCameras() {
+<span class="nc" id="L282">        Alert alert = new Alert(AlertType.CONFIRMATION);</span>
+<span class="nc" id="L283">        alert.setTitle(&quot;Confirm clearing&quot;);</span>
+<span class="nc" id="L284">        alert.setHeaderText(&quot;Are you sure you want to clear all cameras?&quot;);</span>
+<span class="nc" id="L285">        alert.setContentText(&quot;It may not be possible to ever retrieve these settings&quot;);</span>
+<span class="nc bnc" id="L286" title="All 2 branches missed.">        return alert.showAndWait().get() == ButtonType.OK;</span>
+    }
+
+    /**
+     * Shows a dialog asking whether the user is sure if he or she
+     * wants to save the settings.
+     * @return true iff the user wants to save the settings, false otherwise.
+     */
+    public static boolean confirmSaveSettings() {
+<span class="nc" id="L295">        Alert alert = new Alert(AlertType.CONFIRMATION);</span>
+<span class="nc" id="L296">        alert.setTitle(&quot;Confirm saving&quot;);</span>
+<span class="nc" id="L297">        alert.setHeaderText(&quot;Are you sure you want to save these settings?&quot;);</span>
+<span class="nc" id="L298">        alert.setContentText(&quot;The database settings are not verified. You can save the &quot;</span>
+                + &quot;settings, but this prohibits the application from synchronising with &quot;
+                + &quot;the database.&quot;);
+<span class="nc bnc" id="L301" title="All 2 branches missed.">        return alert.showAndWait().get() == ButtonType.OK;</span>
+    }
+
+    /**
+     * Shows a message box to confirm overwriting a preset.
+     * @param newPreset The preset which will overwrite another preset.
+     * @param cam The camera of the preset that will be overridden.
+     */
+    public static boolean confirmPresetOverwrite(Preset newPreset, Camera cam) {
+<span class="nc" id="L310">        Alert alert = new Alert(AlertType.CONFIRMATION);</span>
+<span class="nc" id="L311">        alert.setTitle(&quot;Confirm overwriting&quot;);</span>
+<span class="nc" id="L312">        alert.setHeaderText(&quot;You are about to overwrite a preset&quot;);</span>
+<span class="nc" id="L313">        alert.setContentText(&quot;Are you sure you want to overwrite preset &quot; + newPreset.getId() + &quot;?&quot;);</span>
+
+<span class="nc" id="L315">        Optional&lt;ButtonType&gt; result = alert.showAndWait();</span>
+
+<span class="nc bnc" id="L317" title="All 2 branches missed.">        return result.get() == ButtonType.OK;</span>
+    }
+    
+    /**
+     * Shows a confirmation message when the user clicks the reset script button.
+     * @return The confirmation to return to the user
+     */
+    public static Alert confirmResetScript() {
+<span class="nc" id="L325">        Alert alert = new Alert(AlertType.CONFIRMATION);</span>
+<span class="nc" id="L326">        alert.setTitle(&quot;Warning&quot;);</span>
+<span class="nc" id="L327">        alert.setHeaderText(&quot;Resetting script&quot;);</span>
+<span class="nc" id="L328">        alert.setContentText(&quot;Are you sure you want to reset the script?\n&quot;</span>
+                + &quot;The script will no longer be live.&quot;);
+        
+<span class="nc" id="L331">        return alert;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

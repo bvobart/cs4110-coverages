@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MockedCameraConnection.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Team Free Pizza</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.contextproject.camera</a> &gt; <span class="el_source">MockedCameraConnection.java</span></div><h1>MockedCameraConnection.java</h1><pre class="source lang-java linenums">package nl.tudelft.contextproject.camera;
+
+import java.util.Observable;
+import java.util.Timer;
+import java.util.TimerTask;
+
+/**
+ * Class to represent a mocked camera. It mimics or mocks the behavior of a specific camera
+ * without having a real connection to the cameras.
+ * 
+ * @since 0.4
+ */
+<span class="fc" id="L13">public class MockedCameraConnection extends CameraConnection {</span>
+
+<span class="fc" id="L15">    private CameraSettings camSet = new CameraSettings(30, 30, 30, 1365);</span>
+<span class="fc" id="L16">    private String streamLink = &quot;src\\main\\resources\\error-q.png&quot;;</span>
+    
+    private Timer timer;
+
+    @Override
+    public boolean setUpConnection() {
+<span class="fc" id="L22">        return true;</span>
+    }
+
+    @Override
+    public boolean isConnected() {
+<span class="fc" id="L27">        return true;</span>
+    }
+
+    @Override
+    public String getStreamLink() {
+<span class="fc" id="L32">        return streamLink;</span>
+    }
+
+    /**
+     * Sets the link to the 'live stream' of this mocked camera connection
+     * @param link Link to the 'live stream' of this mocked camera connection.
+     */
+    public void setStreamLink(String link) {
+<span class="nc" id="L40">        streamLink = link;</span>
+<span class="nc" id="L41">    }</span>
+
+    @Override
+    public CameraSettings getCurrentCameraSettings() {
+<span class="fc" id="L45">        return camSet;</span>
+    }
+
+    @Override
+    public int[] getCurrentPanTilt() {
+<span class="fc" id="L50">        return new int[]{camSet.getPan(), camSet.getTilt()};</span>
+    }
+
+    @Override
+    public int getCurrentZoom() {
+<span class="fc" id="L55">        return camSet.getZoom();</span>
+    }
+
+    @Override
+    public int getCurrentFocus() {
+<span class="fc" id="L60">        return camSet.getFocus();</span>
+    }
+
+    @Override
+    protected boolean absPanTilt(int panValue, int tiltValue) {
+<span class="fc" id="L65">        camSet.setPan(panValue);</span>
+<span class="fc" id="L66">        camSet.setTilt(tiltValue);</span>
+
+<span class="fc" id="L68">        return true;</span>
+    }
+
+    @Override
+    protected boolean absPan(int value) {
+<span class="fc" id="L73">        camSet.setPan(value);</span>
+<span class="fc" id="L74">        return true;</span>
+    }
+
+    @Override
+    protected boolean absTilt(int value) {
+<span class="fc" id="L79">        camSet.setTilt(value);</span>
+<span class="fc" id="L80">        return true;</span>
+    }
+
+    @Override
+    protected boolean absZoom(int value) {
+<span class="fc" id="L85">        camSet.setZoom(value);</span>
+<span class="fc" id="L86">        return true;</span>
+    }
+
+    @Override
+    protected boolean absFocus(int value) {
+<span class="fc" id="L91">        camSet.setFocus(value);</span>
+<span class="fc" id="L92">        return true;</span>
+    }
+
+    @Override
+    protected boolean relPanTilt(int panOffset, int tiltOffset) {
+<span class="fc" id="L97">        camSet.pan(panOffset);</span>
+<span class="fc" id="L98">        camSet.tilt(tiltOffset);</span>
+
+<span class="fc" id="L100">        return true;</span>
+    }
+
+    @Override
+    protected boolean relPan(int offset) {
+<span class="fc" id="L105">        camSet.pan(offset);</span>
+<span class="fc" id="L106">        return true;</span>
+    }
+
+    @Override
+    protected boolean relTilt(int offset) {
+<span class="fc" id="L111">        camSet.tilt(offset);</span>
+<span class="fc" id="L112">        return true;</span>
+    }
+
+    @Override
+    protected boolean relZoom(int offset) {
+<span class="fc" id="L117">        camSet.zoom(offset);</span>
+<span class="fc" id="L118">        return true;</span>
+    }
+
+    @Override
+    protected boolean relFocus(int offset) {
+<span class="fc" id="L123">        camSet.focus(offset);</span>
+<span class="fc" id="L124">        return true;</span>
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">        if (!(o instanceof Camera)) {</span>
+<span class="nc" id="L130">            return;</span>
+        }
+
+<span class="fc bfc" id="L133" title="All 2 branches covered.">        if (arg instanceof CameraSettings) {</span>
+<span class="fc" id="L134">            camSet = (CameraSettings) arg;</span>
+        }
+<span class="fc" id="L136">    }</span>
+
+    @Override
+    protected boolean panTiltStart(int panSpeed, int tiltSpeed) {
+<span class="nc bnc" id="L140" title="All 4 branches missed.">        if (panSpeed == 50 &amp;&amp; tiltSpeed == 50) {</span>
+<span class="nc" id="L141">            return panTiltStop();</span>
+        }
+        
+<span class="nc" id="L144">        timer = new Timer(&quot;CameraSettings Pan Tilt&quot;);</span>
+<span class="nc" id="L145">        timer.scheduleAtFixedRate(new TimerTask() {</span>
+            @Override
+            public void run() {
+<span class="nc" id="L148">                int panOff = (panSpeed - 50) * 2;</span>
+<span class="nc" id="L149">                int tiltOff = (tiltSpeed - 50) * 2;</span>
+<span class="nc" id="L150">                relPanTilt(panOff, tiltOff);</span>
+<span class="nc" id="L151">            }</span>
+<span class="nc" id="L152">        }, 0, 100);</span>
+        
+<span class="nc" id="L154">        timer.schedule(new TimerTask() {</span>
+            @Override
+            public void run() {
+<span class="nc" id="L157">                timer.cancel();</span>
+<span class="nc" id="L158">            }</span>
+<span class="nc" id="L159">        }, 60000); //so it will automatically stop after a minute.</span>
+        
+<span class="nc" id="L161">        return true;</span>
+    }
+
+    @Override
+    protected boolean panTiltStop() {
+<span class="nc bnc" id="L166" title="All 2 branches missed.">        if (timer != null) {</span>
+<span class="nc" id="L167">            timer.cancel();</span>
+        }
+<span class="nc" id="L169">        return true;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Preset.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Team Free Pizza</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.contextproject.presets</a> &gt; <span class="el_source">Preset.java</span></div><h1>Preset.java</h1><pre class="source lang-java linenums">package nl.tudelft.contextproject.presets;
+
+import nl.tudelft.contextproject.camera.Camera;
+import nl.tudelft.contextproject.camera.CameraSettings;
+
+import java.util.Objects;
+
+/**
+ * Class to represent a camera preset.
+ * Extend this class to create different presets, with different
+ * functionalities, such as application over time.
+ * 
+ * {@link #applyTo(Camera)} should be implemented to apply the
+ * preset to the camera, in its respective way.
+ * 
+ * @since 0.2
+ */
+public abstract class Preset {
+
+    private String description;
+    private CameraSettings toSet;
+    private int id;
+    private String imageLocation;
+
+    /**
+     * Creates a Preset object with to set camera settings toSet.
+     * 
+     * @param toSet Camera settings to set when applied.
+     * @param identifier The identifier of this preset.
+     */
+<span class="fc" id="L31">    protected Preset(CameraSettings toSet, int identifier) {</span>
+<span class="fc" id="L32">        this.description = &quot;&quot;;</span>
+<span class="fc" id="L33">        this.toSet = toSet;</span>
+<span class="fc" id="L34">        this.id = identifier;</span>
+<span class="fc" id="L35">        this.imageLocation = &quot;&quot;;</span>
+<span class="fc" id="L36">    }</span>
+
+    /**
+     * Returns the identifier of this preset.
+     * @return The identifier of this preset.
+     */
+    public int getId() {
+<span class="fc" id="L43">        return id;</span>
+    }
+
+    @Override
+    public boolean equals(Object o) {
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">        if (o instanceof Preset) {</span>
+<span class="fc" id="L49">            Preset preset = (Preset) o;</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">            return getId() == preset.getId()</span>
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">                    &amp;&amp; Objects.equals(getDescription(), preset.getDescription())</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">                    &amp;&amp; Objects.equals(getToSet(), preset.getToSet())</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">                    &amp;&amp; Objects.equals(imageLocation, preset.imageLocation);</span>
+        }
+
+<span class="nc" id="L56">        return false;</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L61">        return Objects.hash(getDescription(), getToSet(), getId(), imageLocation);</span>
+    }
+
+    /**
+     * Returns the settings the camera should be set to.
+     * @return To be applied camera settings
+     */
+    public CameraSettings getToSet() {
+<span class="fc" id="L69">        return toSet;</span>
+    }
+
+    /**
+     * Sets the location of the preview image of the preset.
+     * @param loc Location of the preview image.
+     */
+    public void setImageLocation(String loc) {
+<span class="fc" id="L77">        this.imageLocation = loc;</span>
+<span class="fc" id="L78">    }</span>
+
+    /**
+     * Returns the location of the preview image.
+     * @return Location of the preview image.
+     */
+    public String getImage() {
+<span class="fc" id="L85">        return this.imageLocation;</span>
+    }
+
+    /**
+     * Sets the description of the preset.
+     * @param desc The description of the preset.
+     */
+    public void setDescription(String desc) {
+<span class="fc" id="L93">        this.description = desc;</span>
+<span class="fc" id="L94">    }</span>
+
+    /**
+     * Returns the description of the preset.
+     * @return The description of the preset.
+     */
+    public String getDescription() {
+<span class="fc" id="L101">        return this.description;</span>
+    }
+
+    /**
+     * Applies the preset to the camera.
+     * @param cam Camera the preset should be applied to.
+     */
+    public abstract void applyTo(Camera cam);
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

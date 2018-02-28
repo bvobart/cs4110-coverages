@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PresetController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Team Free Pizza</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.contextproject.gui</a> &gt; <span class="el_source">PresetController.java</span></div><h1>PresetController.java</h1><pre class="source lang-java linenums">package nl.tudelft.contextproject.gui;
+
+import javafx.beans.property.FloatProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+
+import nl.tudelft.contextproject.ContextTFP;
+import nl.tudelft.contextproject.camera.Camera;
+import nl.tudelft.contextproject.presets.InstantPreset;
+import nl.tudelft.contextproject.presets.Preset;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+/**
+ * This class is a control class for the preset creation screen. It
+ * enables the creation and modification of presets for different cameras.
+ * 
+ * &lt;p&gt;The view section is defined under view/PresetView.fxml
+ * 
+ * @since 0.2
+ */
+<span class="nc" id="L43">public class PresetController {</span>
+
+<span class="nc" id="L45">    private static boolean toCameramanView = false;</span>
+
+    @FXML private CheckBox overwrite;
+    @FXML private CheckBox arrowControl;
+
+    @FXML private ChoiceBox&lt;Integer&gt; cameraSelector;
+
+    @FXML private Button btnBack;
+    @FXML private Button btnSave;
+    @FXML private Button btnRemove;
+    @FXML private Button btnGotoPreset;
+
+    @FXML private TableView&lt;Preset&gt; tableView;
+    @FXML private TableColumn&lt;Preset, Integer&gt; presetColumn;
+    @FXML private TableColumn&lt;Preset, String&gt; descColumn;
+
+    @FXML private TextField presetID;
+    @FXML private TextField description;
+
+    @FXML private VBox vBox;
+
+    private LiveStreamHandler streamHandler;
+<span class="nc" id="L67">    private ObservableList&lt;Preset&gt; data = FXCollections.observableArrayList();</span>
+    private ImageView imageView;
+
+    /**
+     * Initialize method for JavaFX.
+     */
+    @FXML private void initialize() {
+<span class="nc" id="L74">        List&lt;Integer&gt; cameraList = new ArrayList&lt;Integer&gt;();</span>
+
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        for (int i = 0; i &lt; Camera.getCameraAmount(); i++) {</span>
+<span class="nc" id="L77">            cameraList.add(i + 1);</span>
+        }
+
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        if (toCameramanView) {</span>
+<span class="nc" id="L81">            btnBack.setText(&quot;Return to cameraman view&quot;);</span>
+<span class="nc" id="L82">        } else {</span>
+<span class="nc" id="L83">            btnBack.setText(&quot;Return to menu&quot;);</span>
+        }
+
+<span class="nc" id="L86">        cameraSelector.setItems(FXCollections.observableArrayList(cameraList));</span>
+
+<span class="nc" id="L88">        applySettings();</span>
+<span class="nc" id="L89">        setFactories();</span>
+<span class="nc" id="L90">        setActions();</span>
+
+<span class="nc" id="L92">        cameraSelector.getSelectionModel().select(0);</span>
+
+<span class="nc" id="L94">        sort();</span>
+        
+        // Changes the &quot;No content in table&quot; label.
+<span class="nc" id="L97">        tableView.setPlaceholder(new Label(&quot;There are no presets yet. &quot;</span>
+                + &quot;Add one on the left.&quot;));
+<span class="nc" id="L99">    }</span>
+
+    /**
+     * Applies JavaFX settings that can't be specified in the FXML.
+     */
+    private void applySettings() {
+<span class="nc" id="L105">        vBox.setAlignment(Pos.CENTER);</span>
+<span class="nc" id="L106">        vBox.getChildren().clear();</span>
+<span class="nc" id="L107">    }</span>
+
+    /**
+     * Updates the camera stream to the stream referenced by the specified link.
+     * @param streamLink the link to the video stream to be played next.
+     */
+    private void updateStream(String streamLink) {
+<span class="nc bnc" id="L114" title="All 2 branches missed.">        if (streamHandler != null) {</span>
+<span class="nc" id="L115">            streamHandler.stop();</span>
+        }
+
+<span class="nc" id="L118">        streamHandler = new LiveStreamHandler();</span>
+<span class="nc" id="L119">        imageView = streamHandler.createImageView(streamLink, 1920, 1080);</span>
+<span class="nc" id="L120">        new Thread(() -&gt; {</span>
+<span class="nc" id="L121">            fitImageViewSize((float) vBox.getWidth(), (float) vBox.getHeight());</span>
+<span class="nc" id="L122">        }).start();</span>
+
+<span class="nc" id="L124">        vBox.getChildren().clear();</span>
+<span class="nc" id="L125">        vBox.getChildren().add(imageView);</span>
+<span class="nc" id="L126">        streamHandler.start();</span>
+<span class="nc" id="L127">    }</span>
+
+    /**
+     * Sets the factories for the table.
+     */
+    private void setFactories() {
+<span class="nc" id="L133">        presetColumn.setCellValueFactory(</span>
+<span class="nc" id="L134">            new PropertyValueFactory&lt;Preset, Integer&gt;(&quot;id&quot;));</span>
+
+<span class="nc" id="L136">        descColumn.setCellValueFactory(</span>
+<span class="nc" id="L137">            new PropertyValueFactory&lt;Preset, String&gt;(&quot;description&quot;));</span>
+<span class="nc" id="L138">    }</span>
+
+    /**
+     * Adds all actions and listeners to the JavaFX components.
+     */
+    private void setActions() {
+<span class="nc" id="L144">        tableView.setItems(data);</span>
+
+<span class="nc" id="L146">        btnRemove.setOnAction(event -&gt; {</span>
+<span class="nc" id="L147">            int selectedIndex = tableView.getSelectionModel().getSelectedIndex();</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">            if (selectedIndex &gt;= 0) {</span>
+<span class="nc" id="L149">                Preset selected = tableView.getItems().get(selectedIndex);</span>
+<span class="nc" id="L150">                Camera cam = Camera.getCamera(cameraSelector.getValue() - 1);</span>
+<span class="nc" id="L151">                cam.removePreset(selected);</span>
+<span class="nc" id="L152">                data.remove(selected);</span>
+            }
+<span class="nc" id="L154">        });</span>
+
+<span class="nc" id="L156">        vBox.widthProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">            if (streamHandler != null) {</span>
+<span class="nc" id="L158">                fitImageViewSize(newValue.floatValue(), (float) vBox.getHeight());</span>
+            }
+<span class="nc" id="L160">        });</span>
+
+<span class="nc" id="L162">        vBox.heightProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">            if (streamHandler != null) {</span>
+<span class="nc" id="L164">                fitImageViewSize((float) vBox.getWidth(), newValue.floatValue());</span>
+            }
+<span class="nc" id="L166">        });</span>
+
+<span class="nc" id="L168">        initSaveButton();</span>
+<span class="nc" id="L169">        initBackButton();</span>
+<span class="nc" id="L170">        initGotoPresetButton();</span>
+<span class="nc" id="L171">        setCameraSelector();</span>
+<span class="nc" id="L172">        setArrowControl();</span>
+<span class="nc" id="L173">    }</span>
+    
+    /**
+     * Adds the listener to the goto preset button.
+     */
+    private void initGotoPresetButton() {
+<span class="nc" id="L179">        btnGotoPreset.setOnAction(event -&gt; {</span>
+<span class="nc" id="L180">            int selectedIndex = tableView.getSelectionModel().getSelectedIndex();</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">            if (selectedIndex &gt;= 0) {</span>
+<span class="nc" id="L182">                Preset selected = tableView.getItems().get(selectedIndex);</span>
+<span class="nc" id="L183">                Camera cam = Camera.getCamera(cameraSelector.getValue() - 1);</span>
+<span class="nc" id="L184">                selected.applyTo(cam);</span>
+            }
+<span class="nc" id="L186">        });</span>
+<span class="nc" id="L187">    }</span>
+
+    /**
+     * Sets the onAction for the save button.
+     */
+    private void initSaveButton() {
+<span class="nc" id="L193">        btnSave.setOnAction(event -&gt; {</span>
+<span class="nc" id="L194">            int id = -1;</span>
+
+            try {
+<span class="nc" id="L197">                id = Integer.parseInt(presetID.getText());</span>
+<span class="nc" id="L198">                presetID.setStyle(&quot;&quot;);</span>
+<span class="nc" id="L199">                addPreset(id);</span>
+<span class="nc" id="L200">            } catch (Exception e) {</span>
+<span class="nc" id="L201">                presetID.setStyle(&quot;-fx-border-color: red;&quot;);</span>
+            }
+<span class="nc" id="L203">        });</span>
+<span class="nc" id="L204">    }</span>
+
+    /**
+     * Sets the onAction for the back button.
+     */
+    private void initBackButton() {
+<span class="nc" id="L210">        btnBack.setOnAction(event -&gt; {</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">            if (streamHandler != null) {</span>
+<span class="nc" id="L212">                streamHandler.stop();</span>
+            }
+            
+<span class="nc" id="L215">            removeArrowKeyBinds();</span>
+
+<span class="nc bnc" id="L217" title="All 2 branches missed.">            if (toCameramanView) {</span>
+<span class="nc" id="L218">                Animation.animNodeOut(ContextTFP.getRootLayout(), false).setOnFinished(f -&gt; {</span>
+<span class="nc" id="L219">                    CameramanLiveController.show();</span>
+<span class="nc" id="L220">                    Animation.animNodeIn(ContextTFP.getRootLayout());</span>
+<span class="nc" id="L221">                });</span>
+<span class="nc" id="L222">            } else {</span>
+<span class="nc" id="L223">                MenuController.show();</span>
+            }
+<span class="nc" id="L225">        });</span>
+<span class="nc" id="L226">    }</span>
+
+    /**
+     * Sets the onAction for the camera selection choicebox.
+     */
+    private void setCameraSelector() {
+<span class="nc" id="L232">        cameraSelector.setOnAction(event -&gt; {</span>
+<span class="nc" id="L233">            Camera cam = Camera.getCamera(cameraSelector.getValue() - 1);</span>
+<span class="nc" id="L234">            HashMap&lt;Integer, Preset&gt; presets = cam.getPresets();</span>
+<span class="nc" id="L235">            data.clear();</span>
+
+<span class="nc bnc" id="L237" title="All 2 branches missed.">            for (Preset p : presets.values()) {</span>
+<span class="nc" id="L238">                data.add(p);</span>
+            }
+
+<span class="nc bnc" id="L241" title="All 2 branches missed.">            if (cam.hasConnection()) {</span>
+<span class="nc" id="L242">                updateStream(cam.getConnection().getStreamLink());</span>
+<span class="nc" id="L243">            } else {</span>
+<span class="nc" id="L244">                updateStream(&quot;http://i.imgur.com/4YeD8Ti.png&quot;);</span>
+            }
+<span class="nc" id="L246">        });</span>
+<span class="nc" id="L247">    }</span>
+    
+    /**
+     * Sets the action for the arrow key control checkbox.
+     */
+    private void setArrowControl() {
+<span class="nc" id="L253">        arrowControl.setOnAction(event -&gt; {</span>
+<span class="nc bnc" id="L254" title="All 2 branches missed.">            if (arrowControl.isSelected()) {</span>
+<span class="nc" id="L255">                setArrowKeyBinds();</span>
+<span class="nc" id="L256">            } else {</span>
+<span class="nc" id="L257">                removeArrowKeyBinds();</span>
+            }
+<span class="nc" id="L259">        });</span>
+<span class="nc" id="L260">    }</span>
+    
+    /**
+     * Sets the actions to allow arrow key operated control of the camera.
+     */
+    private void setArrowKeyBinds() {
+<span class="nc" id="L266">        Scene scene = arrowControl.getScene();</span>
+<span class="nc" id="L267">        Set&lt;KeyCode&gt; pressedKeys = new HashSet&lt;KeyCode&gt;();</span>
+
+<span class="nc" id="L269">        scene.setOnKeyPressed(event -&gt; {</span>
+<span class="nc bnc" id="L270" title="All 4 branches missed.">            if (!pressedKeys.contains(event.getCode()) &amp;&amp; cameraSelector.getValue() != null) {</span>
+<span class="nc" id="L271">                pressedKeys.add(event.getCode());</span>
+<span class="nc" id="L272">                Camera currentCam = Camera.getCamera(cameraSelector.getValue() - 1);</span>
+                
+<span class="nc bnc" id="L274" title="All 5 branches missed.">                switch (event.getCode()) {</span>
+                    case LEFT:
+<span class="nc" id="L276">                        currentCam.panTiltStart(1, 50);</span>
+<span class="nc" id="L277">                        break;</span>
+                    case RIGHT:
+<span class="nc" id="L279">                        currentCam.panTiltStart(99, 50);</span>
+<span class="nc" id="L280">                        break;</span>
+                    case UP:
+<span class="nc" id="L282">                        currentCam.panTiltStart(50, 99);</span>
+<span class="nc" id="L283">                        break;</span>
+                    case DOWN:
+<span class="nc" id="L285">                        currentCam.panTiltStart(50, 1);</span>
+<span class="nc" id="L286">                        break;</span>
+                    default:
+                        break;
+                }
+            }
+<span class="nc" id="L291">            event.consume();</span>
+<span class="nc" id="L292">        });</span>
+        
+<span class="nc" id="L294">        scene.setOnKeyReleased(event -&gt; {</span>
+<span class="nc bnc" id="L295" title="All 2 branches missed.">            if (cameraSelector.getValue() != null) {</span>
+<span class="nc" id="L296">                pressedKeys.remove(event.getCode());</span>
+<span class="nc" id="L297">                Camera currentCam = Camera.getCamera(cameraSelector.getValue() - 1);</span>
+
+<span class="nc bnc" id="L299" title="All 2 branches missed.">                switch (event.getCode()) {</span>
+                    case LEFT:
+                    case RIGHT:
+                    case UP:
+                    case DOWN:
+<span class="nc" id="L304">                        currentCam.panTiltStop();</span>
+<span class="nc" id="L305">                        break;</span>
+                    default:
+                        break;
+                }
+<span class="nc" id="L309">                event.consume();</span>
+            }
+<span class="nc" id="L311">        });</span>
+<span class="nc" id="L312">    }</span>
+
+    /**
+     * Removes the actions to disable arrow key operated control of a camera.
+     */
+    private void removeArrowKeyBinds() {
+<span class="nc" id="L318">        Scene scene = arrowControl.getScene();</span>
+<span class="nc" id="L319">        scene.setOnKeyPressed(null);</span>
+<span class="nc" id="L320">        scene.setOnKeyReleased(null);</span>
+<span class="nc" id="L321">    }</span>
+    
+    /**
+     * Resizes the ImageView.
+     * 
+     * @param width The new width of the ImageView.
+     * @param height The new height of the ImageView.
+     */
+    private void fitImageViewSize(float width, float height) {
+<span class="nc" id="L330">        FloatProperty videoSourceRatioProperty = streamHandler.getRatio();</span>
+<span class="nc" id="L331">        float fitHeight = videoSourceRatioProperty.get() * width;</span>
+
+<span class="nc bnc" id="L333" title="All 2 branches missed.">        if (fitHeight &gt; height) {</span>
+<span class="nc" id="L334">            imageView.setFitHeight(height);</span>
+<span class="nc" id="L335">            double fitWidth = height / videoSourceRatioProperty.get();</span>
+<span class="nc" id="L336">            imageView.setFitWidth(fitWidth);</span>
+<span class="nc" id="L337">            imageView.setX((width - fitWidth) / 2);</span>
+<span class="nc" id="L338">            imageView.setY(0);</span>
+<span class="nc" id="L339">        } else {</span>
+<span class="nc" id="L340">            imageView.setFitWidth(width);</span>
+<span class="nc" id="L341">            imageView.setFitHeight(fitHeight);</span>
+<span class="nc" id="L342">            imageView.setY((height - fitHeight) / 2);</span>
+<span class="nc" id="L343">            imageView.setX(0);</span>
+        }   
+<span class="nc" id="L345">    }</span>
+
+    /**
+     * Method for adding a preset to the view and the model.
+     * @param id The id of the preset to add.
+     */
+    private void addPreset(int id) {
+<span class="nc" id="L352">        Camera cam = Camera.getCamera(cameraSelector.getValue() - 1);</span>
+<span class="nc" id="L353">        Preset newPreset = new InstantPreset(</span>
+<span class="nc" id="L354">                cam.getSettings(),</span>
+<span class="nc" id="L355">                id,</span>
+<span class="nc" id="L356">                description.getText());</span>
+<span class="nc" id="L357">        String loc = &quot;src/main/resources/snapShots/cam&quot; + cam.getNumber() + &quot;preset&quot; + newPreset.getId() + &quot;.png&quot;;</span>
+        
+<span class="nc bnc" id="L359" title="All 2 branches missed.">        if (streamHandler != null) {</span>
+<span class="nc" id="L360">            streamHandler.snapShot(loc);</span>
+<span class="nc" id="L361">            newPreset.setImageLocation(loc);</span>
+        }
+        
+<span class="nc bnc" id="L364" title="All 2 branches missed.">        if (overwrite.isSelected()) {</span>
+<span class="nc" id="L365">            cam.overwritePreset(newPreset);</span>
+<span class="nc" id="L366">            int newId = newPreset.getId();</span>
+<span class="nc" id="L367">            removePreset(newId);  </span>
+<span class="nc" id="L368">            addToTable(newPreset);</span>
+<span class="nc" id="L369">        } else {</span>
+<span class="nc bnc" id="L370" title="All 2 branches missed.">            if (cam.addPreset(newPreset)) {</span>
+<span class="nc" id="L371">                addToTable(newPreset);</span>
+<span class="nc" id="L372">            } else {</span>
+<span class="nc bnc" id="L373" title="All 2 branches missed.">                if (AlertDialog.confirmPresetOverwrite(newPreset, cam)) {</span>
+<span class="nc" id="L374">                    cam.overwritePreset(newPreset);</span>
+<span class="nc" id="L375">                    int newId = newPreset.getId();</span>
+<span class="nc" id="L376">                    removePreset(newId);  </span>
+<span class="nc" id="L377">                    addToTable(newPreset);</span>
+                }
+            }
+        }
+<span class="nc" id="L381">    }</span>
+
+    /**
+     * Used to add a preset to the table view.
+     * @param p The preset to add.
+     */
+    private void addToTable(Preset p) {
+<span class="nc" id="L388">        data.add(p);</span>
+<span class="nc" id="L389">        sort();</span>
+<span class="nc" id="L390">    }</span>
+
+    /**
+     * Sorts the tableview, ascending to preset id.
+     */
+    private void sort() {
+<span class="nc" id="L396">        tableView.getSortOrder().clear();</span>
+<span class="nc" id="L397">        tableView.getSortOrder().add(presetColumn);</span>
+<span class="nc" id="L398">        presetColumn.setSortable(true);</span>
+<span class="nc" id="L399">    }</span>
+
+    /**
+     * Because the preset id might not be the same as the position in the list, 
+     * this method is required to remove a preset.
+     * 
+     * @param id The id of the preset to remove.
+     */
+    private void removePreset(int id) {
+<span class="nc bnc" id="L408" title="All 2 branches missed.">        for (int i = 0; i &lt; data.size(); i++) {</span>
+<span class="nc" id="L409">            Preset p = data.get(i);</span>
+<span class="nc bnc" id="L410" title="All 2 branches missed.">            if (p.getId() == id) {</span>
+<span class="nc" id="L411">                data.remove(i);</span>
+<span class="nc" id="L412">                break;</span>
+            }
+        }
+<span class="nc" id="L415">    }</span>
+
+    /**
+     * Sets the toCameramanView, that sets the back button to
+     * go back to the cameraman view if the user came from there.
+     * 
+     * @param bSet True iff the back button should go to the
+     *      CameramanLiveView.
+     */
+    public static void setToCameramanView(boolean bSet) {
+<span class="nc" id="L425">        toCameramanView = bSet;</span>
+<span class="nc" id="L426">    }</span>
+
+    /**
+     * Calling this method shows this view in the middle of the rootLayout,
+     * forcing the current view to disappear.
+     */
+    public static void show() {
+        try {
+<span class="nc" id="L434">            FXMLLoader loader = new FXMLLoader();</span>
+<span class="nc" id="L435">            loader.setLocation(ContextTFP.class.getResource(&quot;view/PresetView.fxml&quot;));</span>
+<span class="nc" id="L436">            AnchorPane createScriptView = (AnchorPane) loader.load();</span>
+
+<span class="nc" id="L438">            ContextTFP.getRootLayout().setCenter(createScriptView);</span>
+<span class="nc" id="L439">        } catch (IOException e) {</span>
+<span class="nc" id="L440">            e.printStackTrace();</span>
+        }
+<span class="nc" id="L442">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

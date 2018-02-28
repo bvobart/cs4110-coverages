@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LiveScript.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Team Free Pizza</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.contextproject.gui</a> &gt; <span class="el_source">LiveScript.java</span></div><h1>LiveScript.java</h1><pre class="source lang-java linenums">package nl.tudelft.contextproject.gui;
+
+import javafx.css.PseudoClass;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
+
+import nl.tudelft.contextproject.ContextTFP;
+import nl.tudelft.contextproject.script.Shot;
+
+/**
+ * Class that handles the live script. For now just enables the table
+ * to highlight the current shot. Put in a separate class
+ * to prevent code duplication.
+ * 
+ * @since 0.9
+ */
+public final class LiveScript {
+
+    /**
+     * Constructor should not be called, so defining
+     * it as private.
+     */
+    private LiveScript() { }
+    
+    /**
+     * Sets the rowFactory for the given table, to allow it to highlight the
+     * current shot by applying a CSS {@link PseudoClass}.
+     * 
+     * @param tableShots The table to set the rowFactory of.
+     */
+    protected static void setRowFactory(TableView&lt;Shot&gt; tableShots) {
+<span class="nc" id="L32">        final PseudoClass currentPseudoClass = PseudoClass.getPseudoClass(&quot;current&quot;);</span>
+
+<span class="nc" id="L34">        tableShots.setRowFactory(table -&gt; new TableRow&lt;Shot&gt;() {</span>
+
+            @Override
+            protected void updateItem(Shot s, boolean b) {
+<span class="nc" id="L38">                super.updateItem(s, b);</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">                if (s != null) {</span>
+<span class="nc" id="L40">                    boolean current = s.equals(ContextTFP.getScript().getCurrentShot());</span>
+<span class="nc" id="L41">                    pseudoClassStateChanged(currentPseudoClass, current);</span>
+<span class="nc" id="L42">                    tableShots.refresh();</span>
+                }
+<span class="nc" id="L44">            }</span>
+<span class="nc" id="L45">        });</span>
+<span class="nc" id="L46">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

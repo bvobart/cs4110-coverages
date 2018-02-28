@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Animation.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Team Free Pizza</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.contextproject.gui</a> &gt; <span class="el_source">Animation.java</span></div><h1>Animation.java</h1><pre class="source lang-java linenums">package nl.tudelft.contextproject.gui;
+
+import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
+import javafx.scene.Node;
+import javafx.util.Duration;
+
+/**
+ * This class is responsible for all animations made by the
+ * gui. It handles all translations, fades and other visually
+ * appealing effects that the end user can see.
+ * 
+ * @since 0.7
+ */
+public final class Animation {
+
+    private static final int DURATION_FADE = 500;
+    private static final int DURATION_TRANS = 300;
+    private static final int OFFSET_Y = 80;
+
+    /**
+     * Abstract classes should not have a public constructor,
+     * so defining it as private below.
+     */
+<span class="nc" id="L28">    private Animation() {</span>
+<span class="nc" id="L29">        throw new UnsupportedOperationException();</span>
+    }
+
+    /**
+     * Animation for a {@link Node}. Makes the Node move up.
+     * 
+     * @param n The Node to animate.
+     * @see #animNodeUpDown(Node, boolean)
+     */
+    protected static void animNodeUp(Node n) {
+<span class="nc" id="L39">        animNodeUpDown(n, true);</span>
+<span class="nc" id="L40">    }</span>
+
+    /**
+     * Animation for a {@link Node}. Makes the Node move down.
+     * 
+     * @param n The Node to animate.
+     * @see #animNodeUpDown(Node, boolean)
+     */
+    protected static void animNodeDown(Node n) {
+<span class="nc" id="L49">        animNodeUpDown(n, false);</span>
+<span class="nc" id="L50">    }</span>
+
+    /**
+     * Move a {@link Node} up or down. Uses a {@link TranslateTransition}
+     * to translate the Node. Also uses an EASE_OUT {@link Interpolator}
+     * to smooth out the translation. The Node is disabled during the
+     * translation to prevent the Node from being clicked on twice, 
+     * messing up the translation.
+     * 
+     * @param n The Node to move.
+     * @param up True if the animation is up, false if down.
+     */
+    private static void animNodeUpDown(Node n, boolean up) {
+<span class="nc" id="L63">        n.setDisable(true);</span>
+
+<span class="nc" id="L65">        TranslateTransition tt = new TranslateTransition(Duration.millis(DURATION_TRANS), n);</span>
+
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (up) {</span>
+<span class="nc" id="L68">            tt.setByY(-OFFSET_Y);</span>
+<span class="nc" id="L69">        } else {</span>
+<span class="nc" id="L70">            tt.setByY(OFFSET_Y);</span>
+        }
+
+<span class="nc" id="L73">        tt.setInterpolator(Interpolator.EASE_OUT);</span>
+<span class="nc" id="L74">        tt.play();</span>
+<span class="nc" id="L75">        tt.setOnFinished(event -&gt; {</span>
+<span class="nc" id="L76">            n.setDisable(false);</span>
+<span class="nc" id="L77">        });</span>
+<span class="nc" id="L78">    }</span>
+
+    /**
+     * Animation for a {@link Node}. Makes the Node fade in. Uses a
+     * {@link FadeTransition} to create the fade animation. Makes the
+     * Node visible to make sure the fade is displayed.
+     * 
+     * @param n The Node to animate.
+     */
+    protected static void animNodeIn(Node n) {
+<span class="nc" id="L88">        FadeTransition ft = new FadeTransition(Duration.millis(DURATION_FADE), n);</span>
+<span class="nc" id="L89">        ft.setFromValue(0.0);</span>
+<span class="nc" id="L90">        ft.setToValue(1.0);</span>
+
+<span class="nc" id="L92">        ft.play();</span>
+<span class="nc" id="L93">        n.setVisible(true);</span>
+<span class="nc" id="L94">    }</span>
+
+    /**
+     * Animation for a {@link Node}. Makes the Node fade out. Uses a 
+     * {@link FadeTransition} to create the fade animation. The duration of the
+     * fade is {@link #DURATION_FADE} / 4 when bMakeInvisible is false, or
+     * {@link #DURATION_FADE} / 3 when bMakeInvisible is true.
+     * 
+     * @param n The Node to animate.
+     * @param bMakeInvisible True if the Node should be made invisible 
+     *      after the animation.
+     * @return Returns the FadeTransition itself so it can be modified
+     *      by an external class. This can be used to set an action after the
+     *      completion of the animation.
+     */
+    protected static FadeTransition animNodeOut(Node n, boolean bMakeInvisible) {
+        int dur;
+        
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        if (bMakeInvisible) {</span>
+<span class="nc" id="L113">            dur = DURATION_FADE / 3;</span>
+<span class="nc" id="L114">        } else {</span>
+<span class="nc" id="L115">            dur = DURATION_FADE / 4;</span>
+        }
+        
+<span class="nc" id="L118">        FadeTransition ft = new FadeTransition(Duration.millis(dur), n);</span>
+<span class="nc" id="L119">        ft.setFromValue(1.0);</span>
+<span class="nc" id="L120">        ft.setToValue(0.0);</span>
+
+<span class="nc" id="L122">        ft.play();</span>
+        
+<span class="nc bnc" id="L124" title="All 2 branches missed.">        if (bMakeInvisible) {</span>
+<span class="nc" id="L125">            ft.setOnFinished(event -&gt; {</span>
+<span class="nc" id="L126">                n.setVisible(false);</span>
+<span class="nc" id="L127">            });</span>
+<span class="nc" id="L128">        } else {</span>
+<span class="nc" id="L129">            animTimeout(dur);</span>
+        }
+        
+<span class="nc" id="L132">        return ft;</span>
+    }
+
+    /**
+     * Sets a timeout to prevent the window from being changed when a fade out
+     * animation is still playing. Only called from {@link #animNodeOut(Node, boolean)}
+     * 
+     * @param dur The duration of the timeout.
+     */
+    private static void animTimeout(int dur) {
+<span class="nc" id="L142">        Timeline timeout = new Timeline(new KeyFrame(Duration.millis(dur)));</span>
+<span class="nc" id="L143">        timeout.play();</span>
+<span class="nc" id="L144">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

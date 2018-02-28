@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DirectorLiveController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Team Free Pizza</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.contextproject.gui</a> &gt; <span class="el_source">DirectorLiveController.java</span></div><h1>DirectorLiveController.java</h1><pre class="source lang-java linenums">package nl.tudelft.contextproject.gui;
+
+import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import nl.tudelft.contextproject.ContextTFP;
+import nl.tudelft.contextproject.camera.Camera;
+import nl.tudelft.contextproject.databaseConnection.DatabaseConnection;
+import nl.tudelft.contextproject.presets.Preset;
+import nl.tudelft.contextproject.script.Script;
+import nl.tudelft.contextproject.script.Shot;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Optional;
+
+/**
+ * This class controls the screen that shows the live view
+ * of the {@link Camera} for the director. The director can use this screen
+ * to use the application during live production to get an overview
+ * of the live camera, a preview camera and the {@link Script}, along with controls
+ * to control the cameras and the {@link Preset Presets} set to these cameras.
+ * 
+ * &lt;p&gt;The view section is defined under view/DirectorLiveView.fxml
+ * 
+ * @since 0.3
+ */
+<span class="nc" id="L45">public class DirectorLiveController {</span>
+
+    private static Script script;
+
+    @FXML private Button btnBack;
+    @FXML private Button btnConfirm;
+    @FXML private Button btnManualLoad;
+    @FXML private Button btnNext;
+    @FXML private Button btnReset;
+    @FXML private Button btnUndo;
+
+    @FXML private CheckBox automaticCheck;
+
+    @FXML private ChoiceBox&lt;Camera&gt; cameraSelector;
+    @FXML private ChoiceBox&lt;String&gt; presetSelector;
+
+    @FXML private ImageView thumbnail;
+
+    @FXML private Label actionTxt;
+    @FXML private Label labelID;
+
+    @FXML private TableView&lt;Shot&gt; tableShots;
+    @FXML private TableColumn&lt;Shot, String&gt; columnAction;
+    @FXML private TableColumn&lt;Shot, Number&gt; columnCamera;
+    @FXML private TableColumn&lt;Shot, Number&gt; columnID;
+    @FXML private TableColumn&lt;Shot, String&gt; columnPreset;
+    @FXML private TableColumn&lt;Shot, String&gt; columnShot;
+    @FXML private TableColumn&lt;Shot, String&gt; columnSubject;
+
+    @FXML private TextArea actionArea;
+
+    @FXML private TextField fieldShot;
+    @FXML private TextField fieldSubject;
+
+    @FXML private VBox thumbnailBox;
+
+<span class="nc" id="L81">    private boolean validDatabase = false; </span>
+    
+    /**
+     * Initialize method used by JavaFX.
+     */
+    @FXML private void initialize() {
+<span class="nc" id="L87">        script = ContextTFP.getScript();</span>
+<span class="nc" id="L88">        Shot current = getCurrentShot();</span>
+
+<span class="nc" id="L90">        initializeButtons();</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        if (script.getShots().size() &gt; 0) {</span>
+<span class="nc" id="L92">            initializeScriptButtons();</span>
+<span class="nc" id="L93">            initializeEditButtons();</span>
+<span class="nc" id="L94">            initializeCheckbox();</span>
+<span class="nc" id="L95">            initializeChoiceBoxes();</span>
+<span class="nc" id="L96">            updateShotInfo(current);</span>
+<span class="nc" id="L97">            initializeTableListener();</span>
+
+<span class="nc" id="L99">        } else {</span>
+<span class="nc" id="L100">            emptyInitialization();</span>
+        }
+<span class="nc" id="L102">        setFactories();</span>
+        
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        if (!script.isEmpty()) {          </span>
+<span class="nc" id="L105">            Platform.runLater(new Runnable() {</span>
+                @Override
+                public void run() {
+<span class="nc" id="L108">                    tableShots.requestFocus();</span>
+<span class="nc" id="L109">                    tableShots.getSelectionModel().select(0);</span>
+<span class="nc" id="L110">                    tableShots.getFocusModel().focus(0);</span>
+<span class="nc" id="L111">                }</span>
+            });
+            
+<span class="nc bnc" id="L114" title="All 2 branches missed.">            if (script.getCurrent() &gt; -1) {</span>
+<span class="nc" id="L115">                initializeNextButton();</span>
+<span class="nc" id="L116">            } else {</span>
+<span class="nc" id="L117">                initializeLiveButton();</span>
+<span class="nc" id="L118">                script.initPresetLoading();</span>
+            }
+        }
+        
+        try {
+<span class="nc" id="L123">            DatabaseConnection.getInstance().isValid(200);</span>
+<span class="nc" id="L124">            validDatabase = true;</span>
+<span class="nc" id="L125">        } catch (Exception e) {</span>
+<span class="nc" id="L126">            AlertDialog.noConnection();</span>
+        }
+
+<span class="nc" id="L129">        LiveScript.setRowFactory(tableShots);</span>
+
+<span class="nc" id="L131">        tableShots.setItems(FXCollections.observableArrayList(script.getShots()));</span>
+<span class="nc" id="L132">        tableShots.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);</span>
+        
+        // Changes the &quot;No content in table&quot; label.
+<span class="nc" id="L135">        tableShots.setPlaceholder(new Label(&quot;The script is empty. &quot;</span>
+                + &quot;Create a new script in the Create script screen, &quot;
+                + &quot;or load one in the menu.&quot;));
+<span class="nc" id="L138">    }</span>
+
+    /**
+     * Initializes the back and exit buttons's onAction events.
+     */
+    private void initializeButtons() {
+<span class="nc" id="L144">        btnBack.toFront();</span>
+<span class="nc" id="L145">        btnBack.setOnAction(event -&gt; {</span>
+<span class="nc" id="L146">            MenuController.show();</span>
+<span class="nc" id="L147">        });</span>
+<span class="nc" id="L148">    }</span>
+    
+    /**
+     * Initializes script navigation buttons and preset loading buttons.
+     */
+    private void initializeScriptButtons() {            
+<span class="nc" id="L154">        btnManualLoad.setOnAction(event -&gt; {</span>
+<span class="nc" id="L155">            script.loadNextPresets();</span>
+<span class="nc" id="L156">        });</span>
+        
+<span class="nc" id="L158">        btnReset.setOnAction(event -&gt; {</span>
+<span class="nc" id="L159">            Alert alert = AlertDialog.confirmResetScript();</span>
+<span class="nc" id="L160">            Optional&lt;ButtonType&gt; result = alert.showAndWait();</span>
+
+<span class="nc bnc" id="L162" title="All 2 branches missed.">            if (result.get() == ButtonType.OK) {</span>
+<span class="nc" id="L163">                script.reset(automaticCheck.isSelected());</span>
+                
+<span class="nc bnc" id="L165" title="All 2 branches missed.">                if (validDatabase) {</span>
+                    try {
+<span class="nc" id="L167">                        DatabaseConnection.getInstance().resetCounter();</span>
+<span class="nc" id="L168">                    } catch (Exception e) {</span>
+<span class="nc" id="L169">                        e.printStackTrace();</span>
+                    }
+                }
+                
+<span class="nc" id="L173">                initializeLiveButton();</span>
+<span class="nc" id="L174">                actionTxt.setText(&quot;&quot;);</span>
+<span class="nc" id="L175">                tableShots.refresh();</span>
+            }            
+<span class="nc" id="L177">        });</span>
+<span class="nc" id="L178">    }</span>
+
+    /**
+     * Initializes the edit script buttons.
+     */
+    private void initializeEditButtons() {
+<span class="nc" id="L184">        btnUndo.setOnAction(event -&gt; {</span>
+<span class="nc" id="L185">            updateShotInfo(tableShots.getSelectionModel().getSelectedItem());</span>
+<span class="nc" id="L186">        });</span>
+
+<span class="nc" id="L188">        btnConfirm.setOnAction((event) -&gt; {</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">            if (tableShots.getSelectionModel().getSelectedItem() != null) {</span>
+<span class="nc" id="L190">                changeShot();</span>
+<span class="nc" id="L191">                tableShots.refresh();</span>
+            }
+<span class="nc" id="L193">        });</span>
+<span class="nc" id="L194">    }</span>
+
+    /**
+     * Initializes the button that handles going live.
+     */
+    private void initializeLiveButton() {
+<span class="nc" id="L200">        btnNext.setText(&quot;Go live&quot;);</span>
+<span class="nc" id="L201">        btnNext.setOnAction(event -&gt; {</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">            if (script.getCurrent() == -1) {</span>
+<span class="nc" id="L203">                script.next();</span>
+            }
+<span class="nc" id="L205">            tableShots.refresh();</span>
+<span class="nc" id="L206">            initializeNextButton();           </span>
+<span class="nc" id="L207">        });</span>
+<span class="nc" id="L208">    }</span>
+    
+    private void initializeNextButton() {
+<span class="nc" id="L211">        btnNext.setText(&quot;Next shot&quot;);</span>
+<span class="nc" id="L212">        btnNext.setOnAction(event -&gt; {</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">            if (!endReached()) {</span>
+<span class="nc" id="L214">                script.directorNext(automaticCheck.isSelected());</span>
+<span class="nc" id="L215">                tableShots.refresh();</span>
+<span class="nc" id="L216">            } else {</span>
+<span class="nc" id="L217">                actionTxt.setText(&quot;End of script reached&quot;);</span>
+            }
+<span class="nc" id="L219">        });   </span>
+<span class="nc" id="L220">    }</span>
+
+    /**
+     * Initializes the checkbox.
+     */
+    private void initializeCheckbox() {
+<span class="nc" id="L226">        automaticCheck.selectedProperty().addListener((obs, oldV, newV) -&gt; {</span>
+<span class="nc bnc" id="L227" title="All 4 branches missed.">            if (newV &amp;&amp; script.getCurrent() &gt; -1) {</span>
+<span class="nc" id="L228">                script.loadNextPresets();</span>
+            }
+<span class="nc" id="L230">        });</span>
+<span class="nc" id="L231">    }</span>
+
+    /**
+     * Initializes the choice boxes for preset and camera.
+     */
+    private void initializeChoiceBoxes() {
+<span class="nc" id="L237">        Camera current = getCurrentShot().getCamera();</span>
+
+<span class="nc" id="L239">        initializeCameraChoice();</span>
+<span class="nc" id="L240">        initializePresetChoice();</span>
+<span class="nc" id="L241">        updatePresetChoice(current);</span>
+<span class="nc" id="L242">    }</span>
+
+    /**
+     * Initializes the camera choice box.
+     */
+    private void initializeCameraChoice() {
+<span class="nc" id="L248">        cameraSelector.setItems(FXCollections.observableArrayList(Camera.getAllCameras()));</span>
+<span class="nc" id="L249">        Camera current = getCurrentShot().getCamera();</span>
+<span class="nc" id="L250">        cameraSelector.setValue(current);</span>
+
+<span class="nc" id="L252">        cameraSelector.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -&gt; {</span>
+<span class="nc" id="L253">            updatePresetChoice(newV);</span>
+<span class="nc" id="L254">            presetSelector.setValue(&quot;None&quot;);</span>
+<span class="nc" id="L255">        });</span>
+<span class="nc" id="L256">    }</span>
+
+    /**
+     * Initializes the preset choice box.
+     */
+    private void initializePresetChoice() {
+<span class="nc" id="L262">        Camera current = cameraSelector.getValue();</span>
+
+<span class="nc" id="L264">        updatePresetChoice(current);</span>
+
+<span class="nc" id="L266">        presetSelector.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -&gt; {</span>
+<span class="nc" id="L267">            Camera cam = cameraSelector.getValue();</span>
+<span class="nc bnc" id="L268" title="All 2 branches missed.">            if (newV != null) {</span>
+<span class="nc bnc" id="L269" title="All 2 branches missed.">                if (newV.equals(&quot;None&quot;)) {</span>
+<span class="nc" id="L270">                    thumbnail.setImage(loadImage(&quot;error-q.png&quot;));</span>
+<span class="nc" id="L271">                } else {</span>
+<span class="nc" id="L272">                    thumbnail.setImage(loadImage(&quot;snapShots/cam&quot; </span>
+<span class="nc" id="L273">                            + cam.getNumber() + &quot;preset&quot; + cam.getPreset(</span>
+<span class="nc" id="L274">                                    Integer.valueOf(</span>
+<span class="nc" id="L275">                                            newV.substring(0, presetSelector.getValue().indexOf(&quot; &quot;))))</span>
+<span class="nc" id="L276">                                            .getId() + &quot;.png&quot;));</span>
+                }
+            }
+<span class="nc" id="L279">        });</span>
+<span class="nc" id="L280">    }</span>
+
+    /**
+     * Updates the preset choice box to the presets of a given camera.
+     * @param cam The camera the presets shown should belong to.
+     */
+    private void updatePresetChoice(Camera cam) {       
+<span class="nc" id="L287">        ArrayList&lt;String&gt; presetList = new ArrayList&lt;String&gt;(); </span>
+
+<span class="nc" id="L289">        presetList.add(&quot;None&quot;);</span>
+        
+<span class="nc" id="L291">        ArrayList&lt;Preset&gt; presets = new ArrayList&lt;Preset&gt;(cam.getAllPresets());</span>
+        
+<span class="nc bnc" id="L293" title="All 2 branches missed.">        for (int i = 0; i &lt; presets.size(); ++i) {</span>
+<span class="nc" id="L294">            Preset p = presets.get(i);</span>
+            
+<span class="nc" id="L296">            presetList.add(Integer.toString(p.getId()) </span>
+<span class="nc" id="L297">                    + &quot; - &quot;</span>
+<span class="nc" id="L298">                    + p.getDescription());</span>
+        }
+
+<span class="nc" id="L301">        presetSelector.setItems(FXCollections.observableArrayList(presetList));</span>
+<span class="nc" id="L302">        presetSelector.setValue(&quot;None&quot;);</span>
+<span class="nc" id="L303">    }</span>
+
+    /**
+     * Initializes a table selection listener that updates the shot info and the thumbnail.
+     */
+    private void initializeTableListener() {
+<span class="nc" id="L309">        tableShots.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -&gt; {</span>
+<span class="nc bnc" id="L310" title="All 2 branches missed.">            if (newV != null) {</span>
+<span class="nc" id="L311">                updateShotInfo(newV);</span>
+            }
+<span class="nc" id="L313">        });</span>
+<span class="nc" id="L314">    }</span>
+
+    /**
+     * Set the table column factories.
+     */
+    private void setFactories() {
+<span class="nc" id="L320">        columnID.setCellValueFactory(new PropertyValueFactory&lt;Shot, Number&gt;(&quot;number&quot;));</span>
+
+<span class="nc" id="L322">        columnShot.setCellValueFactory(new PropertyValueFactory&lt;Shot, String&gt;(&quot;shotId&quot;));</span>
+
+<span class="nc" id="L324">        columnPreset.setCellValueFactory(cellData -&gt; {</span>
+<span class="nc bnc" id="L325" title="All 2 branches missed.">            if (cellData.getValue().getPreset() == null) {</span>
+<span class="nc" id="L326">                return new ReadOnlyObjectWrapper&lt;&gt;();</span>
+            } else {
+<span class="nc" id="L328">                return new ReadOnlyObjectWrapper&lt;&gt;(</span>
+<span class="nc" id="L329">                        Integer.toString(cellData.getValue().getPreset().getId()));</span>
+            }
+        });
+
+<span class="nc" id="L333">        columnSubject.setCellValueFactory(new PropertyValueFactory&lt;Shot, String&gt;(&quot;description&quot;));</span>
+
+<span class="nc" id="L335">        columnCamera.setCellValueFactory(cellData -&gt; new ReadOnlyObjectWrapper&lt;&gt;(</span>
+<span class="nc" id="L336">                cellData.getValue().getCamera().getNumber() + 1));</span>
+        
+<span class="nc" id="L338">        columnAction.setCellValueFactory(new PropertyValueFactory&lt;Shot, String&gt;(&quot;action&quot;));</span>
+<span class="nc" id="L339">    }</span>
+
+    /**
+     * Initialize the UI in the case when the script is empty.
+     */
+    private void emptyInitialization() {
+<span class="nc" id="L345">        updateShotInfo(new Shot(0, &quot;&quot;, Camera.DUMMY, null, &quot;&quot;, &quot;&quot;));</span>
+<span class="nc" id="L346">        actionTxt.setText(&quot;No shots&quot;);</span>
+<span class="nc" id="L347">    }</span>
+
+    /**
+     * Updates the shot info and image.
+     */
+    public void updateShotInfo(Shot shot) {
+<span class="nc" id="L353">        labelID.setText(Integer.toString(shot.getNumber()));</span>
+<span class="nc" id="L354">        fieldShot.setText(shot.getShotId());</span>
+<span class="nc" id="L355">        cameraSelector.setValue(shot.getCamera());</span>
+<span class="nc" id="L356">        fieldSubject.setText(shot.getDescription());</span>
+<span class="nc" id="L357">        actionArea.setText(shot.getAction());</span>
+        
+<span class="nc" id="L359">        Preset p = shot.getPreset();</span>
+<span class="nc bnc" id="L360" title="All 2 branches missed.">        if (p != null) {</span>
+<span class="nc" id="L361">            presetSelector.setValue(p.getId() </span>
+<span class="nc" id="L362">                    + &quot; - &quot;</span>
+<span class="nc" id="L363">                    + shot.getPreset().getDescription());</span>
+            
+<span class="nc" id="L365">            thumbnail.setImage(loadImage(&quot;snapShots/cam&quot; </span>
+<span class="nc" id="L366">                    + shot.getCamera().getNumber() + &quot;preset&quot; + shot.getPreset().getId() + &quot;.png&quot;));</span>
+<span class="nc" id="L367">        } else {</span>
+<span class="nc" id="L368">            presetSelector.setValue(&quot;None&quot;);</span>
+<span class="nc" id="L369">            thumbnail.setImage(loadImage(&quot;error-q.png&quot;));</span>
+        }
+<span class="nc" id="L371">    }</span>
+
+    /**
+     * Loads an image. Loads an error image if path is null or invalid.
+     * 
+     * @param path Image path.
+     * @return The newly loaded image.
+     */
+    public Image loadImage(String path) {
+        try {
+<span class="nc" id="L381">            return new Image(path);</span>
+<span class="nc" id="L382">        } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L383">            return new Image(&quot;error-q.png&quot;);</span>
+        }
+    }
+
+    /**
+     * Gives a boolean back depending on whether the end of the script has been reached.
+     * 
+     * @return True if the end of the script has been reached, else false.
+     */
+    public boolean endReached() {
+<span class="nc bnc" id="L393" title="All 2 branches missed.">        return !script.hasNext();</span>
+    }
+
+    /**
+     * Method for adding a preset to the view and the model.
+     * @param id The id of the preset to add.
+     */
+    private void changeShot() {
+<span class="nc" id="L401">        Shot shot = script.getShots().get(tableShots.getSelectionModel().getSelectedIndex());</span>
+
+<span class="nc" id="L403">        String shotID = fieldShot.getText();</span>
+<span class="nc" id="L404">        Camera cam = cameraSelector.getValue();</span>
+<span class="nc" id="L405">        int index = presetSelector.getValue().indexOf(&quot; &quot;);</span>
+<span class="nc" id="L406">        Preset preset = null;</span>
+<span class="nc bnc" id="L407" title="All 2 branches missed.">        if (index != -1) {</span>
+<span class="nc" id="L408">            int presNum = Integer.valueOf(</span>
+<span class="nc" id="L409">                presetSelector.getValue().substring(0, index));</span>
+<span class="nc" id="L410">            preset = cam.getPreset(presNum);</span>
+        }
+        
+<span class="nc" id="L413">        String description = fieldSubject.getText();</span>
+
+<span class="nc" id="L415">        shot.setShotId(shotID);</span>
+<span class="nc" id="L416">        shot.setCamera(cam);</span>
+<span class="nc" id="L417">        shot.setPreset(preset);</span>
+<span class="nc" id="L418">        shot.setDescription(description);       </span>
+<span class="nc" id="L419">    }</span>
+
+    /**
+     * Gets the current shot in the script.
+     * Gives back the first shot if it is not live yet.
+     * 
+     * @return The current or first shot.
+     */
+    public Shot getCurrentShot() {        
+<span class="nc bnc" id="L428" title="All 2 branches missed.">        return (script.getCurrent() == -1) ? script.getNextShot() : script.getCurrentShot();</span>
+    }
+    
+    /**
+     * Returns whether the current shot has a preset or not.
+     * 
+     * @return True if the current shot has a preset. False otherwise.
+     */
+    public boolean hasCurrentPreset() {
+<span class="nc" id="L437">        return getCurrentShot().hasPreset();</span>
+    }
+
+    /**
+     * Calling this method shows this view in the middle of the rootLayout,
+     * forcing the current view to disappear.
+     */
+    public static void show() {
+        try {
+<span class="nc" id="L446">            FXMLLoader loader = new FXMLLoader();</span>
+<span class="nc" id="L447">            loader.setLocation(ContextTFP.class.getResource(&quot;view/DirectorLiveView.fxml&quot;));</span>
+<span class="nc" id="L448">            AnchorPane cameraLiveUI = (AnchorPane) loader.load();</span>
+
+<span class="nc" id="L450">            ContextTFP.getRootLayout().setCenter(cameraLiveUI);</span>
+<span class="nc" id="L451">        } catch (IOException e) {</span>
+<span class="nc" id="L452">            e.printStackTrace();</span>
+        }
+<span class="nc" id="L454">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

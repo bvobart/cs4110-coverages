@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LiveCameraConnection.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Team Free Pizza</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.contextproject.camera</a> &gt; <span class="el_source">LiveCameraConnection.java</span></div><h1>LiveCameraConnection.java</h1><pre class="source lang-java linenums">package nl.tudelft.contextproject.camera;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
+import java.net.URL;
+import java.util.Observable;
+
+/**
+ * Class to represent a live connection with a camera. It is
+ * responsible for the communication between our data model and
+ * the actual camera, in this case a Panasonic AW-HE130.
+ * 
+ * &lt;p&gt;In the {@link #setUpConnection()} method, it will check if the
+ * correct {@link #CAMERA_MODEL} is being talked to.
+ * 
+ * @since 0.4
+ */
+public class LiveCameraConnection extends CameraConnection {
+
+    public static final String CAMERA_MODEL = &quot;AW-HE130&quot;;
+
+    public static final int PAN_LIMIT_LOW = 11528;
+    public static final int PAN_LIMIT_HIGH = 54005;
+
+    public static final int TILT_LIMIT_LOW = 7283;
+    public static final int TILT_LIMIT_HIGH = 36408;
+
+    public static final int ZOOM_LIMIT_LOW = 1365;
+    public static final int ZOOM_LIMIT_HIGH = 4095;
+
+    public static final int FOCUS_LIMIT_LOW = 1365;
+    public static final int FOCUS_LIMIT_HIGH = 4095;
+
+    private static final int READ_TIMEOUT = 1000;
+
+<span class="fc" id="L40">    private final String errorString = &quot;Wrong response from camera: &quot;;</span>
+
+    private boolean connected;
+    private boolean autoFocus;
+    private CameraSettings lastKnown;
+    private String address;
+
+    /**
+     * Creates a LiveCameraConnection object. Assumes that the
+     * address given is the correctly formulated IP address of the
+     * camera to connect to.
+     * 
+     * @param address IP address of the camera to connect to.
+     */
+<span class="fc" id="L54">    public LiveCameraConnection(String address) {</span>
+<span class="fc" id="L55">        this.address = address;</span>
+<span class="fc" id="L56">        this.connected = false;</span>
+<span class="fc" id="L57">    }</span>
+
+    /**
+     * Returns the last known camera settings.
+     * @return The last known camera settings.
+     */
+    protected CameraSettings getLastKnownSettings() {
+<span class="nc" id="L64">        return lastKnown;</span>
+    }
+    
+    protected void setLastKnownSettings(CameraSettings settings) {
+<span class="nc" id="L68">        this.lastKnown = settings;</span>
+<span class="nc" id="L69">    }</span>
+    
+    protected void setConnected(boolean connected) {
+<span class="nc" id="L72">        this.connected = connected;</span>
+<span class="nc" id="L73">    }</span>
+    
+    /**
+     * Returns the address of this connection.
+     * @return the address of this connection.
+     */
+    public String getAddress() {
+<span class="nc" id="L80">        return address;</span>
+    }
+
+    @Override
+    public boolean setUpConnection() {
+        try {
+<span class="fc" id="L86">            String cameraModel = sendRequest(buildCamControlURL(&quot;QID&quot;));</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">            if (cameraModel.equals(&quot;OID:&quot; + CAMERA_MODEL)) {</span>
+<span class="nc" id="L88">                connected = true;</span>
+<span class="nc" id="L89">                lastKnown = new CameraSettings();</span>
+<span class="nc" id="L90">                lastKnown = getCurrentCameraSettings();</span>
+<span class="nc" id="L91">                hasAutoFocus();</span>
+<span class="nc" id="L92">                return true;</span>
+            }
+
+<span class="fc" id="L95">            return false;</span>
+<span class="nc" id="L96">        } catch (IOException e) {</span>
+<span class="nc" id="L97">            e.printStackTrace();</span>
+<span class="nc" id="L98">            return false;</span>
+        }
+    }
+
+    @Override
+    public boolean isConnected() {
+<span class="nc" id="L104">        return connected;</span>
+    }
+
+    @Override
+    public String getStreamLink() {
+<span class="nc" id="L109">        return &quot;rtsp://&quot; + address + &quot;/MediaInput/h264&quot;;</span>
+    }
+
+    /**
+     * Builds the URL for the command specified, which must be a command
+     * from section 3.1 Pan-tilt Head Control.
+     * 
+     * @param command Command to be sent.
+     * @return The formed URL, according to the {@link #address} and the command.
+     * @throws MalformedURLException if the parameter command is null.
+     */
+    protected URL buildPanTiltHeadControlURL(String command) throws MalformedURLException {
+<span class="nc bnc" id="L121" title="All 2 branches missed.">        if (command != null) {</span>
+<span class="nc" id="L122">            URL url = new URL(&quot;http://&quot; + address + &quot;/cgi-bin/aw_ptz?cmd=&quot; + command + &quot;&amp;res=1&quot;);</span>
+<span class="nc" id="L123">            return url;</span>
+        }
+
+<span class="nc" id="L126">        throw new MalformedURLException(&quot;Given command is null&quot;);</span>
+    }
+
+    /**
+     * Builds the URL for the command specified, which must be a command
+     * from section 3.2 Camera Control.
+     * 
+     * @param command Command to be sent.
+     * @return The formed URL, according to the {@link #address} and the command.
+     * @throws MalformedURLException if the parameter command is null.
+     */
+    protected URL buildCamControlURL(String command) throws MalformedURLException {
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">        if (command != null) {</span>
+<span class="fc" id="L139">            URL url = new URL(&quot;http://&quot; + address + &quot;/cgi-bin/aw_cam?cmd=&quot; + command + &quot;&amp;res=1&quot;);</span>
+<span class="fc" id="L140">            return url;</span>
+        }
+
+<span class="nc" id="L143">        throw new MalformedURLException(&quot;Given command is null&quot;);</span>
+    }
+
+    /**
+     * Sends the HTTP request specified in the URL as a GET request.
+     * It waits for a response from the server until a response is
+     * received or until the connection times out, which happens after
+     * the amount of milliseconds specified in {@link #READ_TIMEOUT}.
+     * An empty string is returned if there was no response.
+     * 
+     * @param url The URL containing the full HTTP request 
+     * @return The response of the server. 
+     * @throws IOException when something goes wrong in opening the
+     *      the connection or reading the response from the server.
+     */
+    protected String sendRequest(URL url) throws IOException {
+<span class="fc" id="L159">        HttpURLConnection connection = (HttpURLConnection) url.openConnection();</span>
+
+        try {
+<span class="fc" id="L162">            connection.setRequestMethod(&quot;GET&quot;);</span>
+<span class="fc" id="L163">            connection.setConnectTimeout(READ_TIMEOUT);</span>
+<span class="nc" id="L164">            connection.connect();</span>
+<span class="pc" id="L165">        } catch (SocketTimeoutException e) {</span>
+<span class="fc" id="L166">            connected = false;</span>
+<span class="fc" id="L167">            return &quot;&quot;;</span>
+        }
+
+<span class="nc" id="L170">        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), &quot;UTF-8&quot;));</span>
+<span class="nc" id="L171">        String response = reader.readLine();</span>
+<span class="nc" id="L172">        reader.close();</span>
+
+<span class="nc bnc" id="L174" title="All 2 branches missed.">        return response != null ? response : &quot;&quot;;</span>
+    }
+
+    /**
+     * Returns true if the camera is on auto focus.
+     * @return True if the camera is on auto focus.
+     */
+    public boolean hasAutoFocus() {
+<span class="nc bnc" id="L182" title="All 2 branches missed.">        if (connected) {</span>
+            try {
+<span class="nc" id="L184">                String autoFocusRes = sendRequest(buildPanTiltHeadControlURL(&quot;%23D1&quot;));</span>
+
+<span class="nc bnc" id="L186" title="All 2 branches missed.">                if (autoFocusRes.startsWith(&quot;d1&quot;)) {</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">                    autoFocus = Integer.parseInt(autoFocusRes.substring(2)) == 1;</span>
+<span class="nc" id="L188">                } else {</span>
+<span class="nc" id="L189">                    throw new IOException(errorString + autoFocusRes);</span>
+                }
+<span class="nc" id="L191">            } catch (IOException e) {</span>
+<span class="nc" id="L192">                e.printStackTrace();</span>
+<span class="nc" id="L193">                return autoFocus;</span>
+            }
+        }
+
+<span class="nc" id="L197">        return autoFocus;</span>
+    }
+
+    /**
+     * Sets the auto focus setting on the camera to on (true) or off (false).
+     * 
+     * @param autoFocus true for ON, false for OFF
+     * @return True iff the camera was set to the specified setting.
+     */
+    public boolean setAutoFocus(boolean autoFocus) {
+<span class="nc bnc" id="L207" title="All 2 branches missed.">        if (this.autoFocus == autoFocus) {</span>
+<span class="nc" id="L208">            return true;</span>
+        }
+
+        try {
+<span class="nc bnc" id="L212" title="All 2 branches missed.">            int set = autoFocus ? 1 : 0;</span>
+<span class="nc" id="L213">            String autoFocusRes = sendRequest(buildPanTiltHeadControlURL(&quot;%23D1&quot; + set));</span>
+
+<span class="nc bnc" id="L215" title="All 2 branches missed.">            if (autoFocusRes.equals(&quot;d1&quot; + set)) {</span>
+<span class="nc" id="L216">                this.autoFocus = autoFocus;</span>
+<span class="nc" id="L217">                return true;</span>
+            }
+
+<span class="nc" id="L220">            throw new IOException(errorString + autoFocusRes);</span>
+<span class="nc" id="L221">        } catch (IOException e) {</span>
+<span class="nc" id="L222">            e.printStackTrace();</span>
+<span class="nc" id="L223">            return false;</span>
+        }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+<span class="nc bnc" id="L229" title="All 2 branches missed.">        if (!(o instanceof Camera)) {</span>
+<span class="nc" id="L230">            return;</span>
+        }
+
+<span class="nc bnc" id="L233" title="All 2 branches missed.">        if (arg instanceof CameraSettings) {</span>
+<span class="nc" id="L234">            mutateSettings((CameraSettings) arg);</span>
+        }
+<span class="nc" id="L236">    }</span>
+
+    /**
+     * Finds the least amount of commands to send to the 
+     * camera in order to apply the specified camera settings.
+     * 
+     * @param toSet Camera settings to apply to the camera.
+     * @return True iff the camera was set to the specified settings.
+     */
+    private boolean mutateSettings(CameraSettings toSet) {
+<span class="nc" id="L246">        CameraSettings curSettings = getCurrentCameraSettings();</span>
+<span class="nc" id="L247">        boolean result = true;</span>
+
+<span class="nc bnc" id="L249" title="All 2 branches missed.">        if (curSettings.getPan() != toSet.getPan() </span>
+<span class="nc bnc" id="L250" title="All 2 branches missed.">                || curSettings.getTilt() != toSet.getTilt()) {</span>
+<span class="nc bnc" id="L251" title="All 4 branches missed.">            result = result &amp;&amp; absPanTilt(toSet.getPan(), toSet.getTilt());</span>
+        }
+
+<span class="nc bnc" id="L254" title="All 2 branches missed.">        if (curSettings.getZoom() != toSet.getZoom()) {</span>
+<span class="nc bnc" id="L255" title="All 4 branches missed.">            result = result &amp;&amp; absZoom(toSet.getZoom());</span>
+        }
+
+<span class="nc bnc" id="L258" title="All 4 branches missed.">        if (!hasAutoFocus() &amp;&amp; curSettings.getFocus() != toSet.getFocus()) {</span>
+<span class="nc bnc" id="L259" title="All 4 branches missed.">            result = result &amp;&amp; absFocus(toSet.getFocus());</span>
+        }
+
+<span class="nc" id="L262">        return result;</span>
+    }
+
+    @Override
+    public CameraSettings getCurrentCameraSettings() {
+<span class="nc" id="L267">        int[] panTilt = getCurrentPanTilt();</span>
+<span class="nc" id="L268">        int zoom = getCurrentZoom();</span>
+<span class="nc" id="L269">        int focus = getCurrentFocus();</span>
+<span class="nc" id="L270">        lastKnown = new CameraSettings(panTilt[0], panTilt[1], zoom, focus);</span>
+
+<span class="nc" id="L272">        return lastKnown;</span>
+    }
+
+    @Override
+    public int[] getCurrentPanTilt() {
+        try {
+<span class="nc" id="L278">            String panTiltRes = sendRequest(buildPanTiltHeadControlURL(&quot;%23APC&quot;));</span>
+
+<span class="nc bnc" id="L280" title="All 2 branches missed.">            if (panTiltRes.startsWith(&quot;aPC&quot;)) {</span>
+<span class="nc" id="L281">                int pan = Integer.parseInt(panTiltRes.substring(3, 7), 16);</span>
+<span class="nc" id="L282">                int tilt = Integer.parseInt(panTiltRes.substring(7, 11), 16);</span>
+<span class="nc" id="L283">                lastKnown.setPan(pan);</span>
+<span class="nc" id="L284">                lastKnown.setTilt(tilt);</span>
+<span class="nc" id="L285">                return new int[] {pan, tilt};</span>
+            }
+<span class="nc" id="L287">            throw new IOException(errorString + panTiltRes);</span>
+<span class="nc" id="L288">        } catch (IOException e) {</span>
+<span class="nc" id="L289">            e.printStackTrace();</span>
+<span class="nc" id="L290">            return new int[]{lastKnown.getPan(), lastKnown.getTilt()};</span>
+        }
+    }
+
+    @Override
+    public int getCurrentZoom() {
+        try {
+<span class="nc" id="L297">            String zoomRes = sendRequest(buildPanTiltHeadControlURL(&quot;%23GZ&quot;));</span>
+
+<span class="nc bnc" id="L299" title="All 2 branches missed.">            if (zoomRes.startsWith(&quot;gz&quot;)) {</span>
+<span class="nc" id="L300">                int zoom = Integer.parseInt(zoomRes.substring(2, 5), 16);</span>
+<span class="nc" id="L301">                lastKnown.setZoom(zoom);</span>
+<span class="nc" id="L302">                return zoom;</span>
+            }
+
+<span class="nc" id="L305">            throw new IOException(errorString + zoomRes);</span>
+<span class="nc" id="L306">        } catch (IOException e) {</span>
+<span class="nc" id="L307">            e.printStackTrace();</span>
+<span class="nc" id="L308">            return lastKnown.getZoom();</span>
+        }
+    }
+
+    @Override
+    public int getCurrentFocus() {
+<span class="nc bnc" id="L314" title="All 2 branches missed.">        if (autoFocus) {</span>
+<span class="nc" id="L315">            return -1;</span>
+        }
+
+        try {
+<span class="nc" id="L319">            String focusRes = sendRequest(buildPanTiltHeadControlURL(&quot;%23GF&quot;));</span>
+
+<span class="nc bnc" id="L321" title="All 2 branches missed.">            if (focusRes.startsWith(&quot;gf&quot;)) {</span>
+<span class="nc" id="L322">                int focus = Integer.parseInt(focusRes.substring(2), 16);</span>
+<span class="nc" id="L323">                return focus;</span>
+            }
+
+<span class="nc" id="L326">            throw new IOException(errorString + focusRes);</span>
+<span class="nc" id="L327">        } catch (IOException e) {</span>
+<span class="nc" id="L328">            e.printStackTrace();</span>
+<span class="nc" id="L329">            return lastKnown.getFocus();</span>
+        }
+    }
+
+    @Override
+    protected boolean absPanTilt(int panValue, int tiltValue) {
+<span class="nc" id="L335">        panValue = roundToBounds(panValue, PAN_LIMIT_LOW, PAN_LIMIT_HIGH);</span>
+<span class="nc" id="L336">        tiltValue = roundToBounds(tiltValue, TILT_LIMIT_LOW, TILT_LIMIT_HIGH);</span>
+
+        try {
+<span class="nc" id="L339">            String res = sendRequest(buildPanTiltHeadControlURL(</span>
+<span class="nc" id="L340">                    &quot;%23APS&quot; </span>
+<span class="nc" id="L341">                            + Integer.toHexString(0x10000 | panValue).substring(1).toUpperCase() </span>
+<span class="nc" id="L342">                            + Integer.toHexString(0x10000 | tiltValue).substring(1).toUpperCase()</span>
+<span class="nc" id="L343">                            + &quot;1D&quot; + &quot;2&quot;</span>
+                    ));
+
+<span class="nc bnc" id="L346" title="All 2 branches missed.">            if (res.startsWith(&quot;aPS&quot;)) {</span>
+<span class="nc" id="L347">                lastKnown.setPan(panValue);</span>
+<span class="nc" id="L348">                lastKnown.setTilt(tiltValue);</span>
+<span class="nc" id="L349">                return true;</span>
+            }
+
+<span class="nc" id="L352">            return false;</span>
+<span class="nc" id="L353">        } catch (IOException e) {</span>
+<span class="nc" id="L354">            e.printStackTrace();</span>
+<span class="nc" id="L355">            return false;</span>
+        }
+    }
+
+    @Override
+    protected boolean absPan(int value) {
+<span class="nc" id="L361">        return absPanTilt(value, lastKnown.getTilt());</span>
+    }
+
+    @Override
+    protected boolean absTilt(int value) {
+<span class="nc" id="L366">        return absPanTilt(lastKnown.getPan(), value);</span>
+    }
+
+    @Override
+    protected boolean absZoom(int value) {
+<span class="nc" id="L371">        value = roundToBounds(value, ZOOM_LIMIT_LOW, ZOOM_LIMIT_HIGH);</span>
+        try {
+<span class="nc" id="L373">            String res = sendRequest(buildPanTiltHeadControlURL(&quot;%23AXZ&quot; </span>
+<span class="nc" id="L374">                    + Integer.toHexString(0x1000 | value).substring(1).toUpperCase()</span>
+                    ));
+
+<span class="nc bnc" id="L377" title="All 2 branches missed.">            if (res.startsWith(&quot;axz&quot;)) {</span>
+<span class="nc" id="L378">                lastKnown.setZoom(value);</span>
+<span class="nc" id="L379">                return true;</span>
+            }
+
+<span class="nc" id="L382">            return false;</span>
+<span class="nc" id="L383">        } catch (IOException e) {</span>
+<span class="nc" id="L384">            e.printStackTrace();</span>
+<span class="nc" id="L385">            return false;</span>
+        }
+    }
+
+    @Override
+    protected boolean absFocus(int value) {
+<span class="nc" id="L391">        value = roundToBounds(value, FOCUS_LIMIT_LOW, FOCUS_LIMIT_HIGH);</span>
+
+        try {
+<span class="nc bnc" id="L394" title="All 2 branches missed.">            if (autoFocus) {</span>
+<span class="nc" id="L395">                throw new IOException(&quot;Autofocus is on&quot;);</span>
+            }
+
+<span class="nc" id="L398">            String res = sendRequest(buildPanTiltHeadControlURL(&quot;%23AXF&quot; </span>
+<span class="nc" id="L399">                    + Integer.toHexString(0x1000 | value).substring(1).toUpperCase()</span>
+                    ));
+
+<span class="nc bnc" id="L402" title="All 2 branches missed.">            if (res.startsWith(&quot;axf&quot;)) {</span>
+<span class="nc" id="L403">                lastKnown.setFocus(value);</span>
+<span class="nc" id="L404">                return true;</span>
+<span class="nc bnc" id="L405" title="All 2 branches missed.">            } else if (res.startsWith(&quot;ER3&quot;)) {</span>
+<span class="nc" id="L406">                autoFocus = true;</span>
+<span class="nc" id="L407">                throw new IOException(&quot;Autofocus is on&quot;);</span>
+            }
+
+<span class="nc" id="L410">            return false;</span>
+<span class="nc" id="L411">        } catch (IOException e) {</span>
+<span class="nc" id="L412">            e.printStackTrace();</span>
+<span class="nc" id="L413">            return false;</span>
+        }
+    }
+
+    @Override
+    protected boolean relPanTilt(int panOffset, int tiltOffset) {
+<span class="nc" id="L419">        CameraSettings curSet = getCurrentCameraSettings();</span>
+
+<span class="nc bnc" id="L421" title="All 2 branches missed.">        if (curSet.getPan() + panOffset &lt; PAN_LIMIT_LOW) {</span>
+<span class="nc" id="L422">            panOffset = curSet.getPan() - PAN_LIMIT_LOW;</span>
+<span class="nc bnc" id="L423" title="All 2 branches missed.">        } else if (curSet.getPan() + panOffset &gt; PAN_LIMIT_HIGH) {</span>
+<span class="nc" id="L424">            panOffset = PAN_LIMIT_HIGH - curSet.getPan();</span>
+        }
+
+<span class="nc bnc" id="L427" title="All 2 branches missed.">        if (curSet.getTilt() + tiltOffset &lt; TILT_LIMIT_LOW) {</span>
+<span class="nc" id="L428">            tiltOffset = curSet.getTilt() - TILT_LIMIT_LOW;</span>
+<span class="nc bnc" id="L429" title="All 2 branches missed.">        } else if (curSet.getTilt() + tiltOffset &gt; TILT_LIMIT_HIGH) {</span>
+<span class="nc" id="L430">            tiltOffset = TILT_LIMIT_HIGH - curSet.getTilt();</span>
+        }
+
+        try {
+<span class="nc" id="L434">            String res = sendRequest(buildPanTiltHeadControlURL(&quot;%23RPC&quot; </span>
+<span class="nc" id="L435">                    + Integer.toHexString(0x10000 | 32768 + panOffset).substring(1).toUpperCase() </span>
+<span class="nc" id="L436">                    + Integer.toHexString(0x10000 | 32768 + tiltOffset).substring(1).toUpperCase()</span>
+                    ));
+
+<span class="nc bnc" id="L439" title="All 2 branches missed.">            if (res.startsWith(&quot;rPC&quot;)) {</span>
+<span class="nc" id="L440">                lastKnown.pan(panOffset);</span>
+<span class="nc" id="L441">                lastKnown.tilt(tiltOffset);</span>
+<span class="nc" id="L442">                return true;</span>
+            }
+
+<span class="nc" id="L445">            return false;</span>
+<span class="nc" id="L446">        } catch (IOException e) {</span>
+<span class="nc" id="L447">            e.printStackTrace();</span>
+<span class="nc" id="L448">            return false;</span>
+        }
+    }
+
+    @Override
+    protected boolean relPan(int offset) {
+<span class="nc" id="L454">        return relPanTilt(offset, 0);</span>
+    }
+
+    @Override
+    protected boolean relTilt(int offset) {
+<span class="nc" id="L459">        return relPanTilt(0, offset);</span>
+    }
+
+    @Override
+    protected boolean relZoom(int offset) {
+<span class="nc" id="L464">        return absZoom(getCurrentZoom() + offset);</span>
+    }
+
+    @Override
+    protected boolean relFocus(int offset) {
+<span class="nc" id="L469">        return absFocus(getCurrentFocus() + offset);</span>
+    }
+    
+    @Override
+    protected boolean panTiltStart(int panSpeed, int tiltSpeed) {
+<span class="nc bnc" id="L474" title="All 4 branches missed.">        if (panSpeed == 50 &amp;&amp; tiltSpeed == 50) {</span>
+<span class="nc" id="L475">            return panTiltStop();</span>
+        }
+        
+<span class="nc" id="L478">        panSpeed = roundToBounds(panSpeed, 1, 99);</span>
+<span class="nc" id="L479">        tiltSpeed = roundToBounds(tiltSpeed, 1, 99);</span>
+        
+        try {
+<span class="nc" id="L482">            String res = sendRequest(buildPanTiltHeadControlURL(&quot;%23PTS&quot; </span>
+<span class="nc" id="L483">                            + String.format(&quot;%02d&quot;, panSpeed) </span>
+<span class="nc" id="L484">                            + String.format(&quot;%02d&quot;, tiltSpeed))</span>
+                         );
+<span class="nc bnc" id="L486" title="All 2 branches missed.">            if (res.startsWith(&quot;pTS&quot;)) {</span>
+<span class="nc" id="L487">                return true;</span>
+            }
+<span class="nc" id="L489">            return false;</span>
+<span class="nc" id="L490">        } catch (IOException e) {</span>
+<span class="nc" id="L491">            return false;</span>
+        }
+    }
+    
+    @Override
+    protected boolean panTiltStop() {
+        try {
+<span class="nc" id="L498">            String res = sendRequest(buildPanTiltHeadControlURL(&quot;%23PTS5050&quot;));</span>
+<span class="nc bnc" id="L499" title="All 2 branches missed.">            if (res.equals(&quot;pTS5050&quot;)) {</span>
+<span class="nc" id="L500">                return true;</span>
+            }
+<span class="nc" id="L502">            return false;</span>
+<span class="nc" id="L503">        } catch (IOException e) {</span>
+<span class="nc" id="L504">            return false;</span>
+        }
+    }
+    
+    /**
+     * Enforces that a number is between the given bounds. If not, then it will be
+     * rounded to the closest bound.
+     * 
+     * @param number The number to check
+     * @param boundLow The lower bound
+     * @param boundHigh The upper bound
+     * @return The number, within the specified bounds.
+     */
+    private int roundToBounds(int number, int boundLow, int boundHigh) {
+<span class="nc bnc" id="L518" title="All 4 branches missed.">        return number &lt; boundLow ? boundLow : number &gt; boundHigh ? boundHigh : number;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

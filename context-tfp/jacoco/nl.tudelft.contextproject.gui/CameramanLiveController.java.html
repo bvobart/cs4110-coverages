@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CameramanLiveController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Team Free Pizza</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.contextproject.gui</a> &gt; <span class="el_source">CameramanLiveController.java</span></div><h1>CameramanLiveController.java</h1><pre class="source lang-java linenums">package nl.tudelft.contextproject.gui;
+
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import nl.tudelft.contextproject.ContextTFP;
+import nl.tudelft.contextproject.camera.Camera;
+import nl.tudelft.contextproject.databaseConnection.DatabaseConnection;
+import nl.tudelft.contextproject.presets.Preset;
+import nl.tudelft.contextproject.script.Script;
+import nl.tudelft.contextproject.script.Shot;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
+
+/**
+ * This class controls the screen that shows the view for a cameraman.
+ * This screen allows a cameraman to see the script with the current 
+ * active shot, and look at the {@link Preset Presets} of the 
+ * camera.
+ * 
+ * &lt;p&gt;The view section is defined under view/CameramanLiveView.fxml
+ * 
+ * @since 0.8
+ */
+<span class="nc" id="L37">public class CameramanLiveController {</span>
+
+    private static List&lt;CheckBox&gt; cameras;
+
+    @FXML private Button btnBack;
+    @FXML private Button btnHideAll;
+    @FXML private Button btnPresets;
+    @FXML private Button btnShowAll;
+
+    @FXML private TableView&lt;Shot&gt; tableShots;
+    @FXML private TableColumn&lt;Shot, String&gt; columnAction;
+    @FXML private TableColumn&lt;Shot, Number&gt; columnCamera;
+    @FXML private TableColumn&lt;Shot, Number&gt; columnID;
+    @FXML private TableColumn&lt;Shot, String&gt; columnPreset;
+    @FXML private TableColumn&lt;Shot, String&gt; columnShot;
+    @FXML private TableColumn&lt;Shot, String&gt; columnSubject;
+
+    @FXML private VBox vbox;
+
+    private Script script;
+
+    /**
+     * Initialize method used by JavaFX.
+     */
+    @FXML private void initialize() {
+<span class="nc" id="L62">        script = ContextTFP.getScript();</span>
+<span class="nc" id="L63">        cameras = new ArrayList&lt;CheckBox&gt;();</span>
+<span class="nc" id="L64">        vbox.setSpacing(6);</span>
+
+<span class="nc" id="L66">        initCameraSelector();</span>
+<span class="nc" id="L67">        initButtons();</span>
+<span class="nc" id="L68">        setFactories();</span>
+        
+        // Allows for highlighting of the current shot
+<span class="nc" id="L71">        LiveScript.setRowFactory(tableShots);</span>
+
+<span class="nc" id="L73">        tableShots.getItems().addAll(script.getShots());</span>
+<span class="nc" id="L74">        tableShots.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);</span>
+        
+        // Changes the &quot;No content in table&quot; label.
+<span class="nc" id="L77">        tableShots.setPlaceholder(new Label(&quot;The script is empty. &quot;</span>
+                + &quot;Create a new script in the Create script screen, &quot;
+                + &quot;or load one in the menu.&quot;));
+        
+<span class="nc" id="L81">        initSynchronization();</span>
+<span class="nc" id="L82">    }</span>
+    
+    /**
+     * Initializes the listener used for synchronization with the MySQL database.
+     */
+    private void initSynchronization() {
+<span class="nc" id="L88">        DatabaseConnection.getInstance().addObserver( (Observable obj, Object arg) -&gt; {</span>
+<span class="nc" id="L89">            int liveCount = (int) arg;</span>
+<span class="nc" id="L90">            int current = ContextTFP.getScript().getCurrent();</span>
+
+<span class="nc bnc" id="L92" title="All 4 branches missed.">            if (liveCount &gt; current &amp;&amp; liveCount &lt; ContextTFP.getScript().getShots().size()) {</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">                for (int i = 0; i &lt; (liveCount - current); i++) {</span>
+<span class="nc" id="L94">                    ContextTFP.getScript().next();</span>
+                }
+<span class="nc" id="L96">                tableShots.refresh();</span>
+            }
+<span class="nc" id="L98">        });</span>
+<span class="nc" id="L99">    }</span>
+
+    private void initCameraSelector() {
+<span class="nc bnc" id="L102" title="All 2 branches missed.">        for (Camera c : Camera.getAllCameras()) {</span>
+<span class="nc" id="L103">            final CheckBox check = new CheckBox();</span>
+
+<span class="nc" id="L105">            check.setText(&quot;Camera: &quot; + (c.getNumber() + 1));</span>
+<span class="nc" id="L106">            check.setContentDisplay(ContentDisplay.LEFT);</span>
+<span class="nc" id="L107">            check.fire();</span>
+<span class="nc" id="L108">            cameras.add(check);</span>
+
+<span class="nc" id="L110">            check.selectedProperty().addListener((obs, oldV, newV) -&gt; {</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">                if (newV != null) {</span>
+<span class="nc" id="L112">                    List&lt;Shot&gt; listShots = fillListOfShots();</span>
+<span class="nc" id="L113">                    tableShots.getItems().setAll(listShots);</span>
+                }
+<span class="nc" id="L115">            });</span>
+
+<span class="nc" id="L117">            vbox.getChildren().add(check);</span>
+        }
+<span class="nc" id="L119">    }</span>
+
+    /**
+     * Initialize button functionality.
+     */
+    private void initButtons() {
+<span class="nc" id="L125">        btnBack.setOnAction(event -&gt; {</span>
+<span class="nc" id="L126">            MenuController.show();</span>
+<span class="nc" id="L127">        });</span>
+
+<span class="nc" id="L129">        btnShowAll.setOnAction(event -&gt; {</span>
+<span class="nc" id="L130">            toggleCameras(true);</span>
+<span class="nc" id="L131">        });</span>
+
+<span class="nc" id="L133">        btnHideAll.setOnAction(event -&gt; {</span>
+<span class="nc" id="L134">            toggleCameras(false);</span>
+<span class="nc" id="L135">        });</span>
+
+<span class="nc" id="L137">        btnPresets.setOnAction(event -&gt; {</span>
+<span class="nc" id="L138">            PresetController.setToCameramanView(true);</span>
+
+<span class="nc" id="L140">            Animation.animNodeOut(ContextTFP.getRootLayout(), false).setOnFinished(f -&gt; {</span>
+<span class="nc" id="L141">                PresetController.show();</span>
+<span class="nc" id="L142">                Animation.animNodeIn(ContextTFP.getRootLayout());</span>
+<span class="nc" id="L143">            });</span>
+<span class="nc" id="L144">        });</span>
+<span class="nc" id="L145">    }</span>
+
+    /**
+     * Toggles the cameras shown in the table.
+     * @param show True if show, false if hide.
+     */
+    private void toggleCameras(boolean show) {
+<span class="nc bnc" id="L152" title="All 2 branches missed.">        for (CheckBox c : cameras) {</span>
+<span class="nc" id="L153">            c.setSelected(show);</span>
+        }
+<span class="nc" id="L155">    }</span>
+
+    /**
+     * Sub method of {@link #initButtons()} that fills a list
+     * with all the shots that belong to the selected camera.
+     */
+    private List&lt;Shot&gt; fillListOfShots() {
+<span class="nc" id="L162">        final List&lt;Shot&gt; listShots = new ArrayList&lt;Shot&gt;();</span>
+
+<span class="nc bnc" id="L164" title="All 2 branches missed.">        for (Shot s : script.getShots()) {</span>
+<span class="nc" id="L165">            int shotCamNum = s.getCamera().getNumber();</span>
+
+<span class="nc bnc" id="L167" title="All 2 branches missed.">            if (s.equals(script.getCurrentShot())</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">                    || cameras.get(shotCamNum).isSelected()) {</span>
+<span class="nc" id="L169">                listShots.add(s);</span>
+            }
+        }
+
+<span class="nc" id="L173">        return listShots;</span>
+    }
+
+    /**
+     * Sets the factories of the table columns.
+     */
+    private void setFactories() {
+<span class="nc" id="L180">        columnID.setCellValueFactory(new PropertyValueFactory&lt;Shot, Number&gt;(&quot;number&quot;));</span>
+
+<span class="nc" id="L182">        columnShot.setCellValueFactory(new PropertyValueFactory&lt;Shot, String&gt;(&quot;shotId&quot;));</span>
+
+<span class="nc" id="L184">        columnPreset.setCellValueFactory(cellData -&gt; {</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">            if (cellData.getValue().getPreset() == null) {</span>
+<span class="nc" id="L186">                return new ReadOnlyObjectWrapper&lt;&gt;();</span>
+            } else {
+<span class="nc" id="L188">                return new ReadOnlyObjectWrapper&lt;&gt;(</span>
+<span class="nc" id="L189">                    Integer.toString(cellData.getValue().getPreset().getId()));</span>
+            }
+        });
+
+<span class="nc" id="L193">        columnAction.setCellValueFactory(new PropertyValueFactory&lt;Shot, String&gt;(&quot;action&quot;));</span>
+
+<span class="nc" id="L195">        columnCamera.setCellValueFactory(cellData -&gt; new ReadOnlyObjectWrapper&lt;&gt;(</span>
+<span class="nc" id="L196">            cellData.getValue().getCamera().getNumber() + 1));</span>
+
+<span class="nc" id="L198">        columnSubject.setCellValueFactory(new PropertyValueFactory&lt;Shot, String&gt;(&quot;description&quot;));</span>
+<span class="nc" id="L199">    }</span>
+
+    /**
+     * Calling this method shows this view in the middle of the rootLayout,
+     * forcing the current view to disappear.
+     */
+    public static void show() {
+        try {
+<span class="nc" id="L207">            FXMLLoader loader = new FXMLLoader();</span>
+<span class="nc" id="L208">            loader.setLocation(ContextTFP.class.getResource(&quot;view/CameramanLiveView.fxml&quot;));</span>
+<span class="nc" id="L209">            AnchorPane cameraLiveUI = (AnchorPane) loader.load();</span>
+
+<span class="nc" id="L211">            ContextTFP.getRootLayout().setCenter(cameraLiveUI);</span>
+<span class="nc" id="L212">        } catch (IOException e) {</span>
+<span class="nc" id="L213">            e.printStackTrace();</span>
+        }
+<span class="nc" id="L215">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

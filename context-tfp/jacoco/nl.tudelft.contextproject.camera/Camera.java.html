@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Camera.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Team Free Pizza</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.contextproject.camera</a> &gt; <span class="el_source">Camera.java</span></div><h1>Camera.java</h1><pre class="source lang-java linenums">package nl.tudelft.contextproject.camera;
+
+import nl.tudelft.contextproject.presets.Preset;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Objects;
+import java.util.Observable;
+import java.util.concurrent.ConcurrentHashMap;
+
+/**
+ * This class represents a camera. Every camera has its 
+ * own {@link CameraSettings}. This class extends {@link Observable} 
+ * so its settings can be observed.
+ * 
+ * @since 0.2
+ */
+public class Camera extends Observable {
+
+    /**
+     * Dummy camera with camId -1.
+     */
+    public static final Camera DUMMY;
+
+<span class="fc" id="L25">    private static final ConcurrentHashMap&lt;Integer, Camera&gt; CAMERAS = new ConcurrentHashMap&lt;Integer, Camera&gt;();</span>
+<span class="fc" id="L26">    private static int numCams = 0;</span>
+
+    private CameraConnection connection;
+    private CameraSettings camSet;
+    private HashMap&lt;Integer, Preset&gt; presets;
+
+    private int camId;
+
+    static {
+<span class="fc" id="L35">        DUMMY = new Camera();</span>
+<span class="fc" id="L36">        DUMMY.camId = -1;</span>
+<span class="fc" id="L37">        clearAllCameras();</span>
+<span class="fc" id="L38">    }</span>
+
+    /**
+     * Creates a Camera object with initial camera settings
+     * set to the lower limits of the camera.
+     */
+<span class="fc" id="L44">    public Camera() {</span>
+<span class="fc" id="L45">        camSet = new CameraSettings();</span>
+<span class="fc" id="L46">        camId = numCams++;</span>
+<span class="fc" id="L47">        presets = new HashMap&lt;Integer, Preset&gt;();</span>
+<span class="fc" id="L48">        CAMERAS.put(camId, this);</span>
+<span class="fc" id="L49">    }</span>
+
+    /**
+     * Creates a Camera object with initial camera settings
+     * as specified in the CameraSettings object.
+     * 
+     * @param init Initial camera settings.
+     */
+<span class="fc" id="L57">    public Camera(CameraSettings init) {</span>
+<span class="fc" id="L58">        camSet = init;</span>
+<span class="fc" id="L59">        camId = numCams++;</span>
+<span class="fc" id="L60">        presets = new HashMap&lt;Integer, Preset&gt;();</span>
+<span class="fc" id="L61">        CAMERAS.put(camId, this);</span>
+<span class="fc" id="L62">    }</span>
+
+    /**
+     * Returns the camera with a specific number, or null if it
+     * does not exist (yet).
+     * 
+     * @param camNum The number of the camera to get.
+     * @return The camera with the associated number, or null if
+     *      it does not exist.
+     */
+    public static Camera getCamera(int camNum) {
+<span class="fc" id="L73">        return CAMERAS.get(camNum);</span>
+    }
+
+    /**
+     * Returns all cameras that have been made.
+     * @return A collection of all cameras currently specified.
+     */
+    public static Collection&lt;Camera&gt; getAllCameras() {
+<span class="fc" id="L81">        return CAMERAS.values();</span>
+    }
+
+    /**
+     * Clears all cameras and resets the numCams to 0.
+     */
+    public static void clearAllCameras() {
+<span class="fc" id="L88">        CAMERAS.clear();</span>
+<span class="fc" id="L89">        numCams = 0;</span>
+<span class="fc" id="L90">    }</span>
+
+    /**
+     * Gets the camera number assigned to the camera.
+     * @return Camera number assigned to camera.
+     */
+    public int getNumber() {
+<span class="fc" id="L97">        return camId;</span>
+    }
+
+    /**
+     * Returns the camera settings attached to the camera.
+     * @return Camera settings.
+     */
+    public CameraSettings getSettings() {
+<span class="fc bfc" id="L105" title="All 2 branches covered.">        if (hasConnection()) {</span>
+<span class="fc" id="L106">            camSet = connection.getCurrentCameraSettings();</span>
+        }
+<span class="fc" id="L108">        return camSet;</span>
+    }
+
+    /**
+     * Sets the settings for this camera and updates the observers.
+     * @param settings Camera settings to set.
+     */
+    public void setSettings(CameraSettings settings) {
+<span class="pc bpc" id="L116" title="1 of 4 branches missed.">        if (hasConnection() &amp;&amp; connection.isConnected()) {</span>
+<span class="fc" id="L117">            camSet.setPan(settings.getPan());</span>
+<span class="fc" id="L118">            camSet.setTilt(settings.getTilt());</span>
+<span class="fc" id="L119">            camSet.setZoom(settings.getZoom());</span>
+<span class="fc" id="L120">            camSet.setFocus(settings.getFocus());</span>
+            
+<span class="fc" id="L122">            setChanged();</span>
+<span class="fc" id="L123">            notifyObservers(camSet);</span>
+        }
+<span class="fc" id="L125">    }</span>
+
+    /**
+     * Returns true iff the camera has a non-null CameraConnection
+     * object.
+     * 
+     * @return True iff the camera has a non-null CameraConnection.
+     */
+    public boolean hasConnection() {
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        return connection != null;</span>
+    }
+
+    /**
+     * Returns the CameraConnection object used for communicating with
+     * the actual camera. May be null if it has not yet been initialized.
+     * 
+     * @return The CameraConnection object used for communicating with
+     *      the actual camera.
+     */
+    public CameraConnection getConnection() {
+<span class="fc" id="L145">        return connection;</span>
+    }
+
+    /**
+     * Sets the CameraConnection object used for communicating with
+     * the actual camera. It adds this new connection as an observer
+     * and if there was a previous connection, removes the previous
+     * connection as observer.
+     * 
+     * @param connect The new connection to the camera.
+     */
+    public void setConnection(CameraConnection connect) {
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">        if (hasConnection()) {</span>
+<span class="nc" id="L158">            this.deleteObserver(connection);</span>
+        }
+
+<span class="fc" id="L161">        connection = connect;</span>
+<span class="fc" id="L162">        this.addObserver(connect);</span>
+<span class="fc" id="L163">    }</span>
+
+    /**
+     * Get the total amount of cameras connected to the system.
+     * @return The number of cameras.
+     */
+    public static int getCameraAmount() {
+<span class="fc" id="L170">        return numCams;</span>
+    } 
+
+    /**
+     * Pans the camera a certain offset. Cannot pan past
+     * the pan limits.
+     * 
+     * @param offset The offset to pan the camera.
+     */
+    public void pan(int offset) {
+<span class="fc" id="L180">        camSet.pan(offset);</span>
+
+<span class="fc bfc" id="L182" title="All 2 branches covered.">        if (hasConnection()) {</span>
+<span class="fc" id="L183">            connection.relPan(offset);</span>
+        }
+
+<span class="fc" id="L186">        setChanged();</span>
+<span class="fc" id="L187">        notifyObservers();</span>
+<span class="fc" id="L188">    }</span>
+
+    /**
+     * Tilts the camera a certain offset. Cannot tilt past
+     * the tilt limits.
+     * 
+     * @param offset The offset to tilt the camera.
+     */
+    public void tilt(int offset) {
+<span class="fc" id="L197">        camSet.tilt(offset);</span>
+
+<span class="fc bfc" id="L199" title="All 2 branches covered.">        if (hasConnection()) {</span>
+<span class="fc" id="L200">            connection.relTilt(offset);</span>
+        }
+
+<span class="fc" id="L203">        setChanged();</span>
+<span class="fc" id="L204">        notifyObservers();</span>
+<span class="fc" id="L205">    }</span>
+
+    /**
+     * Pans and Tilts the camera to a setting offset. Cannot tilt or
+     * pan the camera past the pan and tilt limits.
+     *
+     * @param panOffset The offset to pan the camera
+     * @param tiltOffset The offset to tilt the camera.
+     */
+    public void panTilt(int panOffset, int tiltOffset) {
+<span class="fc" id="L215">        camSet.panTilt(panOffset, tiltOffset);</span>
+
+<span class="fc bfc" id="L217" title="All 2 branches covered.">        if (hasConnection()) {</span>
+<span class="fc" id="L218">            connection.relPanTilt(panOffset, tiltOffset);</span>
+        }
+
+<span class="fc" id="L221">        setChanged();</span>
+<span class="fc" id="L222">        notifyObservers();</span>
+<span class="fc" id="L223">    }</span>
+
+    /**
+     * Zooms the camera a certain offset. Cannot zoom past
+     * the zoom limits.
+     * 
+     * @param offset The offset to zoom the camera.
+     */
+    public void zoom(int offset) {
+<span class="fc" id="L232">        camSet.zoom(offset);</span>
+
+<span class="fc bfc" id="L234" title="All 2 branches covered.">        if (hasConnection()) {</span>
+<span class="fc" id="L235">            connection.relZoom(offset);</span>
+        }
+
+<span class="fc" id="L238">        setChanged();</span>
+<span class="fc" id="L239">        notifyObservers();</span>
+<span class="fc" id="L240">    }</span>
+
+    /**
+     * Zooms the camera a certain focus. Cannot focus past
+     * the focus limits.
+     *
+     * @param offset The offset to focus the camera.
+     */
+    public void focus(int offset) {
+<span class="fc" id="L249">        camSet.focus(offset);</span>
+
+<span class="fc bfc" id="L251" title="All 2 branches covered.">        if (hasConnection()) {</span>
+<span class="fc" id="L252">            connection.relFocus(offset);</span>
+        }
+
+<span class="fc" id="L255">        setChanged();</span>
+<span class="fc" id="L256">        notifyObservers();</span>
+<span class="fc" id="L257">    }</span>
+
+    /**
+     * Pans and Tilts the camera to a certain pan and tilt value.
+     * It cannot go past the pan or tilt limit.
+     * 
+     * @param panValue The value to pan the Camera.
+     * @param tiltValue The value to tilt the Camera.
+     */
+    public void absPanTilt(int panValue, int tiltValue) {
+<span class="fc" id="L267">        camSet.setPan(panValue);</span>
+<span class="fc" id="L268">        camSet.setTilt(tiltValue);</span>
+
+<span class="fc bfc" id="L270" title="All 2 branches covered.">        if (hasConnection()) {</span>
+<span class="fc" id="L271">            connection.absPanTilt(panValue, tiltValue);</span>
+        }
+
+<span class="fc" id="L274">        setChanged();</span>
+<span class="fc" id="L275">        notifyObservers();</span>
+<span class="fc" id="L276">    }</span>
+
+    /**
+     * Pans the camera to a certain value. Value cannot go
+     * past the pan limits.
+     * 
+     * @param value The new value to pan the Camera.
+     */
+    public void absPan(int value) {
+<span class="fc" id="L285">        camSet.setPan(value);</span>
+
+<span class="fc bfc" id="L287" title="All 2 branches covered.">        if (hasConnection()) {</span>
+<span class="fc" id="L288">            connection.absPan(value);</span>
+        }
+
+<span class="fc" id="L291">        setChanged();</span>
+<span class="fc" id="L292">        notifyObservers();</span>
+<span class="fc" id="L293">    }</span>
+
+    /**
+     * Tilts the camera to a certain value. Value cannot go
+     * past the tilt limits.
+     * 
+     * @param value The new value to tilt the Camera.
+     */
+    public void absTilt(int value) {
+<span class="fc" id="L302">        camSet.setTilt(value);</span>
+
+<span class="fc bfc" id="L304" title="All 2 branches covered.">        if (hasConnection()) {</span>
+<span class="fc" id="L305">            connection.absTilt(value);</span>
+        }
+
+<span class="fc" id="L308">        setChanged();</span>
+<span class="fc" id="L309">        notifyObservers();</span>
+<span class="fc" id="L310">    }</span>
+
+    /**
+     * Zooms the camera to a certain value. Value cannot go
+     * past the zoom limits.
+     * 
+     * @param value The new value to zoom the Camera.
+     */
+    public void absZoom(int value) {
+<span class="fc" id="L319">        camSet.setZoom(value);</span>
+
+<span class="fc bfc" id="L321" title="All 2 branches covered.">        if (hasConnection()) {</span>
+<span class="fc" id="L322">            connection.absZoom(value);</span>
+        }
+
+<span class="fc" id="L325">        setChanged();</span>
+<span class="fc" id="L326">        notifyObservers();</span>
+<span class="fc" id="L327">    }</span>
+
+    /**
+     * Focuses the camera to a certain value. Value cannot
+     * past the focus limits.
+     * 
+     * @param value The new value to focus the Camera.
+     */
+    public void absFocus(int value) {
+<span class="fc" id="L336">        camSet.setFocus(value);</span>
+
+<span class="pc bpc" id="L338" title="1 of 2 branches missed.">        if (hasConnection()) {</span>
+<span class="fc" id="L339">            connection.absFocus(value);</span>
+        }
+
+<span class="fc" id="L342">        setChanged();</span>
+<span class="fc" id="L343">        notifyObservers();</span>
+<span class="fc" id="L344">    }</span>
+    
+    /**
+     * Makes the camera start panning and tilting in the specified direction
+     * 
+     * @param panSpeed Should be between -100 and 100, where 0 is stop, 
+     *      -100 is maximum speed towards the left and 100 is maximum speed 
+     *      towards the right.
+     * @param tiltSpeed Should be between -100 and 100, where 0 is stop, 
+     *      -100 is maximum speed downwards and 100 is maximum speed upwards.
+     */
+    public void panTiltStart(int panSpeed, int tiltSpeed) {
+<span class="nc bnc" id="L356" title="All 2 branches missed.">        if (hasConnection()) {</span>
+<span class="nc" id="L357">            connection.panTiltStart(panSpeed, tiltSpeed);</span>
+        }
+        
+<span class="nc" id="L360">        setChanged();</span>
+<span class="nc" id="L361">        notifyObservers();</span>
+<span class="nc" id="L362">    }</span>
+    
+    /**
+     * Makes the camera stop panning and tilting in the specified direction.
+     */
+    public void panTiltStop() {
+<span class="nc bnc" id="L368" title="All 2 branches missed.">        if (hasConnection()) {</span>
+<span class="nc" id="L369">            connection.panTiltStop();</span>
+        }
+<span class="nc" id="L371">        camSet = getSettings();</span>
+        
+<span class="nc" id="L373">        setChanged();</span>
+<span class="nc" id="L374">        notifyObservers();</span>
+<span class="nc" id="L375">    }</span>
+
+    /**
+     * Adds a preset to the camera, if there is not already
+     * a preset with the same id. Returns true if successful.
+     * 
+     * @param p The preset to add to this camera.
+     * @return True if the preset was added, otherwise false.
+     */
+    public boolean addPreset(Preset p) {
+<span class="fc bfc" id="L385" title="All 2 branches covered.">        if (presets.get(p.getId()) == null) {</span>
+<span class="fc" id="L386">            presets.put(p.getId(), p);</span>
+<span class="fc" id="L387">            notifyObservers();</span>
+
+<span class="fc" id="L389">            return true;</span>
+        }
+
+<span class="fc" id="L392">        return false;</span>
+    }
+
+    /**
+     * Adds a preset, overwriting if it already exists.
+     * @param p The preset to add.
+     */
+    public void overwritePreset(Preset p) {
+<span class="fc" id="L400">        presets.put(p.getId(), p);</span>
+<span class="fc" id="L401">        notifyObservers();</span>
+<span class="fc" id="L402">    }</span>
+
+    /**
+     * Removes a preset from the camera.
+     * @param p The preset to remove.
+     */
+    public void removePreset(Preset p) {
+<span class="fc" id="L409">        presets.remove(p.getId());</span>
+<span class="fc" id="L410">    }</span>
+
+    /**
+     * Returns the preset with the specified id.
+     * Returns null if the preset doesn't exist.
+     * 
+     * @param id The id of the preset to get.
+     * @return The requested preset.
+     */
+    public Preset getPreset(int id) {
+<span class="fc" id="L420">        return presets.get(id);</span>
+    }
+
+    /**
+     * Returns a hashmap with all the presets of this camera.
+     * @return A hashmap with all the presets of this camera.
+     */
+    public HashMap&lt;Integer, Preset&gt; getPresets() {
+<span class="fc" id="L428">        return presets;</span>
+    }
+
+    /**
+     * Returns the amount of presets currently registered to this camera.
+     * @return Amount of presets.
+     */
+    public int getPresetAmount() {
+<span class="fc" id="L436">        return presets.size();</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="pc bpc" id="L441" title="1 of 2 branches missed.">        if (obj instanceof Camera) {</span>
+<span class="fc" id="L442">            Camera camera = (Camera) obj;</span>
+
+<span class="fc bfc" id="L444" title="All 2 branches covered.">            return camId == camera.camId</span>
+<span class="pc bpc" id="L445" title="1 of 2 branches missed.">                    &amp;&amp; Objects.equals(camSet, camera.camSet)</span>
+<span class="pc bpc" id="L446" title="1 of 2 branches missed.">                    &amp;&amp; Objects.equals(presets, camera.presets);</span>
+        }
+
+<span class="nc" id="L449">        return false;</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L454">        return Objects.hash(camId, camSet, presets);</span>
+    }
+
+    /**
+     * Returns the list of presets currently registered to this camera.
+     * @return The list of presets registered to this camera.
+     */
+    public Collection&lt;Preset&gt; getAllPresets() {
+<span class="fc" id="L462">        return presets.values();</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="pc bpc" id="L467" title="1 of 2 branches missed.">        return this.equals(DUMMY) ? &quot;None&quot; : String.valueOf(camId + 1);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

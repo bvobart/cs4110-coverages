@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoadScript.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Team Free Pizza</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.contextproject.saveLoad</a> &gt; <span class="el_source">LoadScript.java</span></div><h1>LoadScript.java</h1><pre class="source lang-java linenums">package nl.tudelft.contextproject.saveLoad;
+
+import nl.tudelft.contextproject.camera.Camera;
+import nl.tudelft.contextproject.camera.CameraSettings;
+import nl.tudelft.contextproject.presets.Preset;
+import nl.tudelft.contextproject.script.Script;
+import nl.tudelft.contextproject.script.Shot;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
+
+import javax.xml.namespace.QName;
+import javax.xml.stream.XMLEventReader;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.EndElement;
+import javax.xml.stream.events.StartElement;
+import javax.xml.stream.events.XMLEvent;
+
+/**
+ * Utility class for loading a script from an XML file.
+ * The location this file is to be loaded from is stored in the private
+ * variable {@link #loadLocation}, which can be set using {@link #setLoadLocation}.
+ * 
+ * &lt;p&gt;This class has a high cyclomatic complexity due to the load methods.
+ * We did not find any good way to get around this, without sacrificing
+ * code readability.
+ * 
+ * @since 0.3
+ */
+public final class LoadScript {
+
+<span class="fc" id="L37">    private static final Object MUTEX = new Object();</span>
+    
+    /**
+     * Location of the save file to load from.
+     * This is set to savefile.xml per default.
+     */
+<span class="fc" id="L43">    private static String loadLocation = &quot;savefile.xml&quot;;</span>
+
+    /**
+     * XMLEventReader that reads from a save file.
+     */
+<span class="fc" id="L48">    private static XMLEventReader reader;</span>
+
+    /**
+     * Since this is a utility class, the constructor may not be called.
+     */
+<span class="nc" id="L53">    private LoadScript() {</span>
+<span class="nc" id="L54">        throw new UnsupportedOperationException();</span>
+    }
+
+    /**
+     * Returns the location of the save file this class loads from.
+     * @return The location of the save file this class loads from.
+     */
+    public static String getLoadLocation() {
+<span class="nc" id="L62">        return loadLocation;</span>
+    }
+
+    /**
+     * Sets the location of the save file this class loads from.
+     * Also creates a new instance of {@link #reader} so it may load from the
+     * new load location when {@link #load()} is called.
+     *
+     * @param s The new location of the save file this class should load from.
+     */
+    public static void setLoadLocation(String s) {
+<span class="fc" id="L73">        synchronized (MUTEX) {</span>
+<span class="fc" id="L74">            loadLocation = s;</span>
+        }
+<span class="fc" id="L76">    }</span>
+
+    /**
+     * Loads a script from the XML file at the location specified in
+     * {@link #loadLocation}.
+     * It loads the cameras from the save file and puts them in {@link Camera#CAMERAS}.
+     * It then loads the shots from the save file and returns them as a Script object.
+     * 
+     * @return The loaded script
+     */
+    public static Script load() throws XMLStreamException {
+<span class="fc" id="L87">        synchronized (MUTEX) {</span>
+<span class="fc" id="L88">            Camera.clearAllCameras();</span>
+<span class="fc" id="L89">            List&lt;Shot&gt; shots = new LinkedList&lt;Shot&gt;();</span>
+<span class="fc" id="L90">            reader = createReader();</span>
+<span class="fc" id="L91">            checkCorrectDocument();</span>
+            
+<span class="fc bfc" id="L93" title="All 2 branches covered.">            while (reader.hasNext()) {</span>
+<span class="fc" id="L94">                XMLEvent event = reader.nextEvent();</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">                if (event.isStartElement()) {</span>
+<span class="fc" id="L96">                    StartElement start = event.asStartElement();</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">                    if (&quot;cameras&quot;.equals(start.getName().getLocalPart())) {</span>
+<span class="fc" id="L98">                        loadCameras();</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">                    } else if (&quot;shots&quot;.equals(start.getName().getLocalPart())) {</span>
+<span class="fc" id="L100">                        shots = loadShots();</span>
+                    }
+                }
+            }
+            
+<span class="fc" id="L105">            ApplicationSettings.getInstance().initCameraConnections();</span>
+<span class="fc" id="L106">            return new Script(shots);</span>
+        }
+    }
+    
+    /**
+     * Checks if the document to be read is actually a save file from our
+     * application. Does this by reading the first two events in the file,
+     * namely the start of the document and the first tag afterwards,
+     * which should be 'script'.
+     * @throws XMLStreamException When the save file is not correct.
+     */
+    private static void checkCorrectDocument() throws XMLStreamException {
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">        if (reader.hasNext()) {</span>
+<span class="fc" id="L119">            reader.nextEvent(); //skip start of document</span>
+        }
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">        if (reader.hasNext()) {</span>
+<span class="fc" id="L122">            XMLEvent event = reader.nextEvent();</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">            if (event.isStartElement() </span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">                    &amp;&amp; &quot;script&quot;.equals(event.asStartElement().getName().getLocalPart())) {</span>
+<span class="fc" id="L125">                return;</span>
+            }
+        }
+<span class="nc" id="L128">        throw new XMLStreamException(&quot;This is not a savefile from our program.&quot;);</span>
+    }
+
+    /**
+     * Creates an XMLEventReader object using the file location specified
+     * in {@link #loadLocation} for use as the loader class variable.
+     * Throws a RuntimeException in the case the save file cannot be read.
+     *
+     * @return An XMLEventWriter object for use as the writer class variable.
+     */
+    private static XMLEventReader createReader() {
+        try {
+<span class="fc" id="L140">            return (XMLInputFactory.newFactory()).createXMLEventReader(new FileInputStream(loadLocation), &quot;UTF-8&quot;);</span>
+<span class="nc" id="L141">        } catch (IOException | XMLStreamException e) {</span>
+<span class="nc" id="L142">            e.printStackTrace();</span>
+<span class="nc" id="L143">            throw new RuntimeException(&quot;Your save file could not be found or read.&quot;, e);</span>
+        }
+    }
+
+    /**
+     * Reads the 'cameras' section of the XML file.
+     * Assumes that the start element of this section has already been read.
+     * 
+     * @throws XMLStreamException when an error occurs in the XML.
+     */
+    private static void loadCameras() throws XMLStreamException {
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">        while (reader.hasNext()) {</span>
+<span class="fc" id="L155">            XMLEvent event = reader.nextEvent();</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">            if (event.isStartElement()) {</span>
+<span class="fc" id="L157">                StartElement start = event.asStartElement();</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">                if (&quot;camera&quot;.equals(start.getName().getLocalPart())) {</span>
+<span class="fc" id="L159">                    loadCamera(Integer.parseInt(start.getAttributeByName(new QName(&quot;id&quot;)).getValue()));</span>
+<span class="fc" id="L160">                } else {</span>
+<span class="nc" id="L161">                    throw new XMLStreamException(&quot;Unexpected start tag in cameras section: &quot;</span>
+<span class="nc" id="L162">                            + start.getName().getLocalPart());</span>
+                }
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">            } else if (event.isEndElement()) {</span>
+<span class="fc" id="L165">                EndElement end = event.asEndElement();</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">                if (&quot;cameras&quot;.equals(end.getName().getLocalPart())) {</span>
+<span class="fc" id="L167">                    return;</span>
+                }
+<span class="nc" id="L169">                throw new XMLStreamException(&quot;Unexpected end tag in cameras section: &quot;</span>
+<span class="nc" id="L170">                        + end.getName().getLocalPart());</span>
+                
+            }
+        }
+<span class="nc" id="L174">    }</span>
+
+    /**
+     * Reads a 'camera' section of the XML file.
+     * Assumes that the start element of this section has already been read.
+     * 
+     * @param id Id of the camera to be loaded.
+     * @throws XMLStreamException when an error occurs in the XML.
+     */
+    private static void loadCamera(int id) throws XMLStreamException {
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">        Camera cam = Camera.getCamera(id) == null ? new Camera() : Camera.getCamera(id);</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">        while (reader.hasNext()) {</span>
+<span class="fc" id="L186">            XMLEvent event = reader.nextEvent();</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">            if (event.isStartElement()) {</span>
+<span class="fc" id="L188">                StartElement start = event.asStartElement();</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">                if (&quot;cameraSettings&quot;.equals(start.getName().getLocalPart())) {</span>
+<span class="fc" id="L190">                    cam.setSettings(loadCameraSettings(start));</span>
+<span class="pc bpc" id="L191" title="1 of 2 branches missed.">                } else if (&quot;presets&quot;.equals(start.getName().getLocalPart())) {</span>
+<span class="fc" id="L192">                    loadPresets(cam);</span>
+                }
+            }
+<span class="fc bfc" id="L195" title="All 2 branches covered.">            if (event.isEndElement()) {</span>
+<span class="fc" id="L196">                EndElement end = event.asEndElement();</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">                if (&quot;camera&quot;.equals(end.getName().getLocalPart())) {</span>
+<span class="fc" id="L198">                    return;</span>
+                }
+            }
+        }
+<span class="nc" id="L202">    }</span>
+
+    /**
+     * Reads a 'cameraSettings' section of the XML file.
+     * Assumes that the start element of this section has already been read
+     * and is inserted into this method as the start parameter.
+     * 
+     * @param start The start element of the 'cameraSettings' section.
+     * @return The loaded CameraSettings object.
+     * @throws XMLStreamException when an error occurs in the XML.
+     */
+    private static CameraSettings loadCameraSettings(StartElement start) {
+<span class="fc" id="L214">        return new CameraSettings(</span>
+<span class="fc" id="L215">                Integer.parseInt(start.getAttributeByName(new QName(&quot;pan&quot;)).getValue()),</span>
+<span class="fc" id="L216">                Integer.parseInt(start.getAttributeByName(new QName(&quot;tilt&quot;)).getValue()),</span>
+<span class="fc" id="L217">                Integer.parseInt(start.getAttributeByName(new QName(&quot;zoom&quot;)).getValue()),</span>
+<span class="fc" id="L218">                Integer.parseInt(start.getAttributeByName(new QName(&quot;focus&quot;)).getValue())</span>
+                );
+    }
+
+    /**
+     * Reads a 'presets' section associated with a camera of the XML file and
+     * adds these presets to the camera they belong to.
+     * Assumes that the start element of this section has already been read.
+     * 
+     * @param cam Camera object associated with this 'presets' section.
+     * @throws XMLStreamException when an error occurs in the XML.
+     */
+    private static void loadPresets(Camera cam) throws XMLStreamException {
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">        while (reader.hasNext()) {</span>
+<span class="fc" id="L232">            XMLEvent event = reader.nextEvent();</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">            if (event.isStartElement()) {</span>
+<span class="fc" id="L234">                StartElement start = event.asStartElement();</span>
+<span class="pc bpc" id="L235" title="1 of 2 branches missed.">                if (&quot;preset&quot;.equals(start.getName().getLocalPart())) {</span>
+<span class="fc" id="L236">                    cam.addPreset(loadPreset(start));</span>
+                }
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">            } else if (event.isEndElement()) {</span>
+<span class="fc" id="L239">                EndElement end = event.asEndElement();</span>
+<span class="pc bpc" id="L240" title="1 of 2 branches missed.">                if (&quot;presets&quot;.equals(end.getName().getLocalPart())) {</span>
+<span class="fc" id="L241">                    break;</span>
+                }
+            }
+        }
+<span class="fc" id="L245">    }</span>
+
+    /**
+     * Reads a 'preset' section of the XML file.
+     * Assumes that the start element of this section has already been read
+     * and is inserted into this method as the presetStart parameter.
+     * 
+     * @param presetStart The start element of the 'preset' section.
+     * @return The loaded Preset object.
+     * @throws XMLStreamException when an error occurs in the XML.
+     */
+    private static Preset loadPreset(StartElement presetStart) throws XMLStreamException {
+<span class="fc" id="L257">        int id = -1;</span>
+<span class="fc" id="L258">        String description = &quot;&quot;;</span>
+<span class="fc" id="L259">        String imgLoc = &quot;&quot;;</span>
+<span class="fc" id="L260">        AtomicReference&lt;CameraSettings&gt; toSet = new AtomicReference&lt;CameraSettings&gt;();</span>
+        
+<span class="pc bpc" id="L262" title="1 of 2 branches missed.">        while (reader.hasNext()) {</span>
+<span class="fc" id="L263">            XMLEvent event = reader.nextEvent();</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">            if (event.isStartElement()) {</span>
+<span class="fc" id="L265">                StartElement start = event.asStartElement();</span>
+<span class="fc bfc" id="L266" title="All 2 branches covered.">                if (&quot;id&quot;.equals(start.getName().getLocalPart())) {</span>
+<span class="fc" id="L267">                    XMLEvent idEvent = reader.nextEvent();</span>
+<span class="pc bpc" id="L268" title="1 of 2 branches missed.">                    if (idEvent.isCharacters()) {</span>
+<span class="fc" id="L269">                        id = Integer.parseInt(idEvent.asCharacters().getData());</span>
+<span class="fc" id="L270">                    } else {</span>
+<span class="nc" id="L271">                        throw new XMLStreamException(&quot;Preset ID not preset.&quot;);</span>
+                    }
+<span class="fc bfc" id="L273" title="All 2 branches covered.">                } else if (&quot;description&quot;.equals(start.getName().getLocalPart())) {</span>
+<span class="fc" id="L274">                    XMLEvent descEvent = reader.nextEvent();</span>
+<span class="pc bpc" id="L275" title="1 of 2 branches missed.">                    if (descEvent.isCharacters()) {</span>
+<span class="nc" id="L276">                        description = descEvent.asCharacters().getData();</span>
+                    }
+<span class="pc bfc" id="L278" title="All 2 branches covered.">                } else if (&quot;imgLoc&quot;.equals(start.getName().getLocalPart())) {</span>
+<span class="fc" id="L279">                    XMLEvent imgLocEvent = reader.nextEvent();</span>
+<span class="pc bpc" id="L280" title="1 of 2 branches missed.">                    if (imgLocEvent.isCharacters()) {</span>
+<span class="nc" id="L281">                        imgLoc = imgLocEvent.asCharacters().getData();</span>
+                    }
+<span class="pc bpc" id="L283" title="1 of 2 branches missed.">                } else if (&quot;cameraSettings&quot;.equals(start.getName().getLocalPart())) {</span>
+<span class="fc" id="L284">                    toSet.set(loadCameraSettings(start));</span>
+                }
+            }
+            
+<span class="fc bfc" id="L288" title="All 2 branches covered.">            if (event.isEndElement()) {</span>
+<span class="fc" id="L289">                EndElement end = event.asEndElement();</span>
+<span class="fc bfc" id="L290" title="All 2 branches covered.">                if (&quot;preset&quot;.equals(end.getName().getLocalPart())) {</span>
+<span class="fc" id="L291">                    break;</span>
+                }
+            }
+        }
+<span class="pc bpc" id="L295" title="1 of 2 branches missed.">        if (toSet.get() != null) {</span>
+<span class="fc" id="L296">            String type = presetStart.getAttributeByName(new QName(&quot;type&quot;)).getValue();</span>
+<span class="fc" id="L297">            return createPreset(type, toSet.get(), id, description, imgLoc);</span>
+        }
+<span class="nc" id="L299">        throw new XMLStreamException(&quot;No camera settings found in preset&quot;);</span>
+    }
+    
+    /**
+     * Gets the constructor from the right preset class as defined by parameter 'type' and
+     * returns the Preset object instantiated with the rest of the arguments.
+     * 
+     * @param type Full name of the preset class, as returned by {@link Class#getName()}
+     * @param toSet CameraSettings to set in the preset.
+     * @param id Id of the preset.
+     * @param description Description of the preset.
+     * @param imgLoc Image location of the preset.
+     * @return The constructed preset according to the parameters given.
+     * @throws XMLStreamException when instantiating the preset fails.
+     * @see {@link Preset#Preset}
+     */
+    private static Preset createPreset(String type, CameraSettings toSet, int id, 
+            String description, String imgLoc) throws XMLStreamException {
+        Preset preset;
+        
+        try {
+<span class="fc" id="L320">            Constructor&lt;?&gt; constructor = Class.forName(type).getConstructor(CameraSettings.class, int.class);</span>
+<span class="fc" id="L321">            preset = (Preset) constructor.newInstance(toSet, id);</span>
+<span class="pc" id="L322">        } catch (Exception e) {</span>
+<span class="nc" id="L323">            e.printStackTrace();</span>
+<span class="nc" id="L324">            throw new XMLStreamException(&quot;Instantiating preset failed.&quot;, e);</span>
+        }
+        
+<span class="fc" id="L327">        preset.setDescription(description);</span>
+<span class="fc" id="L328">        preset.setImageLocation(imgLoc);</span>
+<span class="fc" id="L329">        return preset;</span>
+    }
+
+    /**
+     * Reads the 'shots' section of the XML file and returns this as a list
+     * of Shot objects.
+     * Assumes that the start element of this section has already been read.
+     * 
+     * @return The loaded list of shots.
+     * @throws XMLStreamException when an error occurs in the XML.
+     */
+    private static List&lt;Shot&gt; loadShots() throws XMLStreamException {
+<span class="fc" id="L341">        List&lt;Shot&gt; shots = new LinkedList&lt;Shot&gt;();</span>
+<span class="pc bpc" id="L342" title="1 of 2 branches missed.">        while (reader.hasNext()) {</span>
+<span class="fc" id="L343">            XMLEvent event = reader.nextEvent();</span>
+<span class="fc bfc" id="L344" title="All 2 branches covered.">            if (event.isStartElement()) {</span>
+<span class="fc" id="L345">                StartElement start = event.asStartElement();</span>
+<span class="pc bpc" id="L346" title="1 of 2 branches missed.">                if (&quot;shot&quot;.equals(start.getName().getLocalPart())) {</span>
+<span class="fc" id="L347">                    shots.add(loadShot(start));</span>
+<span class="fc" id="L348">                } else {</span>
+<span class="nc" id="L349">                    throw new XMLStreamException(&quot;Unexpected start tag in shot section: &quot;</span>
+<span class="nc" id="L350">                            + start.getName().getLocalPart());</span>
+                }
+<span class="pc bpc" id="L352" title="1 of 2 branches missed.">            } else if (event.isEndElement()) {</span>
+<span class="fc" id="L353">                EndElement end = event.asEndElement();</span>
+<span class="pc bpc" id="L354" title="1 of 2 branches missed.">                if (&quot;shots&quot;.equals(end.getName().getLocalPart())) {</span>
+<span class="fc" id="L355">                    break;</span>
+                }
+<span class="nc" id="L357">                throw new XMLStreamException(&quot;Unexpected end tag in shots section: &quot;</span>
+<span class="nc" id="L358">                        + end.getName().getLocalPart());</span>
+                
+            }
+        }
+<span class="fc" id="L362">        return shots;</span>
+    }
+
+    /**
+     * Reads a 'shot' section of the XML file and returns this as a Shot object.
+     * Assumes that the start element of this section has already been read and
+     * is inserted into this method as the startShot parameter.
+     * 
+     * @return The loaded shot.
+     * @throws XMLStreamException when an error occurs in the XML.
+     */
+    private static Shot loadShot(StartElement startShot) throws XMLStreamException {
+<span class="fc" id="L374">        int id = Integer.parseInt(startShot.getAttributeByName(new QName(&quot;number&quot;)).getValue());</span>
+<span class="fc" id="L375">        String shotId = &quot;&quot;;</span>
+<span class="fc" id="L376">        int cameraId = -1;</span>
+<span class="fc" id="L377">        int presetId = -1;</span>
+<span class="fc" id="L378">        String description = &quot;&quot;;</span>
+<span class="fc" id="L379">        String action = &quot;&quot;;</span>
+        
+<span class="pc bpc" id="L381" title="1 of 2 branches missed.">        while (reader.hasNext()) {</span>
+<span class="fc" id="L382">            XMLEvent event = reader.nextEvent();</span>
+<span class="fc bfc" id="L383" title="All 2 branches covered.">            if (event.isStartElement()) {</span>
+<span class="fc" id="L384">                StartElement start = event.asStartElement();</span>
+<span class="fc bfc" id="L385" title="All 2 branches covered.">                if (&quot;shotId&quot;.equals(start.getName().getLocalPart())) {</span>
+<span class="fc" id="L386">                    XMLEvent shotIdEvent = reader.nextEvent();</span>
+<span class="pc bpc" id="L387" title="1 of 2 branches missed.">                    if (shotIdEvent.isCharacters()) {</span>
+<span class="nc" id="L388">                        shotId = shotIdEvent.asCharacters().getData();</span>
+                    }
+<span class="pc bfc" id="L390" title="All 2 branches covered.">                } else if (&quot;description&quot;.equals(start.getName().getLocalPart())) {</span>
+<span class="fc" id="L391">                    XMLEvent descEvent = reader.nextEvent();</span>
+<span class="pc bpc" id="L392" title="1 of 2 branches missed.">                    if (descEvent.isCharacters()) {</span>
+<span class="nc" id="L393">                        description = descEvent.asCharacters().getData();</span>
+                    }
+<span class="pc bfc" id="L395" title="All 2 branches covered.">                } else if (&quot;cameraId&quot;.equals(start.getName().getLocalPart())) {</span>
+<span class="fc" id="L396">                    XMLEvent cameraIdEvent = reader.nextEvent();</span>
+<span class="pc bpc" id="L397" title="1 of 2 branches missed.">                    if (cameraIdEvent.isCharacters()) {</span>
+<span class="fc" id="L398">                        cameraId = Integer.parseInt(cameraIdEvent.asCharacters().getData());</span>
+<span class="fc" id="L399">                    } else {</span>
+<span class="nc" id="L400">                        throw new XMLStreamException(&quot;No camera id present in shot.&quot;);</span>
+                    }
+<span class="fc bfc" id="L402" title="All 2 branches covered.">                } else if (&quot;presetId&quot;.equals(start.getName().getLocalPart())) {</span>
+<span class="fc" id="L403">                    XMLEvent presetIdEvent = reader.nextEvent();</span>
+<span class="fc bfc" id="L404" title="All 2 branches covered.">                    if (presetIdEvent.isCharacters()) {</span>
+<span class="fc" id="L405">                        presetId = Integer.parseInt(presetIdEvent.asCharacters().getData());</span>
+                    }
+<span class="pc bpc" id="L407" title="1 of 2 branches missed.">                } else if (&quot;action&quot;.equals(start.getName().getLocalPart())) {</span>
+<span class="fc" id="L408">                    XMLEvent actionEvent = reader.nextEvent();</span>
+<span class="pc bpc" id="L409" title="1 of 2 branches missed.">                    if (actionEvent.isCharacters()) {</span>
+<span class="nc" id="L410">                        action = actionEvent.asCharacters().getData();</span>
+                    }
+                }
+            }
+<span class="fc bfc" id="L414" title="All 2 branches covered.">            if (event.isEndElement()) {</span>
+<span class="fc" id="L415">                EndElement end = event.asEndElement();</span>
+<span class="fc bfc" id="L416" title="All 2 branches covered.">                if (&quot;shot&quot;.equals(end.getName().getLocalPart())) {</span>
+<span class="fc" id="L417">                    break;</span>
+                }
+            }
+        }
+        
+<span class="fc" id="L422">        Camera cam = Camera.getCamera(cameraId);</span>
+<span class="pc bpc" id="L423" title="1 of 2 branches missed.">        if (cam != null) {</span>
+<span class="fc" id="L424">            return new Shot(id, shotId, cam, cam.getPreset(presetId), description, action);</span>
+        }
+<span class="nc" id="L426">        throw new XMLStreamException(&quot;Camera cannot be found with camera id: &quot; + cameraId);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

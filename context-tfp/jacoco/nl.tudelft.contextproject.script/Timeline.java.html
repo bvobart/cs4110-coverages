@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Timeline.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Team Free Pizza</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.contextproject.script</a> &gt; <span class="el_source">Timeline.java</span></div><h1>Timeline.java</h1><pre class="source lang-java linenums">package nl.tudelft.contextproject.script;
+
+import nl.tudelft.contextproject.camera.Camera;
+
+import java.util.LinkedList;
+import java.util.List;
+
+/** 
+ * Class to represent a timeline of shots for a single {@link Camera}.
+ * A timeline represents a list of shots that is ordered by timestamp.
+ * 
+ * @since 0.2
+ */
+public class Timeline {
+
+    private Camera camera;
+    private int current;
+    private List&lt;Shot&gt; shots;
+
+    /**
+     * Creates a Timeline object with an empty list of shots.
+     */
+<span class="fc" id="L23">    public Timeline() {</span>
+<span class="fc" id="L24">        this.shots = new LinkedList&lt;Shot&gt;();</span>
+<span class="fc" id="L25">    }</span>
+
+    /**
+     * Creates a Timeline object with a certain list of shots.
+     *
+     * @param cam is the camera this Timeline is connected with.
+     * @param shot1 is the list of shots.
+     */
+<span class="fc" id="L33">    public Timeline(Camera cam, List&lt;Shot&gt; shot1) {</span>
+<span class="fc" id="L34">        this.shots = shot1;</span>
+<span class="fc" id="L35">        this.camera = cam;</span>
+<span class="fc" id="L36">        current = -1;</span>
+<span class="fc" id="L37">    }</span>
+
+    /**
+     * Returns the Camera object this Timeline applies to.
+     * @return the Camera object this Timeline applies to.
+     */
+    public Camera getCamera() {
+<span class="fc" id="L44">        return camera;</span>
+    }
+
+    /**
+     * Sets the camera this Timeline applies to.
+     * @param cam Camera this Timeline applies to.
+     */
+    public void setCamera(Camera cam) {
+<span class="fc" id="L52">        camera = cam;</span>
+<span class="fc" id="L53">    }</span>
+
+    /**
+     * This method is used to add shots to a Timeline.
+     * @param shot is the shot to be added to the Timeline.
+     */
+    public void addShot(Shot shot) {
+<span class="fc" id="L60">        shots.add(shot);</span>
+<span class="fc" id="L61">    }</span>
+
+    /**
+     * Gets all the shots in our timeline
+     * @return the shots int our timeline.
+     */
+    public List&lt;Shot&gt; getShots() {
+<span class="fc" id="L68">        return shots;</span>
+    }
+
+    /**
+     * Loads the initial preset of the timeline, if shots is not empty.
+     */
+    public void initPreset() {
+<span class="pc bpc" id="L75" title="1 of 4 branches missed.">        if (!shots.isEmpty() &amp;&amp; shots.get(0).hasPreset()) {</span>
+<span class="fc" id="L76">            shots.get(0).getPreset().applyTo(camera);  </span>
+        }
+<span class="fc" id="L78">    }</span>
+
+    /**
+     * Loads the next preset for a camera, if there is one.
+     * @param oldShot The shot that just finished.
+     */
+    public void nextPreset(Shot oldShot) {
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        int oldIndex = oldShot == null ? -1 : shots.indexOf(oldShot);</span>
+
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">        if (oldIndex + 1 &lt; shots.size()) {</span>
+<span class="fc" id="L88">            Shot nextShot = shots.get(oldIndex + 1);</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">            if (nextShot.hasPreset()) {</span>
+<span class="fc" id="L90">                nextShot.getPreset().applyTo(camera);</span>
+<span class="fc" id="L91">                current = oldIndex + 1;</span>
+            }
+        }
+<span class="fc" id="L94">    }</span>
+    
+    /**
+     * Reloads the next preset.
+     * Since it should be loaded before, it uses 'current'.
+     */
+    public void instantNextPreset() {
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        if (current == -1) {</span>
+<span class="fc" id="L102">            nextPreset(null);</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">        } else if (current &lt; shots.size()) {</span>
+<span class="fc" id="L104">            Shot restoreShot = shots.get(current);</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">            if (restoreShot.hasPreset()) {</span>
+<span class="fc" id="L106">                restoreShot.getPreset().applyTo(camera);</span>
+            }
+        }
+<span class="fc" id="L109">    }</span>
+    
+    /**
+     * Return the next shot of the timeline starting from an old shot
+     * 
+     * @param oldShot The old shot to get the next shot from.
+     * @return The next shot.
+     */
+    public Shot getNextShot(Shot oldShot) {
+<span class="fc" id="L118">        int oldIndex = shots.indexOf(oldShot);</span>
+
+<span class="fc bfc" id="L120" title="All 2 branches covered.">        if (oldIndex + 1 &lt; shots.size()) {</span>
+<span class="fc" id="L121">            return shots.get(oldIndex + 1);</span>
+        }
+        
+<span class="fc" id="L124">        return null;</span>
+    }
+    
+    /**
+     * Gives the index of the the current shot.
+     * @return The index
+     */
+    public int getCurrent() {
+<span class="fc" id="L132">        return current;</span>
+    }
+    
+    /**
+     * Increses the index of the current shot.
+     */
+    public void incCurrent() {
+<span class="nc" id="L139">        current++;</span>
+<span class="nc" id="L140">    }</span>
+    
+    /**
+     * Resets the timeline.
+     */
+    public void reset() {
+<span class="nc" id="L146">        current = -1;</span>
+<span class="nc" id="L147">    }</span>
+
+    /**
+     * This method is responsible for the execution of the shots present on our script.
+     * For all the shots present in our list of shots, it calls the execute method on
+     * every shot. The execute method is defined in the class Shot.
+     * 
+     * &lt;p&gt;Not really sure what this method should do though...
+     */
+    public void executeScript() {
+<span class="fc bfc" id="L157" title="All 2 branches covered.">        for (Shot shot1 : shots) {</span>
+<span class="fc" id="L158">            shot1.execute();</span>
+        }
+<span class="fc" id="L160">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

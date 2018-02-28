@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CameraFeedsController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Team Free Pizza</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.contextproject.gui</a> &gt; <span class="el_source">CameraFeedsController.java</span></div><h1>CameraFeedsController.java</h1><pre class="source lang-java linenums">package nl.tudelft.contextproject.gui;
+
+import javafx.application.Platform;
+import javafx.beans.property.FloatProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+
+import nl.tudelft.contextproject.ContextTFP;
+import nl.tudelft.contextproject.camera.Camera;
+
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Iterator;
+
+/**
+ * Controller for the window that can display camera feeds. This
+ * class is responsible for handling the two steams that can be
+ * displayed in a pop-up window.
+ * 
+ * &lt;p&gt;The view section is defined under view/CameraFeedsView.fxml
+ * 
+ * @since 0.8
+ */
+<span class="nc" id="L32">public class CameraFeedsController {</span>
+
+    private static LiveStreamHandler leftStreamHandler;
+    private static LiveStreamHandler rightStreamHandler;
+
+    @FXML private ChoiceBox&lt;Camera&gt; camChoiceOne;
+    @FXML private ChoiceBox&lt;Camera&gt; camChoiceTwo;
+
+    @FXML private ImageView viewOne;
+    @FXML private ImageView viewTwo;
+
+    @FXML private VBox streamBoxOne;
+    @FXML private VBox streamBoxTwo;
+
+    private Collection&lt;Camera&gt; cameras;
+
+    /**
+     * Initialize method used by JavaFX.
+     */
+    @FXML private void initialize() {
+<span class="nc" id="L52">        cameras = Camera.getAllCameras();</span>
+
+<span class="nc" id="L54">        leftStreamHandler = new LiveStreamHandler();</span>
+<span class="nc" id="L55">        rightStreamHandler = new LiveStreamHandler();</span>
+
+<span class="nc" id="L57">        initChoiceBoxes();</span>
+<span class="nc" id="L58">        addStreamListeners();</span>
+
+<span class="nc" id="L60">        viewOne.setImage(loadImage(&quot;error-x.png&quot;));</span>
+<span class="nc" id="L61">        viewTwo.setImage(loadImage(&quot;error-x.png&quot;));</span>
+
+<span class="nc" id="L63">        fitImageView(viewOne, streamBoxOne);</span>
+<span class="nc" id="L64">        fitImageView(viewTwo, streamBoxTwo);</span>
+<span class="nc" id="L65">    }</span>
+
+    /**
+     * Initializes the choice boxes.
+     * Allows the user to choose his camera feed for each view.
+     */
+    private void initChoiceBoxes() {
+<span class="nc" id="L72">        ObservableList&lt;Camera&gt; choices = FXCollections.observableArrayList();</span>
+<span class="nc" id="L73">        choices.add(Camera.DUMMY);</span>
+<span class="nc" id="L74">        Iterator&lt;Camera&gt; it = cameras.iterator();</span>
+
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        while (it.hasNext()) {</span>
+<span class="nc" id="L77">            choices.add(it.next());</span>
+        }
+
+<span class="nc" id="L80">        camChoiceOne.setItems(choices);</span>
+<span class="nc" id="L81">        camChoiceTwo.setItems(choices);</span>
+
+<span class="nc" id="L83">        camChoiceOne.setValue(Camera.DUMMY);</span>
+<span class="nc" id="L84">        camChoiceTwo.setValue(Camera.DUMMY);</span>
+
+<span class="nc" id="L86">        addChoiceListener(camChoiceOne);</span>
+<span class="nc" id="L87">        addChoiceListener(camChoiceTwo);</span>
+<span class="nc" id="L88">    }</span>
+
+    /**
+     * Add a ChangeListener to the ChoiceBox.
+     * @param cb the ChoiceBox to add the listener to.
+     */
+    private void addChoiceListener(ChoiceBox&lt;Camera&gt; cb) {
+<span class="nc" id="L95">        cb.getSelectionModel().selectedItemProperty().addListener((obs, oldV, newV) -&gt; {</span>
+
+            LiveStreamHandler streamHandler;
+
+<span class="nc bnc" id="L99" title="All 2 branches missed.">            if (cb.equals(camChoiceOne)) {</span>
+<span class="nc" id="L100">                streamHandler = leftStreamHandler;</span>
+<span class="nc" id="L101">            } else {</span>
+<span class="nc" id="L102">                streamHandler = rightStreamHandler;</span>
+            }
+
+<span class="nc" id="L105">            VBox outerBox = (VBox) cb.getParent().getParent();</span>
+<span class="nc" id="L106">            VBox innerBox = (VBox) outerBox.getChildren().get(1);</span>
+<span class="nc" id="L107">            ImageView oldStream = (ImageView) innerBox.getChildren().get(0);</span>
+            
+<span class="nc bnc" id="L109" title="All 2 branches missed.">            if (newV.hasConnection()) {</span>
+<span class="nc" id="L110">                updateStream(newV.getConnection().getStreamLink(), oldStream, streamHandler);   </span>
+<span class="nc" id="L111">            } else {</span>
+<span class="nc" id="L112">                blackView(oldStream, streamHandler);</span>
+            }
+<span class="nc" id="L114">        });</span>
+<span class="nc" id="L115">    }</span>
+
+    /**
+     * Adds listeners to the width and height properties of the stream containers
+     * for scaling.
+     */
+    private void addStreamListeners() {
+<span class="nc" id="L122">        streamBoxOne.widthProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">            if (leftStreamHandler != null) {</span>
+<span class="nc" id="L124">                fitImageViewSize(newValue.floatValue(), </span>
+<span class="nc" id="L125">                        (float) streamBoxOne.getHeight(), </span>
+<span class="nc" id="L126">                        (ImageView) streamBoxOne.getChildren().get(0), leftStreamHandler);</span>
+            }
+<span class="nc" id="L128">        });</span>
+
+<span class="nc" id="L130">        streamBoxTwo.widthProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">            if (rightStreamHandler != null) {</span>
+<span class="nc" id="L132">                fitImageViewSize(newValue.floatValue(), </span>
+<span class="nc" id="L133">                        (float) streamBoxTwo.getHeight(), </span>
+<span class="nc" id="L134">                        (ImageView) streamBoxTwo.getChildren().get(0), rightStreamHandler);</span>
+            }
+<span class="nc" id="L136">        });</span>
+
+<span class="nc" id="L138">        streamBoxOne.heightProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">            if (leftStreamHandler != null) {</span>
+<span class="nc" id="L140">                fitImageViewSize((float) streamBoxOne.getWidth(), </span>
+<span class="nc" id="L141">                        newValue.floatValue(), </span>
+<span class="nc" id="L142">                        (ImageView) streamBoxOne.getChildren().get(0), leftStreamHandler);</span>
+            }
+<span class="nc" id="L144">        });</span>
+
+<span class="nc" id="L146">        streamBoxTwo.heightProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">            if (rightStreamHandler != null) {</span>
+<span class="nc" id="L148">                fitImageViewSize((float) streamBoxTwo.getWidth(), </span>
+<span class="nc" id="L149">                        newValue.floatValue(), </span>
+<span class="nc" id="L150">                        (ImageView) streamBoxTwo.getChildren().get(0), rightStreamHandler);</span>
+            }
+<span class="nc" id="L152">        });</span>
+<span class="nc" id="L153">    }</span>
+
+    /**
+     * Updates the camera stream to the stream referenced by the specified link.
+     * @param streamLink the link to the video stream to be played next.
+     */
+    private void updateStream(String streamLink, ImageView imageView, LiveStreamHandler streamHandler) {
+<span class="nc" id="L160">        VBox vBox = (VBox) imageView.getParent();</span>
+
+<span class="nc bnc" id="L162" title="All 2 branches missed.">        if (streamHandler != null) {</span>
+<span class="nc" id="L163">            streamHandler.stop();</span>
+
+<span class="nc" id="L165">            ImageView newView = streamHandler.createImageView(streamLink, 1920, 1080);</span>
+
+<span class="nc" id="L167">            Platform.runLater(() -&gt; {</span>
+<span class="nc" id="L168">                fitImageViewSize((float) vBox.getWidth(), (float) vBox.getHeight(), newView, streamHandler);</span>
+<span class="nc" id="L169">            }); </span>
+
+<span class="nc" id="L171">            vBox.getChildren().clear();</span>
+<span class="nc" id="L172">            vBox.getChildren().add(newView);</span>
+<span class="nc" id="L173">            vBox.setStyle(&quot;-fx-border-color: transparent&quot;);</span>
+
+<span class="nc bnc" id="L175" title="All 2 branches missed.">            if (!ContextTFP.hasVLC()) {</span>
+<span class="nc" id="L176">                fitImageView(newView, vBox);</span>
+            }
+
+<span class="nc" id="L179">            streamHandler.start();</span>
+        }
+<span class="nc" id="L181">    }</span>
+
+    /**
+     * Loads a black image instead of a stream.
+     * 
+     * @param imgView The ImageView to set to a black image.
+     * @param streamHandler The stream handler that should be stopped.
+     */
+    private void blackView(ImageView imgView, LiveStreamHandler streamHandler) {
+<span class="nc bnc" id="L190" title="All 2 branches missed.">        if (streamHandler != null) {</span>
+<span class="nc" id="L191">            streamHandler.stop();</span>
+        }
+
+<span class="nc" id="L194">        imgView.setImage(loadImage(&quot;error-q.png&quot;));</span>
+<span class="nc" id="L195">    }</span>
+
+    /**
+     * Resizes the ImageView.
+     * 
+     * @param width The new width of the ImageView.
+     * @param height The new height of the ImageView.
+     * @param imageView The imageView that needs resizing.
+     * @param streamHandler The LiveStreamHandler responsible for the stream.
+     */
+    private void fitImageViewSize(float width, float height, ImageView imageView, LiveStreamHandler streamHandler) {
+<span class="nc bnc" id="L206" title="All 2 branches missed.">        if (imageView.getImage() instanceof WritableImage </span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">                &amp;&amp; streamHandler.isPlaying()) {</span>
+<span class="nc" id="L208">            FloatProperty videoSourceRatioProperty = streamHandler.getRatio();</span>
+<span class="nc" id="L209">            float fitHeight = videoSourceRatioProperty.get() * width;</span>
+
+<span class="nc bnc" id="L211" title="All 2 branches missed.">            if (fitHeight &gt; height) {</span>
+<span class="nc" id="L212">                imageView.setFitHeight(height);</span>
+<span class="nc" id="L213">                double fitWidth = height / videoSourceRatioProperty.get();</span>
+<span class="nc" id="L214">                imageView.setFitWidth(fitWidth);</span>
+<span class="nc" id="L215">                imageView.setX((width - fitWidth) / 2);</span>
+<span class="nc" id="L216">                imageView.setY(0);</span>
+<span class="nc" id="L217">            } else {</span>
+<span class="nc" id="L218">                imageView.setFitWidth(width);</span>
+<span class="nc" id="L219">                imageView.setFitHeight(fitHeight);</span>
+<span class="nc" id="L220">                imageView.setY((height - fitHeight) / 2);</span>
+<span class="nc" id="L221">                imageView.setX(0);</span>
+            } 
+        }
+<span class="nc" id="L224">    }</span>
+
+    /**
+     * Fit ImageView to its VBox container.
+     * 
+     * @param imgView The ImageView that should be fit to its VBox.
+     * @param vBox The VBox the ImageView should be bound to.
+     */
+    private void fitImageView(ImageView imgView, VBox vBox) {
+<span class="nc" id="L233">        imgView.fitWidthProperty().bind(vBox.widthProperty());</span>
+<span class="nc" id="L234">        imgView.fitHeightProperty().bind(vBox.heightProperty());</span>
+<span class="nc" id="L235">    }</span>
+
+    /**
+     * Loads an image. Loads an error image if path is null or invalid.
+     * 
+     * @param path Image path.
+     * @return The newly loaded image.
+     */
+    public Image loadImage(String path) {
+        try {
+<span class="nc" id="L245">            return new Image(path);</span>
+<span class="nc" id="L246">        } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L247">            return new Image(&quot;error-x.png&quot;);</span>
+        }
+    }
+
+    /**
+     * Close the streams.
+     */
+    public static void closeStreams() {
+<span class="nc bnc" id="L255" title="All 2 branches missed.">        if (leftStreamHandler != null) {</span>
+<span class="nc" id="L256">            leftStreamHandler.stop();</span>
+        }
+
+<span class="nc bnc" id="L259" title="All 2 branches missed.">        if (rightStreamHandler != null) {</span>
+<span class="nc" id="L260">            rightStreamHandler.stop();</span>
+        }
+<span class="nc" id="L262">    }</span>
+
+    /**
+     * Calling this method shows this view in the middle of the rootLayout,
+     * forcing the current view to disappear.
+     */
+    public static void show() {
+        try {
+<span class="nc" id="L270">            FXMLLoader loader = new FXMLLoader();</span>
+<span class="nc" id="L271">            loader.setLocation(ContextTFP.class.getResource(&quot;view/CameraFeedsView.fxml&quot;));</span>
+<span class="nc" id="L272">            AnchorPane cameraLiveUI = (AnchorPane) loader.load();</span>
+
+<span class="nc" id="L274">            ContextTFP.getRootLayout().setCenter(cameraLiveUI);</span>
+<span class="nc" id="L275">        } catch (IOException e) {</span>
+<span class="nc" id="L276">            e.printStackTrace();</span>
+        }
+<span class="nc" id="L278">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
