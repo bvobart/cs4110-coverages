@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>KeyListeners.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.userinterface</a> &gt; <span class="el_source">KeyListeners.java</span></div><h1>KeyListeners.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package nl.tudelft.scrumbledore.userinterface;</span>
+
+import java.util.ArrayList;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import nl.tudelft.scrumbledore.keybinding.KeybindingContainer;
+import nl.tudelft.scrumbledore.level.element.LevelElementAction;
+import nl.tudelft.scrumbledore.level.element.PlayerElement;
+import nl.tudelft.scrumbledore.game.Game;
+
+/**
+ * Handles all the key event listeners of the gui.
+ * 
+ * @author David Alderliesten
+ * @author Jeroen Meijer
+ */
+public class KeyListeners {
+  private Game game;
+  private Scene scene;
+  private KeybindingContainer keybindings;
+
+  /**
+   * Prepares the EventListeners.
+   * 
+   * @param game
+   *          The game to which the KeyEventListeners are added.
+   * 
+   * @param scene
+   *          The scene to which the KeyEventListeners are added.
+   */
+<span class="nc" id="L33">  public KeyListeners(Game game, Scene scene) {</span>
+<span class="nc" id="L34">    this.game = game;</span>
+<span class="nc" id="L35">    this.scene = scene;</span>
+<span class="nc" id="L36">    this.keybindings = KeybindingContainer.getInstance();</span>
+<span class="nc" id="L37">  }</span>
+
+  /**
+   * Initializes the EventListeners.
+   */
+  public void init() {
+<span class="nc" id="L43">    addKeyEventListeners();</span>
+<span class="nc" id="L44">  }</span>
+
+  /**
+   * Add key event listeners to a given scene to allow player controls.
+   * 
+   * @param scene
+   *          The scene the listeners should be added to.
+   */
+  private void addKeyEventListeners() {
+<span class="nc" id="L53">    keyPressListeners();</span>
+<span class="nc" id="L54">    keyReleaseListeners();</span>
+<span class="nc" id="L55">  }</span>
+
+  /**
+   * Adds key press listeners.
+   */
+  private void keyPressListeners() {
+<span class="nc" id="L61">    scene.setOnKeyPressed(new EventHandler&lt;KeyEvent&gt;() {</span>
+
+      public void handle(KeyEvent keyPressed) {
+<span class="nc" id="L64">        KeyCode keyCode = keyPressed.getCode();</span>
+<span class="nc" id="L65">        ArrayList&lt;PlayerElement&gt; players = game.getCurrentLevel().getPlayers();</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        for (PlayerElement player : players) {</span>
+<span class="nc" id="L67">          player.addAction(keybindings.getKeybinding(player.getPlayerNumber()).getAction(keyCode));</span>
+        }
+<span class="nc" id="L69">      }</span>
+    });
+<span class="nc" id="L71">  }</span>
+
+  /**
+   * Adds key release listeners.
+   */
+  private void keyReleaseListeners() {
+<span class="nc" id="L77">    scene.setOnKeyReleased(new EventHandler&lt;KeyEvent&gt;() {</span>
+
+      public void handle(KeyEvent keyReleased) {
+<span class="nc" id="L80">        KeyCode keyCode = keyReleased.getCode();</span>
+        
+<span class="nc" id="L82">        ArrayList&lt;PlayerElement&gt; players = game.getCurrentLevel().getPlayers();</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">        for (PlayerElement player : players) { </span>
+<span class="nc" id="L84">          player.addAction(LevelElementAction.invertAction(</span>
+<span class="nc" id="L85">              keybindings.getKeybinding(player.getPlayerNumber()).getAction(keyCode)));</span>
+<span class="nc" id="L86">          player.removeAction((keybindings.getKeybinding(</span>
+<span class="nc" id="L87">              player.getPlayerNumber()).getAction(keyCode)));</span>
+        }
+<span class="nc" id="L89">      }</span>
+    });
+<span class="nc" id="L91">  }</span>
+  
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

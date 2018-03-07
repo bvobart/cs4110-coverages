@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>PlayerElementTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.level.element</a> &gt; <span class="el_source">PlayerElementTest.java</span></div><h1>PlayerElementTest.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.level.element;
+
+import nl.tudelft.scrumbledore.level.Vector;
+
+import org.junit.Test;
+
+/**
+ * Abstract Player test class.
+ * 
+ * @author Floris Dolaard
+ */
+@SuppressWarnings(&quot;PMD.TooManyMethods&quot;)
+<span class="fc" id="L13">public abstract class PlayerElementTest extends LevelElementTest {</span>
+
+  /**
+   * Returns an instance of a LevelElement subclass to be tested.
+   * 
+   * @return A LevelElement test object.
+   * @param position
+   *          The position to be passed into the constructor of the LevelElement.
+   * @param size
+   *          The size to be passed into the constructor of the LevelElement.
+   */
+  public abstract LevelElement make(Vector position, Vector size);
+
+  
+  /**
+   * When a player action is added to a bubble's action queue, a call to hasAction for that action
+   * should return true.
+   */
+  @Test
+  public abstract void testHasActionTrue();
+  
+  /**
+   * Test the firing field getter/setter.
+   */
+  @Test
+  public abstract void testFiring();
+
+  /**
+   * Test the alive field getter/setter.
+   */
+  @Test
+  public abstract void testAlive();
+
+  /**
+   * Test the id field getter/setter.
+   */
+  @Test
+  public abstract void testPlayerNumber();
+
+  /**
+   * Test the lastMove field getter/setter.
+   */
+  @Test
+  public abstract void testLastMove();
+
+  /**
+   * Two player instances with the same position and size should be considered equal.
+   */
+  @Test
+  public abstract void testEqualsTrue();
+
+  /**
+   * Two player instances with a different position or size should not be considered equal.
+   */
+  @Test
+  public abstract void testEqualsFalse();
+
+  /**
+   * A Player instance and an instance of another class should not be considered equal.
+   */
+  @Test
+  public abstract void testEqualsFalseOtherClass();
+
+  /**
+   * The stubbed method hashCode should just return zero (line coverage).
+   */
+  @Test
+  public abstract void testHashCode();
+  
+  /**
+   * Test the getSprites method to verify whether the correct
+   * sprite(s) is/are being returned.
+   */
+  @Test
+  public abstract void testGetSprites();
+  
+  /**
+   * Test the getSprites method to verify whether the correct
+   * sprite(s) is/are being returned when it is shooting to the right.
+   */
+  @Test
+  public abstract void testGetSpritesShootingRight();
+  
+  /**
+   * Test the getSprites method to verify whether the correct
+   * sprite(s) is/are being returned when it is shooting to the left.
+   */
+  @Test
+  public abstract void testGetSpritesShootingLeft();
+  
+  /**
+   * Test the getter/setter methods of the lifetime attribute of a Player object.
+   */
+  @Test
+  public abstract void testLifetime();
+  
+  /**
+   * Test the decreasing of the lifetime of a player by a given number of steps.
+   */
+  @Test
+  public abstract void testDecreaseLifetime();
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

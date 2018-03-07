@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>AnimatedSpriteTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.sprite</a> &gt; <span class="el_source">AnimatedSpriteTest.java</span></div><h1>AnimatedSpriteTest.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.sprite;
+
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+
+import nl.tudelft.scrumbledore.Constants;
+
+/**
+ * Test Suite for the Animated Sprite class.
+ * 
+ * @author Jesse Tilro
+ *
+ */
+@RunWith(Parameterized.class)
+public class AnimatedSpriteTest {
+
+  private AnimatedSprite sprite;
+  private double steps;
+  private String expectedFrame;
+
+  /**
+   * Construct a new test suite with the given parameters.
+   * 
+   * @param interval
+   *          The interval of steps between two frames.
+   * @param steps
+   *          The number of steps that should have passed after retrieving the current frame.
+   * @param expectedFrame
+   *          The ID of the expected frame to be retrieved given the interval and steps.
+   */
+  @SuppressWarnings(&quot;PMD.AvoidDuplicateLiterals&quot;)
+<span class="fc" id="L39">  public AnimatedSpriteTest(double interval, double steps, String expectedFrame) {</span>
+<span class="fc" id="L40">    this.steps = steps;</span>
+<span class="fc" id="L41">    this.expectedFrame = expectedFrame;</span>
+<span class="fc" id="L42">    sprite = new AnimatedSprite(&quot;test&quot;, interval);</span>
+<span class="fc" id="L43">    sprite.addFrame(new Sprite(&quot;frame-1&quot;));</span>
+<span class="fc" id="L44">    sprite.addFrame(new Sprite(&quot;frame-2&quot;));</span>
+<span class="fc" id="L45">    sprite.addFrame(new Sprite(&quot;frame-3&quot;));</span>
+<span class="fc" id="L46">  }</span>
+
+  /**
+   * Test get frame.
+   */
+  @Test
+  public void testGetFrame() {
+<span class="fc" id="L53">    Sprite frame = sprite.getFrame(steps);</span>
+<span class="fc" id="L54">    assertEquals(expectedFrame, frame.getID());</span>
+<span class="fc" id="L55">  }</span>
+
+  /**
+   * Data for the boundary tests.
+   * 
+   * @return Collection of tuples of input values.
+   */
+  @Parameters
+  public static Collection&lt;Object[]&gt; data() {
+<span class="fc" id="L64">    Collection&lt;Object[]&gt; input = new ArrayList&lt;Object[]&gt;();</span>
+<span class="fc" id="L65">    input.add(new Object[] { 5, 0, &quot;frame-1&quot; });</span>
+<span class="fc" id="L66">    input.add(new Object[] { 5, 5, &quot;frame-2&quot; });</span>
+<span class="fc" id="L67">    input.add(new Object[] { 5, 6, &quot;frame-2&quot; });</span>
+<span class="fc" id="L68">    input.add(new Object[] { 5, 14, &quot;frame-3&quot; });</span>
+<span class="fc" id="L69">    input.add(new Object[] { 5, 15, &quot;frame-1&quot; });</span>
+<span class="fc" id="L70">    input.add(new Object[] { 20, 30, &quot;frame-2&quot; });</span>
+<span class="fc" id="L71">    return input;</span>
+  }
+  
+  /**
+   * Test the getID() method.
+   */
+  @Test
+  public void testGetID() {
+<span class="fc" id="L79">    AnimatedSprite as = new AnimatedSprite(&quot;test&quot;, 42d, new ArrayList&lt;Sprite&gt;());</span>
+<span class="fc" id="L80">    assertEquals(&quot;test&quot;, as.getID());</span>
+<span class="fc" id="L81">  }</span>
+  
+  /**
+   * Test the getInterval() method.
+   */
+  @Test
+  public void testGetInterval() {
+<span class="fc" id="L88">    AnimatedSprite as = new AnimatedSprite(&quot;test&quot;, 42d, new ArrayList&lt;Sprite&gt;());</span>
+<span class="fc" id="L89">    assertEquals(42, as.getInterval(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L90">  }</span>
+
+  /**
+   * Test the SetInterval() method.
+   */
+  @Test
+  public void testSetInterval() {
+<span class="fc" id="L97">    AnimatedSprite as = new AnimatedSprite(&quot;test&quot;, 42d, new ArrayList&lt;Sprite&gt;());</span>
+<span class="fc" id="L98">    as.setInterval(21d);</span>
+<span class="fc" id="L99">    assertEquals(21, as.getInterval(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L100">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

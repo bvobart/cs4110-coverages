@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>AnimatedSprite.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.sprite</a> &gt; <span class="el_source">AnimatedSprite.java</span></div><h1>AnimatedSprite.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.sprite;
+
+import java.util.ArrayList;
+
+/**
+ * Class representing an Animated Sprite. Has multiple sprites as its animation frames.
+ * 
+ * @author Jesse Tilro
+ */
+public class AnimatedSprite {
+  private String id;
+  private ArrayList&lt;Sprite&gt; frames;
+  private double interval;
+
+  /**
+   * Construct a new AnimatedSprite.
+   * 
+   * @param id
+   *          The ID to be assigned to this animated sprite.
+   *          
+   * @param interval
+   *          The number of (partial) steps between each frame.
+   */
+<span class="fc" id="L24">  public AnimatedSprite(String id, double interval) {</span>
+<span class="fc" id="L25">    this.id = id;</span>
+<span class="fc" id="L26">    this.frames = new ArrayList&lt;Sprite&gt;();</span>
+<span class="fc" id="L27">    this.interval = interval;</span>
+<span class="fc" id="L28">  }</span>
+
+  /**
+   * Construct a new AnimatedSprite given a predefined sequence of frames.
+   * 
+   * @param id
+   *          The ID to be assigned to this animated sprite.
+   *          
+   * @param interval
+   *          The number of (partial) steps between each frame.
+   *          
+   * @param frames
+   *          The frames the animated sprite should consist of.
+   */
+<span class="fc" id="L42">  public AnimatedSprite(String id, double interval, ArrayList&lt;Sprite&gt; frames) {</span>
+<span class="fc" id="L43">    this.id = id;</span>
+<span class="fc" id="L44">    this.frames = frames;</span>
+<span class="fc" id="L45">    this.interval = interval;</span>
+<span class="fc" id="L46">  }</span>
+
+  /**
+   * Add a Sprite instance as the next frame in the sequence to this Animated Sprite.
+   * 
+   * @param frame
+   *          The next frame in the sequence.
+   */
+  public void addFrame(Sprite frame) {
+<span class="fc" id="L55">    frames.add(frame);</span>
+<span class="fc" id="L56">  }</span>
+
+  /**
+   * Get the current frame of the Animated Sprite, based on the given amount of steps that have
+   * passed since the Game was started.
+   * 
+   * @param steps
+   *          The number of steps passed so far.
+   *          
+   * @return The current frame in the animation.
+   */
+  public Sprite getFrame(double steps) {
+<span class="fc" id="L68">    return frames.get(getIndex(steps));</span>
+  }
+
+  /**
+   * Computes the index of the current frame given the exact absolute number of steps passed in the
+   * Game.
+   * 
+   * @param steps
+   *          The number of steps passed so far.
+   *          
+   * @return The index of the current frame.
+   */
+  private int getIndex(double steps) {
+<span class="fc" id="L81">    double cycle = frames.size() * interval;</span>
+<span class="fc" id="L82">    double currentCycle = steps % cycle;</span>
+<span class="fc" id="L83">    int index = (int) Math.floor(currentCycle / interval);</span>
+<span class="fc" id="L84">    return index;</span>
+  }
+
+  /**
+   * Get the ID of this Animated Sprite.
+   * 
+   * @return The ID.
+   */
+  public String getID() {
+<span class="fc" id="L93">    return id;</span>
+  }
+
+  /**
+   * Get the current interval of steps between two frames.
+   * 
+   * @return The interval.
+   */
+  public double getInterval() {
+<span class="fc" id="L102">    return interval;</span>
+  }
+
+  /**
+   * Set the current interval of steps between two frames.
+   * 
+   * @param interval
+   *          The interval.
+   */
+  public void setInterval(double interval) {
+<span class="fc" id="L112">    this.interval = interval;</span>
+<span class="fc" id="L113">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

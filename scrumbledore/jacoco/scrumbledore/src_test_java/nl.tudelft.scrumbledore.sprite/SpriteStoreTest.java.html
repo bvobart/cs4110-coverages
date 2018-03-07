@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>SpriteStoreTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.sprite</a> &gt; <span class="el_source">SpriteStoreTest.java</span></div><h1>SpriteStoreTest.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.sprite;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+/**
+ * Test Suite for the Sprite Store class.
+ * 
+ * @author Jesse Tilro
+ * @author Niels Warnars
+ */
+<span class="fc" id="L15">public class SpriteStoreTest {</span>
+
+  private static final String DIR = &quot;src/test/resources/sprites/&quot;;
+  
+  /**
+   * Test the file system reading functionality that is performed when the SpriteStore is
+   * instantiated.
+   */
+  @Test
+  public void testRead() {
+    // Actual fixtures, execution and assertion.
+<span class="fc" id="L26">    SpriteStore test = new SpriteStore(DIR);</span>
+<span class="fc" id="L27">    assertEquals(1, test.getAll().size());</span>
+<span class="fc" id="L28">    assertTrue(test.getAll().get(0).getID().equals(&quot;test&quot;));</span>
+
+    // Additionally test constructor with zero parameters, just for the line coverage.
+<span class="fc" id="L31">    SpriteStore additionalTest = SpriteStore.getInstance();</span>
+<span class="fc" id="L32">    assertFalse(additionalTest.getAll().isEmpty());</span>
+<span class="fc" id="L33">  }</span>
+
+  /**
+   * When calling the get method provided with a valid sprite ID, a Sprite instance with the
+   * corresponding ID should be returned.
+   */
+  @Test
+  public void testGet() {
+<span class="fc" id="L41">    SpriteStore test = new SpriteStore(DIR);</span>
+<span class="fc" id="L42">    assertEquals(&quot;test&quot;, test.get(&quot;test&quot;).getID());</span>
+<span class="fc" id="L43">  }</span>
+
+  /**
+   * When there is no Sprite in the Sprite Store with the given ID, the get method should return
+   * null.
+   */
+  @Test
+  public void testGetNull() {
+<span class="fc" id="L51">    SpriteStore test = new SpriteStore(DIR);</span>
+<span class="fc" id="L52">    assertEquals(null, test.get(&quot;non_existant_sprite&quot;));</span>
+<span class="fc" id="L53">  }</span>
+
+  /**
+   * When there is no AnimatedSprite in the Sprite Store with the given ID, the get method should
+   * return null.
+   */
+  @Test
+  public void testGetAnimatedNull() {
+<span class="fc" id="L61">    SpriteStore test = new SpriteStore(DIR);</span>
+<span class="fc" id="L62">    assertEquals(null, test.getAnimated(&quot;non_existant_sprite&quot;));</span>
+<span class="fc" id="L63">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

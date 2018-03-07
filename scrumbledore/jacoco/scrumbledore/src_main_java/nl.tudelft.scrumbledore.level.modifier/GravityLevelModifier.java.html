@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>GravityLevelModifier.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.level.modifier</a> &gt; <span class="el_source">GravityLevelModifier.java</span></div><h1>GravityLevelModifier.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.level.modifier;
+
+import nl.tudelft.scrumbledore.Constants;
+import nl.tudelft.scrumbledore.level.Level;
+import nl.tudelft.scrumbledore.level.element.DynamicElement;
+import nl.tudelft.scrumbledore.level.element.Fruit;
+import nl.tudelft.scrumbledore.level.element.NPC;
+
+/**
+ * Class simulating Gravity on the LevelElements in the game.
+ * 
+ * @author Jesse Tilro
+ */
+public class GravityLevelModifier implements LevelModifier {
+  private double strength;
+  private double max;
+
+  /**
+   * Constructs a new Gravity Level Modifier using a given strength and max.
+   * 
+   * @param strength
+   *          The strength.
+   * 
+   * @param max
+   *          The maximal vertical speed it may accelerate elements to.
+   */
+<span class="fc" id="L27">  public GravityLevelModifier(double strength, double max) {</span>
+<span class="fc" id="L28">    this.strength = strength;</span>
+<span class="fc" id="L29">    this.max = max;</span>
+<span class="fc" id="L30">  }</span>
+
+  /**
+   * Construct a new Gravity Level Modifier using the constants for strength and max.
+   */
+<span class="fc" id="L35">  public GravityLevelModifier() {</span>
+<span class="fc" id="L36">    this.strength = Constants.GRAVITY_STRENGTH;</span>
+<span class="fc" id="L37">    this.max = Constants.GRAVITY_MAX;</span>
+<span class="fc" id="L38">  }</span>
+
+  /**
+   * Pull down all elements in a given Level.
+   * 
+   * @param level
+   *          A Level containing elements to be pulled down.
+   * 
+   * @param d
+   *          The number of steps since last executing this function.
+   */
+  public void modify(Level level, double d) {
+<span class="fc bfc" id="L50" title="All 2 branches covered.">    for (NPC element : level.getNPCs()) {</span>
+<span class="fc" id="L51">      pull(element, d);</span>
+    }
+
+<span class="fc bfc" id="L54" title="All 2 branches covered.">    for (Fruit element : level.getFruits()) {</span>
+<span class="fc" id="L55">      pull(element, d);</span>
+    }
+
+<span class="fc bfc" id="L58" title="All 2 branches covered.">    for (DynamicElement player : level.getPlayers()) {</span>
+<span class="fc" id="L59">      pull(player, d);</span>
+    }
+<span class="fc" id="L61">  }</span>
+
+  /**
+   * Pull down a LevelElement that is affected by Gravity by incrementing its vertical speed if it
+   * has not yet reached the maximal vertical speed.
+   * 
+   * @param element
+   *          A DynamicElement
+   * 
+   * @param d
+   *          The number of steps since last executing this function.
+   */
+  public void pull(DynamicElement element, double d) {
+<span class="fc bfc" id="L74" title="All 2 branches covered.">    if (element == null) {</span>
+<span class="fc" id="L75">      return;</span>
+    }
+
+<span class="fc bfc" id="L78" title="All 2 branches covered.">    if (!element.hasGravity()) {</span>
+<span class="fc" id="L79">      return;</span>
+    }
+
+<span class="fc" id="L82">    double vspeed = element.vSpeed();</span>
+<span class="fc" id="L83">    double update = strength * d;</span>
+
+<span class="fc bfc" id="L85" title="All 2 branches covered.">    if ((max - vspeed) &gt;= update) {</span>
+<span class="fc" id="L86">      element.getSpeed().setY(vspeed + update);</span>
+<span class="fc" id="L87">    } else {</span>
+<span class="fc" id="L88">      element.getSpeed().setY(max);</span>
+    }
+<span class="fc" id="L90">  }</span>
+
+  /**
+   * Return the strength of the gravity.
+   * 
+   * @return strength The strength of the gravity.
+   */
+  public double getStrength() {
+<span class="fc" id="L98">    return strength;</span>
+  }
+
+  /**
+   * Return the maximum strength of the gravity.
+   * 
+   * @return max The maximum strength of the gravity.
+   */
+  public double getMax() {
+<span class="fc" id="L107">    return max;</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

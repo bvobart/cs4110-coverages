@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Vector.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.level</a> &gt; <span class="el_source">Vector.java</span></div><h1>Vector.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.level;
+
+/**
+ * Class representing a 2D vector, to be used in the game to represent for example a vector,
+ * position or size.
+ * 
+ * @author Jesse Tilro
+ */
+@SuppressWarnings(&quot;PMD.TooManyMethods&quot;)
+public class Vector implements Cloneable {
+  private double entryX;
+  private double entryY;
+
+  /**
+   * Create a new 2D Vector with given X and Y entries.
+   * 
+   * @param d
+   *          The X entry of the vector.
+   *          
+   * @param e
+   *          The Y entry of the vector.
+   */
+<span class="fc" id="L23">  public Vector(double d, double e) {</span>
+<span class="fc" id="L24">    this.entryX = d;</span>
+<span class="fc" id="L25">    this.entryY = e;</span>
+<span class="fc" id="L26">  }</span>
+
+  /**
+   * Summing two vectors into one.
+   * 
+   * @param vector
+   *          The vector to add to the current one.
+   */
+  public void sum(Vector vector) {
+<span class="fc" id="L35">    this.entryX += vector.getX();</span>
+<span class="fc" id="L36">    this.entryY += vector.getY();</span>
+<span class="fc" id="L37">  }</span>
+
+  /**
+   * Returns a new Vector which is the sum of two given vectors.
+   * 
+   * @param v1
+   *          The first vector.
+   *          
+   * @param v2
+   *          The second vector.
+   *          
+   * @return The sum of the first and second vector.
+   */
+  public static Vector sum(Vector v1, Vector v2) {
+<span class="fc" id="L51">    return new Vector(v1.getX() + v2.getX(), v1.getY() + v2.getY());</span>
+  }
+
+  /**
+   * Subtracting a given vector from this vector.
+   * 
+   * @param vector
+   *          The vector to subtract from to this vector.
+   */
+  public void difference(Vector vector) {
+<span class="fc" id="L61">    sum(Vector.scale(vector, -1));</span>
+<span class="fc" id="L62">  }</span>
+
+  /**
+   * Returns a new Vector which is the difference between two given vectors.
+   * 
+   * @param v1
+   *          The first vector.
+   *          
+   * @param v2
+   *          The second vector.
+   *          
+   * @return The difference between the first and second vector.
+   */
+  public static Vector difference(Vector v1, Vector v2) {
+<span class="fc" id="L76">    return Vector.sum(v1, Vector.scale(v2, -1));</span>
+  }
+
+  /**
+   * Scale this vector using a scalar.
+   * 
+   * @param scalar
+   *          A scalar.
+   */
+  public void scale(double scalar) {
+<span class="fc" id="L86">    this.entryX *= scalar;</span>
+<span class="fc" id="L87">    this.entryY *= scalar;</span>
+<span class="fc" id="L88">  }</span>
+
+  /**
+   * Returns a new Vector which is the product of a given vector and a scalar.
+   * 
+   * @param vector
+   *          The vector to be scaled.
+   *          
+   * @param scalar
+   *          The scalar.
+   *          
+   * @return The scaled vector.
+   */
+  public static Vector scale(Vector vector, double scalar) {
+<span class="fc" id="L102">    return new Vector(vector.getX() * scalar, vector.getY() * scalar);</span>
+  }
+
+  /**
+   * Returns the result of the dotproduct between this vector and another one.
+   * 
+   * @param vector
+   *          The other vector.
+   *          
+   * @return The result of the dotproduct.
+   */
+  public double dotProduct(Vector vector) {
+<span class="fc" id="L114">    return this.entryX * vector.getX() + this.entryY * vector.getY();</span>
+  }
+
+  /**
+   * Returns the result the length of this vector.
+   * 
+   * @return The length.
+   */
+  public double length() {
+<span class="fc" id="L123">    return Math.sqrt(dotProduct(this));</span>
+  }
+
+  /**
+   * Returns the distance between this and a given other vector.
+   * 
+   * @param vector
+   *          The other vector.
+   *          
+   * @return The distance.
+   */
+  public double distance(Vector vector) {
+<span class="fc" id="L135">    Vector dv = Vector.difference(this, vector);</span>
+<span class="fc" id="L136">    return dv.length();</span>
+  }
+
+  @Override
+  public Vector clone() throws CloneNotSupportedException {
+<span class="fc" id="L141">    return (Vector) super.clone();</span>
+  }
+
+  /**
+   * Get the X entry of the vector.
+   * 
+   * @return X entry.
+   */
+  public double getX() {
+<span class="fc" id="L150">    return entryX;</span>
+  }
+
+  /**
+   * Get the Y entry of the vector.
+   * 
+   * @return Y entry.
+   */
+  public double getY() {
+<span class="fc" id="L159">    return entryY;</span>
+  }
+
+  /**
+   * Set the X entry of the vector.
+   * 
+   * @param entryX
+   *          X entry.
+   */
+  public void setX(double entryX) {
+<span class="fc" id="L169">    this.entryX = entryX;</span>
+<span class="fc" id="L170">  }</span>
+
+  /**
+   * Set the Y entry of the vector.
+   * 
+   * @param entryY
+   *          Y entry.
+   */
+  public void setY(double entryY) {
+<span class="fc" id="L179">    this.entryY = entryY;</span>
+<span class="fc" id="L180">  }</span>
+
+  @Override
+  public int hashCode() {
+<span class="fc" id="L184">    return 0;</span>
+  }
+
+  @Override
+  public boolean equals(Object other) {
+<span class="fc bfc" id="L189" title="All 2 branches covered.">    if (other instanceof Vector) {</span>
+<span class="fc" id="L190">      Vector that = (Vector) other;</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">      return this.getX() == that.getX() </span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">          &amp;&amp; this.getY() == that.getY();</span>
+    }
+<span class="fc" id="L194">    return false;</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

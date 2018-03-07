@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Sprite.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.sprite</a> &gt; <span class="el_source">Sprite.java</span></div><h1>Sprite.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.sprite;
+
+import nl.tudelft.scrumbledore.Constants;
+import nl.tudelft.scrumbledore.level.Vector;
+
+/**
+ * Represents a sprite that can be drawn in the GUI as a visual representation of a LevelElement.
+ * 
+ * @author Jesse Tilro
+ * @author Niels Warnars
+ */
+public class Sprite {
+  private String id;
+  private String ext;
+  private String dir;
+  private Vector size;
+
+  /**
+   * Constructs a new sprite instance with the given id to reference an image file.
+   * 
+   * @param id
+   *          Reference to an image file.
+   */
+<span class="fc" id="L24">  public Sprite(String id) {</span>
+<span class="fc" id="L25">    this.id = id;</span>
+<span class="fc" id="L26">    this.ext = &quot;png&quot;;</span>
+<span class="fc" id="L27">    this.dir = Constants.SPRITES_DIR;</span>
+<span class="fc" id="L28">  }</span>
+
+  /**
+   * Constructs a new sprite instance with the given id to reference an image file and the extension
+   * of the file.
+   * 
+   * @param id
+   *          Reference to an image file.
+   *          
+   * @param ext
+   *          The extension of the image file.
+   */
+<span class="fc" id="L40">  public Sprite(String id, String ext) {</span>
+<span class="fc" id="L41">    this.id = id;</span>
+<span class="fc" id="L42">    this.ext = ext;</span>
+<span class="fc" id="L43">    this.dir = Constants.SPRITES_DIR;</span>
+<span class="fc" id="L44">  }</span>
+
+  /**
+   * Constructs a new sprite instance with the given id to reference an image file, the extension of
+   * the file and the directory to look for it.
+   * 
+   * @param id
+   *          Reference to an image file.
+   *          
+   * @param ext
+   *          The extension of the image file.
+   *          
+   * @param dir
+   *          The directory to look for the file.
+   */
+<span class="fc" id="L59">  public Sprite(String id, String ext, String dir) {</span>
+<span class="fc" id="L60">    this.id = id;</span>
+<span class="fc" id="L61">    this.ext = ext;</span>
+<span class="fc" id="L62">    this.dir = dir;</span>
+<span class="fc" id="L63">  }</span>
+
+  /**
+   * Constructs a new sprite instance with the given id to reference an image file, the extension of
+   * the file, the directory to look for it and its size.
+   * 
+   * @param id
+   *          Reference to an image file.
+   *          
+   * @param ext
+   *          The extension of the image file.
+   *          
+   * @param dir
+   *          The directory to look for the file.
+   *          
+   * @param size
+   *          A Vector describing the dimensions of the image.
+   */
+<span class="fc" id="L81">  public Sprite(String id, String ext, String dir, Vector size) {</span>
+<span class="fc" id="L82">    this.id = id;</span>
+<span class="fc" id="L83">    this.ext = ext;</span>
+<span class="fc" id="L84">    this.dir = dir;</span>
+<span class="fc" id="L85">    this.size = size;</span>
+<span class="fc" id="L86">  }</span>
+
+  /**
+   * Get the ID of this Sprite.
+   * 
+   * @return The ID.
+   */
+  public String getID() {
+<span class="fc" id="L94">    return id;</span>
+  }
+
+  /**
+   * The the path to the file to be used for this sprite.
+   * 
+   * @return File path.
+   */
+  public String getPath() {
+<span class="fc" id="L103">    return dir + id + &quot;.&quot; + ext;</span>
+  }
+
+  /**
+   * Get the drawing position of the image given the absolute position where it's origin point
+   * should be.
+   * 
+   * @param origin
+   *          The absolute position for the origin of the sprite.
+   *          
+   * @return A Vector describing the drawing position.
+   */
+  public Vector getDrawPosition(Vector origin) {
+<span class="fc" id="L116">    return Vector.sum(origin, Vector.scale(size, -.5));</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

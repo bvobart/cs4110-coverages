@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>KineticsLevelModifier.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.level.modifier</a> &gt; <span class="el_source">KineticsLevelModifier.java</span></div><h1>KineticsLevelModifier.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.level.modifier;
+
+import java.util.ArrayList;
+import nl.tudelft.scrumbledore.level.Level;
+import nl.tudelft.scrumbledore.level.Vector;
+import nl.tudelft.scrumbledore.level.element.DynamicElement;
+import nl.tudelft.scrumbledore.level.element.LevelElement;
+
+/**
+ * The Kinetics class handles the position/speed of levelelements.
+ * 
+ * @author Floris Doolaard
+ * @author David Alderliesten
+ */
+@SuppressWarnings(&quot;PMD.TooManyMethods&quot;)
+<span class="fc" id="L16">public class KineticsLevelModifier implements LevelModifier {</span>
+
+  /**
+   * Update all elements in a given Level.
+   * 
+   * @param level
+   *          The level whose elements should be updated.
+   * 
+   * @param d
+   *          The number of steps since last executing this function.
+   */
+  public void modify(Level level, double d) {
+<span class="fc" id="L28">    ArrayList&lt;LevelElement&gt; elements = level.getDynamicElements();</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">    for (int i = 0; i &lt; elements.size(); i++) {</span>
+<span class="fc" id="L30">      DynamicElement element = (DynamicElement) elements.get(i);</span>
+<span class="fc" id="L31">      move(element, d);</span>
+<span class="fc" id="L32">      applyFriction(element, d);</span>
+    }
+<span class="fc" id="L34">  }</span>
+
+  /**
+   * Apply friction on a given LevelElement based on its Friction Vector. If an entry in the speed
+   * vector is smaller than the corresponding entry in the friction vector, it is set to zero.
+   * Otherwise, the friction entry is subtracted from the speed.
+   * 
+   * @param el
+   *          A LevelElement.
+   * 
+   * @param d
+   *          The number of steps passed since this method was last called.
+   */
+  public void applyFriction(DynamicElement el, double d) {
+<span class="fc" id="L48">    int signX = 0;</span>
+<span class="fc" id="L49">    int signY = 0;</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">    if (Math.abs(el.hSpeed()) &gt; el.hFric() * d) {</span>
+<span class="fc" id="L51">      signX = (int) Math.signum(el.hSpeed());</span>
+<span class="fc" id="L52">    } else {</span>
+<span class="fc" id="L53">      el.stopHorizontally();</span>
+    }
+<span class="fc bfc" id="L55" title="All 2 branches covered.">    if (Math.abs(el.vSpeed()) &gt; el.vFric() * d) {</span>
+<span class="fc" id="L56">      signY = (int) Math.signum(el.vSpeed());</span>
+<span class="fc" id="L57">    } else {</span>
+<span class="fc" id="L58">      el.stopVertically();</span>
+    }
+
+<span class="fc" id="L61">    Vector fricDiff = new Vector(d * signX * el.hFric(), d * signY * el.vFric());</span>
+<span class="fc" id="L62">    el.getSpeed().difference(fricDiff);</span>
+<span class="fc" id="L63">  }</span>
+
+  /**
+   * Move a LevelElement by updating its position vector.
+   * 
+   * @param el
+   *          The element whose position has to be updated with its speed.
+   * 
+   * @param d
+   *          The number of steps since last executing this function.
+   */
+  public void move(DynamicElement el, double d) {
+<span class="fc bfc" id="L75" title="All 2 branches covered.">    if (el != null) {</span>
+<span class="fc" id="L76">      el.getPosition().sum(Vector.scale(el.getSpeed(), d));</span>
+    }
+<span class="fc" id="L78">  }</span>
+
+  /**
+   * Reverse update the position of the LevelElement by removing the speed vector.
+   * 
+   * @param el
+   *          The element whose position has to be reverse updated with its speed.
+   * 
+   * @param d
+   *          The number of steps since last executing this function.
+   */
+  public void revertMove(DynamicElement el, double d) {
+<span class="fc bfc" id="L90" title="All 2 branches covered.">    if (el != null) {</span>
+<span class="fc" id="L91">      el.getPosition().difference(Vector.scale(el.getSpeed(), d));</span>
+    }
+<span class="fc" id="L93">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

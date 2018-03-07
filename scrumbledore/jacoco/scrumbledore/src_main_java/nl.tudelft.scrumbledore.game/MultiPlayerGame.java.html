@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>MultiPlayerGame.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.game</a> &gt; <span class="el_source">MultiPlayerGame.java</span></div><h1>MultiPlayerGame.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.game;
+
+import java.util.ArrayList;
+import nl.tudelft.scrumbledore.level.Level;
+import nl.tudelft.scrumbledore.level.LevelParser;
+
+/**
+ * A Game that can be played by multiple players.
+ * 
+ * @author Jesse Tilro
+ *
+ */
+public class MultiPlayerGame extends Game {
+
+  /**
+   * Construct a new MultiPlayerGame.
+   */
+  public MultiPlayerGame() {
+<span class="fc" id="L19">    super();</span>
+<span class="fc" id="L20">  }</span>
+
+  /**
+   * Construct a new MultiPlayerGame with given levels, used for testing purposes.
+   * 
+   * @param levels
+   *          The levels this Game needs to consist of.
+   * 
+   */
+  public MultiPlayerGame(ArrayList&lt;Level&gt; levels) {
+<span class="fc" id="L30">    super(levels);</span>
+<span class="fc" id="L31">  }</span>
+
+  /**
+   * Make new Levels for this Game.
+   * 
+   * @return A list of Levels.
+   */
+  protected ArrayList&lt;Level&gt; makeLevels() {
+<span class="fc" id="L39">    LevelParser parser = new LevelParser();</span>
+<span class="fc" id="L40">    return parser.getLevels();</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

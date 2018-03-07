@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CollisionTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.level</a> &gt; <span class="el_source">CollisionTest.java</span></div><h1>CollisionTest.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.level;
+
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+
+import nl.tudelft.scrumbledore.level.element.DynamicElement;
+import nl.tudelft.scrumbledore.level.element.Platform;
+import nl.tudelft.scrumbledore.level.element.Player;
+import nl.tudelft.scrumbledore.level.element.StaticElement;
+
+/**
+ * Test Suite for the Collision class.
+ * 
+ * @author Jesse Tilro
+ *
+ */
+@RunWith(Parameterized.class)
+public class CollisionTest {
+
+  private boolean expectedOut;
+
+  private DynamicElement collider;
+  private StaticElement collidee;
+
+  private Collision collision;
+
+  /**
+   * Constructs a new Test Suite instance for the next test case, using parameterized values.
+   * 
+   * @param colliderX
+   *          X-coordinate of the position of the collider LevelElement.
+   * @param colliderY
+   *          Y-coordinate of the position of the collider LevelElement.
+   * @param collideeX
+   *          X-coordinate of the position of the collidee LevelElement.
+   * @param collideeY
+   *          Y-coordinate of the position of the collidee LevelElement.
+   * @param expectedOut
+   *          Expected outcome of the assertion.
+   */
+  public CollisionTest(double colliderX, double colliderY, double collideeX, double collideeY,
+<span class="fc" id="L49">      boolean expectedOut) {</span>
+<span class="fc" id="L50">    this.expectedOut = expectedOut;</span>
+
+<span class="fc" id="L52">    this.collider = new Player(new Vector(colliderX, colliderY), new Vector(32, 32));</span>
+<span class="fc" id="L53">    this.collidee = new Platform(new Vector(collideeX, collideeY), new Vector(32, 32));</span>
+
+<span class="fc" id="L55">    this.collision = new Collision(this.collider, this.collidee, 1);</span>
+<span class="fc" id="L56">  }</span>
+
+  /**
+   * 
+   */
+  @Test
+  public void testColliding() {
+<span class="fc" id="L63">    boolean actualOut = collision.colliding();</span>
+<span class="fc" id="L64">    assertEquals(expectedOut, actualOut);</span>
+<span class="fc" id="L65">  }</span>
+
+  /**
+   * Data for the boundary tests.
+   * 
+   * @return Collection of tuples of input values.
+   */
+  @Parameters
+  public static Collection&lt;Object[]&gt; data() {
+<span class="fc" id="L74">    Collection&lt;Object[]&gt; input = new ArrayList&lt;Object[]&gt;();</span>
+    // Same position should be colliding.
+<span class="fc" id="L76">    input.add(new Object[] { 0, 0, 0, 0, true });</span>
+    // Corners touching
+<span class="fc" id="L78">    input.add(new Object[] { 32, 32, 64, 64, true });</span>
+<span class="fc" id="L79">    input.add(new Object[] { 31, 32, 64, 64, false });</span>
+<span class="fc" id="L80">    input.add(new Object[] { 96, 32, 64, 64, true });</span>
+<span class="fc" id="L81">    input.add(new Object[] { 96, 31, 64, 64, false });</span>
+<span class="fc" id="L82">    input.add(new Object[] { 96, 96, 64, 64, true });</span>
+<span class="fc" id="L83">    input.add(new Object[] { 97, 96, 64, 64, false });</span>
+<span class="fc" id="L84">    input.add(new Object[] { 32, 96, 64, 64, true });</span>
+<span class="fc" id="L85">    input.add(new Object[] { 32, 97, 64, 64, false });</span>
+    // Edges touching
+<span class="fc" id="L87">    input.add(new Object[] { 32, 32, 64, 32, true });</span>
+<span class="fc" id="L88">    input.add(new Object[] { 31, 32, 64, 32, false });</span>
+<span class="fc" id="L89">    input.add(new Object[] { 64, 32, 64, 64, true });</span>
+<span class="fc" id="L90">    input.add(new Object[] { 64, 32, 64, 65, false });</span>
+<span class="fc" id="L91">    input.add(new Object[] { 64, 32, 32, 32, true });</span>
+<span class="fc" id="L92">    input.add(new Object[] { 65, 32, 32, 32, false });</span>
+<span class="fc" id="L93">    input.add(new Object[] { 32, 64, 32, 32, true });</span>
+<span class="fc" id="L94">    input.add(new Object[] { 32, 65, 32, 32, false });</span>
+    // Random
+<span class="fc" id="L96">    input.add(new Object[] { 14, 27, 40, 22, true });</span>
+<span class="fc" id="L97">    input.add(new Object[] { 16, 12, 45, 60, false });</span>
+<span class="fc" id="L98">    return input;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

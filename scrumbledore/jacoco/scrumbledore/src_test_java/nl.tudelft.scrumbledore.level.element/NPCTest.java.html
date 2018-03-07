@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>NPCTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.level.element</a> &gt; <span class="el_source">NPCTest.java</span></div><h1>NPCTest.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.level.element;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+import java.util.ArrayList;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import nl.tudelft.scrumbledore.level.Vector;
+import nl.tudelft.scrumbledore.sprite.Sprite;
+
+/**
+ * Test suite for the NPC class.
+ * 
+ * @author Jesse Tilro
+ * @author Niels Warnars
+ */
+@SuppressWarnings(&quot;PMD.TooManyMethods&quot;)
+<span class="fc" id="L23">public class NPCTest extends LevelElementTest {</span>
+
+  private NPC npc;
+
+  /**
+   * Set the NPC field to a new NPC instance to use as a test object.
+   */
+  @Before
+  public void setUp() {
+<span class="fc" id="L32">    npc = new NPC(new Vector(0, 0), new Vector(0, 0));</span>
+<span class="fc" id="L33">  }</span>
+
+  @Override
+  public LevelElement make(Vector position, Vector size) {
+<span class="fc" id="L37">    return new NPC(position, size);</span>
+  }
+
+  /**
+   * When a new NPC element is created, initially it should have gravity and have the correct
+   * position and size.
+   */
+  @Test
+  public void testConstuctor() {
+<span class="fc" id="L46">    assertEquals(new Vector(0, 0), npc.getPosition());</span>
+<span class="fc" id="L47">    assertEquals(new Vector(0, 0), npc.getSize());</span>
+<span class="fc" id="L48">    assertTrue(npc.hasGravity());</span>
+<span class="fc" id="L49">  }</span>
+
+  /**
+   * The stubbed method hashCode should just return zero (line coverage).
+   */
+  @Test
+  public void testHashCode() {
+<span class="fc" id="L56">    assertEquals(0, npc.hashCode());</span>
+<span class="fc" id="L57">  }</span>
+
+  /**
+   * Two NPC instances with the same position and size should be considered equal.
+   */
+  @Test
+  public void testEqualsTrue() {
+<span class="fc" id="L64">    NPC npc2 = new NPC(npc.getPosition(), npc.getSize());</span>
+<span class="fc" id="L65">    assertEquals(npc, npc2);</span>
+<span class="fc" id="L66">  }</span>
+
+  /**
+   * Two NPC instances with a different position or size should not be considered equal.
+   */
+  @Test
+  public void testEqualsFalse() {
+<span class="fc" id="L73">    NPC npc2 = new NPC(new Vector(42, 42), npc.getSize());</span>
+<span class="fc" id="L74">    NPC npc3 = new NPC(npc.getPosition(), new Vector(42, 42));</span>
+<span class="fc" id="L75">    assertFalse(npc.equals(npc2));</span>
+<span class="fc" id="L76">    assertFalse(npc.equals(npc3));</span>
+<span class="fc" id="L77">  }</span>
+
+  /**
+   * An NPC instance and an instance of another class should not be considered equal.
+   */
+  @Test
+  public void testEqualsFalseOtherClass() {
+<span class="fc" id="L84">    Fruit fruit = new Fruit(npc.getPosition(), npc.getSize());</span>
+<span class="fc" id="L85">    assertFalse(npc.equals(fruit));</span>
+<span class="fc" id="L86">  }</span>
+
+  /**
+   * Test the lastMove field getter/setter.
+   */
+  @Test
+  public void testLastMove() {
+<span class="fc" id="L93">    npc.setLastMove(LevelElementAction.MoveLeft);</span>
+<span class="fc" id="L94">    assertEquals(LevelElementAction.MoveLeft, npc.getLastMove());</span>
+<span class="fc" id="L95">    npc.setLastMove(LevelElementAction.MoveRight);</span>
+<span class="fc" id="L96">    assertEquals(LevelElementAction.MoveRight, npc.getLastMove());</span>
+    // Actions other than MoveLeft and MoveRight should be ignored.
+<span class="fc" id="L98">    assertEquals(LevelElementAction.MoveRight, npc.getLastMove());</span>
+<span class="fc" id="L99">  }</span>
+  
+  /**
+   * Test the getSprites method to verify whether the correct
+   * sprite(s) is/are being returned.
+   */
+  @Test
+  public void testGetSprites() {
+<span class="fc" id="L107">    ArrayList&lt;Sprite&gt; sprites = npc.getSprites(1);</span>
+    
+<span class="fc" id="L109">    assertEquals(1, sprites.size());</span>
+<span class="fc" id="L110">    assertEquals(&quot;frame-01&quot;, sprites.get(0).getID());</span>
+<span class="fc" id="L111">    assertEquals(&quot;images&quot; + File.separator + &quot;sprites&quot; + File.separator</span>
+<span class="fc" id="L112">        + &quot;zenchan-move-left/frame-01.png&quot;, sprites.get(0).getPath());</span>
+<span class="fc" id="L113">  }</span>
+  
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

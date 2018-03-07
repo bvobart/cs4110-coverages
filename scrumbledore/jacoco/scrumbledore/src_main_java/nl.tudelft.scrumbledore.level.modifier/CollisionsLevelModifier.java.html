@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CollisionsLevelModifier.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.level.modifier</a> &gt; <span class="el_source">CollisionsLevelModifier.java</span></div><h1>CollisionsLevelModifier.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.level.modifier;
+
+import java.util.ArrayList;
+import nl.tudelft.scrumbledore.Constants;
+import nl.tudelft.scrumbledore.Logger;
+import nl.tudelft.scrumbledore.game.ScoreCounter;
+import nl.tudelft.scrumbledore.level.Collision;
+import nl.tudelft.scrumbledore.level.Level;
+import nl.tudelft.scrumbledore.level.Vector;
+import nl.tudelft.scrumbledore.level.element.Bubble;
+import nl.tudelft.scrumbledore.level.element.DynamicElement;
+import nl.tudelft.scrumbledore.level.element.Fruit;
+import nl.tudelft.scrumbledore.level.element.LevelElementAction;
+import nl.tudelft.scrumbledore.level.element.NPC;
+import nl.tudelft.scrumbledore.level.element.Platform;
+import nl.tudelft.scrumbledore.level.element.PlayerElement;
+import nl.tudelft.scrumbledore.level.powerup.ChiliChicken;
+import nl.tudelft.scrumbledore.level.powerup.ChiliChickenPickUp;
+import nl.tudelft.scrumbledore.level.powerup.PowerupPickUp;
+import nl.tudelft.scrumbledore.level.powerup.TurtleTaco;
+import nl.tudelft.scrumbledore.level.powerup.TurtleTacoPickUp;
+
+/**
+ * Class responsible for collision detection between given elements.
+ * 
+ * @author Jesse Tilro
+ * @author David Alderliesten
+ */
+@SuppressWarnings({ &quot;checkstyle:methodlength&quot;, &quot;PMD.ModifiedCyclomaticComplexity&quot;,
+    &quot;PMD.NPathComplexity&quot;, &quot;PMD.StdCyclomaticComplexity&quot;, &quot;PMD.CyclomaticComplexity&quot;,
+    &quot;PMD.TooManyMethods&quot; })
+public class CollisionsLevelModifier implements LevelModifier {
+  private ScoreCounter score;
+
+  /**
+   * Constructs a new Collisions Level Modifier using a given Kinetics Level Modifier.
+   * 
+   * @param score
+   *          The Score Counter to be used.
+   */
+<span class="fc" id="L41">  public CollisionsLevelModifier(ScoreCounter score) {</span>
+<span class="fc" id="L42">    this.score = score;</span>
+<span class="fc" id="L43">  }</span>
+
+  /**
+   * Detect collisions in level.
+   * 
+   * @param level
+   *          The level.
+   * 
+   * @param delta
+   *          The steps passed since this method wat last executed.
+   */
+  public void modify(Level level, double delta) {
+<span class="fc" id="L55">    detectPlayerPowerup(level, delta);</span>
+<span class="fc" id="L56">    detectPlayerBubble(level, delta);</span>
+<span class="fc" id="L57">    detectBubbleEnemy(level, delta);</span>
+<span class="fc" id="L58">    detectBubbleBubble(level, delta);</span>
+<span class="fc" id="L59">    detectFruitPlatform(level, delta);</span>
+<span class="fc" id="L60">    detectBubblePlatform(level, delta);</span>
+<span class="fc" id="L61">    detectPlayerPlatform(level, delta);</span>
+<span class="fc" id="L62">    detectPlayerFruit(level, delta);</span>
+<span class="fc" id="L63">    detectPlayerEnemy(level, delta);</span>
+<span class="fc" id="L64">    detectNPCPlatform(level, delta);</span>
+<span class="fc" id="L65">  }</span>
+
+  /**
+   * Detect collisions between player and powerups.
+   * 
+   * @param level
+   *          the level.
+   * 
+   * @param delta
+   *          the delta provided by StepTimer.
+   */
+  protected void detectPlayerPowerup(Level level, double delta) {
+<span class="fc" id="L77">    ArrayList&lt;PowerupPickUp&gt; powerUps = level.getPowerups();</span>
+<span class="fc" id="L78">    ArrayList&lt;PlayerElement&gt; players = level.getPlayers();</span>
+
+<span class="fc bfc" id="L80" title="All 2 branches covered.">    if (powerUps.size() &gt; 0) {</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">      for (int j = 0; j &lt; players.size(); j++) {</span>
+<span class="fc" id="L82">        DynamicElement player = players.get(j);</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        for (int i = 0; i &lt; powerUps.size(); i++) {</span>
+<span class="fc" id="L84">          PowerupPickUp currentPow = powerUps.get(i);</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">          if (currentPow.inBoxRangeOf(player, Constants.COLLISION_RADIUS)) {</span>
+<span class="fc" id="L86">            Collision collision = new Collision(player, currentPow, delta);</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">            if (collision.colliding()) {</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">              if (currentPow instanceof ChiliChickenPickUp) {</span>
+<span class="fc" id="L89">                ChiliChicken newChick = new ChiliChicken((PlayerElement) player);</span>
+<span class="fc" id="L90">                players.add(j, newChick);</span>
+<span class="fc" id="L91">                players.remove(j + 1);</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">              } else if (currentPow instanceof TurtleTacoPickUp) {</span>
+<span class="fc" id="L93">                TurtleTaco newTurtle = new TurtleTaco((PlayerElement) player);</span>
+<span class="fc" id="L94">                players.add(j, newTurtle);</span>
+<span class="fc" id="L95">                players.remove(j + 1);</span>
+              }
+<span class="fc" id="L97">              powerUps.remove(i);</span>
+            }
+          }
+        }
+      }
+    }
+
+<span class="fc" id="L104">  }</span>
+
+  /**
+   * Detect collisions between player and platform.
+   * 
+   * @param level
+   *          The Level.
+   * 
+   * @param delta
+   *          The delta provided by the StepTimer.
+   */
+  protected void detectFruitPlatform(Level level, double delta) {
+<span class="fc bfc" id="L116" title="All 2 branches covered.">    for (Fruit fruit : level.getFruits()) {</span>
+<span class="fc" id="L117">      boolean pickable = true;</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">      for (DynamicElement player : level.getPlayers()) {</span>
+<span class="fc" id="L119">        Collision playerCollision = new Collision(fruit, player, delta);</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">        if (playerCollision.colliding()) {</span>
+<span class="fc" id="L121">          pickable = false;</span>
+        }
+      }
+<span class="fc bfc" id="L124" title="All 2 branches covered.">      if (pickable) {</span>
+<span class="fc" id="L125">        fruit.setPickable(pickable);</span>
+      }
+
+<span class="fc bfc" id="L128" title="All 2 branches covered.">      for (Platform platform : level.getPlatforms()) {</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">        if (platform.inBoxRangeOf(fruit, Constants.COLLISION_RADIUS)) {</span>
+<span class="fc" id="L130">          Collision collision = new Collision(fruit, platform, delta);</span>
+
+<span class="pc bpc" id="L132" title="2 of 4 branches missed.">          if (collision.collidingFromTop() &amp;&amp; fruit.vSpeed() &gt; 0) {</span>
+<span class="fc" id="L133">            fruit.stopVertically();</span>
+<span class="fc" id="L134">            fruit.snapTop(platform);</span>
+          }
+        }
+      }
+    }
+<span class="fc" id="L139">  }</span>
+
+  /**
+   * Detect collisions between player and platform.
+   * 
+   * @param level
+   *          The Level.
+   * 
+   * @param delta
+   *          The delta provided by the StepTimer.
+   */
+  protected void detectPlayerPlatform(Level level, double delta) {
+<span class="fc bfc" id="L151" title="All 2 branches covered.">    for (DynamicElement player : level.getPlayers()) {</span>
+<span class="fc" id="L152">      ArrayList&lt;Platform&gt; candidates = new ArrayList&lt;Platform&gt;();</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">      for (Platform platform : level.getPlatforms()) {</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">        if (platform.inBoxRangeOf(player, Constants.COLLISION_RADIUS)) {</span>
+<span class="fc" id="L155">          candidates.add(platform);</span>
+<span class="fc" id="L156">          Collision collision = new Collision(player, platform, delta);</span>
+
+<span class="pc bpc" id="L158" title="1 of 4 branches missed.">          if (collision.collidingFromTop() &amp;&amp; player.vSpeed() &gt; 0) {</span>
+<span class="fc" id="L159">            player.stopVertically();</span>
+<span class="fc" id="L160">            player.snapTop(platform);</span>
+          }
+        }
+      }
+<span class="fc bfc" id="L164" title="All 2 branches covered.">      for (Platform platform : candidates) {</span>
+<span class="fc" id="L165">        Collision collision = new Collision(player, platform, delta);</span>
+
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">        if (!platform.isPassable()) {</span>
+<span class="pc bpc" id="L168" title="1 of 4 branches missed.">          if (collision.collidingFromBottom() &amp;&amp; player.vSpeed() &lt; 0) {</span>
+<span class="fc" id="L169">            player.stopVertically();</span>
+<span class="fc" id="L170">            player.snapBottom(platform);</span>
+          }
+
+<span class="pc bpc" id="L173" title="1 of 4 branches missed.">          if (collision.collidingFromLeft() &amp;&amp; player.hSpeed() &gt; 0) {</span>
+<span class="fc" id="L174">            player.stopHorizontally();</span>
+<span class="fc" id="L175">            player.snapLeft(platform);</span>
+          }
+
+<span class="pc bpc" id="L178" title="1 of 4 branches missed.">          if (collision.collidingFromRight() &amp;&amp; player.hSpeed() &lt; 0) {</span>
+<span class="fc" id="L179">            player.stopHorizontally();</span>
+<span class="fc" id="L180">            player.snapRight(platform);</span>
+          }
+        }
+      }
+    }
+<span class="fc" id="L185">  }</span>
+
+  /**
+   * Detect collisions between NPC's and platform.
+   * 
+   * @param level
+   *          The Level.
+   * 
+   * @param delta
+   *          The delta provided by the StepTimer.
+   */
+  public void detectNPCPlatform(Level level, double delta) {
+<span class="fc bfc" id="L197" title="All 2 branches covered.">    for (NPC npc : level.getNPCs()) {</span>
+<span class="fc" id="L198">      ArrayList&lt;Platform&gt; candidates = new ArrayList&lt;Platform&gt;();</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">      for (Platform platform : level.getPlatforms()) {</span>
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">        if (platform.inBoxRangeOf(npc, Constants.COLLISION_RADIUS)) {</span>
+<span class="fc" id="L201">          candidates.add(platform);</span>
+<span class="fc" id="L202">          Collision collision = new Collision(npc, platform, delta);</span>
+
+<span class="pc bpc" id="L204" title="1 of 4 branches missed.">          if (collision.collidingFromTop() &amp;&amp; npc.vSpeed() &gt; 0) {</span>
+<span class="fc" id="L205">            npc.stopVertically();</span>
+<span class="fc" id="L206">            npc.snapTop(platform);</span>
+          }
+
+<span class="pc bpc" id="L209" title="3 of 4 branches missed.">          if (collision.collidingFromBottom() &amp;&amp; npc.vSpeed() &lt; 0) {</span>
+<span class="nc" id="L210">            npc.stopVertically();</span>
+<span class="nc" id="L211">            npc.snapBottom(platform);</span>
+          }
+        }
+      }
+<span class="fc bfc" id="L215" title="All 2 branches covered.">      for (Platform platform : candidates) {</span>
+<span class="fc" id="L216">        Collision collision = new Collision(npc, platform, delta);</span>
+
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">        if (!platform.isPassable()) {</span>
+<span class="pc bpc" id="L219" title="1 of 4 branches missed.">          if (collision.collidingFromLeft() &amp;&amp; npc.hSpeed() &gt; 0) {</span>
+<span class="fc" id="L220">            npc.stopHorizontally();</span>
+<span class="fc" id="L221">            npc.snapLeft(platform);</span>
+<span class="fc" id="L222">            npc.addAction(LevelElementAction.MoveLeft);</span>
+
+<span class="pc bpc" id="L224" title="2 of 4 branches missed.">            if (!collision.collidingFromTop() &amp;&amp; npc.vSpeed() == 0) {</span>
+<span class="fc" id="L225">              npc.addAction(LevelElementAction.Jump);</span>
+            }
+          }
+
+<span class="pc bpc" id="L229" title="1 of 4 branches missed.">          if (collision.collidingFromRight() &amp;&amp; npc.hSpeed() &lt; 0) {</span>
+<span class="fc" id="L230">            npc.stopHorizontally();</span>
+<span class="fc" id="L231">            npc.snapRight(platform);</span>
+<span class="fc" id="L232">            npc.addAction(LevelElementAction.MoveRight);</span>
+
+<span class="pc bpc" id="L234" title="2 of 4 branches missed.">            if (!collision.collidingFromTop() &amp;&amp; npc.vSpeed() == 0) {</span>
+<span class="fc" id="L235">              npc.addAction(LevelElementAction.Jump);</span>
+            }
+          }
+        }
+      }
+
+    }
+
+<span class="fc" id="L243">  }</span>
+
+  /**
+   * Detect collisions between bubble and platform.
+   * 
+   * @param level
+   *          The Level.
+   * 
+   * @param delta
+   *          The delta provided by the StepTimer.
+   */
+  @SuppressWarnings(&quot;PMD.CollapsibleIfStatements&quot;)
+  protected void detectBubblePlatform(Level level, double delta) {
+<span class="fc" id="L256">    ArrayList&lt;Bubble&gt; projectiles = level.getBubbles();</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">    for (int i = 0; i &lt; projectiles.size(); i++) {</span>
+<span class="fc" id="L258">      Bubble currentBubble = projectiles.get(i);</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">      for (Platform platform : level.getPlatforms()) {</span>
+<span class="pc bpc" id="L260" title="1 of 2 branches missed.">        if (platform.inBoxRangeOf(currentBubble, Constants.COLLISION_RADIUS)) {</span>
+<span class="fc" id="L261">          Collision collision = new Collision(currentBubble, platform, delta);</span>
+
+<span class="fc bfc" id="L263" title="All 2 branches covered.">          if (collision.collidingFromBottom()) {</span>
+<span class="fc" id="L264">            currentBubble.getSpeed().setY(Constants.BUBBLE_BOUNCE);</span>
+<span class="fc" id="L265">            currentBubble.snapBottom(platform);</span>
+<span class="fc" id="L266">            break;</span>
+          }
+
+<span class="fc bfc" id="L269" title="All 2 branches covered.">          if (collision.collidingFromLeft()) {</span>
+<span class="fc" id="L270">            currentBubble.getSpeed().setX(-Constants.BUBBLE_BOUNCE);</span>
+<span class="fc" id="L271">            currentBubble.snapLeft(platform);</span>
+<span class="fc" id="L272">            break;</span>
+          }
+
+<span class="pc bpc" id="L275" title="1 of 2 branches missed.">          if (collision.collidingFromRight()) {</span>
+<span class="fc" id="L276">            currentBubble.getSpeed().setX(Constants.BUBBLE_BOUNCE);</span>
+<span class="fc" id="L277">            currentBubble.snapRight(platform);</span>
+<span class="fc" id="L278">            break;</span>
+          }
+        }
+      }
+    }
+<span class="fc" id="L283">  }</span>
+
+  /**
+   * Detect collision between the player an bubbles.
+   * 
+   * @param level
+   *          The level.
+   * 
+   * @param delta
+   *          The delta.
+   */
+  protected void detectPlayerBubble(Level level, double delta) {
+<span class="fc bfc" id="L295" title="All 2 branches covered.">    for (DynamicElement player : level.getPlayers()) {</span>
+<span class="fc bfc" id="L296" title="All 2 branches covered.">      for (Bubble bubble : level.getBubbles()) {</span>
+<span class="pc bpc" id="L297" title="1 of 2 branches missed.">        if (bubble.inBoxRangeOf(player, Constants.COLLISION_RADIUS)) {</span>
+<span class="fc" id="L298">          Collision collision = new Collision(player, bubble, delta);</span>
+<span class="fc bfc" id="L299" title="All 4 branches covered.">          if (collision.collidingFromTop() &amp;&amp; !(bubble.hasNPC())) {</span>
+<span class="fc" id="L300">            player.getSpeed().setY(-Constants.PLAYER_JUMP);</span>
+<span class="fc" id="L301">            player.snapTop(bubble);</span>
+<span class="fc" id="L302">            break;</span>
+          }
+
+<span class="pc bpc" id="L305" title="1 of 4 branches missed.">          if (collision.colliding() &amp;&amp; bubble.hasNPC()) {</span>
+<span class="fc" id="L306">            Fruit newFruit = null;</span>
+            try {
+<span class="fc" id="L308">              newFruit = new Fruit(bubble.getPosition().clone(), new Vector(Constants.BLOCKSIZE,</span>
+<span class="fc" id="L309">                  Constants.BLOCKSIZE));</span>
+<span class="pc" id="L310">            } catch (CloneNotSupportedException e) {</span>
+<span class="nc" id="L311">              e.printStackTrace();</span>
+            }
+<span class="fc" id="L313">            level.getFruits().add(newFruit);</span>
+<span class="fc" id="L314">            level.getEnemyBubbles().remove(bubble);</span>
+<span class="fc" id="L315">            level.getBubbles().remove(bubble);</span>
+
+<span class="pc bpc" id="L317" title="1 of 2 branches missed.">            if (Constants.isLoggingWantEnemy()) {</span>
+<span class="fc" id="L318">              Logger.getInstance().log(&quot;Player executed an encapsulated enemy.&quot;);</span>
+            }
+
+<span class="fc" id="L321">            break;</span>
+          }
+        }
+      }
+    }
+<span class="fc" id="L326">  }</span>
+
+  /**
+   * Detect collisions between Bubbles and enemies.
+   * 
+   * @param level
+   *          The Level.
+   * 
+   * @param delta
+   *          The steps passed since this method was last executed.
+   */
+  protected void detectBubbleEnemy(Level level, double delta) {
+<span class="fc" id="L338">    ArrayList&lt;NPC&gt; enemies = level.getNPCs();</span>
+<span class="fc" id="L339">    ArrayList&lt;Bubble&gt; projectiles = level.getBubbles();</span>
+<span class="fc" id="L340">    ArrayList&lt;Bubble&gt; enemyBubbles = level.getEnemyBubbles();</span>
+
+<span class="fc bfc" id="L342" title="All 4 branches covered.">    if (projectiles.size() &gt; 0 &amp;&amp; enemies.size() &gt; 0) {</span>
+<span class="fc bfc" id="L343" title="All 2 branches covered.">      for (int i = 0; i &lt; enemies.size(); i++) {</span>
+
+<span class="fc bfc" id="L345" title="All 2 branches covered.">        for (int j = 0; j &lt; projectiles.size(); j++) {</span>
+<span class="fc" id="L346">          Bubble currentP = projectiles.get(j);</span>
+<span class="pc bpc" id="L347" title="2 of 4 branches missed.">          if (!(currentP.hasNPC()) &amp;&amp; enemies.size() != i</span>
+<span class="pc bpc" id="L348" title="1 of 2 branches missed.">              &amp;&amp; enemies.get(i).inBoxRangeOf(currentP, Constants.COLLISION_RADIUS)</span>
+<span class="pc bpc" id="L349" title="1 of 2 branches missed.">              &amp;&amp; new Collision(currentP, enemies.get(i), delta).colliding()) {</span>
+
+<span class="fc" id="L351">            enemies.remove(i);</span>
+<span class="fc" id="L352">            enemyBubbles.add(currentP);</span>
+<span class="fc" id="L353">            currentP.setHasNPC(true);</span>
+<span class="fc" id="L354">            currentP.setLifetime(1.5 * Constants.BUBBLE_LIFETIME);</span>
+
+<span class="pc bpc" id="L356" title="1 of 2 branches missed.">            if (Constants.isLoggingWantEnemy()) {</span>
+<span class="fc" id="L357">              Logger.getInstance().log(&quot;An enemy was encapsulated by a bubble.&quot;);</span>
+            }
+          }
+        }
+      }
+    }
+<span class="fc" id="L363">  }</span>
+
+  /**
+   * Detect and handle collisions between Bubbles.
+   * 
+   * @param level
+   *          The level to be modified.
+   * 
+   * @param delta
+   *          The number of steps passed since this method was last executed.
+   */
+  protected void detectBubbleBubble(Level level, double delta) {
+<span class="fc" id="L375">    ArrayList&lt;Bubble&gt; bubbles = level.getBubbles();</span>
+
+<span class="fc bfc" id="L377" title="All 2 branches covered.">    for (Bubble bubble : bubbles) {</span>
+<span class="fc bfc" id="L378" title="All 2 branches covered.">      for (Bubble other : bubbles) {</span>
+<span class="pc bpc" id="L379" title="1 of 4 branches missed.">        if (!other.equals(bubble) &amp;&amp; other.inBoxRangeOf(bubble, Constants.COLLISION_RADIUS)) {</span>
+<span class="fc" id="L380">          Collision collision = new Collision(bubble, other, delta);</span>
+<span class="pc bpc" id="L381" title="1 of 2 branches missed.">          if (collision.colliding()) {</span>
+<span class="fc bfc" id="L382" title="All 2 branches covered.">            if (other.posX() &lt; bubble.posX()) {</span>
+<span class="fc" id="L383">              other.getSpeed().setX(-Constants.BUBBLE_BOUNCE);</span>
+<span class="fc" id="L384">              bubble.getSpeed().setX(Constants.BUBBLE_BOUNCE);</span>
+<span class="fc" id="L385">            } else {</span>
+<span class="fc" id="L386">              other.getSpeed().setX(Constants.BUBBLE_BOUNCE);</span>
+<span class="fc" id="L387">              bubble.getSpeed().setX(-Constants.BUBBLE_BOUNCE);</span>
+            }
+          }
+        }
+      }
+    }
+<span class="fc" id="L393">  }</span>
+
+  /**
+   * Detect collisions between player and fruit element.
+   * 
+   * @param level
+   *          The Level.
+   * 
+   * @param delta
+   *          The delta provided by the StepTimer.
+   */
+  protected void detectPlayerFruit(Level level, double delta) {
+<span class="fc bfc" id="L405" title="All 2 branches covered.">    for (DynamicElement player : level.getPlayers()) {</span>
+<span class="fc" id="L406">      ArrayList&lt;Fruit&gt; fruits = level.getFruits();</span>
+
+<span class="fc bfc" id="L408" title="All 2 branches covered.">      if (fruits.size() &gt; 0) {</span>
+<span class="fc bfc" id="L409" title="All 2 branches covered.">        for (int i = 0; i &lt; fruits.size(); i++) {</span>
+<span class="fc bfc" id="L410" title="All 2 branches covered.">          if (fruits.get(i).isPickable()</span>
+<span class="pc bpc" id="L411" title="1 of 2 branches missed.">              &amp;&amp; fruits.get(i).inBoxRangeOf(player, Constants.COLLISION_RADIUS)) {</span>
+<span class="fc" id="L412">            Collision collision = new Collision(player, fruits.get(i), delta);</span>
+<span class="pc bpc" id="L413" title="1 of 2 branches missed.">            if (collision.colliding()) {</span>
+<span class="fc" id="L414">              fruits.remove(i);</span>
+<span class="fc" id="L415">              score.updateScore(100);</span>
+            }
+          }
+        }
+      }
+    }
+<span class="fc" id="L421">  }</span>
+
+  /**
+   * Restarting level on hit with enemy.
+   * 
+   * @param level
+   *          The Level.
+   * 
+   * @param delta
+   *          The delta provided by the StepTimer.
+   */
+  protected void detectPlayerEnemy(Level level, double delta) {
+<span class="fc bfc" id="L433" title="All 2 branches covered.">    for (PlayerElement player : level.getPlayers()) {</span>
+<span class="fc" id="L434">      ArrayList&lt;NPC&gt; npcs = level.getNPCs();</span>
+
+<span class="pc bpc" id="L436" title="1 of 4 branches missed.">      if (npcs.size() &gt; 0 &amp;&amp; !(player instanceof TurtleTaco)) {</span>
+<span class="fc bfc" id="L437" title="All 2 branches covered.">        for (int i = 0; i &lt; npcs.size(); i++) {</span>
+<span class="pc bpc" id="L438" title="1 of 2 branches missed.">          if (npcs.get(i).inBoxRangeOf(player, Constants.COLLISION_RADIUS)) {</span>
+<span class="fc" id="L439">            Collision collision = new Collision(player, npcs.get(i), delta);</span>
+<span class="pc bpc" id="L440" title="1 of 2 branches missed.">            if (collision.colliding()) {</span>
+<span class="fc" id="L441">              player.setAlive(false);</span>
+            }
+          }
+        }
+      }
+    }
+<span class="fc" id="L447">  }</span>
+
+  /**
+   * Returns a ScoreCounter.
+   * 
+   * @return the score.
+   */
+  public ScoreCounter getScore() {
+<span class="fc" id="L455">    return score;</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

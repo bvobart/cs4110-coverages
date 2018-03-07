@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>WarpLevelModifierTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.level.modifier</a> &gt; <span class="el_source">WarpLevelModifierTest.java</span></div><h1>WarpLevelModifierTest.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.level.modifier;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import nl.tudelft.scrumbledore.Constants;
+import nl.tudelft.scrumbledore.level.Level;
+import nl.tudelft.scrumbledore.level.Vector;
+import nl.tudelft.scrumbledore.level.element.Fruit;
+import nl.tudelft.scrumbledore.level.element.LevelElement;
+import nl.tudelft.scrumbledore.level.element.Player;
+
+/**
+ * Test suite for the WarpLevelModifier class.
+ * 
+ * @author Jesse Tilro
+ *
+ */
+<span class="fc" id="L21">public class WarpLevelModifierTest {</span>
+
+  private WarpLevelModifier warp;
+
+  /**
+   * Set up the test object.
+   */
+  @Before
+  public void setUp() {
+<span class="fc" id="L30">    warp = new WarpLevelModifier();</span>
+<span class="fc" id="L31">  }</span>
+
+  /**
+   * When a Level Element has gotten outside the bottom of the level and is subsequently being
+   * warped, it should reappear just outside the top of the level with the same X coordinate.
+   */
+  @Test
+  public void testWarpVerticallyBottomToTop() {
+<span class="fc" id="L39">    LevelElement el = new Fruit(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L40">    el.getPosition().setY(Constants.LEVELY + 17);</span>
+<span class="fc" id="L41">    warp.warpVertically(el);</span>
+<span class="fc" id="L42">    assertEquals(-16, el.posY(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L43">    assertEquals(0, el.posX(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L44">  }</span>
+
+  /**
+   * When a Level Element has gotten outside the top of the level and is subsequently being warped,
+   * it should reappear just outside the bottom of the level with the same X coordinate.
+   */
+  @Test
+  public void testWarpVerticallyTopToBottom() {
+<span class="fc" id="L52">    LevelElement el = new Fruit(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L53">    el.getPosition().setY(-17);</span>
+<span class="fc" id="L54">    warp.warpVertically(el);</span>
+<span class="fc" id="L55">    assertEquals(Constants.LEVELY + 16, el.posY(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L56">    assertEquals(0, el.posX(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L57">  }</span>
+
+  /**
+   * When a Level Element has gotten outside the right side of the level and is subsequently being
+   * warped, it should reappear just outside the left side of the level with the same Y coordinate.
+   */
+  @Test
+  public void testWarpHorizontallyRightToLeft() {
+<span class="fc" id="L65">    LevelElement el = new Fruit(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L66">    el.getPosition().setX(Constants.LEVELX);</span>
+<span class="fc" id="L67">    warp.warpHorizontally(el);</span>
+<span class="fc" id="L68">    assertEquals(16, el.posX(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L69">    assertEquals(0, el.posY(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L70">  }</span>
+
+  /**
+   * When a Level Element has gotten outside the left side of the level and is subsequently being
+   * warped, it should reappear just outside the right side of the level with the same Y coordinate.
+   */
+  @Test
+  public void testWarpHorizontallyLeftToRight() {
+<span class="fc" id="L78">    LevelElement el = new Fruit(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L79">    el.getPosition().setX(0);</span>
+<span class="fc" id="L80">    warp.warpHorizontally(el);</span>
+<span class="fc" id="L81">    assertEquals(Constants.LEVELX - 16, el.posX(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L82">    assertEquals(0, el.posY(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L83">  }</span>
+
+  /**
+   * When a Level is modified and the Player is moving outside the bottom of the Level, the Player
+   * should be warped to the top of the Level.
+   */
+  @Test
+  public void testModifyPlayerWarp() {
+<span class="fc" id="L91">    Player player = new Player(new Vector(0, Constants.LEVELY + 1), new Vector(0, 0));</span>
+<span class="fc" id="L92">    Level level = new Level();</span>
+<span class="fc" id="L93">    level.addElement(player);</span>
+<span class="fc" id="L94">    Vector expectedPosition = new Vector(0, 0);</span>
+
+<span class="fc" id="L96">    warp.modify(level, .5);</span>
+
+<span class="fc" id="L98">    assertEquals(expectedPosition, player.getPosition());</span>
+<span class="fc" id="L99">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

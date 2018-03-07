@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CollisionDirectionTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.level</a> &gt; <span class="el_source">CollisionDirectionTest.java</span></div><h1>CollisionDirectionTest.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.level;
+
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+
+import nl.tudelft.scrumbledore.Constants;
+import nl.tudelft.scrumbledore.level.element.DynamicElement;
+import nl.tudelft.scrumbledore.level.element.Platform;
+import nl.tudelft.scrumbledore.level.element.Player;
+import nl.tudelft.scrumbledore.level.element.StaticElement;
+
+/**
+ * Test Suite for the Collision class.
+ * 
+ * @author Jesse Tilro
+ *
+ */
+@RunWith(Parameterized.class)
+public class CollisionDirectionTest {
+
+  private boolean expectedTop;
+  private boolean expectedBottom;
+  private boolean expectedLeft;
+  private boolean expectedRight;
+
+  private DynamicElement collider;
+  private StaticElement collidee;
+
+  private Collision collision;
+
+  /**
+   * Constructs a new Test Suite instance for the next test case, using parameterized values.
+   * 
+   * @param collider
+   *          The position of the collider LevelElement.
+   * @param collidee
+   *          The position of the collidee LevelElement.
+   * @param colliderSpeed
+   *          The speed component of the collider LevelElement.
+   * @param expectedTop
+   *          Expected outcome of the collision from top check.
+   * @param expectedBottom
+   *          Expected outcome of the collision from top check.
+   * @param expectedLeft
+   *          Expected outcome of the collision from top check.
+   * @param expectedRight
+   *          Expected outcome of the collision from top check.
+   */
+  public CollisionDirectionTest(Vector collider, Vector collidee, Vector colliderSpeed,
+<span class="fc" id="L57">      boolean expectedTop, boolean expectedBottom, boolean expectedLeft, boolean expectedRight) {</span>
+<span class="fc" id="L58">    this.expectedTop = expectedTop;</span>
+<span class="fc" id="L59">    this.expectedBottom = expectedBottom;</span>
+<span class="fc" id="L60">    this.expectedLeft = expectedLeft;</span>
+<span class="fc" id="L61">    this.expectedRight = expectedRight;</span>
+
+<span class="fc" id="L63">    this.collider = new Player(collider, new Vector(32, 32));</span>
+<span class="fc" id="L64">    this.collidee = new Platform(collidee, new Vector(32, 32));</span>
+
+<span class="fc" id="L66">    this.collider.getSpeed().setX(colliderSpeed.getX());</span>
+<span class="fc" id="L67">    this.collider.getSpeed().setY(colliderSpeed.getY());</span>
+
+<span class="fc" id="L69">    this.collision = new Collision(this.collider, this.collidee, 1);</span>
+<span class="fc" id="L70">  }</span>
+
+  /**
+   * Test the collidingFromTop method.
+   */
+  @Test
+  public void testCollidingFromTop() {
+<span class="fc" id="L77">    boolean actualOut = collision.collidingFromTop();</span>
+<span class="fc" id="L78">    assertEquals(expectedTop, actualOut);</span>
+<span class="fc" id="L79">  }</span>
+
+  /**
+   * Test the collidingFromBottom method.
+   */
+  @Test
+  public void testCollidingFromBottom() {
+<span class="fc" id="L86">    boolean actualOut = collision.collidingFromBottom();</span>
+<span class="fc" id="L87">    assertEquals(expectedBottom, actualOut);</span>
+<span class="fc" id="L88">  }</span>
+
+  /**
+   * Test the collidingFromLeft method.
+   */
+  @Test
+  public void testCollidingFromLeft() {
+<span class="fc" id="L95">    boolean actualOut = collision.collidingFromLeft();</span>
+<span class="fc" id="L96">    assertEquals(expectedLeft, actualOut);</span>
+<span class="fc" id="L97">  }</span>
+
+  /**
+   * Test the collidingFromRight method.
+   */
+  @Test
+  public void testCollidingFromRight() {
+<span class="fc" id="L104">    boolean actualOut = collision.collidingFromRight();</span>
+<span class="fc" id="L105">    assertEquals(expectedRight, actualOut);</span>
+<span class="fc" id="L106">  }</span>
+
+  /**
+   * Data for the boundary tests.
+   * 
+   * @return Collection of tuples of input values.
+   */
+  @SuppressWarnings(&quot;checkstyle:methodlength&quot;)
+  @Parameters
+  public static Collection&lt;Object[]&gt; data() {
+<span class="fc" id="L116">    Collection&lt;Object[]&gt; input = new ArrayList&lt;Object[]&gt;();</span>
+    // Same position should not classify as a collision from any direction.
+<span class="fc" id="L118">    input.add(new Object[] { new Vector(0, 0), new Vector(0, 0), new Vector(0, 0), false, false,</span>
+<span class="fc" id="L119">        false, false });</span>
+    
+    // Touching Top.
+<span class="fc" id="L122">    input.add(new Object[] { new Vector(33, 32), new Vector(32, 64), new Vector(0, 0), true, false,</span>
+<span class="fc" id="L123">        false, false });</span>
+<span class="fc" id="L124">    input.add(new Object[] { new Vector(32, 32 - Constants.COLLISION_PRECISION), new Vector(32, 64),</span>
+<span class="fc" id="L125">        new Vector(0, 0), false, false, false, false });</span>
+    // Touching Left.
+<span class="fc" id="L127">    input.add(new Object[] { new Vector(0, 32), new Vector(32, 32), new Vector(0, 0), false, false,</span>
+<span class="fc" id="L128">        true, false });</span>
+<span class="fc" id="L129">    input.add(new Object[] { new Vector(0 - Constants.COLLISION_PRECISION, 32), new Vector(32, 32),</span>
+<span class="fc" id="L130">        new Vector(0, 0), false, false, false, false });</span>
+    // Touching Bottom.
+<span class="fc" id="L132">    input.add(new Object[] { new Vector(33, 64), new Vector(32, 32), new Vector(0, 0), false, true,</span>
+<span class="fc" id="L133">        false, false });</span>
+<span class="fc" id="L134">    input.add(new Object[] { new Vector(32, 32 - Constants.COLLISION_PRECISION), new Vector(32, 64),</span>
+<span class="fc" id="L135">        new Vector(0, 0), false, false, false, false });</span>
+    // Touching Right.
+<span class="fc" id="L137">    input.add(new Object[] { new Vector(32, 32), new Vector(0, 32), new Vector(0, 0), false, false,</span>
+<span class="fc" id="L138">        false, true });</span>
+<span class="fc" id="L139">    input.add(new Object[] { new Vector(0 - Constants.COLLISION_PRECISION, 32), new Vector(32, 32),</span>
+<span class="fc" id="L140">        new Vector(0, 0), false, false, false, false });</span>
+
+    // From Top.
+<span class="fc" id="L143">    input.add(new Object[] { new Vector(32, 25), new Vector(32, 64), new Vector(0, 8), true, false,</span>
+<span class="fc" id="L144">        false, false });</span>
+    // From Left.
+<span class="fc" id="L146">    input.add(new Object[] { new Vector(0, 32), new Vector(48, 32), new Vector(20, 0), false, false,</span>
+<span class="fc" id="L147">        true, false });</span>
+    // From Right.
+<span class="fc" id="L149">    input.add(new Object[] { new Vector(48, 32), new Vector(0, 32), new Vector(-20, 0), false,</span>
+<span class="fc" id="L150">        false, false, true });</span>
+    // From Bottom.
+<span class="fc" id="L152">    input.add(new Object[] { new Vector(32, 48), new Vector(32, 0), new Vector(0, -20), false,</span>
+<span class="fc" id="L153">        true, false, false });</span>
+
+<span class="fc" id="L155">    return input;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

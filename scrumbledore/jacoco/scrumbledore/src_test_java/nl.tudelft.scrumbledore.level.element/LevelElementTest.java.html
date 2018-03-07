@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>LevelElementTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.level.element</a> &gt; <span class="el_source">LevelElementTest.java</span></div><h1>LevelElementTest.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.level.element;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import nl.tudelft.scrumbledore.Constants;
+import nl.tudelft.scrumbledore.level.Vector;
+
+/**
+ * Test Suite for LevelElement class.
+ * 
+ * @author Jesse Tilro
+ * @author Niels Warnars
+ *
+ */
+@SuppressWarnings(&quot;PMD.TooManyMethods&quot;)
+<span class="fc" id="L22">public abstract class LevelElementTest {</span>
+  private Vector position;
+  private Vector size;
+
+  /**
+   * Setting up properties used in the test class.
+   */
+  @Before
+  public void before() {
+<span class="fc" id="L31">    position = new Vector(16, 32);</span>
+<span class="fc" id="L32">    size = new Vector(42, 42);</span>
+<span class="fc" id="L33">  }</span>
+
+  /**
+   * Returns an instance of a LevelElement subclass to be tested.
+   * 
+   * @return A LevelElement test object.
+   * @param position
+   *          The position to be passed into the constructor of the LevelElement.
+   * @param size
+   *          The size to be passed into the constructor of the LevelElement.
+   */
+  public abstract LevelElement make(Vector position, Vector size);
+
+  /**
+   * The constructor of a LevelElement should properly set the object properties.
+   */
+  @Test
+  public void testConstructor() {
+<span class="fc" id="L51">    LevelElement testElement = make(position, size);</span>
+
+<span class="fc" id="L53">    assertEquals(position, testElement.getPosition());</span>
+<span class="fc" id="L54">    assertEquals(size, testElement.getSize());</span>
+<span class="fc" id="L55">  }</span>
+
+  /**
+   * The Y-coordinate of the top of the element should be calculated correctly given the center
+   * position and height.
+   */
+  @Test
+  public void testGetTop() {
+<span class="fc" id="L63">    int y = 64;</span>
+<span class="fc" id="L64">    int height = 32;</span>
+<span class="fc" id="L65">    int top = y - height / 2;</span>
+
+<span class="fc" id="L67">    Vector position = new Vector(128, y);</span>
+<span class="fc" id="L68">    Vector size = new Vector(32, height);</span>
+<span class="fc" id="L69">    LevelElement testElement = make(position, size);</span>
+
+<span class="fc" id="L71">    assertEquals(top, testElement.getTop(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L72">  }</span>
+
+  /**
+   * The Y-coordinate of the bottom of the element should be calculated correctly given the center
+   * position and height.
+   */
+  @Test
+  public void testGetBottom() {
+<span class="fc" id="L80">    int y = 128;</span>
+<span class="fc" id="L81">    int height = 32;</span>
+<span class="fc" id="L82">    int bottom = y + height / 2;</span>
+
+<span class="fc" id="L84">    Vector position = new Vector(256, y);</span>
+<span class="fc" id="L85">    Vector size = new Vector(64, height);</span>
+<span class="fc" id="L86">    LevelElement testElement = make(position, size);</span>
+
+<span class="fc" id="L88">    assertEquals(bottom, testElement.getBottom(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L89">  }</span>
+
+  /**
+   * The X-coordinate of the left side of the element should be calculated correctly given the
+   * center position and width.
+   */
+  @Test
+  public void testGetLeft() {
+<span class="fc" id="L97">    int x = 64;</span>
+<span class="fc" id="L98">    int width = 32;</span>
+<span class="fc" id="L99">    int left = x - width / 2;</span>
+
+<span class="fc" id="L101">    Vector position = new Vector(x, 128);</span>
+<span class="fc" id="L102">    Vector size = new Vector(width, 96);</span>
+<span class="fc" id="L103">    LevelElement testElement = make(position, size);</span>
+
+<span class="fc" id="L105">    assertEquals(left, testElement.getLeft(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L106">  }</span>
+
+  /**
+   * The X-coordinate of the right side of the element should be calculated correctly given the
+   * center position and width.
+   */
+  @Test
+  public void testGetRight() {
+<span class="fc" id="L114">    int x = 128;</span>
+<span class="fc" id="L115">    int width = 32;</span>
+<span class="fc" id="L116">    int right = x + width / 2;</span>
+
+<span class="fc" id="L118">    Vector position = new Vector(x, 64);</span>
+<span class="fc" id="L119">    Vector size = new Vector(width, 32);</span>
+<span class="fc" id="L120">    LevelElement testElement = make(position, size);</span>
+
+<span class="fc" id="L122">    assertEquals(right, testElement.getRight(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L123">  }</span>
+
+  /**
+   * Test whether the distance to another LevelElement is calculated correctly.
+   */
+  @Test
+  public void testDistance() {
+<span class="fc" id="L130">    LevelElement l1 = make(new Vector(0, 0), size);</span>
+<span class="fc" id="L131">    LevelElement l2 = make(new Vector(3, 4), new Vector(32, 32));</span>
+<span class="fc" id="L132">    assertEquals(5, l1.distance(l2), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L133">  }</span>
+
+  /**
+   * Test for the inRadiusRangeOf method.
+   */
+  @Test
+  public void testInRadiusRangeOfTrue() {
+<span class="fc" id="L140">    LevelElement l1 = make(new Vector(0, 0), size);</span>
+<span class="fc" id="L141">    LevelElement l2 = make(new Vector(0, 8), size);</span>
+
+<span class="fc" id="L143">    assertTrue(l1.inRadiusRangeOf(l2, 8));</span>
+<span class="fc" id="L144">  }</span>
+
+  /**
+   * Test for the inRadiusRangeOf method.
+   */
+  @Test
+  public void testInRadiusRangeOfFalse() {
+<span class="fc" id="L151">    LevelElement l1 = make(new Vector(0, 0), size);</span>
+<span class="fc" id="L152">    LevelElement l2 = make(new Vector(0, 9), size);</span>
+
+<span class="fc" id="L154">    assertFalse(l1.inRadiusRangeOf(l2, 8));</span>
+<span class="fc" id="L155">  }</span>
+
+  /**
+   * Test for the inRadiusRangeOf method.
+   */
+  @Test
+  public void testInBoxRangeOfTrue() {
+<span class="fc" id="L162">    LevelElement l1 = make(new Vector(0, 0), size);</span>
+<span class="fc" id="L163">    LevelElement l2 = make(new Vector(0, 8), size);</span>
+
+<span class="fc" id="L165">    assertTrue(l1.inBoxRangeOf(l2, 8));</span>
+<span class="fc" id="L166">  }</span>
+
+  /**
+   * Test for the inRadiusRangeOf method.
+   */
+  @Test
+  public void testInBoxRangeOfFalse() {
+<span class="fc" id="L173">    LevelElement l1 = make(new Vector(0, 0), size);</span>
+<span class="fc" id="L174">    LevelElement l2 = make(new Vector(0, 9), size);</span>
+
+<span class="fc" id="L176">    assertFalse(l1.inBoxRangeOf(l2, 8));</span>
+<span class="fc" id="L177">  }</span>
+
+  /**
+   * Test the posX and posY methods.
+   */
+  @Test
+  public void testPos() {
+<span class="fc" id="L184">    LevelElement l1 = make(new Vector(42, 21), size);</span>
+
+<span class="fc" id="L186">    assertEquals(42, l1.posX(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L187">    assertEquals(21, l1.posY(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L188">  }</span>
+
+  /**
+   * Test width() method.
+   */
+  @Test
+  public void testWidth() {
+<span class="fc" id="L195">    LevelElement l1 = make(new Vector(42, 21), new Vector(16, 32));</span>
+<span class="fc" id="L196">    assertEquals(16, l1.width(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L197">  }</span>
+
+  /**
+   * Test the height() method.
+   */
+  @Test
+  public void testHeight() {
+<span class="fc" id="L204">    LevelElement l1 = make(position, new Vector(16, 32));</span>
+<span class="fc" id="L205">    assertEquals(32, l1.height(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L206">  }</span>
+
+  /**
+   * The LevelElement should be correctly snapped the left side of another one using the snapLeft
+   * method.
+   */
+  @Test
+  public void testSnapLeft() {
+<span class="fc" id="L214">    DynamicElement snapper = new Player(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L215">    LevelElement snapTo = new Platform(new Vector(64, 0), new Vector(32, 32));</span>
+
+<span class="fc" id="L217">    snapper.snapLeft(snapTo);</span>
+
+<span class="fc" id="L219">    assertEquals(32, snapper.getPosition().getX(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L220">  }</span>
+
+  /**
+   * The LevelElement should be correctly snapped the right side of another one using the snapRight
+   * method.
+   */
+  @Test
+  public void testSnapRight() {
+<span class="fc" id="L228">    DynamicElement snapper = new Player(new Vector(64, 0), new Vector(32, 32));</span>
+<span class="fc" id="L229">    LevelElement snapTo = new Platform(new Vector(0, 0), new Vector(32, 32));</span>
+
+<span class="fc" id="L231">    snapper.snapRight(snapTo);</span>
+
+<span class="fc" id="L233">    assertEquals(32, snapper.getPosition().getX(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L234">  }</span>
+
+  /**
+   * The LevelElement should be correctly snapped the top side of another one using the snapTop
+   * method.
+   */
+  @Test
+  public void testSnapTop() {
+<span class="fc" id="L242">    DynamicElement snapper = new Player(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L243">    LevelElement snapTo = new Platform(new Vector(0, 64), new Vector(32, 32));</span>
+
+<span class="fc" id="L245">    snapper.snapTop(snapTo);</span>
+
+<span class="fc" id="L247">    assertEquals(32, snapper.getPosition().getY(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L248">  }</span>
+
+  /**
+   * The LevelElement should be correctly snapped the top side of another one using the snapTop
+   * method.
+   */
+  @Test
+  public void testSnapBottom() {
+<span class="fc" id="L256">    DynamicElement snapper = new Player(new Vector(0, 64), new Vector(32, 32));</span>
+<span class="fc" id="L257">    LevelElement snapTo = new Platform(new Vector(0, 0), new Vector(32, 32));</span>
+
+<span class="fc" id="L259">    snapper.snapBottom(snapTo);</span>
+
+<span class="fc" id="L261">    assertEquals(32, snapper.getPosition().getY(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L262">  }</span>
+
+  /**
+   * Cleaning up test properties after testing.
+   */
+  @After
+  public void after() {
+<span class="fc" id="L269">    position = null;</span>
+<span class="fc" id="L270">    size = null;</span>
+<span class="fc" id="L271">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

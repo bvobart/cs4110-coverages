@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Player.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.level.element</a> &gt; <span class="el_source">Player.java</span></div><h1>Player.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.level.element;
+
+import java.util.ArrayList;
+import nl.tudelft.scrumbledore.Constants;
+import nl.tudelft.scrumbledore.level.Vector;
+import nl.tudelft.scrumbledore.sprite.Sprite;
+import nl.tudelft.scrumbledore.sprite.SpriteStore;
+
+/**
+ * Class representing a Player in a game.
+ * 
+ * @author Niels Warnars
+ * @author Jesse Tilro
+ * @author Floris Doolaard
+ */
+public class Player extends BasicDynamicElement implements PlayerElement {
+  private LevelElementAction lastMove;
+  private Boolean firing;
+  private Boolean alive;
+  private int id;
+  private double lifetime;
+
+  /**
+   * Create a new Player instance.
+   * 
+   * @param position
+   *          Position of the player in the level.
+   * 
+   * @param size
+   *          Size of the Basic Player.
+   */
+  public Player(Vector position, Vector size) {
+<span class="fc" id="L33">    super(position, size);</span>
+
+<span class="fc" id="L35">    setGravity(true);</span>
+
+<span class="fc" id="L37">    id = 0;</span>
+<span class="fc" id="L38">    lastMove = LevelElementAction.MoveRight;</span>
+<span class="fc" id="L39">    firing = false;</span>
+<span class="fc" id="L40">    alive = true;</span>
+<span class="fc" id="L41">    lifetime = Constants.PLAYER_POWERUP_LIFETIME;</span>
+<span class="fc" id="L42">  }</span>
+
+  /**
+   * Checking whether the player is alive.
+   * 
+   * @return The boolean if the player is alive.
+   */
+  public Boolean isAlive() {
+<span class="fc" id="L50">    return alive;</span>
+  }
+
+  /**
+   * Setting the life of the player.
+   * 
+   * @param bool
+   *          Can be True or False, stated on situation of player.
+   */
+  public void setAlive(Boolean bool) {
+<span class="fc" id="L60">    alive = bool;</span>
+<span class="fc" id="L61">  }</span>
+
+  /**
+   * Gets the id of the current player.
+   * 
+   * @return Integer that represents the players number in the game.
+   */
+  public int getPlayerNumber() {
+<span class="fc" id="L69">    return id;</span>
+  }
+
+  /**
+   * Sets the id of the current player.
+   * 
+   * @param id
+   *          Integer that represents the players number in the game.
+   */
+  public void setPlayerNumber(int id) {
+<span class="fc" id="L79">    this.id = id;</span>
+<span class="fc" id="L80">  }</span>
+
+  /**
+   * Get the last horizontal move performed.
+   * 
+   * @return The last move performed.
+   */
+  public LevelElementAction getLastMove() {
+<span class="fc" id="L88">    return lastMove;</span>
+  }
+
+  /**
+   * Set the last performed horizontal move.
+   * 
+   * @param action
+   *          The last move action performed.
+   */
+  public void setLastMove(LevelElementAction action) {
+<span class="fc bfc" id="L98" title="All 4 branches covered.">    if (action == LevelElementAction.MoveLeft || action == LevelElementAction.MoveRight) {</span>
+<span class="fc" id="L99">      lastMove = action;</span>
+    }
+<span class="fc" id="L101">  }</span>
+
+  @Override
+  public int hashCode() {
+<span class="fc" id="L105">    return 0;</span>
+  }
+
+  @Override
+  public boolean equals(Object other) {
+<span class="fc bfc" id="L110" title="All 2 branches covered.">    if (other instanceof Player) {</span>
+<span class="fc" id="L111">      Player that = (Player) other;</span>
+<span class="fc bfc" id="L112" title="All 4 branches covered.">      return this.getPosition().equals(that.getPosition()) &amp;&amp; this.getSize().equals(that.getSize());</span>
+    }
+
+<span class="fc" id="L115">    return false;</span>
+  }
+
+  /**
+   * Return whether the Player is firing.
+   * 
+   * @return whether the Player is firing.
+   */
+  public Boolean isFiring() {
+<span class="fc" id="L124">    return firing;</span>
+  }
+
+  /**
+   * Set whether the Player is firing.
+   * 
+   * @param isFiring
+   *          whether the Player is firing.
+   */
+  public void setFiring(Boolean isFiring) {
+<span class="fc" id="L134">    this.firing = isFiring;</span>
+<span class="fc" id="L135">  }</span>
+
+  /**
+   * Retrieve a set of Sprites to be drawn in the current cycle at the position of this Level
+   * Element.
+   * 
+   * @param steps
+   *          The absolute exact number of steps since the game was started.
+   * 
+   * @return Sprites to be drawn.
+   */
+  public ArrayList&lt;Sprite&gt; getSprites(double steps) {
+<span class="fc" id="L147">    ArrayList&lt;Sprite&gt; result = new ArrayList&lt;Sprite&gt;();</span>
+<span class="fc" id="L148">    SpriteStore store = SpriteStore.getInstance();</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">    if (alive) {</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">      boolean toRight = getLastMove() == LevelElementAction.MoveRight;</span>
+
+<span class="fc" id="L152">      String id = &quot;move-left&quot;;</span>
+<span class="fc bfc" id="L153" title="All 4 branches covered.">      if (firing &amp;&amp; toRight) {</span>
+<span class="fc" id="L154">        id = &quot;shoot-right&quot;;</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">      } else if (firing) {</span>
+<span class="fc" id="L156">        id = &quot;shoot-left&quot;;</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">      } else if (toRight) {</span>
+<span class="fc" id="L158">        id = &quot;move-right&quot;;</span>
+      }
+<span class="pc bpc" id="L160" title="1 of 4 branches missed.">      if (getSpeed().getX() == 0 &amp;&amp; !firing) {</span>
+<span class="fc" id="L161">        steps = 0;</span>
+      }
+
+<span class="fc" id="L164">      id = &quot;player-&quot; + Constants.PLAYER_COLORS.get(getPlayerNumber()) + &quot;-&quot; + id;</span>
+
+<span class="fc" id="L166">      result.add(store.getAnimated(id).getFrame(steps));</span>
+    }
+<span class="fc" id="L168">    return result;</span>
+  }
+
+  /**
+   * Decrease the lifetime by a given number of steps.
+   * 
+   * @param delta
+   *          The number of steps.
+   */
+  public void decreaseLifetime(double delta) {
+<span class="fc" id="L178">    lifetime -= delta;</span>
+<span class="fc" id="L179">  }</span>
+
+  /**
+   * Get the remaining lifetime.
+   * 
+   * @return Remaining lifetime.
+   */
+  public double getLifetime() {
+<span class="fc" id="L187">    return lifetime;</span>
+  }
+
+  /**
+   * Setting the life time of a bubble.
+   * 
+   * @param newTime
+   *          The new life time.
+   */
+  public void setLifetime(double newTime) {
+<span class="fc" id="L197">    lifetime = newTime;</span>
+<span class="fc" id="L198">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>TurtleTacoPickUp.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.level.powerup</a> &gt; <span class="el_source">TurtleTacoPickUp.java</span></div><h1>TurtleTacoPickUp.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.level.powerup;
+
+import java.util.ArrayList;
+import nl.tudelft.scrumbledore.level.Vector;
+import nl.tudelft.scrumbledore.level.element.LevelElementAction;
+import nl.tudelft.scrumbledore.sprite.Sprite;
+import nl.tudelft.scrumbledore.sprite.SpriteStore;
+
+/**
+ * This class represents a pickup item of the BlueberryBubble power-up.
+ * 
+ * @author Floris Doolaard
+ */
+public class TurtleTacoPickUp extends PowerupPickUp {
+
+  /**
+   * The consctrutor creates a pickup item in the level.
+   * 
+   * @param position
+   *          location of the object.
+   * @param size
+   *          size of the object.
+   */
+  public TurtleTacoPickUp(Vector position, Vector size) {
+<span class="fc" id="L25">    super(position, size);</span>
+<span class="fc" id="L26">  }</span>
+
+  @Override
+  public ArrayList&lt;Sprite&gt; getSprites(double steps) {
+<span class="fc" id="L30">    SpriteStore store = SpriteStore.getInstance();</span>
+<span class="fc" id="L31">    ArrayList&lt;Sprite&gt; result = new ArrayList&lt;Sprite&gt;();</span>
+
+<span class="fc" id="L33">    result.add(store.get(&quot;powerup-turtle-taco&quot;));</span>
+<span class="fc" id="L34">    return result;</span>
+  }
+
+  /**
+   * Add an action to be performed in the next step.
+   * 
+   * @param action
+   *          A LevelElementAction to be added.
+   */
+  public void addAction(LevelElementAction action) {
+<span class="fc" id="L44">  }</span>
+
+  /**
+   * Remove all actions from the queue.
+   */
+  public void clearActions() {
+<span class="nc" id="L50">  }</span>
+
+  /**
+   * Check whether the given action is queued for the next step.
+   * 
+   * @param action
+   *          A LevelElementAction to be checked.
+   *          
+   * @return Whether the given action is queued.
+   */
+  public boolean hasAction(LevelElementAction action) {
+<span class="fc" id="L61">    return false;</span>
+  }
+
+  /**
+   * Remove the given action from the actions queue.
+   * 
+   * @param action
+   *          A LevelElementAction to be removed.
+   */
+  public void removeAction(LevelElementAction action) {
+<span class="fc" id="L71">  }</span>
+
+  /**
+   * Get the last horizontal move performed.
+   * 
+   * @return The last move performed.
+   */
+  public LevelElementAction getLastMove() {
+<span class="fc" id="L79">    return null;</span>
+  }
+
+  /**
+   * Set the last performed horizontal move.
+   * 
+   * @param action
+   *          The last move action performed.
+   */
+  public void setLastMove(LevelElementAction action) {
+<span class="fc" id="L89">  }</span>
+
+  /**
+   * Gives a list of current actions of the player.
+   * 
+   * @return A list of actions.
+   */
+  public ArrayList&lt;LevelElementAction&gt; getActions() {
+<span class="fc" id="L97">    return null;</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>
