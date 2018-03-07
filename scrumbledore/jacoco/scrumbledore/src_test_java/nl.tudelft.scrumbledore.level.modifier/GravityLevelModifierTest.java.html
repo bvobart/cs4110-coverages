@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>GravityLevelModifierTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.level.modifier</a> &gt; <span class="el_source">GravityLevelModifierTest.java</span></div><h1>GravityLevelModifierTest.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.level.modifier;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import nl.tudelft.scrumbledore.Constants;
+import nl.tudelft.scrumbledore.level.Level;
+import nl.tudelft.scrumbledore.level.Vector;
+import nl.tudelft.scrumbledore.level.element.DynamicElement;
+import nl.tudelft.scrumbledore.level.element.Fruit;
+import nl.tudelft.scrumbledore.level.element.NPC;
+import nl.tudelft.scrumbledore.level.element.Player;
+
+/**
+ * Test Suite for Gravity Level Modifier class.
+ * 
+ * @author Jesse Tilro
+ *
+ */
+<span class="fc" id="L23">public class GravityLevelModifierTest {</span>
+
+  private DynamicElement test;
+  private DynamicElement test2;
+  private double strength;
+  private double max;
+
+  /**
+   * Setup a new instance of this Test Suite, providing it which a test object.
+   */
+  @Before
+  public void setUp() {
+<span class="fc" id="L35">    test = new Fruit(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L36">    test2 = new Fruit(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L37">    test.setGravity(true);</span>
+<span class="fc" id="L38">    test2.setGravity(true);</span>
+<span class="fc" id="L39">    strength = 2;</span>
+<span class="fc" id="L40">    max = 8;</span>
+<span class="fc" id="L41">  }</span>
+
+  /**
+   * A new Gravity Level Modifier should be constructed with Constants.GRAVITY_MAX and
+   * Constants.GRAVITY_STRENGTH.
+   */
+  @Test
+  public void testConstructor() {
+<span class="fc" id="L49">    GravityLevelModifier gravity = new GravityLevelModifier();</span>
+    
+<span class="fc" id="L51">    assertEquals(Constants.GRAVITY_MAX, gravity.getMax(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L52">    assertEquals(Constants.GRAVITY_STRENGTH, gravity.getStrength(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L53">  }</span>
+  
+  /**
+   * When a pull action is performed on a null element no actions should be performed on this 
+   * element.
+   */
+  @Test
+  public void testPullNull() {
+<span class="fc" id="L61">    GravityLevelModifier gravity = new GravityLevelModifier(strength, max);</span>
+<span class="fc" id="L62">    DynamicElement el = null;</span>
+<span class="fc" id="L63">    gravity.pull(el, 1);</span>
+
+<span class="fc" id="L65">    assertNull(el);</span>
+<span class="fc" id="L66">  }</span>
+  
+  /**
+   * When a level element is pulled that has not yet reached the maximal vertical speed and is not
+   * about too in the next pull either, its vertical speed should be incremented with the strength.
+   */
+  @Test
+  public void testPullNotReachedMaxSpeed() {
+<span class="fc" id="L74">    GravityLevelModifier gravity = new GravityLevelModifier(strength, max);</span>
+<span class="fc" id="L75">    gravity.pull(test, 1);</span>
+
+<span class="fc" id="L77">    assertEquals(0 + strength, test.getSpeed().getY(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L78">  }</span>
+
+  /**
+   * When a level element is pulled that is about to reach or exceed the maximal vertical speed, its
+   * vertical speed should be set to the maximal vertical speed.
+   */
+  @Test
+  public void testPullAboutToReachMaxSpeed() {
+<span class="fc" id="L86">    GravityLevelModifier gravity = new GravityLevelModifier(strength, max);</span>
+
+<span class="fc" id="L88">    test.getSpeed().setY(max - (strength - 1));</span>
+
+<span class="fc" id="L90">    gravity.pull(test, 1);</span>
+
+<span class="fc" id="L92">    assertEquals(max, test.getSpeed().getY(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L93">  }</span>
+
+  /**
+   * When a level element is pulled that whose vertical speed has in some way exceeded the maximal
+   * vertical speed, its vertical speed should be set to the maximal vertical speed.
+   */
+  @Test
+  public void testPullExceededMaxSpeed() {
+<span class="fc" id="L101">    GravityLevelModifier gravity = new GravityLevelModifier(strength, max);</span>
+<span class="fc" id="L102">    test.getSpeed().setY(max + 1);</span>
+
+<span class="fc" id="L104">    gravity.pull(test, 1);</span>
+
+<span class="fc" id="L106">    assertEquals(max, test.getSpeed().getY(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L107">  }</span>
+
+  /**
+   * When an entire level is pulled, all gravity affected LevelElements are pulled down.
+   */
+  @Test
+  public void testModifyLevelBoundaryValues() {
+<span class="fc" id="L114">    GravityLevelModifier gravity = new GravityLevelModifier(strength, max);</span>
+<span class="fc" id="L115">    test.getSpeed().setY(0);</span>
+<span class="fc" id="L116">    test2.getSpeed().setY(7);</span>
+<span class="fc" id="L117">    Level level = new Level();</span>
+<span class="fc" id="L118">    level.addElement(test);</span>
+<span class="fc" id="L119">    level.addElement(test2);</span>
+
+<span class="fc" id="L121">    gravity.modify(level, 1.0d);</span>
+
+<span class="fc" id="L123">    assertEquals(0 + strength, test.getSpeed().getY(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L124">    assertEquals(max, test2.getSpeed().getY(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L125">  }</span>
+
+  /**
+   * When an entire level is pulled, all gravity affected LevelElements (NPC, Fruit, Player) 
+   * are pulled down.
+   */
+  @Test
+  public void testModifyLevelAllElements() {
+<span class="fc" id="L133">    GravityLevelModifier gravity = new GravityLevelModifier(strength, max);</span>
+<span class="fc" id="L134">    NPC npc = new NPC(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L135">    Fruit fruit = new Fruit(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L136">    Player player = new Player(new Vector(0, 0), new Vector(32, 32));</span>
+
+<span class="fc" id="L138">    npc.getSpeed().setY(0);</span>
+<span class="fc" id="L139">    fruit.getSpeed().setY(0);</span>
+<span class="fc" id="L140">    player.getSpeed().setY(0);</span>
+
+<span class="fc" id="L142">    Level level = new Level();</span>
+<span class="fc" id="L143">    level.addElement(npc);</span>
+<span class="fc" id="L144">    level.addElement(fruit);</span>
+<span class="fc" id="L145">    level.addElement(player);</span>
+
+<span class="fc" id="L147">    gravity.modify(level, 1.0d);</span>
+
+<span class="fc" id="L149">    assertEquals(0 + strength, npc.getSpeed().getY(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L150">    assertEquals(0 + strength, fruit.getSpeed().getY(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L151">    assertEquals(0 + strength, player.getSpeed().getY(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L152">  }</span>
+
+  /**
+   * When an entire level is pulled, elements unaffected by gravity shouldn't be affected.
+   */
+  @Test
+  public void testModifyLevelUnaffected() {
+<span class="fc" id="L159">    GravityLevelModifier gravity = new GravityLevelModifier(strength, max);</span>
+<span class="fc" id="L160">    test.setGravity(false);</span>
+<span class="fc" id="L161">    Level level = new Level();</span>
+<span class="fc" id="L162">    level.addElement(test);</span>
+
+<span class="fc" id="L164">    gravity.modify(level, 1.0d);</span>
+
+<span class="fc" id="L166">    assertEquals(0, test.getSpeed().getY(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L167">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

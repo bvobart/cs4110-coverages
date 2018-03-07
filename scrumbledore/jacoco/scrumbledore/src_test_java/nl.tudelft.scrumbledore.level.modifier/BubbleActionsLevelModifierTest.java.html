@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>BubbleActionsLevelModifierTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.level.modifier</a> &gt; <span class="el_source">BubbleActionsLevelModifierTest.java</span></div><h1>BubbleActionsLevelModifierTest.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.level.modifier;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import nl.tudelft.scrumbledore.Constants;
+import nl.tudelft.scrumbledore.level.Level;
+import nl.tudelft.scrumbledore.level.Vector;
+import nl.tudelft.scrumbledore.level.element.Bubble;
+import nl.tudelft.scrumbledore.level.element.LevelElementAction;
+import nl.tudelft.scrumbledore.level.element.NPC;
+import nl.tudelft.scrumbledore.level.element.Player;
+
+/**
+ * Test Suite for the Bubble Actions Level Modifier class.
+ * 
+ * @author Jesse Tilro
+ *
+ */
+<span class="fc" id="L23">public class BubbleActionsLevelModifierTest {</span>
+
+  private NPC npc;
+  private Bubble bubble;
+  private Bubble bubble2;
+  private Level level;
+  private BubbleActionsLevelModifier modifier;
+
+  /**
+   * Setup a test object, Player Actions Level Modifier, and dependencies: a Player and a Level
+   * instance.
+   */
+  @Before
+  public void setUp() {
+<span class="fc" id="L37">    Player player = new Player(new Vector(0, 0), new Vector(0, 0));</span>
+<span class="fc" id="L38">    npc = new NPC(new Vector(16, 16), new Vector(0, 0));</span>
+<span class="fc" id="L39">    bubble = new Bubble(new Vector(0, 0), new Vector(0, 0));</span>
+<span class="fc" id="L40">    bubble2 = new Bubble(new Vector(0, 0), new Vector(0, 0));</span>
+<span class="fc" id="L41">    level = new Level();</span>
+<span class="fc" id="L42">    level.addElement(player);</span>
+<span class="fc" id="L43">    level.addElement(npc);</span>
+<span class="fc" id="L44">    level.addElement(bubble);</span>
+<span class="fc" id="L45">    level.addElement(bubble2);</span>
+<span class="fc" id="L46">    modifier = new BubbleActionsLevelModifier();</span>
+<span class="fc" id="L47">  }</span>
+
+  /**
+   * When a Level is modified and one of its Bubbles has a negative lifetime and an NPC
+   * then a new NPC should be spawned.
+   */
+  @Test
+  public void testModifyNegativeLifetime() {
+<span class="fc" id="L55">    bubble.setLifetime(0);</span>
+<span class="fc" id="L56">    bubble.setHasNPC(true);</span>
+<span class="fc" id="L57">    modifier.modify(level, .5);</span>
+<span class="fc" id="L58">    assertEquals(2, level.getNPCs().size());</span>
+<span class="fc" id="L59">    assertEquals(new Vector(16, 16), level.getNPCs().get(0).getPosition());</span>
+<span class="fc" id="L60">    assertEquals(new Vector(0, 0), level.getNPCs().get(1).getPosition());</span>
+<span class="fc" id="L61">  }</span>
+  
+  /**
+   * When a Level is modified and its Bubbles have the action to move left or right, their speed
+   * vector needs to updated correspondingly.
+   */
+  @Test
+  public void testModifyMove() {
+<span class="fc" id="L69">    bubble.addAction(LevelElementAction.MoveLeft);</span>
+<span class="fc" id="L70">    bubble2.addAction(LevelElementAction.MoveRight);</span>
+<span class="fc" id="L71">    modifier.modify(level, .5);</span>
+<span class="fc" id="L72">    double expected = -Constants.BUBBLE_SPEED;</span>
+<span class="fc" id="L73">    double expected2 = Constants.BUBBLE_SPEED;</span>
+<span class="fc" id="L74">    assertEquals(expected, bubble.getSpeed().getX(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L75">    assertEquals(expected2, bubble2.getSpeed().getX(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L76">  }</span>
+
+  /**
+   * When a Level is modified and one of its Bubbles is floating at maximal velocity, it should not
+   * be accelerated anymore.
+   */
+  @Test
+  public void testModifyFloatMax() {
+<span class="fc" id="L84">    double expected = -Constants.BUBBLE_FLOAT;</span>
+<span class="fc" id="L85">    bubble.getSpeed().setY(expected);</span>
+<span class="fc" id="L86">    modifier.modify(level, .5);</span>
+<span class="fc" id="L87">    assertEquals(expected, bubble.getSpeed().getY(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L88">  }</span>
+
+  /**
+   * When a Level is modified and one of its bubbles is out of lifetime, this bubble should be
+   * removed from the level.
+   */
+  @Test
+  public void testModifyRemoveNoLifetimeLeft() {
+<span class="fc" id="L96">    bubble.decreaseLifetime(bubble.getLifetime());</span>
+<span class="fc" id="L97">    bubble2.addAction(LevelElementAction.MoveLeft);</span>
+<span class="fc" id="L98">    modifier.modify(level, .5);</span>
+<span class="fc" id="L99">    assertFalse(level.getBubbles().contains(bubble));</span>
+<span class="fc" id="L100">  }</span>
+
+  /**
+   * When a Level is modified, after processing all actions in a bubble's action queue, the queue
+   * should be cleared.
+   */
+  @Test
+  public void testModifyClear() {
+<span class="fc" id="L108">    bubble.addAction(LevelElementAction.MoveLeft);</span>
+<span class="fc" id="L109">    bubble2.addAction(LevelElementAction.MoveRight);</span>
+<span class="fc" id="L110">    modifier.modify(level, .5);</span>
+<span class="fc" id="L111">    assertFalse(bubble.hasAction(LevelElementAction.MoveLeft));</span>
+<span class="fc" id="L112">    assertFalse(bubble2.hasAction(LevelElementAction.MoveRight));</span>
+<span class="fc" id="L113">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

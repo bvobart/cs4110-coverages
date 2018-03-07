@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>SpriteTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.sprite</a> &gt; <span class="el_source">SpriteTest.java</span></div><h1>SpriteTest.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.sprite;
+
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+
+import nl.tudelft.scrumbledore.Constants;
+import nl.tudelft.scrumbledore.level.Vector;
+
+/**
+ * Test Suite for the Sprite class.
+ * 
+ * @author Jesse Tilro
+ *
+ */
+<span class="fc" id="L15">public class SpriteTest {</span>
+
+  /**
+   * Test the ID field getter.
+   */
+  @Test
+  public void testGetID() {
+<span class="fc" id="L22">    Sprite test = new Sprite(&quot;test&quot;);</span>
+<span class="fc" id="L23">    assertEquals(&quot;test&quot;, test.getID());</span>
+<span class="fc" id="L24">  }</span>
+
+  /**
+   * The getPath method should combine the id, ext and dir fields correctly to form a path to the
+   * image file to be used for the sprite.
+   */
+  @Test
+  public void testGetPath() {
+<span class="fc" id="L32">    Sprite test = new Sprite(&quot;file&quot;, &quot;ext&quot;, &quot;dir/&quot;);</span>
+<span class="fc" id="L33">    assertEquals(&quot;dir/file.ext&quot;, test.getPath());</span>
+<span class="fc" id="L34">  }</span>
+
+  /**
+   * The getPath should be using the Constants Sprites Directory if dir was not specified in the
+   * constructor.
+   */
+  @Test
+  public void testGetPathConstantsDir() {
+<span class="fc" id="L42">    Sprite test = new Sprite(&quot;file&quot;, &quot;ext&quot;);</span>
+<span class="fc" id="L43">    String expectedPath = Constants.SPRITES_DIR + &quot;file.ext&quot;;</span>
+<span class="fc" id="L44">    assertEquals(expectedPath, test.getPath());</span>
+<span class="fc" id="L45">  }</span>
+
+  /**
+   * Test the getDrawPosition method which should return the middle coordinates of a sprite.
+   */
+  @Test
+  public void testGetDrawPosition() {
+<span class="fc" id="L52">    Sprite test = new Sprite(&quot;file&quot;, &quot;ext&quot;, &quot;dir/&quot;, new Vector(32, 32));</span>
+<span class="fc" id="L53">    Vector res = test.getDrawPosition(new Vector(32, 32));</span>
+<span class="fc" id="L54">    assertEquals(new Vector(16.0d, 16.0d), res);</span>
+<span class="fc" id="L55">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

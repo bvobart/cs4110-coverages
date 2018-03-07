@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Keybinding.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.keybinding</a> &gt; <span class="el_source">Keybinding.java</span></div><h1>Keybinding.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.keybinding;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import javafx.scene.input.KeyCode;
+import nl.tudelft.scrumbledore.Constants;
+import nl.tudelft.scrumbledore.level.element.LevelElementAction;
+
+/**
+ * Represents a Keybinding in the form of a key value pair.
+ * 
+ * @author Jeroen Meijer
+ */
+public class Keybinding {
+  private Map&lt;KeyCode, LevelElementAction&gt; keyMap;
+  private Map&lt;LevelElementAction, KeyCode&gt; actionMap;
+
+  /**
+   * Creates a new KeyBinding with the default binding for the given player number.
+   * 
+   * @param playerNumber
+   *          The number of a given player.
+   */
+<span class="fc" id="L25">  public Keybinding(int playerNumber) {</span>
+<span class="fc" id="L26">    keyMap = new HashMap&lt;KeyCode, LevelElementAction&gt;();</span>
+<span class="fc" id="L27">    actionMap = new HashMap&lt;LevelElementAction, KeyCode&gt;();</span>
+
+<span class="fc" id="L29">    Map&lt;KeyCode, LevelElementAction&gt; tempMap = Constants.KEY_MAPPING.get(playerNumber);</span>
+
+<span class="fc bfc" id="L31" title="All 2 branches covered.">    for (Entry&lt;KeyCode, LevelElementAction&gt; entry : tempMap.entrySet()) {</span>
+<span class="fc" id="L32">      keyMap.put(entry.getKey(), tempMap.get(entry.getKey()));</span>
+<span class="fc" id="L33">      actionMap.put(tempMap.get(entry.getKey()), entry.getKey());</span>
+    }
+<span class="fc" id="L35">  }</span>
+
+  /**
+   * Updates a Keybinding with the given using the key as identifier.
+   * 
+   * @param action
+   *          Updated.
+   * 
+   * @param key
+   *          Unchanged.
+   */
+  public void updateActionByKey(KeyCode key, LevelElementAction action) {
+<span class="fc" id="L47">    actionMap.remove(keyMap.get(key));</span>
+<span class="fc" id="L48">    actionMap.put(action, key);</span>
+<span class="fc" id="L49">    keyMap.replace(key, action);</span>
+<span class="fc" id="L50">  }</span>
+
+  /**
+   * Updates a Keybinding with the given using the action as identifier.
+   * 
+   * @param action
+   *          Unchanged.
+   * 
+   * @param key
+   *          Updated.
+   */
+  public void updateKeyByAction(LevelElementAction action, KeyCode key) {
+<span class="fc" id="L62">    keyMap.remove(actionMap.get(action));</span>
+<span class="fc" id="L63">    keyMap.put(key, action);</span>
+<span class="fc" id="L64">    actionMap.replace(action, key);</span>
+<span class="fc" id="L65">  }</span>
+
+  /**
+   * Gets a KeyCode based on an LevelElementAction.
+   * 
+   * @param action
+   *          The LevelElementAction to get the KeyCode for.
+   * 
+   * @return KeyCode The KeyCode associated with a LevelElementAction.
+   */
+  public KeyCode getKey(LevelElementAction action) {
+<span class="fc" id="L76">    return actionMap.get(action);</span>
+  }
+
+  /**
+   * Gets a LevelElementAction based on an KeyCode.
+   * 
+   * @param key
+   *          The KeyCode to get the LevelElementAction for.
+   * 
+   * @return LevelElementAction The LevelElementAction associated with a KeyCode.
+   */
+  public LevelElementAction getAction(KeyCode key) {
+<span class="fc" id="L88">    return keyMap.get(key);</span>
+  }
+
+  /**
+   * Checks if the given key is already mapped.
+   * 
+   * @param key
+   *          The key to check.
+   * 
+   * @return boolean Wether or not the key is already bound.
+   */
+  public boolean isAssigned(KeyCode key) {
+<span class="fc bfc" id="L100" title="All 2 branches covered.">    return getAction(key) != null;</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

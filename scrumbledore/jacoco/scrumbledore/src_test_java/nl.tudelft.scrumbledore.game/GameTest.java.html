@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>GameTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.game</a> &gt; <span class="el_source">GameTest.java</span></div><h1>GameTest.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.game;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import java.util.ArrayList;
+import org.junit.Before;
+import org.junit.Test;
+import nl.tudelft.scrumbledore.Constants;
+import nl.tudelft.scrumbledore.level.Level;
+import nl.tudelft.scrumbledore.level.Vector;
+import nl.tudelft.scrumbledore.level.element.Fruit;
+import nl.tudelft.scrumbledore.level.modifier.NPCLevelModifier;
+
+/**
+ * Testing the Game class.
+ * 
+ * @author Floris Doolaard
+ * @author Jesse Tilro
+ * @author Niels Warnars
+ *
+ */
+@SuppressWarnings(&quot;PMD.TooManyMethods&quot;)
+<span class="fc" id="L24">public abstract class GameTest {</span>
+  private Game game;
+  private ArrayList&lt;Level&gt; levels;
+
+  /**
+   * Setting up test properties.
+   * 
+   * @throws Exception
+   */
+  @Before
+  public void before() {
+<span class="fc" id="L35">    Level level1 = new Level();</span>
+<span class="fc" id="L36">    Level level2 = new Level();</span>
+<span class="fc" id="L37">    level2.addElement(new Fruit(new Vector(32, 32), new Vector(32, 32)));</span>
+<span class="fc" id="L38">    levels = new ArrayList&lt;Level&gt;();</span>
+<span class="fc" id="L39">    levels.add(level1);</span>
+<span class="fc" id="L40">    levels.add(level2);</span>
+<span class="fc" id="L41">    game = make(levels);</span>
+<span class="fc" id="L42">  }</span>
+
+  /**
+   * Make the Game to be considered test object.
+   * 
+   * @param levels
+   *          The levels the Game needs to consist of.
+   * @return The test object.
+   */
+  protected abstract Game make(ArrayList&lt;Level&gt; levels);
+
+  /**
+   * Test the constructor of the Game.
+   */
+  @Test
+  public void testConstructor() {
+<span class="fc" id="L58">    assertEquals(levels, game.getLevels());</span>
+<span class="fc" id="L59">    assertEquals(levels.get(0), game.getCurrentLevel());</span>
+<span class="fc" id="L60">  }</span>
+
+  /**
+   * The remaining levels method should initially return the total number of levels - 1.
+   */
+  @Test
+  public void testRemainingLevelsInitial() {
+<span class="fc" id="L67">    assertEquals(levels.size() - 1, game.remainingLevels());</span>
+<span class="fc" id="L68">  }</span>
+
+  /**
+   * After proceeding to the next level, the remaining levels method should return the total number
+   * of levels - 2.
+   */
+  @Test
+  public void testRemainingLevelsAfterGoingToNextLevel() {
+<span class="fc" id="L76">    game.goToNextLevel();</span>
+<span class="fc" id="L77">    assertEquals(levels.size() - 2, game.remainingLevels());</span>
+<span class="fc" id="L78">  }</span>
+
+  /**
+   * When going to the next Level, the current Level should be updated to the next Level in the
+   * list.
+   */
+  @Test
+  public void testGoToNextLevel() {
+<span class="fc" id="L86">    assertEquals(levels.get(0), game.getCurrentLevel());</span>
+<span class="fc" id="L87">    game.goToNextLevel();</span>
+<span class="fc" id="L88">    assertEquals(levels.get(1), game.getCurrentLevel());</span>
+<span class="fc" id="L89">  }</span>
+
+  /**
+   * When a score is being set this one should be returned as a string when calling the
+   * Game.getScore method.
+   */
+  @Test
+  public void testGetScore() {
+<span class="fc" id="L97">    ScoreCounter sc = game.getScoreCounter();</span>
+<span class="fc" id="L98">    sc.updateScore(42);</span>
+<span class="fc" id="L99">    assertEquals(&quot;42&quot;, game.getScore());</span>
+<span class="fc" id="L100">  }</span>
+  
+  /**
+   * When a score is being set and this score is the highest score achieved in the game then
+   * this score should be returned as a string when calling the Game.getHighScore method.
+   */
+  @Test
+  public void testGetHighScore() {
+<span class="fc" id="L108">    ScoreCounter sc = game.getScoreCounter();</span>
+<span class="fc" id="L109">    sc.updateScore(42);</span>
+<span class="fc" id="L110">    sc.resetScore();</span>
+<span class="fc" id="L111">    sc.updateScore(21);</span>
+<span class="fc" id="L112">    assertEquals(&quot;42&quot;, game.getHighScore());</span>
+<span class="fc" id="L113">  }</span>
+  
+  /**
+   * Whenever a step is taken the Modifier.modify() method should be taken.
+   */
+  @Test
+  @SuppressWarnings(&quot;PMD.JUnitTestsShouldIncludeAssert&quot;)
+  public void testStep() {
+<span class="fc" id="L121">    NPCLevelModifier modifier = mock(NPCLevelModifier.class);</span>
+<span class="fc" id="L122">    game.registerLevelModifier(modifier);</span>
+    
+<span class="fc" id="L124">    game.step(1.0d);</span>
+<span class="fc" id="L125">    verify(modifier).modify(game.getCurrentLevel(), 1.0d);</span>
+<span class="fc" id="L126">  }</span>
+  
+  /**
+   * When the Game is restarted, it's current Level should be reset to the first Level again.
+   */
+  @Test
+  public void testRestart() {
+<span class="fc" id="L133">    game.goToNextLevel();</span>
+<span class="fc" id="L134">    game.restart();</span>
+    // Since on restart the game loads levels from the file system instead of our fixtures, we use
+    // an assertion relative to the Game's own levels instead of our fixtures.
+<span class="fc" id="L137">    assertEquals(game.getLevels().get(0), game.getCurrentLevel());</span>
+<span class="fc" id="L138">  }</span>
+
+  /**
+   * The step counting mechanism should accumulate the exact numbers of steps correctly.
+   */
+  @Test
+  public void testSteps() {
+<span class="fc" id="L145">    game.addSteps(3.2);</span>
+<span class="fc" id="L146">    game.addSteps(6.4);</span>
+<span class="fc" id="L147">    assertEquals(9.6, game.getSteps(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L148">    assertEquals(9, game.getFullSteps());</span>
+<span class="fc" id="L149">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

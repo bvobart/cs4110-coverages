@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ScoreCounter.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.game</a> &gt; <span class="el_source">ScoreCounter.java</span></div><h1>ScoreCounter.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.game;
+
+import nl.tudelft.scrumbledore.Constants;
+import nl.tudelft.scrumbledore.Logger;
+
+/**
+ * A counter given to the Game class as an attribute that keeps track of the score.
+ * 
+ * @author Floris Doolaard
+ * @author David Alderliesten
+ */
+public class ScoreCounter {
+  private int score;
+  private int highScore;
+
+  /**
+   * Constructing a ScoreCounter object.
+   */
+<span class="fc" id="L19">  public ScoreCounter() {</span>
+<span class="fc" id="L20">    this.score = 0;</span>
+<span class="fc" id="L21">    this.highScore = 0;</span>
+<span class="fc" id="L22">  }</span>
+
+  /**
+   * Returns the current total score.
+   * 
+   * @return The current score.
+   */
+  public int getScore() {
+<span class="fc" id="L30">    return score;</span>
+  }
+
+  /**
+   * Returns the current high score.
+   * 
+   * @return The current high-score.
+   */
+  public int getHighScore() {
+<span class="fc" id="L39">    return highScore;</span>
+  }
+
+  /**
+   * Returns the current total score in the form of a string.
+   * 
+   * @return The current score as a string.
+   */
+  public String getScoreString() {
+<span class="fc" id="L48">    return Integer.toString(score);</span>
+  }
+
+  /**
+   * Updating the current score with additional score and update the high-score if needed.
+   * 
+   * @param addScore
+   *          The score to be added to the total score.
+   */
+  public void updateScore(int addScore) {
+<span class="fc" id="L58">    score += addScore;</span>
+
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">    if (Constants.isLoggingWantPoints()) {</span>
+<span class="fc" id="L61">      Logger.getInstance().log(</span>
+<span class="fc" id="L62">          &quot;Player gained &quot; + addScore + &quot; points, totalling at &quot; + score + &quot; points.&quot;);</span>
+    }
+
+<span class="fc bfc" id="L65" title="All 2 branches covered.">    if (score &gt; highScore) {</span>
+<span class="fc" id="L66">      highScore = score;</span>
+
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">      if (Constants.isLoggingWantPoints()) {</span>
+<span class="fc" id="L69">        Logger.getInstance().log(</span>
+<span class="fc" id="L70">            &quot;The high-score has been changed and is now worth &quot; + highScore + &quot; points!&quot;);</span>
+      }
+    }
+<span class="fc" id="L73">  }</span>
+
+  /**
+   * Resets the score to a value of 0 when called.
+   */
+  public void resetScore() {
+<span class="fc" id="L79">    score = 0;</span>
+<span class="fc" id="L80">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

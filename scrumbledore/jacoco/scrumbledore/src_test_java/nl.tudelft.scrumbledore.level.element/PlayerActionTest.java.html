@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>PlayerActionTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.level.element</a> &gt; <span class="el_source">PlayerActionTest.java</span></div><h1>PlayerActionTest.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.level.element;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+/**
+ * Test suite for the Player Action enum.
+ * 
+ * @author Niels Warnars
+ */
+<span class="fc" id="L12">public class PlayerActionTest {</span>
+
+  /**
+   * Test the invertAction method with a given MoveRight action. Expected outcome: MoveStop.
+   */
+  @Test
+  public final void testInvertActionMoveRight() {
+<span class="fc" id="L19">    LevelElementAction result = LevelElementAction.invertAction(LevelElementAction.MoveRight);</span>
+<span class="fc" id="L20">    assertEquals(LevelElementAction.MoveStop, result);</span>
+<span class="fc" id="L21">  }</span>
+
+  /**
+   * Test the invertAction method with a given MoveLeft action. Expected outcome: MoveStop.
+   */
+  @Test
+  public final void testInvertActionMoveLeft() {
+<span class="fc" id="L28">    LevelElementAction result = LevelElementAction.invertAction(LevelElementAction.MoveLeft);</span>
+<span class="fc" id="L29">    assertEquals(LevelElementAction.MoveStop, result);</span>
+<span class="fc" id="L30">  }</span>
+
+  /**
+   * Test the invertAction method with a given Shoot action. Expected outcome: ShootStop.
+   */
+  @Test
+  public final void testInvertActionShoot() {
+<span class="fc" id="L37">    LevelElementAction result = LevelElementAction.invertAction(LevelElementAction.Shoot);</span>
+<span class="fc" id="L38">    assertEquals(LevelElementAction.ShootStop, result);</span>
+<span class="fc" id="L39">  }</span>
+
+  /**
+   * Test the invertAction method with an unsupported action. Expected outcome: null.
+   */
+  @Test
+  public final void testInvertActionUnsupported() {
+<span class="fc" id="L46">    LevelElementAction result = LevelElementAction.invertAction(LevelElementAction.Jump);</span>
+<span class="fc" id="L47">    assertEquals(null, result);</span>
+<span class="fc" id="L48">  }</span>
+
+  /**
+   * Test the invertAction method with null given. Expected outcome: null.
+   */
+  @Test
+  public final void testInvertActionNull() {
+<span class="fc" id="L55">    LevelElementAction result = LevelElementAction.invertAction(null);</span>
+<span class="fc" id="L56">    assertEquals(null, result);</span>
+<span class="fc" id="L57">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

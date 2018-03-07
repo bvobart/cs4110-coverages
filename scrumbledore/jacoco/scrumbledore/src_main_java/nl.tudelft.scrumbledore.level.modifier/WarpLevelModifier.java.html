@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>WarpLevelModifier.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.level.modifier</a> &gt; <span class="el_source">WarpLevelModifier.java</span></div><h1>WarpLevelModifier.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.level.modifier;
+
+import nl.tudelft.scrumbledore.Constants;
+import nl.tudelft.scrumbledore.level.Level;
+import nl.tudelft.scrumbledore.level.element.LevelElement;
+
+/**
+ * LevelModifier responsible for warping LevelElements around the edges of the Level. (This used to
+ * be a responsibility of the KineticsLevelModifier.)
+ * 
+ * @author Jesse Tilro
+ *
+ */
+<span class="fc" id="L14">public class WarpLevelModifier implements LevelModifier {</span>
+
+  /**
+   * Warp all dynamic element in a given Level.
+   * 
+   * @param level
+   *          The level to be modified.
+   *          
+   * @param delta
+   *          The number of steps passed since the last cycle.
+   */
+  public void modify(Level level, double delta) {
+<span class="fc bfc" id="L26" title="All 2 branches covered.">    for (LevelElement element : level.getDynamicElements()) {</span>
+<span class="fc" id="L27">      warp(element);</span>
+    }
+<span class="fc" id="L29">  }</span>
+
+  /**
+   * Warp a LeveElement both in horizontal and vertical direction.
+   * 
+   * @param element
+   *          The LevelElement to be warped.
+   */
+  public void warp(LevelElement element) {
+<span class="fc" id="L38">    warpVertically(element);</span>
+<span class="fc" id="L39">    warpHorizontally(element);</span>
+<span class="fc" id="L40">  }</span>
+
+  /**
+   * Warp a Level Element through the vertical boundaries of the level.
+   * 
+   * @param element
+   *          The Level Element to be warped.
+   */
+  public void warpVertically(LevelElement element) {
+<span class="fc" id="L49">    double offset = element.height() / 2;</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">    if (element.posY() &lt; -offset) {</span>
+<span class="fc" id="L51">      element.getPosition().setY(Constants.LEVELY + offset);</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">    } else if (element.posY() &gt; Constants.LEVELY + offset) {</span>
+<span class="fc" id="L53">      element.getPosition().setY(-offset);</span>
+    }
+<span class="fc" id="L55">  }</span>
+
+  /**
+   * Warp a Level Element through the horizontal boundaries of the level.
+   * 
+   * @param element
+   *          The Level Element to be warped.
+   */
+  public void warpHorizontally(LevelElement element) {
+<span class="fc" id="L64">    double offset = -element.width() / 2;</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">    if (element.posX() &lt; -offset) {</span>
+<span class="fc" id="L66">      element.getPosition().setX(Constants.LEVELX + offset);</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">    } else if (element.posX() &gt; Constants.LEVELX + offset) {</span>
+<span class="fc" id="L68">      element.getPosition().setX(-offset);</span>
+    }
+<span class="fc" id="L70">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

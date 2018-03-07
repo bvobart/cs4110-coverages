@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>PlayerActionsLevelModifierTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.level.modifier</a> &gt; <span class="el_source">PlayerActionsLevelModifierTest.java</span></div><h1>PlayerActionsLevelModifierTest.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.level.modifier;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import nl.tudelft.scrumbledore.Constants;
+import nl.tudelft.scrumbledore.level.Level;
+import nl.tudelft.scrumbledore.level.Vector;
+import nl.tudelft.scrumbledore.level.element.LevelElementAction;
+import nl.tudelft.scrumbledore.level.element.Player;
+import nl.tudelft.scrumbledore.level.powerup.ChiliChicken;
+import nl.tudelft.scrumbledore.level.powerup.TurtleTaco;
+
+/**
+ * Test Suite for the Player Actions Level Modifier class.
+ * 
+ * @author Jesse Tilro
+ *
+ */
+@SuppressWarnings(&quot;PMD.TooManyMethods&quot;)
+<span class="fc" id="L25">public class PlayerActionsLevelModifierTest {</span>
+
+  private Player player;
+  private Level level;
+  private PlayerActionsLevelModifier modifier;
+
+  /**
+   * Setup a test object, Player Actions Level Modifier, and dependencies: a Player and a Level
+   * instance.
+   */
+  @Before
+  public void setUp() {
+<span class="fc" id="L37">    player = new Player(new Vector(0, 0), new Vector(0, 0));</span>
+<span class="fc" id="L38">    level = new Level();</span>
+<span class="fc" id="L39">    level.addElement(player);</span>
+<span class="fc" id="L40">    modifier = new PlayerActionsLevelModifier();</span>
+<span class="fc" id="L41">  }</span>
+
+  /**
+   * When a Level is modified and its Player has the action to move left, then the player's speed
+   * vector x entry should be set negative.
+   */
+  @Test
+  public void testModifyMoveLeft() {
+<span class="fc" id="L49">    player.addAction(LevelElementAction.MoveLeft);</span>
+<span class="fc" id="L50">    modifier.modify(level, .5);</span>
+<span class="fc" id="L51">    double expectedOut = -Constants.PLAYER_SPEED;</span>
+<span class="fc" id="L52">    assertEquals(expectedOut, player.getSpeed().getX(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L53">  }</span>
+
+  /**
+   * When a Level is modified and its Player has the action to move right, then the player's speed
+   * vector x entry should be set positive.
+   */
+  @Test
+  public void testModifyMoveRight() {
+<span class="fc" id="L61">    player.addAction(LevelElementAction.MoveRight);</span>
+<span class="fc" id="L62">    modifier.modify(level, .5);</span>
+<span class="fc" id="L63">    double expectedOut = Constants.PLAYER_SPEED;</span>
+<span class="fc" id="L64">    assertEquals(expectedOut, player.getSpeed().getX(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L65">  }</span>
+
+  /**
+   * When a Level is modified, the Player is a powerup and its Player has the action to move left,
+   * then the player's speed vector x entry should be set negative.
+   */
+  @Test
+  public void testModifyMoveLeftChiliChicken() {
+<span class="fc" id="L73">    player.addAction(LevelElementAction.MoveLeft);</span>
+<span class="fc" id="L74">    level.getPlayers().set(0, new ChiliChicken(player));</span>
+<span class="fc" id="L75">    modifier.modify(level, .5);</span>
+<span class="fc" id="L76">    double expectedOut = -Constants.PLAYER_SPEED * Constants.PLAYER_CHILI_MULTIPLIER;</span>
+<span class="fc" id="L77">    assertEquals(expectedOut, player.getSpeed().getX(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L78">  }</span>
+
+  /**
+   * When a Level is modified, the Player is a powerup and its Player has the action to move right,
+   * then the player's speed vector x entry should be set positive.
+   */
+  @Test
+  public void testModifyMoveRightChiliChicken() {
+<span class="fc" id="L86">    player.addAction(LevelElementAction.MoveRight);</span>
+<span class="fc" id="L87">    level.getPlayers().set(0, new ChiliChicken(player));</span>
+<span class="fc" id="L88">    modifier.modify(level, .5);</span>
+<span class="fc" id="L89">    double expectedOut = Constants.PLAYER_SPEED * Constants.PLAYER_CHILI_MULTIPLIER;</span>
+<span class="fc" id="L90">    assertEquals(expectedOut, player.getSpeed().getX(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L91">  }</span>
+
+  /**
+   * When a Level is modified and its Player has the action to stop moving, then the player's speed
+   * vector x entry should be set to zero.
+   */
+  @Test
+  public void testModifyMoveStop() {
+<span class="fc" id="L99">    player.getSpeed().setX(42);</span>
+<span class="fc" id="L100">    player.getSpeed().setY(1);</span>
+<span class="fc" id="L101">    player.addAction(LevelElementAction.MoveStop);</span>
+<span class="fc" id="L102">    modifier.modify(level, .5);</span>
+<span class="fc" id="L103">    double expectedOut = 0;</span>
+<span class="fc" id="L104">    assertEquals(expectedOut, player.getSpeed().getX(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L105">  }</span>
+
+  /**
+   * When a Level is modified and its Player has the action to jump, then the player's speed vector
+   * y entry should be set negative.
+   */
+  @Test
+  public void testModifyJump() {
+<span class="fc" id="L113">    player.addAction(LevelElementAction.Jump);</span>
+<span class="fc" id="L114">    modifier.modify(level, .5);</span>
+<span class="fc" id="L115">    double expectedOut = -Constants.PLAYER_JUMP;</span>
+<span class="fc" id="L116">    assertEquals(expectedOut, player.getSpeed().getY(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L117">  }</span>
+
+  /**
+   * When a Level is modified and its Player has the action to jump and the player is already
+   * vertically moving, then the player's speed vector y entry should not be changed.
+   */
+  @Test
+  public void testModifyJumpNotPossible() {
+<span class="fc" id="L125">    player.getSpeed().setY(1);</span>
+<span class="fc" id="L126">    player.addAction(LevelElementAction.Jump);</span>
+<span class="fc" id="L127">    modifier.modify(level, .5);</span>
+<span class="fc" id="L128">    double expectedOut = 1;</span>
+<span class="fc" id="L129">    assertEquals(expectedOut, player.getSpeed().getY(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L130">  }</span>
+
+  /**
+   * When a Level is modified, after processing all actions in the player's action queue, the queue
+   * should be cleared.
+   */
+  @Test
+  public void testModifyClear() {
+<span class="fc" id="L138">    player.addAction(LevelElementAction.Shoot);</span>
+<span class="fc" id="L139">    player.addAction(LevelElementAction.MoveStop);</span>
+<span class="fc" id="L140">    modifier.modify(level, .5);</span>
+<span class="fc" id="L141">    assertFalse(player.hasAction(LevelElementAction.MoveStop));</span>
+<span class="fc" id="L142">    assertFalse(player.hasAction(LevelElementAction.Shoot));</span>
+<span class="fc" id="L143">  }</span>
+
+  /**
+   * When a Level is modified and its Player has the action to stop shooting, then the shooting
+   * action should be removed and the player should no longer be firing.
+   */
+  @Test
+  public void testModifyStopShooting() {
+<span class="fc" id="L151">    player.setFiring(true);</span>
+<span class="fc" id="L152">    player.addAction(LevelElementAction.ShootStop);</span>
+<span class="fc" id="L153">    modifier.modify(level, .5);</span>
+<span class="fc" id="L154">    assertFalse(player.isFiring());</span>
+<span class="fc" id="L155">    assertFalse(player.hasAction(LevelElementAction.ShootStop));</span>
+<span class="fc" id="L156">  }</span>
+
+  /**
+   * When a player is not alive, after the modify the actions list should be cleared.
+   */
+  @Test
+  public void testModifyNotAlive() {
+<span class="fc" id="L163">    player.setAlive(false);</span>
+<span class="fc" id="L164">    player.addAction(LevelElementAction.Jump);</span>
+<span class="fc" id="L165">    modifier.modify(level, .5);</span>
+<span class="fc" id="L166">    assertTrue(player.getActions().isEmpty());</span>
+<span class="fc" id="L167">  }</span>
+
+  /**
+   * When a Level is modified and the player is a powerup, then the lifetime of said powerup should
+   * decrease.
+   */
+  @Test
+  public void testPowerUpCountDown() {
+<span class="fc" id="L175">    level.getPlayers().set(0, new ChiliChicken(player));</span>
+<span class="fc" id="L176">    assertEquals(player.getLifetime(), 90, Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L177">    modifier.modify(level, 0.5);</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">    assertTrue(player.getLifetime() &lt; 90);</span>
+<span class="fc" id="L179">  }</span>
+
+  /**
+   * When a Level is modified and the powerup countdown is smaller or equal to zero, the
+   * PlayerElement should be a player again.
+   */
+  @Test
+  public void testChiliChickenCountDownEnd() {
+<span class="fc" id="L187">    level.getPlayers().set(0, new ChiliChicken(player));</span>
+<span class="fc" id="L188">    modifier.modify(level, 250);</span>
+<span class="fc" id="L189">    modifier.modify(level, 0.5);</span>
+<span class="fc" id="L190">    assertTrue(level.getPlayers().get(0) instanceof Player);</span>
+<span class="fc" id="L191">  }</span>
+
+  /**
+   * When a Level is modified and the powerup countdown is smaller or equal to zero, the
+   * PlayerElement should be a player again.
+   */
+  @Test
+  public void testTurtleTacoCountDownEnd() {
+<span class="fc" id="L199">    level.getPlayers().set(0, new TurtleTaco(player));</span>
+<span class="fc" id="L200">    modifier.modify(level, 250);</span>
+<span class="fc" id="L201">    modifier.modify(level, 0.5);</span>
+<span class="fc" id="L202">    assertTrue(level.getPlayers().get(0) instanceof Player);</span>
+<span class="fc" id="L203">  }</span>
+
+  /**
+   * When a Level is modified and the Player has a shoot action, a bubble should be spawned.
+   */
+  @Test
+  public void testShoot() {
+<span class="fc" id="L210">    player.addAction(LevelElementAction.MoveLeft);</span>
+<span class="fc" id="L211">    modifier.modify(level, 0.5);</span>
+<span class="fc" id="L212">    player.addAction(LevelElementAction.Shoot);</span>
+<span class="fc" id="L213">    modifier.modify(level, 0.5);</span>
+<span class="fc" id="L214">    assertEquals(level.getBubbles().size(), 1);</span>
+<span class="fc" id="L215">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

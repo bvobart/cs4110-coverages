@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>KeybindingContainerTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.keybinding</a> &gt; <span class="el_source">KeybindingContainerTest.java</span></div><h1>KeybindingContainerTest.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.keybinding;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
+import org.junit.After;
+import org.junit.Test;
+
+import javafx.scene.input.KeyCode;
+import nl.tudelft.scrumbledore.Constants;
+import nl.tudelft.scrumbledore.level.element.LevelElementAction;
+
+/**
+ * Test suite for the KeybindingContainer class.
+ * 
+ * @author Jeroen Meijer
+ */
+<span class="fc" id="L18">public class KeybindingContainerTest {</span>
+
+<span class="fc" id="L20">  private KeybindingContainer keybindingContainer = KeybindingContainer.getInstance();</span>
+
+  /**
+   * Resets the keybindingcontainer after each test.
+   */
+  @After
+  public void reset() {
+<span class="fc" id="L27">    keybindingContainer.reset();</span>
+<span class="fc" id="L28">  }</span>
+
+  /**
+   * Tests if the getInstance method returns a KeybindingContainer.
+   */
+  @Test
+  public void testGetInstance() {
+<span class="fc" id="L35">    assertEquals(KeybindingContainer.class, KeybindingContainer.getInstance().getClass());</span>
+<span class="fc" id="L36">  }</span>
+
+  /**
+   * Tests the getter method.
+   */
+  @Test
+  public void testGetKeybinding() {
+<span class="fc" id="L43">    Keybinding binding = new Keybinding(0);</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">    for (KeyCode key : Constants.KEY_MAPPING.get(0).keySet()) {</span>
+<span class="fc" id="L45">      assertEquals(binding.getAction(key), keybindingContainer.getKeybinding(0).getAction(key));</span>
+<span class="fc" id="L46">    }</span>
+<span class="fc" id="L47">  }</span>
+
+  /**
+   * Tests if the updateKeybinding method updates the keybinding properly.
+   */
+  @Test
+  public void testUpdateKeybinding() {
+<span class="fc" id="L54">    assertEquals(KeyCode.UP, keybindingContainer.getKeybinding(0).getKey(LevelElementAction.Jump));</span>
+
+<span class="fc" id="L56">    keybindingContainer.updateKeyBinding(0, LevelElementAction.Jump, KeyCode.LEFT);</span>
+
+<span class="fc" id="L58">    assertEquals(KeyCode.LEFT,</span>
+<span class="fc" id="L59">        keybindingContainer.getKeybinding(0).getKey(LevelElementAction.Jump));</span>
+
+<span class="fc" id="L61">    assertFalse(keybindingContainer.getKeybinding(0).isAssigned(KeyCode.UP));</span>
+
+<span class="fc" id="L63">    assertEquals(KeyCode.UNDEFINED,</span>
+<span class="fc" id="L64">        keybindingContainer.getKeybinding(0).getKey(LevelElementAction.MoveLeft));</span>
+<span class="fc" id="L65">  }</span>
+  
+  /**
+   * Tests whether the reset functions resets.
+   */
+  @Test
+  public void testReset() {
+<span class="fc" id="L72">    assertEquals(KeyCode.UP, keybindingContainer.getKeybinding(0).getKey(LevelElementAction.Jump));</span>
+
+<span class="fc" id="L74">    keybindingContainer.updateKeyBinding(0, LevelElementAction.Jump, KeyCode.LEFT);</span>
+
+<span class="fc" id="L76">    assertEquals(KeyCode.LEFT,</span>
+<span class="fc" id="L77">        keybindingContainer.getKeybinding(0).getKey(LevelElementAction.Jump));</span>
+
+<span class="fc" id="L79">    assertFalse(keybindingContainer.getKeybinding(0).isAssigned(KeyCode.UP));</span>
+
+<span class="fc" id="L81">    assertEquals(KeyCode.UNDEFINED,</span>
+<span class="fc" id="L82">        keybindingContainer.getKeybinding(0).getKey(LevelElementAction.MoveLeft));</span>
+
+<span class="fc" id="L84">    keybindingContainer.reset();</span>
+
+<span class="fc" id="L86">    assertEquals(KeyCode.UP, keybindingContainer.getKeybinding(0).getKey(LevelElementAction.Jump));</span>
+<span class="fc" id="L87">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

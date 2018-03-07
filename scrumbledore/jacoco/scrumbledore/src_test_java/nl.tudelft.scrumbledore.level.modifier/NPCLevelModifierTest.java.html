@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>NPCLevelModifierTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.level.modifier</a> &gt; <span class="el_source">NPCLevelModifierTest.java</span></div><h1>NPCLevelModifierTest.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.level.modifier;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import nl.tudelft.scrumbledore.Constants;
+import nl.tudelft.scrumbledore.level.Level;
+import nl.tudelft.scrumbledore.level.Vector;
+import nl.tudelft.scrumbledore.level.element.LevelElementAction;
+import nl.tudelft.scrumbledore.level.element.NPC;
+
+/**
+ * Test Suite for NPC Level Modifier class.
+
+ * @author Niels Warnars
+ */
+@SuppressWarnings(&quot;deprecation&quot;)
+<span class="fc" id="L21">public class NPCLevelModifierTest {</span>
+
+  private NPC npc;
+  private Level level;
+  private NPCLevelModifier modifier;
+  
+  /**
+   * Set-up the NPC Level Modifier, NPC and Level objects.
+   */
+  @Before
+  public void setUp() {
+<span class="fc" id="L32">    modifier = new NPCLevelModifier();</span>
+<span class="fc" id="L33">    npc = new NPC(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L34">    level = new Level();</span>
+    
+<span class="fc" id="L36">    level.addElement(npc);</span>
+<span class="fc" id="L37">  }</span>
+  
+  /**
+   * When a modify is performed on an NPC with the MoveLeft its speed should be set to
+   * -NPC_SPEED and the MoveLeft action should be removed.
+   */
+  @Test
+  public void testModifyMoveLeft() {
+<span class="fc" id="L45">    npc.clearActions();</span>
+<span class="fc" id="L46">    npc.addAction(LevelElementAction.MoveLeft);</span>
+    
+<span class="fc" id="L48">    modifier.modify(level, 1.0d);</span>
+    
+<span class="fc" id="L50">    assertEquals(-Constants.NPC_SPEED, npc.getSpeed().getX(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L51">    assertFalse(npc.hasAction(LevelElementAction.MoveLeft));</span>
+<span class="fc" id="L52">  }</span>
+  
+  /**
+   * When a modify is performed on an NPC with the MoveRight its speed should be set to
+   * +NPC_SPEED and the MoveRight action should be removed.
+   */
+  @Test
+  public void testModifyMoveRight() {
+<span class="fc" id="L60">    npc.clearActions();</span>
+<span class="fc" id="L61">    npc.addAction(LevelElementAction.MoveRight);</span>
+    
+<span class="fc" id="L63">    modifier.modify(level, 1.0d);</span>
+    
+<span class="fc" id="L65">    assertEquals(Constants.NPC_SPEED, npc.getSpeed().getX(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L66">    assertFalse(npc.hasAction(LevelElementAction.MoveRight));</span>
+<span class="fc" id="L67">  }</span>
+  
+  /**
+   * When a modify is performed on an NPC with the Jump its vertical speed should be set to
+   * PLAYER_JUMP / -1.1 and the Jump action should be removed.
+   */
+  @Test
+  public void testModifyJump() {
+<span class="fc" id="L75">    npc.clearActions();</span>
+<span class="fc" id="L76">    npc.addAction(LevelElementAction.Jump);</span>
+    
+<span class="fc" id="L78">    modifier.modify(level, 1.0d);</span>
+    
+<span class="fc" id="L80">    assertEquals(Constants.PLAYER_JUMP / -1.1, npc.getSpeed().getY(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L81">    assertFalse(npc.hasAction(LevelElementAction.Jump));</span>
+<span class="fc" id="L82">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

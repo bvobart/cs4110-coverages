@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Game.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.game</a> &gt; <span class="el_source">Game.java</span></div><h1>Game.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.game;
+
+import java.util.ArrayList;
+import nl.tudelft.scrumbledore.level.Level;
+import nl.tudelft.scrumbledore.level.modifier.LevelModifier;
+
+/**
+ * The class responsible for aggregating all model classes of the Game, and therefore modeling a
+ * Game session.
+ * 
+ * @author Jesse Tilro
+ * @author David Alderliesten
+ */
+<span class="pc bpc" id="L14" title="1 of 2 branches missed.">public abstract class Game {</span>
+  private ArrayList&lt;Level&gt; levels;
+  private ArrayList&lt;LevelModifier&gt; modifiers;
+  private Level currentLevel;
+  private ScoreCounter score;
+  private double steps;
+
+  /**
+   * Constructs a new Game with levels parsed from file system.
+   */
+<span class="fc" id="L24">  public Game() {</span>
+<span class="fc" id="L25">    construct(makeLevels());</span>
+<span class="fc" id="L26">  }</span>
+
+  /**
+   * Constructs a new Game with given levels, used for testing purposes.
+   * 
+   * @param levels
+   *          The levels this Game needs to consist of.
+   */
+<span class="fc" id="L34">  public Game(ArrayList&lt;Level&gt; levels) {</span>
+<span class="fc" id="L35">    construct(levels);</span>
+<span class="fc" id="L36">  }</span>
+
+  /**
+   * Shared part of the constructors.
+   * 
+   * @param levels
+   *          The levels for the game.
+   */
+  private void construct(ArrayList&lt;Level&gt; levels) {
+<span class="pc bpc" id="L45" title="3 of 4 branches missed.">    assert levels.size() &gt; 0;</span>
+
+<span class="fc" id="L47">    this.levels = levels;</span>
+<span class="fc" id="L48">    this.currentLevel = this.levels.get(0);</span>
+
+<span class="fc" id="L50">    this.score = new ScoreCounter();</span>
+<span class="fc" id="L51">    this.steps = 0;</span>
+
+<span class="fc" id="L53">    this.modifiers = new ArrayList&lt;LevelModifier&gt;();</span>
+<span class="fc" id="L54">  }</span>
+
+  /**
+   * Runs invariant assertions required for the functioning of the game.
+   */
+  public void invariant() {
+<span class="pc bpc" id="L60" title="3 of 4 branches missed.">    assert levels.contains(currentLevel);</span>
+<span class="fc" id="L61">  }</span>
+
+  /**
+   * Get the current level.
+   * 
+   * @return The current Level.
+   */
+  public Level getCurrentLevel() {
+<span class="fc" id="L69">    return currentLevel;</span>
+  }
+
+  /**
+   * Returns the current level number.
+   * 
+   * @return The current level number as a string.
+   */
+  public int getCurrentLevelNumber() {
+<span class="fc" id="L78">    invariant();</span>
+<span class="fc" id="L79">    int index = 0;</span>
+<span class="pc bpc" id="L80" title="3 of 4 branches missed.">    while (!currentLevel.equals(levels.get(index)) &amp;&amp; index &lt; levels.size()) {</span>
+<span class="nc" id="L81">      ++index;</span>
+    }
+<span class="fc" id="L83">    return index + 1;</span>
+  }
+
+  /**
+   * Returns the list of all levels in the game.
+   * 
+   * @return All levels in the game.
+   */
+  public ArrayList&lt;Level&gt; getLevels() {
+<span class="fc" id="L92">    return levels;</span>
+  }
+
+  /**
+   * Set the current level to the given level.
+   * 
+   * @param level
+   *          The level.
+   */
+  public void setCurrentLevel(Level level) {
+<span class="pc bpc" id="L102" title="3 of 4 branches missed.">    assert levels.contains(level);</span>
+<span class="fc" id="L103">    this.currentLevel = level;</span>
+<span class="fc" id="L104">  }</span>
+
+  /**
+   * Return the number of remaining levels to be played after the current level is won.
+   * 
+   * @return An integer number of remaining levels.
+   */
+  public int remainingLevels() {
+<span class="fc" id="L112">    invariant();</span>
+<span class="fc" id="L113">    int remaining = 0;</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">    while (!currentLevel.equals(levels.get(levels.size() - 1 - remaining))) {</span>
+<span class="fc" id="L115">      ++remaining;</span>
+    }
+<span class="fc" id="L117">    return remaining;</span>
+  }
+
+  /**
+   * Advances the game to the next level.
+   */
+  public void goToNextLevel() {
+<span class="fc" id="L124">    invariant();</span>
+<span class="pc bpc" id="L125" title="3 of 4 branches missed.">    assert remainingLevels() &gt; 0;</span>
+
+<span class="fc" id="L127">    int newIndex = getCurrentLevelNumber();</span>
+
+<span class="fc" id="L129">    setCurrentLevel(levels.get(newIndex));</span>
+
+<span class="fc" id="L131">    invariant();</span>
+<span class="fc" id="L132">  }</span>
+
+  /**
+   * Register a new LevelModifier that should be triggered on this Game's steps.
+   * 
+   * @param levelModifier
+   *          The LevelModifier to be registered.
+   */
+  public void registerLevelModifier(LevelModifier levelModifier) {
+<span class="fc" id="L141">    modifiers.add(levelModifier);</span>
+<span class="fc" id="L142">  }</span>
+
+  /**
+   * Performs a step, the next cycle in the game.
+   * 
+   * @param delta
+   *          The relative period of time passed with respect to the expected period of time since
+   *          the last step.
+   */
+  public void step(double delta) {
+<span class="fc" id="L152">    addSteps(delta);</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">    for (LevelModifier modifier : modifiers) {</span>
+<span class="fc" id="L154">      modifier.modify(currentLevel, delta);</span>
+    }
+<span class="fc" id="L156">  }</span>
+
+  /**
+   * Returns the current value of the score.
+   * 
+   * @return Value of the current score.
+   */
+  public String getScore() {
+<span class="fc" id="L164">    return score.getScoreString();</span>
+  }
+
+  /**
+   * Get the Game's ScoreCounter.
+   * 
+   * @return The Game's ScoreCounter.
+   */
+  public ScoreCounter getScoreCounter() {
+<span class="fc" id="L173">    return score;</span>
+  }
+
+  /**
+   * Returns the current value of the high score.
+   * 
+   * @return Value of the high score.
+   */
+  public String getHighScore() {
+<span class="fc" id="L182">    return Integer.toString(score.getHighScore());</span>
+  }
+
+  /**
+   * Increment this Game's step counter with a given number of (partial) steps.
+   * 
+   * @param steps
+   *          The number of (partial) steps to be added.
+   */
+  public void addSteps(double steps) {
+<span class="fc" id="L192">    this.steps += steps;</span>
+<span class="fc" id="L193">  }</span>
+
+  /**
+   * Get the exact number of steps that have been performed in this game.
+   * 
+   * @return The number of steps performed.
+   */
+  public double getSteps() {
+<span class="fc" id="L201">    return steps;</span>
+  }
+
+  /**
+   * Get the number of entire steps that have been performed in this game.
+   * 
+   * @return The number of entire steps performed.
+   */
+  public int getFullSteps() {
+<span class="fc" id="L210">    return (int) Math.floor(steps);</span>
+  }
+
+  /**
+   * Restart the Game.
+   */
+  public void restart() {
+<span class="fc" id="L217">    levels = makeLevels();</span>
+<span class="fc" id="L218">    score.resetScore();</span>
+<span class="fc" id="L219">    currentLevel = levels.get(0);</span>
+<span class="fc" id="L220">  }</span>
+
+  /**
+   * Returns a list of LevelModifiers.
+   * 
+   * @return A list of levelModifiers
+   */
+  public ArrayList&lt;LevelModifier&gt; getModifiers() {
+<span class="fc" id="L228">    return modifiers;</span>
+  }
+
+  /**
+   * Make the Levels for this Game.
+   * 
+   * @return A list of Levels.
+   */
+  protected abstract ArrayList&lt;Level&gt; makeLevels();
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

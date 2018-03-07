@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>KineticsLevelModifierTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.level.modifier</a> &gt; <span class="el_source">KineticsLevelModifierTest.java</span></div><h1>KineticsLevelModifierTest.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.level.modifier;
+
+import static org.junit.Assert.assertEquals;
+
+import nl.tudelft.scrumbledore.level.Level;
+import nl.tudelft.scrumbledore.level.Vector;
+import nl.tudelft.scrumbledore.level.element.Bubble;
+import nl.tudelft.scrumbledore.level.element.DynamicElement;
+import nl.tudelft.scrumbledore.level.element.Fruit;
+import nl.tudelft.scrumbledore.level.element.NPC;
+import nl.tudelft.scrumbledore.level.element.Player;
+
+//import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+
+/**
+ * Testing the Kinetics class.
+ * 
+ * @author Floris Doolaard
+ *
+ */
+@SuppressWarnings(&quot;PMD.TooManyMethods&quot;)
+<span class="fc" id="L24">public class KineticsLevelModifierTest {</span>
+
+  private KineticsLevelModifier kinetics;
+
+  /**
+   * Setting up test properties.
+   * 
+   * @throws Exception
+   */
+  @Before
+  public void setUpBeforeClass() {
+<span class="fc" id="L35">    kinetics = new KineticsLevelModifier();</span>
+<span class="fc" id="L36">  }</span>
+
+  /**
+   * When the an element has a speed larger than its friction vector, the friction vector simply
+   * needs to be absolutely subtracted from the speed vector. (MCDC)
+   */
+  @Test
+  public void testApplyFrictionSpeedLargerThanFriction() {
+<span class="fc" id="L44">    DynamicElement el = new Bubble(new Vector(1, 2), new Vector(0, 0));</span>
+    // Set speed
+<span class="fc" id="L46">    el.getSpeed().sum(new Vector(4, -4));</span>
+    // Set friction
+<span class="fc" id="L48">    el.getFriction().setX(8);</span>
+<span class="fc" id="L49">    el.getFriction().setY(8);</span>
+    // The expected resulting speed vector given the delta
+<span class="fc" id="L51">    Vector expectedOut = new Vector(2, -2);</span>
+
+<span class="fc" id="L53">    kinetics.applyFriction(el, .25);</span>
+
+<span class="fc" id="L55">    assertEquals(expectedOut, el.getSpeed());</span>
+<span class="fc" id="L56">  }</span>
+
+  /**
+   * When an element has a speed x entry being smaller than the friction x entry to be subtracted,
+   * its speed x entry should be set to 0. (MCDC)
+   */
+  @Test
+  public void testApplyFrictionSpeedXSmaller() {
+<span class="fc" id="L64">    DynamicElement el = new Bubble(new Vector(1, 2), new Vector(0, 0));</span>
+    // Set speed
+<span class="fc" id="L66">    el.getSpeed().sum(new Vector(4, -4));</span>
+    // Set friction
+<span class="fc" id="L68">    el.getFriction().setX(8);</span>
+<span class="fc" id="L69">    el.getFriction().setY(4);</span>
+    // The expected resulting speed vector given the delta
+<span class="fc" id="L71">    Vector expectedOut = new Vector(0, -1);</span>
+
+<span class="fc" id="L73">    kinetics.applyFriction(el, .75);</span>
+
+<span class="fc" id="L75">    assertEquals(expectedOut, el.getSpeed());</span>
+<span class="fc" id="L76">  }</span>
+
+  /**
+   * When an element has a speed y entry being smaller than the friction y entry to be subtracted,
+   * its speed y entry should be set to 0. (MCDC)
+   */
+  @Test
+  public void testApplyFrictionSpeedYSmaller() {
+<span class="fc" id="L84">    DynamicElement el = new Bubble(new Vector(1, 2), new Vector(0, 0));</span>
+    // Set speed
+<span class="fc" id="L86">    el.getSpeed().sum(new Vector(4, -4));</span>
+    // Set friction
+<span class="fc" id="L88">    el.getFriction().setX(4);</span>
+<span class="fc" id="L89">    el.getFriction().setY(8);</span>
+    // The expected resulting speed vector given the delta
+<span class="fc" id="L91">    Vector expectedOut = new Vector(1, 0);</span>
+
+<span class="fc" id="L93">    kinetics.applyFriction(el, .75);</span>
+
+<span class="fc" id="L95">    assertEquals(expectedOut, el.getSpeed());</span>
+<span class="fc" id="L96">  }</span>
+
+  /**
+   * The position of an element should be updated correctly when adding it's speed vector and taking
+   * the delta into account.
+   */
+  @Test
+  public void testMove() {
+<span class="fc" id="L104">    DynamicElement el = new Bubble(new Vector(1, 2), new Vector(0, 0));</span>
+<span class="fc" id="L105">    el.getSpeed().sum(new Vector(2, 2));</span>
+<span class="fc" id="L106">    kinetics.move(el, 0.5);</span>
+    // For branch coverage:
+<span class="fc" id="L108">    kinetics.move(null, 1);</span>
+<span class="fc" id="L109">    assertEquals(new Vector(2, 3), el.getPosition());</span>
+<span class="fc" id="L110">  }</span>
+
+  /**
+   * The position of an element should be updated correctly when removing it's speed vector and
+   * taking the delta into account.
+   */
+  @Test
+  public void testRevertMove() {
+<span class="fc" id="L118">    DynamicElement el = new Bubble(new Vector(1, 2), new Vector(0, 0));</span>
+<span class="fc" id="L119">    el.getSpeed().sum(new Vector(2, 2));</span>
+<span class="fc" id="L120">    kinetics.revertMove(el, 0.5);</span>
+    // For branch coverage:
+<span class="fc" id="L122">    kinetics.revertMove(null, 1);</span>
+<span class="fc" id="L123">    assertEquals(new Vector(0, 1), el.getPosition());</span>
+<span class="fc" id="L124">  }</span>
+
+  /**
+   * When a Level is modified, the position of the Player should be updated correctly.
+   */
+  @Test
+  public void testModifyPlayer() {
+<span class="fc" id="L131">    Player player = new Player(new Vector(0, 0), new Vector(0, 0));</span>
+<span class="fc" id="L132">    player.getSpeed().sum(new Vector(4, 4));</span>
+<span class="fc" id="L133">    Level level = new Level();</span>
+<span class="fc" id="L134">    level.addElement(player);</span>
+<span class="fc" id="L135">    Vector expectedPosition = new Vector(2, 2);</span>
+
+<span class="fc" id="L137">    kinetics.modify(level, .5);</span>
+
+<span class="fc" id="L139">    assertEquals(expectedPosition, player.getPosition());</span>
+<span class="fc" id="L140">  }</span>
+
+  /**
+   * When a Level is modified, the position and speed of the Bubbles should be updated correctly.
+   */
+  @Test
+  public void testModifyBubbles() {
+    // Dummy player
+<span class="fc" id="L148">    Player player = new Player(new Vector(0, 0), new Vector(0, 0));</span>
+    // Fixtures of interest
+<span class="fc" id="L150">    Bubble bubble = new Bubble(new Vector(0, 0), new Vector(0, 0));</span>
+<span class="fc" id="L151">    bubble.getSpeed().sum(new Vector(4, 4));</span>
+<span class="fc" id="L152">    bubble.getFriction().setX(4);</span>
+<span class="fc" id="L153">    Level level = new Level();</span>
+<span class="fc" id="L154">    level.addElement(bubble);</span>
+<span class="fc" id="L155">    level.addElement(player);</span>
+<span class="fc" id="L156">    Vector expectedPosition = new Vector(2, 2);</span>
+<span class="fc" id="L157">    Vector expectedSpeed = new Vector(2, 4);</span>
+
+<span class="fc" id="L159">    kinetics.modify(level, .5);</span>
+
+<span class="fc" id="L161">    assertEquals(expectedPosition, bubble.getPosition());</span>
+<span class="fc" id="L162">    assertEquals(expectedSpeed, bubble.getSpeed());</span>
+<span class="fc" id="L163">  }</span>
+
+  /**
+   * When a Level is modified, the position of the NPC's should be updated correctly.
+   */
+  @Test
+  public void testModifyNPC() {
+    // Dummy player
+<span class="fc" id="L171">    Player player = new Player(new Vector(0, 0), new Vector(0, 0));</span>
+    // Fixtures of interest
+<span class="fc" id="L173">    NPC npc = new NPC(new Vector(0, 0), new Vector(0, 0));</span>
+<span class="fc" id="L174">    npc.getSpeed().sum(new Vector(4, 4));</span>
+<span class="fc" id="L175">    Level level = new Level();</span>
+<span class="fc" id="L176">    level.addElement(npc);</span>
+<span class="fc" id="L177">    level.addElement(player);</span>
+<span class="fc" id="L178">    Vector expectedPosition = new Vector(2, 2);</span>
+
+<span class="fc" id="L180">    kinetics.modify(level, .5);</span>
+
+<span class="fc" id="L182">    assertEquals(expectedPosition, npc.getPosition());</span>
+<span class="fc" id="L183">  }</span>
+
+  /**
+   * When a Level is modified, the position of the Fruits should be updated correctly.
+   */
+  @Test
+  public void testModifyFruit() {
+    // Dummy player
+<span class="fc" id="L191">    Player player = new Player(new Vector(0, 0), new Vector(0, 0));</span>
+    // Fixtures of interest
+<span class="fc" id="L193">    Fruit fruit = new Fruit(new Vector(0, 0), new Vector(0, 0));</span>
+<span class="fc" id="L194">    fruit.getSpeed().sum(new Vector(4, 4));</span>
+<span class="fc" id="L195">    Level level = new Level();</span>
+<span class="fc" id="L196">    level.addElement(fruit);</span>
+<span class="fc" id="L197">    level.addElement(player);</span>
+<span class="fc" id="L198">    Vector expectedPosition = new Vector(2, 2);</span>
+
+<span class="fc" id="L200">    kinetics.modify(level, .5);</span>
+
+<span class="fc" id="L202">    assertEquals(expectedPosition, fruit.getPosition());</span>
+<span class="fc" id="L203">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

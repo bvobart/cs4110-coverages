@@ -1,0 +1,1631 @@
+<html>
+<head>
+<style type='text/css'>
+html, body, div, span, p, blockquote, pre {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+
+body{
+	line-height: 1;
+	color: black;
+	background: white;
+	margin-left: 20px;
+}
+
+.src { 
+	border: 1px solid #dddddd;
+	padding-top: 10px;
+	padding-right: 5px;
+	padding-left: 5px;
+	font-family: Consolas, Courier, monospace;
+}
+
+
+.covered {background-color: #ddffdd}
+.uncovered {background-color: #ffdddd}
+.killed {background-color: #aaffaa}
+.survived {background-color: #ffaaaa}
+.uncertain {background-color: #dde7ef}
+.run_error {background-color: #dde7ef}
+.na {background-color: #eeeeee}
+.timed_out {background-color: #dde7ef}
+.non_viable {background-color: #aaffaa}
+.memory_error {background-color: #dde7ef}
+.not_started {background-color: #dde7ef; color : red}
+.no_coverage {background-color: #ffaaaa}
+
+
+.pop {outline:none; }
+.pop strong {line-height:30px;}
+.pop {text-decoration:none;}
+.pop span { z-index:10;display:none; padding:14px 20px; margin-top:-30px; margin-left:28px; width:800px; line-height:16px; word-wrap:break-word; }
+.pop:hover span{ display:inline; position:absolute; color:#111; border:1px solid #DCA; background:#fffAF0;}
+
+.pop span { border-radius:4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; -moz-box-shadow: 5px 5px 8px #CCC; -webkit-box-shadow: 5px 5px 8px #CCC; box-shadow: 5px 5px 8px #CCC; }
+</style>
+
+</head>
+<body>
+
+
+<h1>KineticsLevelModifier.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_1'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package nl.tudelft.scrumbledore.level.modifier;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_2'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_3'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.ArrayList;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_4'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import nl.tudelft.scrumbledore.level.Level;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_5'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import nl.tudelft.scrumbledore.level.Vector;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_6'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import nl.tudelft.scrumbledore.level.element.DynamicElement;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_7'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import nl.tudelft.scrumbledore.level.element.LevelElement;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_8'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_9'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_10'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * The Kinetics class handles the position/speed of levelelements.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_11'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_12'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author Floris Doolaard</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_13'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author David Alderliesten</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_14'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_15'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>@SuppressWarnings(&#34;PMD.TooManyMethods&#34;)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_16'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>public class KineticsLevelModifier implements LevelModifier {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_17'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_18'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_19'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * Update all elements in a given Level.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_20'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_21'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * @param level</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_22'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   *          The level whose elements should be updated.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_23'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_24'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * @param d</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_25'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   *          The number of steps since last executing this function.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_26'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_27'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  public void modify(Level level, double d) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_28'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    ArrayList&#60;LevelElement&#62; elements = level.getDynamicElements();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_29'/>
+29
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_29'>3</a>
+<span>
+
+1. modify : changed conditional boundary &rarr; KILLED<br/>
+
+2. modify : Changed increment from 1 to -1 &rarr; KILLED<br/>
+
+3. modify : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    for (int i = 0; i &#60; elements.size(); i++) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_30'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>      DynamicElement element = (DynamicElement) elements.get(i);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_31'/>
+31
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_31'>1</a>
+<span>
+
+1. modify : removed call to nl/tudelft/scrumbledore/level/modifier/KineticsLevelModifier::move &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>      move(element, d);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_32'/>
+32
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_32'>1</a>
+<span>
+
+1. modify : removed call to nl/tudelft/scrumbledore/level/modifier/KineticsLevelModifier::applyFriction &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>      applyFriction(element, d);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_33'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_34'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_35'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_36'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_37'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * Apply friction on a given LevelElement based on its Friction Vector. If an entry in the speed</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_38'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * vector is smaller than the corresponding entry in the friction vector, it is set to zero.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_39'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * Otherwise, the friction entry is subtracted from the speed.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_40'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_41'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * @param el</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_42'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   *          A LevelElement.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_43'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_44'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * @param d</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_45'/>
+45
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_45'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   *          The number of steps passed since this method was last called.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_46'/>
+46
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_46'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_47'/>
+47
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_47'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  public void applyFriction(DynamicElement el, double d) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_48'/>
+48
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_48'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    int signX = 0;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_49'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    int signY = 0;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_50'/>
+50
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_50'>3</a>
+<span>
+
+1. applyFriction : changed conditional boundary &rarr; SURVIVED<br/>
+
+2. applyFriction : Replaced double multiplication with division &rarr; KILLED<br/>
+
+3. applyFriction : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>    if (Math.abs(el.hSpeed()) &#62; el.hFric() * d) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_51'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>      signX = (int) Math.signum(el.hSpeed());</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_52'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    } else {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_53'/>
+53
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_53'>1</a>
+<span>
+
+1. applyFriction : removed call to nl/tudelft/scrumbledore/level/element/DynamicElement::stopHorizontally &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>      el.stopHorizontally();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_54'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_55'/>
+55
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_55'>3</a>
+<span>
+
+1. applyFriction : changed conditional boundary &rarr; SURVIVED<br/>
+
+2. applyFriction : Replaced double multiplication with division &rarr; KILLED<br/>
+
+3. applyFriction : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>    if (Math.abs(el.vSpeed()) &#62; el.vFric() * d) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_56'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>      signY = (int) Math.signum(el.vSpeed());</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_57'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    } else {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_58'/>
+58
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_58'>1</a>
+<span>
+
+1. applyFriction : removed call to nl/tudelft/scrumbledore/level/element/DynamicElement::stopVertically &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>      el.stopVertically();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_59'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_60'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_61'/>
+61
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_61'>4</a>
+<span>
+
+1. applyFriction : Replaced double multiplication with division &rarr; KILLED<br/>
+
+2. applyFriction : Replaced double multiplication with division &rarr; KILLED<br/>
+
+3. applyFriction : Replaced double multiplication with division &rarr; KILLED<br/>
+
+4. applyFriction : Replaced double multiplication with division &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    Vector fricDiff = new Vector(d * signX * el.hFric(), d * signY * el.vFric());</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_62'/>
+62
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_62'>1</a>
+<span>
+
+1. applyFriction : removed call to nl/tudelft/scrumbledore/level/Vector::difference &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    el.getSpeed().difference(fricDiff);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_63'/>
+63
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_63'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_64'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_65'/>
+65
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_65'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_66'/>
+66
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_66'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * Move a LevelElement by updating its position vector.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_67'/>
+67
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_67'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_68'/>
+68
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_68'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * @param el</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_69'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   *          The element whose position has to be updated with its speed.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_70'/>
+70
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_70'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_71'/>
+71
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_71'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * @param d</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_72'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   *          The number of steps since last executing this function.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_73'/>
+73
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_73'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_74'/>
+74
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_74'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  public void move(DynamicElement el, double d) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_75'/>
+75
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_75'>1</a>
+<span>
+
+1. move : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    if (el != null) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_76'/>
+76
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_76'>1</a>
+<span>
+
+1. move : removed call to nl/tudelft/scrumbledore/level/Vector::sum &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>      el.getPosition().sum(Vector.scale(el.getSpeed(), d));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_77'/>
+77
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_77'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_78'/>
+78
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_78'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_79'/>
+79
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_79'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_80'/>
+80
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_80'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_81'/>
+81
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_81'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * Reverse update the position of the LevelElement by removing the speed vector.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_82'/>
+82
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_82'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_83'/>
+83
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_83'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * @param el</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_84'/>
+84
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_84'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   *          The element whose position has to be reverse updated with its speed.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_85'/>
+85
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_85'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_86'/>
+86
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_86'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * @param d</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_87'/>
+87
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_87'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   *          The number of steps since last executing this function.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_88'/>
+88
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_88'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_89'/>
+89
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_89'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  public void revertMove(DynamicElement el, double d) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_90'/>
+90
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_90'>1</a>
+<span>
+
+1. revertMove : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    if (el != null) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_91'/>
+91
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_91'>1</a>
+<span>
+
+1. revertMove : removed call to nl/tudelft/scrumbledore/level/Vector::difference &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>      el.getPosition().difference(Vector.scale(el.getSpeed(), d));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_92'/>
+92
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_92'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_93'/>
+93
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_93'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_94'/>
+94
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_94'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_95'/>
+95
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_95'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_29'>29</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_29'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>modify<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testModifyFruit(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest)</span></span> changed conditional boundary &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>modify<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testModifyFruit(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest)</span></span> Changed increment from 1 to -1 &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>modify<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testModifyFruit(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_31'>31</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_31'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>modify<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testModifyFruit(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest)</span></span> removed call to nl/tudelft/scrumbledore/level/modifier/KineticsLevelModifier::move &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_32'>32</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_32'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>modify<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testModifyBubbles(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest)</span></span> removed call to nl/tudelft/scrumbledore/level/modifier/KineticsLevelModifier::applyFriction &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_50'>50</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_50'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>applyFriction<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>applyFriction<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testApplyFrictionSpeedLargerThanFriction(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest)</span></span> Replaced double multiplication with division &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>applyFriction<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testApplyFrictionSpeedLargerThanFriction(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_53'>53</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_53'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>applyFriction<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testApplyFrictionSpeedXSmaller(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest)</span></span> removed call to nl/tudelft/scrumbledore/level/element/DynamicElement::stopHorizontally &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_55'>55</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_55'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>applyFriction<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>applyFriction<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testApplyFrictionSpeedLargerThanFriction(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest)</span></span> Replaced double multiplication with division &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>applyFriction<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testApplyFrictionSpeedLargerThanFriction(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_58'>58</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_58'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>applyFriction<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testApplyFrictionSpeedYSmaller(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest)</span></span> removed call to nl/tudelft/scrumbledore/level/element/DynamicElement::stopVertically &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_61'>61</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_61'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>applyFriction<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testApplyFrictionSpeedXSmaller(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest)</span></span> Replaced double multiplication with division &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>applyFriction<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testApplyFrictionSpeedLargerThanFriction(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest)</span></span> Replaced double multiplication with division &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>applyFriction<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testApplyFrictionSpeedYSmaller(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest)</span></span> Replaced double multiplication with division &rarr; KILLED</p> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>applyFriction<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testApplyFrictionSpeedLargerThanFriction(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest)</span></span> Replaced double multiplication with division &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_62'>62</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_62'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>applyFriction<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testApplyFrictionSpeedLargerThanFriction(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest)</span></span> removed call to nl/tudelft/scrumbledore/level/Vector::difference &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_75'>75</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_75'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>move<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testMove(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_76'>76</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_76'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>move<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testMove(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest)</span></span> removed call to nl/tudelft/scrumbledore/level/Vector::sum &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_90'>90</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_90'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>revertMove<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testRevertMove(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3ec9f8d_91'>91</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3ec9f8d_91'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>revertMove<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testRevertMove(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest)</span></span> removed call to nl/tudelft/scrumbledore/level/Vector::difference &rarr; KILLED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+
+<li class='mutator'>INCREMENTS_MUTATOR</li>
+
+<li class='mutator'>VOID_METHOD_CALL_MUTATOR</li>
+
+<li class='mutator'>RETURN_VALS_MUTATOR</li>
+
+<li class='mutator'>MATH_MUTATOR</li>
+
+<li class='mutator'>NEGATE_CONDITIONALS_MUTATOR</li>
+
+<li class='mutator'>INVERT_NEGS_MUTATOR</li>
+
+<li class='mutator'>CONDITIONALS_BOUNDARY_MUTATOR</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testModifyPlayer(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest) (0 ms)</li><li>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testModifyBubbles(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest) (0 ms)</li><li>nl.tudelft.scrumbledore.level.CollisionDirectionTest.testCollidingFromLeft[10](nl.tudelft.scrumbledore.level.CollisionDirectionTest) (1 ms)</li><li>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testRevertMove(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest) (0 ms)</li><li>nl.tudelft.scrumbledore.level.CollisionDirectionTest.testCollidingFromTop[9](nl.tudelft.scrumbledore.level.CollisionDirectionTest) (1 ms)</li><li>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testModifyNPC(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest) (0 ms)</li><li>nl.tudelft.scrumbledore.level.CollisionDirectionTest.testCollidingFromRight[11](nl.tudelft.scrumbledore.level.CollisionDirectionTest) (2 ms)</li><li>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testApplyFrictionSpeedXSmaller(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest) (1 ms)</li><li>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testMove(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest) (1 ms)</li><li>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testApplyFrictionSpeedYSmaller(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest) (1 ms)</li><li>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testModifyFruit(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest) (0 ms)</li><li>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testApplyFrictionSpeedLargerThanFriction(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest) (0 ms)</li><li>nl.tudelft.scrumbledore.level.CollisionDirectionTest.testCollidingFromBottom[12](nl.tudelft.scrumbledore.level.CollisionDirectionTest) (3 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 1.1.9
+
+</body>
+</html>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Logger.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore</a> &gt; <span class="el_source">Logger.java</span></div><h1>Logger.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+/**
+ * Class for the maintenance and creation of logging files, which track movement and actions in
+ * every session and store them.
+ * 
+ * @author David Alderliesten
+ * @author Jesse Tilro
+ */
+@SuppressWarnings(&quot;PMD.AvoidDuplicateLiterals&quot;)
+public final class Logger {
+  private File loggingFile;
+  private static volatile Logger instance;
+
+  /**
+   * Logger constructor, which should be used only once since this is a Singleton class.
+   */
+<span class="fc" id="L30">  private Logger() {</span>
+<span class="fc" id="L31">    createLoggingDir();</span>
+<span class="fc" id="L32">    createLoggingFile();</span>
+<span class="fc" id="L33">  }</span>
+
+  /**
+   * Creates a new Logger instance if it has not yet been instantiated.
+   * 
+   * @return The single Logger instance.
+   */
+  public static Logger getInstance() {
+<span class="fc bfc" id="L41" title="All 2 branches covered.">    if (instance == null) {</span>
+<span class="pc" id="L42">      synchronized (Logger.class) {</span>
+<span class="pc bpc" id="L43" title="1 of 2 branches missed.">        if (instance == null) {</span>
+<span class="fc" id="L44">          instance = new Logger();</span>
+        }
+      }
+    }
+<span class="fc" id="L48">    return instance;</span>
+  }
+
+  /**
+   * Create the directory in which logging files should be stored if it does not exists yet on the
+   * file system.
+   */
+  private void createLoggingDir() {
+<span class="fc" id="L56">    File appDir = new File(Constants.APPDATA_DIR);</span>
+<span class="fc" id="L57">    File loggingDir = new File(Constants.APPDATA_DIR + Constants.LOGGER_DIR);</span>
+
+<span class="fc" id="L59">    boolean result = true;</span>
+    try {
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">      if (!appDir.exists()) {</span>
+<span class="nc" id="L62">        result = appDir.mkdir();</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">        if (!result) {</span>
+<span class="nc" id="L64">          throw new IOException();</span>
+        }
+      }
+
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">      if (!loggingDir.exists()) {</span>
+<span class="nc" id="L69">        result = loggingDir.mkdir();</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        if (!result) {</span>
+<span class="nc" id="L71">          throw new IOException();</span>
+        }
+      }
+<span class="nc" id="L74">    } catch (IOException e) {</span>
+<span class="nc" id="L75">      e.printStackTrace();</span>
+    }
+<span class="fc" id="L77">  }</span>
+
+  /**
+   * Creates a new Logging File for this session where all logged lines should be written to.
+   */
+  private void createLoggingFile() {
+    try {
+<span class="fc" id="L84">      Date currentDate = new Date();</span>
+<span class="fc" id="L85">      SimpleDateFormat simpleFormat = new SimpleDateFormat(&quot;yyyy-MM.dd-hh-mm-ss&quot;);</span>
+
+<span class="fc" id="L87">      String desiredFileName = &quot;Session-&quot; + simpleFormat.format(currentDate) + &quot;.log&quot;;</span>
+<span class="fc" id="L88">      loggingFile = new File(Constants.APPDATA_DIR + Constants.LOGGER_DIR + desiredFileName);</span>
+
+<span class="fc" id="L90">      BufferedWriter buffWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(</span>
+<span class="fc" id="L91">          loggingFile), &quot;UTF-8&quot;));</span>
+<span class="fc" id="L92">      buffWriter.write(&quot;--------------------SCRUMBLEDORE LOGGING FILE&quot;);</span>
+
+<span class="fc" id="L94">      buffWriter.close();</span>
+<span class="pc" id="L95">    } catch (IOException e) {</span>
+<span class="nc" id="L96">      e.printStackTrace();</span>
+    }
+<span class="fc" id="L98">  }</span>
+
+  /**
+   * Allows the caller to log the passed string in the current session's logging file.
+   * 
+   * @param toLog
+   *          The content that the caller wishes to be logged in the logging file.
+   */
+  public void log(String toLog) {
+    try {
+<span class="fc" id="L108">      BufferedWriter buffWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(</span>
+<span class="fc" id="L109">          loggingFile, true), &quot;UTF-8&quot;));</span>
+
+<span class="fc" id="L111">      buffWriter.newLine();</span>
+<span class="fc" id="L112">      buffWriter.write(toLog);</span>
+
+<span class="fc" id="L114">      buffWriter.close();</span>
+<span class="pc" id="L115">    } catch (IOException e) {</span>
+<span class="nc" id="L116">      e.printStackTrace();</span>
+    }
+<span class="fc" id="L118">  }</span>
+
+  /**
+   * Returns the logging file.
+   * 
+   * @return The logging file
+   */
+  public File getLoggingFile() {
+<span class="fc" id="L126">    return loggingFile;</span>
+  }
+
+  /**
+   * Returns all the lines currently in the Logging file.
+   * 
+   * @return ArrayList with current logger contents.
+   */
+  public ArrayList&lt;String&gt; getLines() {
+<span class="fc" id="L135">    ArrayList&lt;String&gt; toReturn = new ArrayList();</span>
+
+    try {
+<span class="fc" id="L138">      BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(</span>
+<span class="fc" id="L139">          loggingFile), &quot;UTF-8&quot;));</span>
+
+<span class="fc" id="L141">      String currentElement = null;</span>
+
+<span class="fc bfc" id="L143" title="All 2 branches covered.">      while ((currentElement = fileReader.readLine()) != null) {</span>
+<span class="fc" id="L144">        toReturn.add(currentElement);</span>
+      }
+
+<span class="fc" id="L147">      fileReader.close();</span>
+<span class="pc" id="L148">    } catch (IOException e) {</span>
+<span class="nc" id="L149">      e.printStackTrace();</span>
+    }
+
+<span class="fc" id="L152">    return toReturn;</span>
+  }
+  
+  /**
+   * Fetches the first line of the current logger and returns it.
+   * 
+   * @return A string with the first line.
+   */
+  public String getFirstLine() {
+<span class="fc" id="L161">    String toReturn = null;</span>
+    
+    try {
+<span class="fc" id="L164">      BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(</span>
+<span class="fc" id="L165">          loggingFile), &quot;UTF-8&quot;));</span>
+
+<span class="fc" id="L167">      toReturn = fileReader.readLine();</span>
+
+<span class="fc" id="L169">      fileReader.close();</span>
+<span class="pc" id="L170">    } catch (IOException e) {</span>
+<span class="nc" id="L171">      e.printStackTrace();</span>
+    }
+    
+<span class="fc" id="L174">    return toReturn;</span>
+  }
+
+  /**
+   * Fetches the last line of the current logger and returns it.
+   * 
+   * @return A string with the last line.
+   */
+  public String getLastLine() {
+<span class="fc" id="L183">    String toReturn = null;</span>
+
+    try {
+<span class="fc" id="L186">      BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(</span>
+<span class="fc" id="L187">          loggingFile), &quot;UTF-8&quot;));</span>
+      
+<span class="fc" id="L189">      String currentElement = null;</span>
+
+<span class="fc bfc" id="L191" title="All 2 branches covered.">      while ((currentElement = fileReader.readLine()) != null) {</span>
+<span class="fc" id="L192">        toReturn = currentElement;</span>
+      }
+
+<span class="fc" id="L195">      fileReader.close();</span>
+<span class="pc" id="L196">    } catch (IOException e) {</span>
+<span class="nc" id="L197">      e.printStackTrace();</span>
+    }
+
+<span class="fc" id="L200">    return toReturn;</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

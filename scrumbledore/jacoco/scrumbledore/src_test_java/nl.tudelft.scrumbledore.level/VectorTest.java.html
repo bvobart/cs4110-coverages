@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>VectorTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.level</a> &gt; <span class="el_source">VectorTest.java</span></div><h1>VectorTest.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.level;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import nl.tudelft.scrumbledore.Constants;
+import nl.tudelft.scrumbledore.level.element.Fruit;
+import nl.tudelft.scrumbledore.level.element.LevelElement;
+
+/**
+ * Test Suite for Vector Class.
+ * 
+ * @author Jesse Tilro
+ *
+ */
+@SuppressWarnings(&quot;PMD.TooManyMethods&quot;)
+<span class="fc" id="L20">public class VectorTest {</span>
+
+  /**
+   * The constructor of the vector class should set the properties correctly. The getters are also
+   * tested this way.
+   */
+  @Test
+  public void testConstructor() {
+<span class="fc" id="L28">    Vector testVector = new Vector(1, 2);</span>
+<span class="pc bpc" id="L29" title="2 of 4 branches missed.">    assertTrue(testVector.getX() == 1 &amp;&amp; testVector.getY() == 2);</span>
+<span class="fc" id="L30">  }</span>
+
+  /**
+   * The sum between to vectors should be calculated correctly.
+   */
+  @Test
+  public void testSum() {
+<span class="fc" id="L37">    Vector v1 = new Vector(1, 2);</span>
+<span class="fc" id="L38">    Vector v2 = new Vector(3, 4);</span>
+<span class="fc" id="L39">    v1.sum(v2);</span>
+<span class="fc" id="L40">    assertEquals(new Vector(4, 6), v1);</span>
+<span class="fc" id="L41">  }</span>
+
+  /**
+   * The difference between to vectors should be calculated correctly.
+   */
+  @Test
+  public void testDifference() {
+<span class="fc" id="L48">    Vector v1 = new Vector(1, 2);</span>
+<span class="fc" id="L49">    Vector v2 = new Vector(3, 4);</span>
+<span class="fc" id="L50">    v1.difference(v2);</span>
+<span class="fc" id="L51">    assertEquals(new Vector(-2, -2), v1);</span>
+<span class="fc" id="L52">  }</span>
+
+  /**
+   * The vector should be able to be scaled correctly.
+   */
+  @Test
+  public void testScale() {
+<span class="fc" id="L59">    Vector v1 = new Vector(8, 16);</span>
+<span class="fc" id="L60">    v1.scale(2);</span>
+<span class="fc" id="L61">    assertEquals(new Vector(16, 32), v1);</span>
+<span class="fc" id="L62">  }</span>
+
+  /**
+   * The sum between to vectors should be calculated correctly.
+   */
+  @Test
+  public void testSumStatic() {
+<span class="fc" id="L69">    Vector v1 = new Vector(1, 2);</span>
+<span class="fc" id="L70">    Vector v2 = new Vector(3, 4);</span>
+<span class="fc" id="L71">    Vector res = Vector.sum(v1, v2);</span>
+<span class="fc" id="L72">    assertEquals(new Vector(4, 6), res);</span>
+<span class="fc" id="L73">  }</span>
+
+  /**
+   * The sum between to vectors should be calculated correctly.
+   */
+  @Test
+  public void testDifferenceStatic() {
+<span class="fc" id="L80">    Vector v1 = new Vector(1, 2);</span>
+<span class="fc" id="L81">    Vector v2 = new Vector(3, 4);</span>
+<span class="fc" id="L82">    Vector res = Vector.difference(v1, v2);</span>
+<span class="fc" id="L83">    assertEquals(new Vector(-2, -2), res);</span>
+<span class="fc" id="L84">  }</span>
+
+  /**
+   * The vector should be able to be scaled correctly.
+   */
+  @Test
+  public void testScaleStatic() {
+<span class="fc" id="L91">    Vector v1 = new Vector(8, 16);</span>
+<span class="fc" id="L92">    Vector res = Vector.scale(v1, 2);</span>
+<span class="fc" id="L93">    assertEquals(new Vector(16, 32), res);</span>
+<span class="fc" id="L94">  }</span>
+
+  /**
+   * The dot product between to vectors should be calculated correctly.
+   */
+  @Test
+  public void testDotproduct() {
+<span class="fc" id="L101">    Vector v1 = new Vector(1, 2);</span>
+<span class="fc" id="L102">    Vector v2 = new Vector(3, 4);</span>
+<span class="fc" id="L103">    double dot = v1.dotProduct(v2);</span>
+<span class="fc" id="L104">    assertEquals(11, dot, Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L105">  }</span>
+
+  /**
+   * The length of a vector should be calculated correctly.
+   */
+  @Test
+  public void testLength() {
+<span class="fc" id="L112">    Vector vec = new Vector(3, 4);</span>
+<span class="fc" id="L113">    assertEquals(5, vec.length(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L114">  }</span>
+
+  /**
+   * The distance between two vectors should be calculated correctly.
+   */
+  @Test
+  public void testDistance() {
+<span class="fc" id="L121">    Vector v1 = new Vector(3, 4);</span>
+<span class="fc" id="L122">    Vector v2 = new Vector(6, 8);</span>
+<span class="fc" id="L123">    assertEquals(5, v1.distance(v2), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L124">  }</span>
+
+  /**
+   * The setX method should set the entryX property properly.
+   */
+  @Test
+  public void testSetX() {
+<span class="fc" id="L131">    Vector testVector = new Vector(0, 0);</span>
+<span class="fc" id="L132">    testVector.setX(1);</span>
+<span class="fc" id="L133">    assertEquals(1, testVector.getX(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L134">  }</span>
+
+  /**
+   * The setY method should set the entryX property properly.
+   */
+  @Test
+  public void testSetY() {
+<span class="fc" id="L141">    Vector testVector = new Vector(0, 0);</span>
+<span class="fc" id="L142">    testVector.setY(2);</span>
+<span class="fc" id="L143">    assertEquals(2, testVector.getY(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L144">  }</span>
+
+  /**
+   * Two Vectors with the same X and Y should be considered equal.
+   */
+  @Test
+  public void testEqualsTrue() {
+<span class="fc" id="L151">    Vector testVector1 = new Vector(1, 2);</span>
+<span class="fc" id="L152">    Vector testVector2 = new Vector(1, 2);</span>
+<span class="fc" id="L153">    assertEquals(testVector1, testVector2);</span>
+<span class="fc" id="L154">  }</span>
+
+  /**
+   * Two Vectors with different X and Y should not be considered equal.
+   */
+  @Test
+  public void testEqualsFalse() {
+<span class="fc" id="L161">    Vector testVector1 = new Vector(1, 2);</span>
+<span class="fc" id="L162">    Vector testVector2 = new Vector(1, 3);</span>
+<span class="fc" id="L163">    assertFalse(testVector1.equals(testVector2));</span>
+<span class="fc" id="L164">  }</span>
+
+  /**
+   * A Vector should not be equal to an instance of another class.
+   */
+  @Test
+  public void testEqualsFalseOtherClass() {
+<span class="fc" id="L171">    Vector testVector1 = new Vector(1, 2);</span>
+<span class="fc" id="L172">    LevelElement testElement = new Fruit(new Vector(0, 0), new Vector(0, 0));</span>
+<span class="fc" id="L173">    assertFalse(testVector1.equals(testElement));</span>
+<span class="fc" id="L174">  }</span>
+
+  /**
+   * When a Vector is cloned, the original and its clone should be considered equal.
+   */
+  @Test
+  public void testCloneEqual() {
+<span class="fc" id="L181">    Vector original = new Vector(1, 2);</span>
+<span class="fc" id="L182">    Vector clone = null;</span>
+    try {
+<span class="fc" id="L184">      clone = original.clone();</span>
+<span class="nc" id="L185">    } catch (CloneNotSupportedException e) {</span>
+<span class="nc" id="L186">      e.printStackTrace();</span>
+<span class="fc" id="L187">    }</span>
+<span class="fc" id="L188">    assertEquals(original, clone);</span>
+<span class="fc" id="L189">  }</span>
+
+  /**
+   * When a Vector is cloned and the clone is changed, the original and clone should not be
+   * considered equal anymore since they different instances.
+   */
+  @Test
+  public void testCloneNotEqual() {
+<span class="fc" id="L197">    Vector original = new Vector(1, 2);</span>
+<span class="fc" id="L198">    Vector clone = null;</span>
+    try {
+<span class="fc" id="L200">      clone = original.clone();</span>
+<span class="nc" id="L201">    } catch (CloneNotSupportedException e) {</span>
+<span class="nc" id="L202">      e.printStackTrace();</span>
+<span class="fc" id="L203">    }</span>
+<span class="fc" id="L204">    clone.setX(42);</span>
+<span class="fc" id="L205">    assertFalse(clone.equals(original));</span>
+<span class="fc" id="L206">  }</span>
+
+  /**
+   * The has code of a random instance should be zero, for the method is stubbed.
+   */
+  @Test
+  public void testHashCode() {
+<span class="fc" id="L213">    Vector test = new Vector(1, 2);</span>
+<span class="fc" id="L214">    assertEquals(0, test.hashCode());</span>
+<span class="fc" id="L215">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

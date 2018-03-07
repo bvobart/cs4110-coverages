@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>SpriteStore.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.sprite</a> &gt; <span class="el_source">SpriteStore.java</span></div><h1>SpriteStore.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.sprite;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.imageio.ImageIO;
+import nl.tudelft.scrumbledore.Constants;
+import nl.tudelft.scrumbledore.level.Vector;
+
+/**
+ * The Sprite Store reads and creates Sprites from the file system and allows to easily select and
+ * use them.
+ * 
+ * @author Jesse Tilro
+ * @author Niels Warnars
+ */
+public class SpriteStore {
+  private ArrayList&lt;Sprite&gt; sprites;
+  private ArrayList&lt;AnimatedSprite&gt; animatedSprites;
+  private String dir;
+  private String dirSprite;
+  private static volatile SpriteStore instance;
+
+  /**
+   * Construct a new Sprite Store by reading the Sprites from the file system.
+   */
+<span class="fc" id="L28">  private SpriteStore() {</span>
+<span class="fc" id="L29">    this.dir = Constants.RESOURCES_DIR + Constants.SPRITES_DIR;</span>
+<span class="fc" id="L30">    this.dirSprite = Constants.SPRITES_DIR;</span>
+<span class="fc" id="L31">    read();</span>
+<span class="fc" id="L32">  }</span>
+
+  /**
+   * Creates a new SpriteStore instance if it has not yet been instantiated.
+   * 
+   * @return The single SpriteStore instance.
+   */
+  public static SpriteStore getInstance() {
+<span class="fc bfc" id="L40" title="All 2 branches covered.">    if (instance == null) {</span>
+<span class="pc" id="L41">      synchronized (SpriteStore.class) {</span>
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        if (instance == null) {</span>
+<span class="fc" id="L43">          instance = new SpriteStore();</span>
+        }
+      }
+    }
+<span class="fc" id="L47">    return instance;</span>
+  }
+
+  /**
+   * Construct a new Sprite Store by reading the Sprites from the file system, from a given
+   * directory.
+   * 
+   * @param dir
+   *          The directory where sprites should be loaded from.
+   */
+<span class="fc" id="L57">  public SpriteStore(String dir) {</span>
+<span class="fc" id="L58">    this.dir = dir;</span>
+<span class="fc" id="L59">    read();</span>
+<span class="fc" id="L60">  }</span>
+
+  /**
+   * Read Sprites from file system.
+   */
+  public void read() {
+<span class="fc" id="L66">    sprites = new ArrayList&lt;Sprite&gt;();</span>
+<span class="fc" id="L67">    final File directory = new File(dir);</span>
+<span class="fc" id="L68">    sprites = readSprites(directory, dirSprite);</span>
+<span class="fc" id="L69">    animatedSprites = readAnimatedSprites(directory, dirSprite);</span>
+<span class="fc" id="L70">  }</span>
+
+  /**
+   * Get all Sprites read from the file system.
+   * 
+   * @param directory
+   *          The directory to search for sprites.
+   * 
+   * @return All Sprites.
+   */
+  private ArrayList&lt;Sprite&gt; readSprites(File directory, String dir) {
+<span class="fc" id="L81">    ArrayList&lt;Sprite&gt; spr = new ArrayList&lt;Sprite&gt;();</span>
+<span class="fc" id="L82">    File[] fileEntries = directory.listFiles();</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">    if (fileEntries != null) {</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">      for (final File fileEntry : fileEntries) {</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        if (!fileEntry.isDirectory()) {</span>
+<span class="fc" id="L86">          spr.add(getSpriteFromFile(fileEntry, dir));</span>
+        }
+      }
+    }
+<span class="fc" id="L90">    return spr;</span>
+  }
+
+  /**
+   * Get all Animated Sprites read from the file system.
+   * 
+   * @param directory
+   *          The directory to search for animated sprites.
+   * 
+   * @return All Animated Sprites.
+   */
+  private ArrayList&lt;AnimatedSprite&gt; readAnimatedSprites(File directory, String dir) {
+<span class="fc" id="L102">    ArrayList&lt;AnimatedSprite&gt; spr = new ArrayList&lt;AnimatedSprite&gt;();</span>
+<span class="fc" id="L103">    File[] fileEntries = directory.listFiles();</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">    if (fileEntries != null) {</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">      for (final File fileEntry : fileEntries) {</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        if (fileEntry.isDirectory()) {</span>
+<span class="fc" id="L107">          String dirFrame = dir + fileEntry.getName() + &quot;/&quot;;</span>
+<span class="fc" id="L108">          ArrayList&lt;Sprite&gt; frames = readSprites(fileEntry, dirFrame);</span>
+<span class="fc" id="L109">          double interval = Constants.ANIMATED_SPRITES_INTERVAL;</span>
+<span class="fc" id="L110">          AnimatedSprite animatedSprite = new AnimatedSprite(fileEntry.getName(), interval, frames);</span>
+<span class="fc" id="L111">          spr.add(animatedSprite);</span>
+        }
+      }
+    }
+<span class="fc" id="L115">    return spr;</span>
+  }
+
+  /**
+   * Get a new Sprite instance based on the given image file.
+   * 
+   * @param file
+   *          The image file that the Sprite should correspond to.
+   * 
+   * @param dir
+   *          The path to the image file.
+   * 
+   * @return A Sprite.
+   */
+  private Sprite getSpriteFromFile(File file, String dir) {
+<span class="fc" id="L130">    String name = file.getName();</span>
+<span class="fc" id="L131">    int pos = name.lastIndexOf('.');</span>
+<span class="fc" id="L132">    String id = name.substring(0, pos);</span>
+<span class="fc" id="L133">    String ext = name.substring(pos + 1);</span>
+
+<span class="fc" id="L135">    Vector size = new Vector(0, 0);</span>
+    try {
+<span class="fc" id="L137">      BufferedImage sprite = ImageIO.read(file);</span>
+<span class="fc" id="L138">      size.setX(sprite.getWidth());</span>
+<span class="fc" id="L139">      size.setY(sprite.getHeight());</span>
+<span class="pc" id="L140">    } catch (IOException e) {</span>
+<span class="nc" id="L141">      e.printStackTrace();</span>
+    }
+
+<span class="fc" id="L144">    return new Sprite(id, ext, dir, size);</span>
+  }
+
+  /**
+   * Return the ArrayList of sprites in the Sprite Store.
+   * 
+   * @return An ArrayList of Sprites.
+   */
+  public ArrayList&lt;Sprite&gt; getAll() {
+<span class="fc" id="L153">    return sprites;</span>
+  }
+
+  /**
+   * Get a sprite by its ID.
+   * 
+   * @param id
+   *          The ID.
+   * 
+   * @return The Sprite.
+   */
+  public Sprite get(String id) {
+<span class="fc bfc" id="L165" title="All 2 branches covered.">    for (Sprite spr : sprites) {</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">      if (spr.getID().equals(id)) {</span>
+<span class="fc" id="L167">        return spr;</span>
+      }
+    }
+<span class="fc" id="L170">    return null;</span>
+  }
+
+  /**
+   * Get an animated sprite by its ID.
+   * 
+   * @param id
+   *          The ID.
+   * 
+   * @return The Animated Sprite.
+   */
+  public AnimatedSprite getAnimated(String id) {
+<span class="fc bfc" id="L182" title="All 2 branches covered.">    for (AnimatedSprite spr : animatedSprites) {</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">      if (spr.getID().equals(id)) {</span>
+<span class="fc" id="L184">        return spr;</span>
+      }
+    }
+<span class="fc" id="L187">    return null;</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

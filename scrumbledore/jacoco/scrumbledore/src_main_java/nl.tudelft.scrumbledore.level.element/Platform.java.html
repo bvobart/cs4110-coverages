@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Platform.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.level.element</a> &gt; <span class="el_source">Platform.java</span></div><h1>Platform.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.level.element;
+
+import java.util.ArrayList;
+import nl.tudelft.scrumbledore.level.Vector;
+import nl.tudelft.scrumbledore.sprite.Sprite;
+import nl.tudelft.scrumbledore.sprite.SpriteStore;
+
+/**
+ * Class representing a Platform in a game.
+ * 
+ * @author Niels Warnars
+ */
+public class Platform extends BasicStaticElement {
+  private boolean isPassable;
+
+  /**
+   * Create a new Platform instance.
+   * 
+   * @param position
+   *          Position of the platform in the level.
+   * 
+   * @param size
+   *          Size of the platform.
+   */
+  public Platform(Vector position, Vector size) {
+<span class="fc" id="L26">    super(position, size);</span>
+
+<span class="fc" id="L28">    isPassable = false;</span>
+<span class="fc" id="L29">  }</span>
+
+  @Override
+  public int hashCode() {
+<span class="fc" id="L33">    return 0;</span>
+  }
+
+  @Override
+  public boolean equals(Object other) {
+<span class="fc bfc" id="L38" title="All 2 branches covered.">    if (other instanceof Platform) {</span>
+<span class="fc" id="L39">      Platform that = (Platform) other;</span>
+<span class="pc bpc" id="L40" title="2 of 4 branches missed.">      return this.getPosition().equals(that.getPosition()) &amp;&amp; this.getSize().equals(that.getSize())</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">          &amp;&amp; this.isPassable() == that.isPassable();</span>
+    }
+
+<span class="fc" id="L44">    return false;</span>
+  }
+
+  /**
+   * Return whether a plaform is passable.
+   * 
+   * @return Whether a platform is passable.
+   */
+  public boolean isPassable() {
+<span class="fc" id="L53">    return isPassable;</span>
+  }
+
+  /**
+   * Set a Platform to passable.
+   * 
+   * @param isPassable
+   *          A platform is passable.
+   */
+  public void setPassable(boolean isPassable) {
+<span class="fc" id="L63">    this.isPassable = isPassable;</span>
+<span class="fc" id="L64">  }</span>
+
+  /**
+   * Retrieve a set of Sprites to be drawn in the current cycle at the position of this Level
+   * Element.
+   * 
+   * @param steps
+   *          The absolute exact number of steps since the game was started.
+   * 
+   * @return Sprites to be drawn.
+   */
+  public ArrayList&lt;Sprite&gt; getSprites(double steps) {
+<span class="fc" id="L76">    SpriteStore store = SpriteStore.getInstance();</span>
+<span class="fc" id="L77">    String id = &quot;wall-1&quot;;</span>
+<span class="fc" id="L78">    ArrayList&lt;Sprite&gt; result = new ArrayList&lt;Sprite&gt;();</span>
+<span class="fc" id="L79">    result.add(store.get(id));</span>
+<span class="fc" id="L80">    return result;</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>PlayerTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.level.element</a> &gt; <span class="el_source">PlayerTest.java</span></div><h1>PlayerTest.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.level.element;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+import java.util.ArrayList;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import nl.tudelft.scrumbledore.Constants;
+import nl.tudelft.scrumbledore.level.Vector;
+import nl.tudelft.scrumbledore.sprite.Sprite;
+
+/**
+ * Test Suite for the Player class.
+ * 
+ * @author Jesse Tilro
+ * @author Niels Warnars
+ */
+@SuppressWarnings(&quot;PMD.TooManyMethods&quot;)
+<span class="fc" id="L24">public class PlayerTest extends LevelElementTest {</span>
+
+  private Player player;
+
+  @Override
+  public LevelElement make(Vector position, Vector size) {
+<span class="fc" id="L30">    return new Player(position, size);</span>
+  }
+
+  /**
+   * Set the bubble field to a new Bubble instance to use as a test object.
+   */
+  @Before
+  public void setUp() {
+<span class="fc" id="L38">    player = new Player(new Vector(0, 0), new Vector(0, 0));</span>
+<span class="fc" id="L39">  }</span>
+
+  /**
+   * When a new Player element is created, initially it should have gravity, be alive, should not be
+   * firing and looking right.
+   */
+  @Test
+  public void testConstuctor() {
+<span class="fc" id="L47">    assertTrue(player.hasGravity());</span>
+<span class="fc" id="L48">    assertTrue(player.isAlive());</span>
+<span class="fc" id="L49">    assertFalse(player.isFiring());</span>
+<span class="fc" id="L50">    assertEquals(LevelElementAction.MoveRight, player.getLastMove());</span>
+<span class="fc" id="L51">  }</span>
+
+  /**
+   * When a player action is added to a bubble's action queue, a call to hasAction for that action
+   * should return true.
+   */
+  @Test
+  public void testHasActionTrue() {
+<span class="fc" id="L59">    player.addAction(LevelElementAction.MoveLeft);</span>
+<span class="fc" id="L60">    assertTrue(player.hasAction(LevelElementAction.MoveLeft));</span>
+<span class="fc" id="L61">  }</span>
+  
+  /**
+   * Test the firing field getter/setter.
+   */
+  @Test
+  public void testFiring() {
+<span class="fc" id="L68">    player.setFiring(true);</span>
+<span class="fc" id="L69">    assertTrue(player.isFiring());</span>
+<span class="fc" id="L70">  }</span>
+
+  /**
+   * Test the alive field getter/setter.
+   */
+  @Test
+  public void testAlive() {
+<span class="fc" id="L77">    player.setAlive(false);</span>
+<span class="fc" id="L78">    assertFalse(player.isAlive());</span>
+<span class="fc" id="L79">  }</span>
+
+  /**
+   * Test the id field getter/setter.
+   */
+  @Test
+  public void testPlayerNumber() {
+<span class="fc" id="L86">    player.setPlayerNumber(42);</span>
+<span class="fc" id="L87">    assertEquals(42, player.getPlayerNumber());</span>
+<span class="fc" id="L88">  }</span>
+
+  /**
+   * Test the lastMove field getter/setter.
+   */
+  @Test
+  public void testLastMove() {
+<span class="fc" id="L95">    player.setLastMove(LevelElementAction.MoveLeft);</span>
+<span class="fc" id="L96">    assertEquals(LevelElementAction.MoveLeft, player.getLastMove());</span>
+<span class="fc" id="L97">    player.setLastMove(LevelElementAction.MoveRight);</span>
+<span class="fc" id="L98">    assertEquals(LevelElementAction.MoveRight, player.getLastMove());</span>
+    // Actions other than MoveLeft and MoveRight should be ignored.
+<span class="fc" id="L100">    player.setLastMove(LevelElementAction.Jump);</span>
+<span class="fc" id="L101">    assertEquals(LevelElementAction.MoveRight, player.getLastMove());</span>
+<span class="fc" id="L102">  }</span>
+
+  /**
+   * Two player instances with the same position and size should be considered equal.
+   */
+  @Test
+  public void testEqualsTrue() {
+<span class="fc" id="L109">    Player player2 = new Player(player.getPosition(), player.getSize());</span>
+<span class="fc" id="L110">    assertEquals(player, player2);</span>
+<span class="fc" id="L111">  }</span>
+
+  /**
+   * Two player instances with a different position or size should not be considered equal.
+   */
+  @Test
+  public void testEqualsFalse() {
+<span class="fc" id="L118">    Player player2 = new Player(new Vector(42, 42), player.getSize());</span>
+<span class="fc" id="L119">    Player player3 = new Player(player.getPosition(), new Vector(42, 42));</span>
+<span class="fc" id="L120">    assertFalse(player.equals(player2));</span>
+<span class="fc" id="L121">    assertFalse(player.equals(player3));</span>
+<span class="fc" id="L122">  }</span>
+
+  /**
+   * A Player instance and an instance of another class should not be considered equal.
+   */
+  @Test
+  public void testEqualsFalseOtherClass() {
+<span class="fc" id="L129">    Fruit fruit = new Fruit(player.getPosition(), player.getSize());</span>
+<span class="fc" id="L130">    assertFalse(player.equals(fruit));</span>
+<span class="fc" id="L131">  }</span>
+
+  /**
+   * The stubbed method hashCode should just return zero (line coverage).
+   */
+  @Test
+  public void testHashCode() {
+<span class="fc" id="L138">    assertEquals(0, player.hashCode());</span>
+<span class="fc" id="L139">  }</span>
+
+  
+  /**
+   * Test the getSprites method to verify whether the correct
+   * sprite(s) is/are being returned.
+   */
+  @Test
+  public void testGetSprites() {
+<span class="fc" id="L148">    ArrayList&lt;Sprite&gt; sprites = player.getSprites(1);</span>
+    
+<span class="fc" id="L150">    assertEquals(1, sprites.size());</span>
+<span class="fc" id="L151">    assertEquals(&quot;frame-01&quot;, sprites.get(0).getID());</span>
+<span class="fc" id="L152">    assertEquals(&quot;images&quot; + File.separator + &quot;sprites&quot; + File.separator </span>
+<span class="fc" id="L153">        + &quot;player-green-move-right/frame-01.png&quot;, sprites.get(0).getPath());</span>
+<span class="fc" id="L154">  }</span>
+  
+  /**
+   * Test the getSprites method to verify whether the correct
+   * sprite(s) is/are being returned when it is shooting to the right.
+   */
+  @Test
+  public void testGetSpritesShootingRight() {
+<span class="fc" id="L162">    player.setFiring(true);</span>
+<span class="fc" id="L163">    player.setLastMove(LevelElementAction.MoveRight);</span>
+<span class="fc" id="L164">    ArrayList&lt;Sprite&gt; sprites = player.getSprites(1);</span>
+    
+<span class="fc" id="L166">    assertEquals(1, sprites.size());</span>
+<span class="fc" id="L167">    assertEquals(&quot;player-shoot-right&quot;, sprites.get(0).getID());</span>
+<span class="fc" id="L168">    assertEquals(&quot;images&quot; + File.separator + &quot;sprites&quot; + File.separator </span>
+<span class="fc" id="L169">        + &quot;player-green-shoot-right/player-shoot-right.png&quot;, sprites.get(0).getPath());</span>
+<span class="fc" id="L170">  }</span>
+  
+  /**
+   * Test the getSprites method to verify whether the correct
+   * sprite(s) is/are being returned when it is shooting to the left.
+   */
+  @Test
+  public void testGetSpritesShootingLeft() {
+<span class="fc" id="L178">    player.setFiring(true);</span>
+<span class="fc" id="L179">    player.setLastMove(LevelElementAction.MoveLeft);</span>
+<span class="fc" id="L180">    ArrayList&lt;Sprite&gt; sprites = player.getSprites(1);</span>
+    
+<span class="fc" id="L182">    assertEquals(1, sprites.size());</span>
+<span class="fc" id="L183">    assertEquals(&quot;player-shoot-left&quot;, sprites.get(0).getID());</span>
+<span class="fc" id="L184">    assertEquals(&quot;images&quot; + File.separator + &quot;sprites&quot; + File.separator </span>
+<span class="fc" id="L185">        + &quot;player-green-shoot-left/player-shoot-left.png&quot;, sprites.get(0).getPath());</span>
+<span class="fc" id="L186">  }</span>
+  
+  /**
+   * Test the getter/setter methods of the lifetime attribute of a Player object.
+   */
+  @Test
+  public void testLifetime() {
+<span class="fc" id="L193">    player.setLifetime(42d);</span>
+<span class="fc" id="L194">    assertEquals(42d, player.getLifetime(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L195">  }</span>
+  
+  /**
+   * Test the decreasing of the lifetime of a player by a given number of steps.
+   */
+  @Test
+  public void testDecreaseLifetime() {
+<span class="fc" id="L202">    player.setLifetime(42d);</span>
+<span class="fc" id="L203">    player.decreaseLifetime(1d);</span>
+<span class="fc" id="L204">    assertEquals(41d, player.getLifetime(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L205">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

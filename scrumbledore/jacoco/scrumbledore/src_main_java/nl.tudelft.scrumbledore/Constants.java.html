@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Constants.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore</a> &gt; <span class="el_source">Constants.java</span></div><h1>Constants.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javafx.scene.input.KeyCode;
+import nl.tudelft.scrumbledore.level.element.LevelElementAction;
+
+/**
+ * Class for the maintenance of strings used throughout the game. Meant to allow easy fixing
+ * for later.
+ * 
+ * @author David Alderliesten
+ * @author Jesse Tilro
+ * @author Niels Warnars
+ */
+@SuppressWarnings(&quot;PMD.AvoidDuplicateLiterals&quot;)
+public final class Constants {
+
+  /**
+   * Private constructor as no instance of a utility class should ever be possible to instantiate.
+   */
+<span class="nc" id="L27">  private Constants() {</span>
+<span class="nc" id="L28">  }</span>
+
+  public static final int GUIX = 646;
+  public static final int GUIY = 723;
+
+  public static final int LEVELX = 640;
+  public static final int LEVELY = 640;
+
+  public static final int REFRESH_RATE = 30;
+
+  public static final int NUMBER_OF_PLAYERS = 2;
+<span class="fc" id="L39">  public static final List&lt;String&gt; PLAYER_COLORS = Collections.unmodifiableList(Arrays.asList(</span>
+<span class="fc" id="L40">      &quot;green&quot;, &quot;blue&quot;));</span>
+
+  public static final String SCRUMBLEDORE_TEXT = &quot;SCRUMBLEDORE&quot;;
+  public static final String SINGLEPLAYERGAME_BUTTON = &quot;Singleplayer Game&quot;;
+  public static final String MULTIPLAYERGAME_BUTTON = &quot;Multiplayer Game&quot;;
+  public static final String SETTINGS_BUTTON = &quot;Settings&quot;;
+  public static final String EXIT_BUTTON = &quot;Exit&quot;;
+
+  public static final String SCORELABEL = &quot;Score:&quot;;
+  public static final String HISCORELABEL = &quot;High-Score:&quot;;
+  public static final String POWERUPLABEL = &quot;Power-Ups:&quot;;
+  public static final String NOPOWERUP_LABEL = &quot;NONE&quot;;
+  public static final String POWERUP_CHILILABEL = &quot;CHILI SPEED&quot;;
+  public static final String POWERUP_TACOLABEL = &quot;TACO INVINCIBILITY&quot;;
+  public static final String LEVELLABEL = &quot;Level:&quot;;
+
+  public static final String ADVANCINGLABEL = &quot;Advancing to next level in a few moments...&quot;;
+  public static final int ADVANCING_DELAY = 5000;
+
+  public static final String STARTBTNLABEL = &quot;Start&quot;;
+  public static final String STOPBTNLABEL = &quot;Stop&quot;;
+  public static final String SETTINGSBTNLABEL = &quot;Settings&quot;;
+  public static final String EXITBTNLABEL = &quot;Exit&quot;;
+
+  public static final String LOGGING_PLAYER_MOVEMENT = &quot;Do you wish to track player movement?&quot;;
+  public static final String LOGGING_PLAYER_INPUT = &quot;Do you wish to track player input?&quot;;
+  public static final String LOGGING_GAME_STARTSTOP = &quot;Do you wish to track game &quot;
+      + &quot;states, such as pausing and restarting?&quot;;
+  public static final String LOGGING_SHOOTING = &quot;Do you wish to track shooting?&quot;;
+  public static final String LOGGING_POINTS = &quot;Do you wish to track points and high-scores?&quot;;
+  public static final String LOGGING_ENEMY = &quot;Do you wish to track enemy actions and changes?&quot;;
+  public static final String LOGGING_ACTIVE = &quot;Yes&quot;;
+  public static final String LOGGING_DISABLED = &quot;No&quot;;
+  public static final String SETTINGSCLOSE = &quot;Close&quot;;
+
+<span class="fc" id="L75">  private static boolean loggingWantMovement = false;</span>
+<span class="fc" id="L76">  private static boolean loggingWantInput = false;</span>
+<span class="fc" id="L77">  private static boolean loggingWantStartStop = false;</span>
+<span class="fc" id="L78">  private static boolean loggingWantShooting = false;</span>
+<span class="fc" id="L79">  private static boolean loggingWantPoints = false;</span>
+<span class="fc" id="L80">  private static boolean loggingWantEnemy = false;</span>
+
+  public static final String SETTINGS_LABEL = &quot;Settings&quot;;
+  public static final String SETTINGS_YES = &quot;Yes&quot;;
+  public static final String SETTINGS_NO = &quot;No&quot;;
+  public static final String SETTINGSEXIT_BUTTON = &quot;Back&quot;;
+  public static final String SETTINGSLOGGING_BUTTON = &quot;Logging&quot;;
+  public static final String SETTINGSKEYBINDING_BUTTON = &quot;Keybinding&quot;;
+  public static final String SETTINGS_CHOOSEKEYQUERY = &quot;Press the desired key...&quot;;
+  public static final int SETTINGS_CHOOSEKEYPADDING = 50;
+
+  public static final String SETTINGS_PLAYER1 = &quot;Player 1&quot;;
+  public static final String SETTINGS_PLAYER2 = &quot;Player 2&quot;;
+
+  public static final int MAINMENU_PADDING = 30;
+  public static final int SETTINGS_PADDING = 20;
+  public static final int GAME_PADDING = 10;
+
+  public static final String GAME_SCORELABEL = &quot;Score&quot;;
+  public static final String GAME_HISCORELABEL = &quot;High-Score&quot;;
+  public static final String GAME_POWERUPLABEL = &quot;Power-Ups&quot;;
+  public static final String GAME_LEVELLABEL = &quot;Level&quot;;
+
+  public static final String GAME_STARTBUTTON = &quot;Start&quot;;
+  public static final String GAME_STOPBUTTON = &quot;Stop&quot;;
+  public static final String GAME_SETTINGSBUTTON = &quot;Settings&quot;;
+  public static final String GAME_EXITBUTTON = &quot;Exit&quot;;
+
+  public static final String GAMEWIN_HEADER = &quot;SCRUMMASTER&quot;;
+  public static final String GAMEWIN_DIALOG = &quot;You beat the game, congratulations!&quot;;
+  public static final String GAMEWIN_POINTS = &quot;You scored &quot;;
+  public static final String GAMEWIN_HIGHSCORE = &quot; points with a session high score of &quot;;
+  public static final String GAMEWIN_TOMAINMENU = &quot;Return to the main menu&quot;;
+
+  public static final double BLOCKSIZE = 32;
+
+  public static final double NUM_BLOCKS = 20;
+
+  public static final double DOUBLE_PRECISION = 0.001;
+
+  public static final double COLLISION_PRECISION = 1;
+  public static final double COLLISION_RADIUS = 64;
+
+  public static final double GRAVITY_STRENGTH = 2;
+  public static final double GRAVITY_MAX = 8;
+
+  public static final double PLAYER_SPEED = 8;
+  public static final double PLAYER_CHILI_MULTIPLIER = 1.8;
+  public static final double PLAYER_JUMP = 22;
+
+  public static final double BUBBLE_SPEED = 20;
+  public static final double FIREBALL_SPEED = 9;
+  public static final double BUBBLE_FRICTION = 1.5;
+  public static final double BUBBLE_FLOAT = 2;
+  public static final double BUBBLE_BOUNCE = 8;
+  public static final double BUBBLE_LIFETIME = REFRESH_RATE * 3;
+
+  public static final double PLAYER_POWERUP_LIFETIME = REFRESH_RATE * 3;
+  public static final double CHILI_LIFETIME_MULTIPLIER = 0.4;
+  public static final double TURTLE_LIFETIME_MULTIPLIER = 0.7;
+
+  public static final double NPC_SPEED = 4;
+
+  public static final double RAPID_FIRE_LIMIT = 5;
+
+<span class="fc" id="L145">  public static final String LEVELS_DIR = &quot;src&quot; + System.getProperty(&quot;file.separator&quot;) + &quot;main&quot;</span>
+<span class="fc" id="L146">      + System.getProperty(&quot;file.separator&quot;) + &quot;resources&quot; + System.getProperty(&quot;file.separator&quot;)</span>
+<span class="fc" id="L147">      + &quot;levels&quot; + System.getProperty(&quot;file.separator&quot;);</span>
+<span class="fc" id="L148">  public static final String RESOURCES_DIR = &quot;src&quot; + System.getProperty(&quot;file.separator&quot;) + &quot;main&quot;</span>
+<span class="fc" id="L149">      + System.getProperty(&quot;file.separator&quot;) + &quot;resources&quot; + System.getProperty(&quot;file.separator&quot;);</span>
+<span class="fc" id="L150">  public static final String APPDATA_DIR = System.getProperty(&quot;user.dir&quot;)</span>
+<span class="fc" id="L151">      + System.getProperty(&quot;file.separator&quot;) + &quot;appdata&quot; + System.getProperty(&quot;file.separator&quot;);</span>
+
+<span class="fc" id="L153">  public static final String SPRITES_DIR = &quot;images&quot; + System.getProperty(&quot;file.separator&quot;)</span>
+<span class="fc" id="L154">      + &quot;sprites&quot; + System.getProperty(&quot;file.separator&quot;);</span>
+<span class="fc" id="L155">  public static final String LOGGER_DIR = &quot;logger&quot; + System.getProperty(&quot;file.separator&quot;);</span>
+
+  public static final String CSS_MAINMENU = &quot;css/mainmenustyle.css&quot;;
+  public static final String CSS_SETTINGS = &quot;css/settingsstyle.css&quot;;
+  public static final String CSS_GAMEVIEW = &quot;css/gameviewstyle.css&quot;;
+  public static final String CSS_VICTORY = &quot;css/victorystyle.css&quot;;
+
+  public static final double ANIMATED_SPRITES_INTERVAL = REFRESH_RATE / 10;
+
+<span class="fc" id="L164">  public static final List&lt;Map&lt;KeyCode, LevelElementAction&gt;&gt; KEY_MAPPING = createKeyMapping();</span>
+
+  /**
+   * Returns a list of maps containing the keybinding/key mapping for players one and two.
+   * 
+   * @return A list containing a map with the keybindings/key mapping for both players.
+   */
+  private static List&lt;Map&lt;KeyCode, LevelElementAction&gt;&gt; createKeyMapping() {
+<span class="fc" id="L172">    List&lt;Map&lt;KeyCode, LevelElementAction&gt;&gt; keyMapping </span>
+<span class="fc" id="L173">        = new ArrayList&lt;Map&lt;KeyCode, LevelElementAction&gt;&gt;();</span>
+
+<span class="fc" id="L175">    keyMapping.add(createKeyMappingP1());</span>
+<span class="fc" id="L176">    keyMapping.add(createKeyMappingP2());</span>
+
+<span class="fc" id="L178">    return keyMapping;</span>
+  }
+
+  /**
+   * Returns a map containing the keybinding/key mapping for player one.
+   * 
+   * @return A map containing the keys and their associated actions.
+   */
+  private static Map&lt;KeyCode, LevelElementAction&gt; createKeyMappingP1() {
+<span class="fc" id="L187">    Map&lt;KeyCode, LevelElementAction&gt; keyMapping = new HashMap&lt;KeyCode, LevelElementAction&gt;();</span>
+<span class="fc" id="L188">    keyMapping.put(KeyCode.LEFT, LevelElementAction.MoveLeft);</span>
+<span class="fc" id="L189">    keyMapping.put(KeyCode.RIGHT, LevelElementAction.MoveRight);</span>
+<span class="fc" id="L190">    keyMapping.put(KeyCode.UP, LevelElementAction.Jump);</span>
+<span class="fc" id="L191">    keyMapping.put(KeyCode.CONTROL, LevelElementAction.Shoot);</span>
+
+<span class="fc" id="L193">    return keyMapping;</span>
+  }
+
+  /**
+   * Returns a map containing the keybinding/key mapping for player two.
+   * 
+   * @return A map containing the keys and their associated actions.
+   */
+  private static Map&lt;KeyCode, LevelElementAction&gt; createKeyMappingP2() {
+<span class="fc" id="L202">    Map&lt;KeyCode, LevelElementAction&gt; keyMapping = new HashMap&lt;KeyCode, LevelElementAction&gt;();</span>
+<span class="fc" id="L203">    keyMapping.put(KeyCode.A, LevelElementAction.MoveLeft);</span>
+<span class="fc" id="L204">    keyMapping.put(KeyCode.D, LevelElementAction.MoveRight);</span>
+<span class="fc" id="L205">    keyMapping.put(KeyCode.W, LevelElementAction.Jump);</span>
+<span class="fc" id="L206">    keyMapping.put(KeyCode.Q, LevelElementAction.Shoot);</span>
+
+<span class="fc" id="L208">    return keyMapping;</span>
+  }
+
+  /**
+   * Returns whether movement should be logged.
+   * 
+   * @return Whether movement should be logged.
+   */
+  public static boolean isLoggingWantMovement() {
+<span class="fc" id="L217">    return loggingWantMovement;</span>
+  }
+
+  /**
+   * Returns whether input should be logged.
+   * 
+   * @return Whether input should be logged.
+   */
+  public static boolean isLoggingWantInput() {
+<span class="fc" id="L226">    return loggingWantInput;</span>
+  }
+
+  /**
+   * Returns whether the usage of the start/stop button should be logged.
+   * 
+   * @return Whether the usage of the start/stop button should be logged.
+   */
+  public static boolean isLoggingWantStartStop() {
+<span class="fc" id="L235">    return loggingWantStartStop;</span>
+  }
+
+  /**
+   * Returns whether shooting actions should be logged.
+   * 
+   * @return Whether shooting actions should be logged.
+   */
+  public static boolean isLoggingWantShooting() {
+<span class="fc" id="L244">    return loggingWantShooting;</span>
+  }
+
+  /**
+   * Returns whether obtained points should be logged.
+   * 
+   * @return Whether obtained points should be logged.
+   */
+  public static boolean isLoggingWantPoints() {
+<span class="fc" id="L253">    return loggingWantPoints;</span>
+  }
+
+  /**
+   * Returns whether the location of enemies should be logged.
+   * 
+   * @return Whether the location of enemies should be logged.
+   */
+  public static boolean isLoggingWantEnemy() {
+<span class="fc" id="L262">    return loggingWantEnemy;</span>
+  }
+
+  /**
+   * Set whether movement should be logged.
+   * 
+   * @param loggingWantMovement
+   *          whether movement should be logged
+   */
+  public static void setLoggingWantMovement(boolean loggingWantMovement) {
+<span class="fc" id="L272">    Constants.loggingWantMovement = loggingWantMovement;</span>
+<span class="fc" id="L273">  }</span>
+
+  /**
+   * Set whether input should be logged.
+   * 
+   * @param loggingWantInput
+   *          whether input should be logged
+   */
+  public static void setLoggingWantInput(boolean loggingWantInput) {
+<span class="fc" id="L282">    Constants.loggingWantInput = loggingWantInput;</span>
+<span class="fc" id="L283">  }</span>
+
+  /**
+   * Set whether the usage of the start/stop button should be logged.
+   * 
+   * @param loggingWantStartStop
+   *          whether the usage of the start/stop button should be logged
+   */
+  public static void setLoggingWantStartStop(boolean loggingWantStartStop) {
+<span class="fc" id="L292">    Constants.loggingWantStartStop = loggingWantStartStop;</span>
+<span class="fc" id="L293">  }</span>
+
+  /**
+   * Set whether shooting actions should be logged.
+   * 
+   * @param loggingWantShooting
+   *          whether shooting actions should be logged
+   */
+  public static void setLoggingWantShooting(boolean loggingWantShooting) {
+<span class="fc" id="L302">    Constants.loggingWantShooting = loggingWantShooting;</span>
+<span class="fc" id="L303">  }</span>
+
+  /**
+   * Set whether obtained points should be logged.
+   * 
+   * @param loggingWantPoints
+   *          whether obtained points should be logged
+   */
+  public static void setLoggingWantPoints(boolean loggingWantPoints) {
+<span class="fc" id="L312">    Constants.loggingWantPoints = loggingWantPoints;</span>
+<span class="fc" id="L313">  }</span>
+
+  /**
+   * Set whether the location of enemies should be logged.
+   * 
+   * @param loggingWantEnemy
+   *          whether the location of enemies should be logged
+   */
+  public static void setLoggingWantEnemy(boolean loggingWantEnemy) {
+<span class="fc" id="L322">    Constants.loggingWantEnemy = loggingWantEnemy;</span>
+<span class="fc" id="L323">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CollisionsLevelModifierTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.level.modifier</a> &gt; <span class="el_source">CollisionsLevelModifierTest.java</span></div><h1>CollisionsLevelModifierTest.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.level.modifier;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import nl.tudelft.scrumbledore.Constants;
+import nl.tudelft.scrumbledore.game.ScoreCounter;
+import nl.tudelft.scrumbledore.level.Level;
+import nl.tudelft.scrumbledore.level.Vector;
+import nl.tudelft.scrumbledore.level.element.Bubble;
+import nl.tudelft.scrumbledore.level.element.DynamicElement;
+import nl.tudelft.scrumbledore.level.element.Fruit;
+import nl.tudelft.scrumbledore.level.element.NPC;
+import nl.tudelft.scrumbledore.level.element.Platform;
+import nl.tudelft.scrumbledore.level.element.Player;
+import nl.tudelft.scrumbledore.level.powerup.ChiliChicken;
+import nl.tudelft.scrumbledore.level.powerup.ChiliChickenPickUp;
+import nl.tudelft.scrumbledore.level.powerup.PowerupPickUp;
+import nl.tudelft.scrumbledore.level.powerup.TurtleTaco;
+import nl.tudelft.scrumbledore.level.powerup.TurtleTacoPickUp;
+
+/**
+ * Test suite for the CollisionsLevelModifier class.
+ * 
+ * @author Niels Warnars
+ * @author Jesse Tilro
+ */
+@SuppressWarnings({ &quot;PMD.JUnitTestsShouldIncludeAssert&quot;, &quot;PMD.TooManyMethods&quot;,
+    &quot;PMD.TooManyStaticImports&quot; })
+<span class="fc" id="L37">public class CollisionsLevelModifierTest {</span>
+  private ScoreCounter sc;
+  private CollisionsLevelModifier clm;
+
+  /**
+   * Set up mock objects and an CollisionsLevelModifier instance.
+   */
+  @Before
+  public void setUp() {
+<span class="fc" id="L46">    sc = mock(ScoreCounter.class);</span>
+
+<span class="fc" id="L48">    clm = new CollisionsLevelModifier(sc);</span>
+<span class="fc" id="L49">  }</span>
+
+  /**
+   * Helper method for stubbing a mocked dependency DynamicElement class.
+   * 
+   * @param instance
+   *          The reference instance determining which class is to be mocked and how it should be
+   *          stubbed.
+   */
+  private DynamicElement mockLevelElement(DynamicElement instance) {
+<span class="fc" id="L59">    DynamicElement mock = mock(instance.getClass());</span>
+
+<span class="fc" id="L61">    when(mock.getPosition()).thenReturn(instance.getPosition());</span>
+<span class="fc" id="L62">    when(mock.getSpeed()).thenReturn(instance.getSpeed());</span>
+<span class="fc" id="L63">    when(mock.posX()).thenReturn(instance.posX());</span>
+<span class="fc" id="L64">    when(mock.posY()).thenReturn(instance.posY());</span>
+<span class="fc" id="L65">    when(mock.hSpeed()).thenReturn(instance.hSpeed());</span>
+<span class="fc" id="L66">    when(mock.vSpeed()).thenReturn(instance.vSpeed());</span>
+<span class="fc" id="L67">    when(mock.getLeft()).thenReturn(instance.getLeft());</span>
+<span class="fc" id="L68">    when(mock.getRight()).thenReturn(instance.getRight());</span>
+<span class="fc" id="L69">    when(mock.getTop()).thenReturn(instance.getTop());</span>
+<span class="fc" id="L70">    when(mock.getBottom()).thenReturn(instance.getBottom());</span>
+
+<span class="fc" id="L72">    return mock;</span>
+  }
+
+  /**
+   * Test the CollisionsLevelModifier constructor and the getter methods.
+   */
+  @Test
+  public void testCollisionsLevelModifier() {
+<span class="fc" id="L80">    ScoreCounter sc = new ScoreCounter();</span>
+
+<span class="fc" id="L82">    CollisionsLevelModifier clm = new CollisionsLevelModifier(sc);</span>
+<span class="fc" id="L83">    assertEquals(sc, clm.getScore());</span>
+<span class="fc" id="L84">  }</span>
+
+  /**
+   * Test the collision between a fruit and a platform.
+   */
+  @Test
+  public void testDetectFruitPlatform() {
+<span class="fc" id="L91">    Platform platform = new Platform(new Vector(0, 32), new Vector(32, 32));</span>
+<span class="fc" id="L92">    Fruit fruit = new Fruit(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L93">    fruit.getSpeed().setY(4);</span>
+<span class="fc" id="L94">    DynamicElement fruitMock = mockLevelElement(fruit);</span>
+
+<span class="fc" id="L96">    Level level = new Level();</span>
+<span class="fc" id="L97">    level.addElement(fruitMock);</span>
+<span class="fc" id="L98">    level.addElement(platform);</span>
+
+<span class="fc" id="L100">    clm.modify(level, 1);</span>
+<span class="fc" id="L101">    verify(fruitMock).stopVertically();</span>
+<span class="fc" id="L102">    verify(fruitMock).snapTop(platform);</span>
+<span class="fc" id="L103">  }</span>
+
+  /**
+   * Test the collision between a platform and an NPC colliding from the top.
+   */
+  @Test
+  public void testDetectNPCPlatformFromTop() {
+    // Fixtures
+<span class="fc" id="L111">    Platform platform = new Platform(new Vector(0, 32), new Vector(32, 32));</span>
+<span class="fc" id="L112">    NPC npc = new NPC(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L113">    npc.getSpeed().setY(8);</span>
+<span class="fc" id="L114">    DynamicElement npcMock = mockLevelElement(npc);</span>
+
+<span class="fc" id="L116">    Level level = new Level();</span>
+<span class="fc" id="L117">    level.addElement(platform);</span>
+<span class="fc" id="L118">    level.addElement(npcMock);</span>
+<span class="fc" id="L119">    clm.modify(level, 1);</span>
+
+<span class="fc" id="L121">    verify(npcMock).stopVertically();</span>
+<span class="fc" id="L122">    verify(npcMock).snapTop(platform);</span>
+<span class="fc" id="L123">  }</span>
+
+  /**
+   * Test the collision between a platform and an NPC colliding from the left.
+   */
+  @Test
+  public void testDetectNPCPlatformFromLeft() {
+<span class="fc" id="L130">    Platform platform = new Platform(new Vector(32, 0), new Vector(32, 32));</span>
+<span class="fc" id="L131">    NPC npc = new NPC(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L132">    npc.getSpeed().setX(4);</span>
+<span class="fc" id="L133">    DynamicElement npcMock = mockLevelElement(npc);</span>
+
+<span class="fc" id="L135">    Level level = new Level();</span>
+<span class="fc" id="L136">    level.addElement(platform);</span>
+<span class="fc" id="L137">    level.addElement(npcMock);</span>
+
+<span class="fc" id="L139">    clm.modify(level, 1);</span>
+<span class="fc" id="L140">    verify(npcMock).stopHorizontally();</span>
+<span class="fc" id="L141">    verify(npcMock).snapLeft(platform);</span>
+<span class="fc" id="L142">  }</span>
+
+  /**
+   * Test the collision between a platform and an NPC colliding from the right.
+   */
+  @Test
+  public void testDetectNPCPlatformFromRight() {
+<span class="fc" id="L149">    Platform platform = new Platform(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L150">    NPC npc = new NPC(new Vector(32, 0), new Vector(32, 32));</span>
+<span class="fc" id="L151">    npc.getSpeed().setX(-4);</span>
+<span class="fc" id="L152">    DynamicElement npcMock = mockLevelElement(npc);</span>
+
+<span class="fc" id="L154">    Level level = new Level();</span>
+<span class="fc" id="L155">    level.addElement(platform);</span>
+<span class="fc" id="L156">    level.addElement(npcMock);</span>
+
+<span class="fc" id="L158">    clm.modify(level, 1);</span>
+<span class="fc" id="L159">    verify(npcMock).stopHorizontally();</span>
+<span class="fc" id="L160">    verify(npcMock).snapRight(platform);</span>
+<span class="fc" id="L161">  }</span>
+
+  /**
+   * Test the collision between a platform and a player colliding from the top.
+   */
+  @Test
+  public void testDetectPlayerPlatformFromTop() {
+<span class="fc" id="L168">    Platform platform = new Platform(new Vector(0, 32), new Vector(32, 32));</span>
+<span class="fc" id="L169">    Player player = new Player(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L170">    player.getSpeed().setY(4);</span>
+<span class="fc" id="L171">    DynamicElement playerMock = mockLevelElement(player);</span>
+
+<span class="fc" id="L173">    Level level = new Level();</span>
+<span class="fc" id="L174">    level.addElement(playerMock);</span>
+<span class="fc" id="L175">    level.addElement(platform);</span>
+
+<span class="fc" id="L177">    clm.modify(level, 1);</span>
+<span class="fc" id="L178">    verify(playerMock).stopVertically();</span>
+<span class="fc" id="L179">    verify(playerMock).snapTop(platform);</span>
+<span class="fc" id="L180">  }</span>
+
+  /**
+   * Test the collision between a platform and a player colliding from the bottom.
+   */
+  @Test
+  public void testDetectPlayerPlatformFromBottom() {
+<span class="fc" id="L187">    Platform platform = new Platform(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L188">    Player player = new Player(new Vector(0, 32), new Vector(32, 32));</span>
+<span class="fc" id="L189">    player.getSpeed().setY(-4);</span>
+<span class="fc" id="L190">    DynamicElement playerMock = mockLevelElement(player);</span>
+
+<span class="fc" id="L192">    Level level = new Level();</span>
+<span class="fc" id="L193">    level.addElement(playerMock);</span>
+<span class="fc" id="L194">    level.addElement(platform);</span>
+
+<span class="fc" id="L196">    clm.modify(level, 1);</span>
+<span class="fc" id="L197">    verify(playerMock).stopVertically();</span>
+<span class="fc" id="L198">    verify(playerMock).snapBottom(platform);</span>
+<span class="fc" id="L199">  }</span>
+
+  /**
+   * Test the collision between a platform and a player colliding from the left.
+   */
+  @Test
+  public void testDetectPlayerPlatformFromLeft() {
+<span class="fc" id="L206">    Platform platform = new Platform(new Vector(32, 0), new Vector(32, 32));</span>
+<span class="fc" id="L207">    Player player = new Player(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L208">    player.getSpeed().setX(4);</span>
+<span class="fc" id="L209">    DynamicElement playerMock = mockLevelElement(player);</span>
+
+<span class="fc" id="L211">    Level level = new Level();</span>
+<span class="fc" id="L212">    level.addElement(playerMock);</span>
+<span class="fc" id="L213">    level.addElement(platform);</span>
+
+<span class="fc" id="L215">    clm.modify(level, 1);</span>
+<span class="fc" id="L216">    verify(playerMock).stopHorizontally();</span>
+<span class="fc" id="L217">  }</span>
+
+  /**
+   * Test the collision between a platform and a player colliding from the right.
+   */
+  @Test
+  public void testDetectPlayerPlatformFromRight() {
+<span class="fc" id="L224">    Platform platform = new Platform(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L225">    Player player = new Player(new Vector(32, 0), new Vector(32, 32));</span>
+<span class="fc" id="L226">    player.getSpeed().setX(-4);</span>
+<span class="fc" id="L227">    DynamicElement playerMock = mockLevelElement(player);</span>
+
+<span class="fc" id="L229">    Level level = new Level();</span>
+<span class="fc" id="L230">    level.addElement(playerMock);</span>
+<span class="fc" id="L231">    level.addElement(platform);</span>
+
+<span class="fc" id="L233">    clm.modify(level, 1);</span>
+<span class="fc" id="L234">    verify(playerMock).stopHorizontally();</span>
+<span class="fc" id="L235">  }</span>
+
+  /**
+   * Test the collision between a platform and a bubble colliding from the bottom.
+   */
+  @Test
+  public void testDetectBubblePlatformFromBottom() {
+<span class="fc" id="L242">    Platform platform = new Platform(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L243">    Bubble bubble = new Bubble(new Vector(0, 32), new Vector(32, 32));</span>
+<span class="fc" id="L244">    DynamicElement bubbleMock = mockLevelElement(bubble);</span>
+
+<span class="fc" id="L246">    Level level = new Level();</span>
+<span class="fc" id="L247">    level.addElement(bubbleMock);</span>
+<span class="fc" id="L248">    level.addElement(platform);</span>
+
+<span class="fc" id="L250">    clm.modify(level, 1);</span>
+<span class="fc" id="L251">    verify(bubbleMock).snapBottom(platform);</span>
+<span class="fc" id="L252">    assertEquals(Constants.BUBBLE_BOUNCE, bubbleMock.getSpeed().getY(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L253">  }</span>
+
+  /**
+   * Test the collision between a platform and a bubble colliding from the left.
+   */
+  @Test
+  public void testDetectBubblePlatformFromLeft() {
+<span class="fc" id="L260">    Platform platform = new Platform(new Vector(32, 0), new Vector(32, 32));</span>
+<span class="fc" id="L261">    Bubble bubble = new Bubble(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L262">    DynamicElement bubbleMock = mockLevelElement(bubble);</span>
+
+<span class="fc" id="L264">    Level level = new Level();</span>
+<span class="fc" id="L265">    level.addElement(bubbleMock);</span>
+<span class="fc" id="L266">    level.addElement(platform);</span>
+
+<span class="fc" id="L268">    clm.modify(level, 1);</span>
+<span class="fc" id="L269">    verify(bubbleMock).snapLeft(platform);</span>
+<span class="fc" id="L270">    assertEquals(-Constants.BUBBLE_BOUNCE, bubbleMock.getSpeed().getX(),</span>
+        Constants.DOUBLE_PRECISION);
+<span class="fc" id="L272">  }</span>
+
+  /**
+   * Test the collision between a platform and a bubble colliding from the left.
+   */
+  @Test
+  public void testDetectBubblePlatformFromRight() {
+<span class="fc" id="L279">    Platform platform = new Platform(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L280">    Bubble bubble = new Bubble(new Vector(32, 0), new Vector(32, 32));</span>
+<span class="fc" id="L281">    DynamicElement bubbleMock = mockLevelElement(bubble);</span>
+
+<span class="fc" id="L283">    Level level = new Level();</span>
+<span class="fc" id="L284">    level.addElement(bubbleMock);</span>
+<span class="fc" id="L285">    level.addElement(platform);</span>
+
+<span class="fc" id="L287">    clm.modify(level, 1);</span>
+<span class="fc" id="L288">    verify(bubbleMock).snapRight(platform);</span>
+<span class="fc" id="L289">    assertEquals(Constants.BUBBLE_BOUNCE, bubbleMock.getSpeed().getX(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L290">  }</span>
+
+  /**
+   * Test the collision between a bubble and a player colliding from the top.
+   */
+  @Test
+  public void testDetectPlayerBubbleFromTop() {
+<span class="fc" id="L297">    Bubble bubble = new Bubble(new Vector(0, 32), new Vector(32, 32));</span>
+<span class="fc" id="L298">    Player player = new Player(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L299">    player.getSpeed().setY(4);</span>
+<span class="fc" id="L300">    DynamicElement playerMock = mockLevelElement(player);</span>
+
+<span class="fc" id="L302">    Level level = new Level();</span>
+<span class="fc" id="L303">    level.addElement(playerMock);</span>
+<span class="fc" id="L304">    level.addElement(bubble);</span>
+
+<span class="fc" id="L306">    clm.modify(level, 1);</span>
+<span class="fc" id="L307">    verify(playerMock).snapTop(bubble);</span>
+<span class="fc" id="L308">    assertEquals(-Constants.PLAYER_JUMP, playerMock.getSpeed().getY(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L309">  }</span>
+
+  /**
+   * Test the collision between a bubble containing an NPC and a player colliding from the top.
+   */
+  @Test
+  public void testDetectPlayerBubbleWithNPCFromTop() {
+<span class="fc" id="L316">    Bubble bubble = new Bubble(new Vector(0, 32), new Vector(32, 32));</span>
+<span class="fc" id="L317">    Player player = new Player(new Vector(0, 0), new Vector(32, 32));</span>
+
+<span class="fc" id="L319">    bubble.setHasNPC(true);</span>
+<span class="fc" id="L320">    player.getSpeed().setY(4);</span>
+
+<span class="fc" id="L322">    Level level = new Level();</span>
+<span class="fc" id="L323">    level.addElement(player);</span>
+<span class="fc" id="L324">    level.addElement(bubble);</span>
+
+<span class="fc" id="L326">    clm.modify(level, 1);</span>
+<span class="fc" id="L327">    assertFalse(level.getBubbles().contains(bubble));</span>
+<span class="fc" id="L328">  }</span>
+
+  /**
+   * Test the collision between a bubble and a bubble colliding.
+   */
+  @Test
+  public void testDetectPlayerBubbleTwoSameBubbles() {
+<span class="fc" id="L335">    Player player = new Player(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L336">    Bubble bubble = new Bubble(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L337">    Bubble bubble2 = new Bubble(new Vector(0, 0), new Vector(32, 32));</span>
+
+<span class="fc" id="L339">    bubble.getSpeed().setX(2);</span>
+<span class="fc" id="L340">    bubble2.getSpeed().setX(4);</span>
+
+<span class="fc" id="L342">    Level level = new Level();</span>
+<span class="fc" id="L343">    level.addElement(player);</span>
+<span class="fc" id="L344">    level.addElement(bubble);</span>
+<span class="fc" id="L345">    level.addElement(bubble2);</span>
+
+<span class="fc" id="L347">    clm.modify(level, 1);</span>
+<span class="fc" id="L348">    assertEquals(Constants.BUBBLE_BOUNCE, bubble.hSpeed(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L349">    assertEquals(-Constants.BUBBLE_BOUNCE, bubble2.hSpeed(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L350">  }</span>
+
+  /**
+   * Test the collision between a bubble and a bubble colliding.
+   */
+  @Test
+  public void testDetectPlayerBubbleTwoDifferentBubbles() {
+<span class="fc" id="L357">    Player player = new Player(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L358">    Bubble bubble = new Bubble(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L359">    Bubble bubble2 = new Bubble(new Vector(32, 0), new Vector(32, 32));</span>
+
+<span class="fc" id="L361">    bubble.getSpeed().setX(2);</span>
+<span class="fc" id="L362">    bubble2.getSpeed().setX(4);</span>
+
+<span class="fc" id="L364">    Level level = new Level();</span>
+<span class="fc" id="L365">    level.addElement(player);</span>
+<span class="fc" id="L366">    level.addElement(bubble);</span>
+<span class="fc" id="L367">    level.addElement(bubble2);</span>
+
+<span class="fc" id="L369">    clm.modify(level, 1);</span>
+<span class="fc" id="L370">    assertEquals(-Constants.BUBBLE_BOUNCE, bubble.hSpeed(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L371">    assertEquals(Constants.BUBBLE_BOUNCE, bubble2.hSpeed(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L372">  }</span>
+
+  /**
+   * Test the collision between a bubble and an enemy.
+   */
+  @Test
+  public void testDetectBubbleEnemy() {
+<span class="fc" id="L379">    Bubble bubble = new Bubble(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L380">    NPC npc = new NPC(new Vector(0, 32), new Vector(32, 32));</span>
+
+<span class="fc" id="L382">    Level level = new Level();</span>
+<span class="fc" id="L383">    level.addElement(bubble);</span>
+<span class="fc" id="L384">    level.addElement(npc);</span>
+
+<span class="fc" id="L386">    assertEquals(0, level.getFruits().size());</span>
+<span class="fc" id="L387">    clm.modify(level, 1);</span>
+<span class="fc" id="L388">    assertEquals(0, level.getNPCs().size());</span>
+<span class="fc" id="L389">  }</span>
+
+  /**
+   * Test the collision between a player and a fruit.
+   */
+  @Test
+  public void testDetectPlayerFruit() {
+<span class="fc" id="L396">    Player player = new Player(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L397">    Fruit fruit = new Fruit(new Vector(0, 32), new Vector(32, 32));</span>
+<span class="fc" id="L398">    fruit.setPickable(true);</span>
+
+<span class="fc" id="L400">    Level level = new Level();</span>
+<span class="fc" id="L401">    level.addElement(player);</span>
+<span class="fc" id="L402">    level.addElement(fruit);</span>
+
+<span class="fc" id="L404">    clm.modify(level, 1);</span>
+<span class="fc" id="L405">    assertEquals(0, level.getFruits().size());</span>
+<span class="fc" id="L406">    verify(sc).updateScore(100);</span>
+<span class="fc" id="L407">  }</span>
+
+  /**
+   * Test the collision between a player and an enemy.
+   */
+  @Test
+  public void testDetectPlayerEnemy() {
+<span class="fc" id="L414">    Player player = new Player(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L415">    NPC npc = new NPC(new Vector(0, 32), new Vector(32, 32));</span>
+
+<span class="fc" id="L417">    Level level = new Level();</span>
+<span class="fc" id="L418">    level.addElement(player);</span>
+<span class="fc" id="L419">    level.addElement(npc);</span>
+
+<span class="fc" id="L421">    assertTrue(player.isAlive());</span>
+<span class="fc" id="L422">    clm.modify(level, 1);</span>
+<span class="fc" id="L423">    assertFalse(player.isAlive());</span>
+<span class="fc" id="L424">  }</span>
+
+  /**
+   * Test the collision between a layer and a ChiliChicken powerup.
+   */
+  @Test
+  public void testDetectPlayerPowerupChiliChicken() {
+<span class="fc" id="L431">    Player player = new Player(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L432">    PowerupPickUp pickup = new ChiliChickenPickUp(new Vector(32, 32), new Vector(32, 32));</span>
+
+<span class="fc" id="L434">    Level level = new Level();</span>
+<span class="fc" id="L435">    level.addElement(player);</span>
+<span class="fc" id="L436">    level.addElement(pickup);</span>
+
+<span class="fc" id="L438">    clm.modify(level, 1);</span>
+<span class="fc" id="L439">    assertEquals(level.getPowerups().size(), 0);</span>
+<span class="fc" id="L440">    assertTrue(level.getPlayers().get(0) instanceof ChiliChicken);</span>
+<span class="fc" id="L441">  }</span>
+
+  /**
+   * Test the collision between a layer and a TurtleTaco powerup.
+   */
+  @Test
+  public void testDetectPlayerPowerupTurtleTaco() {
+<span class="fc" id="L448">    Player player = new Player(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L449">    PowerupPickUp pickup = new TurtleTacoPickUp(new Vector(32, 32), new Vector(32, 32));</span>
+
+<span class="fc" id="L451">    Level level = new Level();</span>
+<span class="fc" id="L452">    level.addElement(player);</span>
+<span class="fc" id="L453">    level.addElement(pickup);</span>
+
+<span class="fc" id="L455">    clm.modify(level, 1);</span>
+<span class="fc" id="L456">    assertEquals(level.getPowerups().size(), 0);</span>
+<span class="fc" id="L457">    assertTrue(level.getPlayers().get(0) instanceof TurtleTaco);</span>
+<span class="fc" id="L458">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

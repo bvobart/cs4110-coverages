@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>LoggingSettings.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.userinterface</a> &gt; <span class="el_source">LoggingSettings.java</span></div><h1>LoggingSettings.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.userinterface;
+
+import nl.tudelft.scrumbledore.Constants;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+
+/**
+ * Class responsible for generating the logging options and the arming of all graphical elements for
+ * these options.
+ * 
+ * @author David Alderliesten
+ */
+@SuppressWarnings(&quot;PMD.TooManyMethods&quot;)
+public final class LoggingSettings {
+  private static VBox currentBox;
+
+  /**
+   * Constructor is set to private, as only one instance of the settings menu should exist at any
+   * given time.
+   */
+<span class="nc" id="L26">  private LoggingSettings() {</span>
+<span class="nc" id="L27">  }</span>
+
+  /**
+   * Performs all the actions required to get the settings for logging.
+   * 
+   * @return A JavaFX VBox containing all the options and associated actions.
+   */
+  public static VBox fetchLoggingOptions() {
+<span class="nc" id="L35">    currentBox = new VBox(Constants.SETTINGS_PADDING);</span>
+
+<span class="nc" id="L37">    generateOptions();</span>
+
+<span class="nc" id="L39">    return currentBox;</span>
+  }
+
+  /**
+   * Generates the options needed for the logger in the settings menu.
+   */
+  private static void generateOptions() {
+<span class="nc" id="L46">    generateMovement();</span>
+<span class="nc" id="L47">    generateInput();</span>
+<span class="nc" id="L48">    generateStartStop();</span>
+<span class="nc" id="L49">    generateShooting();</span>
+<span class="nc" id="L50">    generatePoints();</span>
+<span class="nc" id="L51">    generateEnemy();</span>
+<span class="nc" id="L52">  }</span>
+
+  /**
+   * Generates button functionality for the movement query.
+   */
+  private static void generateMovement() {
+<span class="nc" id="L58">    HBox movementBox = new HBox(Constants.SETTINGS_PADDING);</span>
+<span class="nc" id="L59">    Label queryLocation = new Label(Constants.LOGGING_PLAYER_MOVEMENT);</span>
+<span class="nc" id="L60">    final ToggleGroup movementGroup = new ToggleGroup();</span>
+<span class="nc" id="L61">    final RadioButton movementTrue = new RadioButton(Constants.SETTINGS_YES);</span>
+<span class="nc" id="L62">    movementTrue.setToggleGroup(movementGroup);</span>
+<span class="nc" id="L63">    final RadioButton movementFalse = new RadioButton(Constants.SETTINGS_NO);</span>
+<span class="nc" id="L64">    movementFalse.setToggleGroup(movementGroup);</span>
+
+<span class="nc bnc" id="L66" title="All 2 branches missed.">    if (Constants.isLoggingWantMovement()) {</span>
+<span class="nc" id="L67">      movementTrue.setSelected(true);</span>
+<span class="nc" id="L68">      movementFalse.setSelected(false);</span>
+    } else {
+<span class="nc" id="L70">      movementFalse.setSelected(true);</span>
+<span class="nc" id="L71">      movementTrue.setSelected(false);</span>
+    }
+<span class="nc" id="L73">    movementGroup.selectedToggleProperty().addListener(new ChangeListener&lt;Object&gt;() {</span>
+      public void changed(ObservableValue&lt;? extends Object&gt; param, Object oldButton,
+          Object newButton) {
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        if (newButton == movementTrue) {</span>
+<span class="nc" id="L77">          Constants.setLoggingWantMovement(true);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        } else if (newButton == movementFalse) {</span>
+<span class="nc" id="L79">          Constants.setLoggingWantMovement(false);</span>
+        }
+<span class="nc" id="L81">      }</span>
+    });
+
+<span class="nc" id="L84">    movementBox.getChildren().addAll(queryLocation, movementTrue, movementFalse);</span>
+<span class="nc" id="L85">    currentBox.getChildren().addAll(movementBox);</span>
+<span class="nc" id="L86">  }</span>
+
+  /**
+   * Generates the queries for the input logging within the settings menu.
+   */
+  private static void generateInput() {
+<span class="nc" id="L92">    HBox inputBox = new HBox(Constants.SETTINGS_PADDING);</span>
+<span class="nc" id="L93">    Label queryInput = new Label(Constants.LOGGING_PLAYER_INPUT);</span>
+<span class="nc" id="L94">    final ToggleGroup inputGroup = new ToggleGroup();</span>
+<span class="nc" id="L95">    final RadioButton inputTrue = new RadioButton(Constants.SETTINGS_YES);</span>
+<span class="nc" id="L96">    inputTrue.setToggleGroup(inputGroup);</span>
+<span class="nc" id="L97">    final RadioButton inputFalse = new RadioButton(Constants.SETTINGS_NO);</span>
+<span class="nc" id="L98">    inputFalse.setToggleGroup(inputGroup);</span>
+
+<span class="nc bnc" id="L100" title="All 2 branches missed.">    if (Constants.isLoggingWantInput()) {</span>
+<span class="nc" id="L101">      inputTrue.setSelected(true);</span>
+<span class="nc" id="L102">      inputFalse.setSelected(false);</span>
+    } else {
+<span class="nc" id="L104">      inputFalse.setSelected(true);</span>
+<span class="nc" id="L105">      inputTrue.setSelected(false);</span>
+    }
+<span class="nc" id="L107">    inputGroup.selectedToggleProperty().addListener(new ChangeListener&lt;Object&gt;() {</span>
+      public void changed(ObservableValue&lt;? extends Object&gt; param, Object oldButton,
+          Object newButton) {
+<span class="nc bnc" id="L110" title="All 2 branches missed.">        if (newButton == inputTrue) {</span>
+<span class="nc" id="L111">          Constants.setLoggingWantInput(true);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        } else if (newButton == inputFalse) {</span>
+<span class="nc" id="L113">          Constants.setLoggingWantInput(false);</span>
+        }
+<span class="nc" id="L115">      }</span>
+    });
+
+<span class="nc" id="L118">    inputBox.getChildren().addAll(queryInput, inputTrue, inputFalse);</span>
+<span class="nc" id="L119">    currentBox.getChildren().addAll(inputBox);</span>
+<span class="nc" id="L120">  }</span>
+
+  /**
+   * Generate the start/stop options or logging for the settings menu.
+   */
+  private static void generateStartStop() {
+<span class="nc" id="L126">    HBox startStopBox = new HBox(Constants.SETTINGS_PADDING);</span>
+<span class="nc" id="L127">    Label queryStartStop = new Label(Constants.LOGGING_GAME_STARTSTOP);</span>
+<span class="nc" id="L128">    final ToggleGroup startStopGroup = new ToggleGroup();</span>
+<span class="nc" id="L129">    final RadioButton startStopTrue = new RadioButton(Constants.SETTINGS_YES);</span>
+<span class="nc" id="L130">    startStopTrue.setToggleGroup(startStopGroup);</span>
+<span class="nc" id="L131">    final RadioButton startStopFalse = new RadioButton(Constants.SETTINGS_NO);</span>
+<span class="nc" id="L132">    startStopFalse.setToggleGroup(startStopGroup);</span>
+
+<span class="nc bnc" id="L134" title="All 2 branches missed.">    if (Constants.isLoggingWantStartStop()) {</span>
+<span class="nc" id="L135">      startStopTrue.setSelected(true);</span>
+<span class="nc" id="L136">      startStopFalse.setSelected(false);</span>
+    } else {
+<span class="nc" id="L138">      startStopFalse.setSelected(true);</span>
+<span class="nc" id="L139">      startStopTrue.setSelected(false);</span>
+    }
+<span class="nc" id="L141">    startStopGroup.selectedToggleProperty().addListener(new ChangeListener&lt;Object&gt;() {</span>
+      public void changed(ObservableValue&lt;? extends Object&gt; param, Object oldButton,
+          Object newButton) {
+<span class="nc bnc" id="L144" title="All 2 branches missed.">        if (newButton == startStopTrue) {</span>
+<span class="nc" id="L145">          Constants.setLoggingWantStartStop(true);</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">        } else if (newButton == startStopFalse) {</span>
+<span class="nc" id="L147">          Constants.setLoggingWantStartStop(false);</span>
+        }
+<span class="nc" id="L149">      }</span>
+    });
+
+<span class="nc" id="L152">    startStopBox.getChildren().addAll(queryStartStop, startStopTrue, startStopFalse);</span>
+<span class="nc" id="L153">    currentBox.getChildren().addAll(startStopBox);</span>
+<span class="nc" id="L154">  }</span>
+
+  /**
+   * Generate the shooting options or logging for the settings menu.
+   */
+  private static void generateShooting() {
+<span class="nc" id="L160">    HBox shootBox = new HBox(Constants.SETTINGS_PADDING);</span>
+<span class="nc" id="L161">    Label queryShoot = new Label(Constants.LOGGING_SHOOTING);</span>
+<span class="nc" id="L162">    final ToggleGroup shootGroup = new ToggleGroup();</span>
+<span class="nc" id="L163">    final RadioButton shootTrue = new RadioButton(Constants.SETTINGS_YES);</span>
+<span class="nc" id="L164">    shootTrue.setToggleGroup(shootGroup);</span>
+<span class="nc" id="L165">    final RadioButton shootFalse = new RadioButton(Constants.SETTINGS_NO);</span>
+<span class="nc" id="L166">    shootFalse.setToggleGroup(shootGroup);</span>
+
+<span class="nc bnc" id="L168" title="All 2 branches missed.">    if (Constants.isLoggingWantShooting()) {</span>
+<span class="nc" id="L169">      shootTrue.setSelected(true);</span>
+<span class="nc" id="L170">      shootFalse.setSelected(false);</span>
+    } else {
+<span class="nc" id="L172">      shootFalse.setSelected(true);</span>
+<span class="nc" id="L173">      shootTrue.setSelected(false);</span>
+    }
+<span class="nc" id="L175">    shootGroup.selectedToggleProperty().addListener(new ChangeListener&lt;Object&gt;() {</span>
+      public void changed(ObservableValue&lt;? extends Object&gt; param, Object oldButton,
+          Object newButton) {
+<span class="nc bnc" id="L178" title="All 2 branches missed.">        if (newButton == shootTrue) {</span>
+<span class="nc" id="L179">          Constants.setLoggingWantShooting(true);</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">        } else if (newButton == shootFalse) {</span>
+<span class="nc" id="L181">          Constants.setLoggingWantShooting(false);</span>
+        }
+<span class="nc" id="L183">      }</span>
+    });
+
+<span class="nc" id="L186">    shootBox.getChildren().addAll(queryShoot, shootTrue, shootFalse);</span>
+<span class="nc" id="L187">    currentBox.getChildren().addAll(shootBox);</span>
+<span class="nc" id="L188">  }</span>
+
+  /**
+   * Generate the points options or logging for the settings menu.
+   */
+  private static void generatePoints() {
+<span class="nc" id="L194">    HBox pointBox = new HBox(Constants.SETTINGS_PADDING);</span>
+<span class="nc" id="L195">    Label queryPoint = new Label(Constants.LOGGING_POINTS);</span>
+<span class="nc" id="L196">    final ToggleGroup pointGroup = new ToggleGroup();</span>
+<span class="nc" id="L197">    final RadioButton pointTrue = new RadioButton(Constants.SETTINGS_YES);</span>
+<span class="nc" id="L198">    pointTrue.setToggleGroup(pointGroup);</span>
+<span class="nc" id="L199">    final RadioButton pointFalse = new RadioButton(Constants.SETTINGS_NO);</span>
+<span class="nc" id="L200">    pointFalse.setToggleGroup(pointGroup);</span>
+
+<span class="nc bnc" id="L202" title="All 2 branches missed.">    if (Constants.isLoggingWantPoints()) {</span>
+<span class="nc" id="L203">      pointTrue.setSelected(true);</span>
+<span class="nc" id="L204">      pointFalse.setSelected(false);</span>
+    } else {
+<span class="nc" id="L206">      pointFalse.setSelected(true);</span>
+<span class="nc" id="L207">      pointTrue.setSelected(false);</span>
+    }
+<span class="nc" id="L209">    pointGroup.selectedToggleProperty().addListener(new ChangeListener&lt;Object&gt;() {</span>
+      public void changed(ObservableValue&lt;? extends Object&gt; param, Object oldButton,
+          Object newButton) {
+<span class="nc bnc" id="L212" title="All 2 branches missed.">        if (newButton == pointTrue) {</span>
+<span class="nc" id="L213">          Constants.setLoggingWantPoints(true);</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">        } else if (newButton == pointFalse) {</span>
+<span class="nc" id="L215">          Constants.setLoggingWantPoints(false);</span>
+        }
+<span class="nc" id="L217">      }</span>
+    });
+
+<span class="nc" id="L220">    pointBox.getChildren().addAll(queryPoint, pointTrue, pointFalse);</span>
+<span class="nc" id="L221">    currentBox.getChildren().addAll(pointBox);</span>
+<span class="nc" id="L222">  }</span>
+
+  /**
+   * Generate the enemy options or logging for the settings menu.
+   */
+  private static void generateEnemy() {
+<span class="nc" id="L228">    HBox enemyBox = new HBox(Constants.SETTINGS_PADDING);</span>
+<span class="nc" id="L229">    Label queryEnemy = new Label(Constants.LOGGING_ENEMY);</span>
+<span class="nc" id="L230">    final ToggleGroup enemyGroup = new ToggleGroup();</span>
+<span class="nc" id="L231">    final RadioButton enemyTrue = new RadioButton(Constants.SETTINGS_YES);</span>
+<span class="nc" id="L232">    enemyTrue.setToggleGroup(enemyGroup);</span>
+<span class="nc" id="L233">    final RadioButton enemyFalse = new RadioButton(Constants.SETTINGS_NO);</span>
+<span class="nc" id="L234">    enemyFalse.setToggleGroup(enemyGroup);</span>
+
+<span class="nc bnc" id="L236" title="All 2 branches missed.">    if (Constants.isLoggingWantEnemy()) {</span>
+<span class="nc" id="L237">      enemyTrue.setSelected(true);</span>
+<span class="nc" id="L238">      enemyFalse.setSelected(false);</span>
+    } else {
+<span class="nc" id="L240">      enemyFalse.setSelected(true);</span>
+<span class="nc" id="L241">      enemyTrue.setSelected(false);</span>
+    }
+<span class="nc" id="L243">    enemyGroup.selectedToggleProperty().addListener(new ChangeListener&lt;Object&gt;() {</span>
+      public void changed(ObservableValue&lt;? extends Object&gt; param, Object oldButton,
+          Object newButton) {
+<span class="nc bnc" id="L246" title="All 2 branches missed.">        if (newButton == enemyTrue) {</span>
+<span class="nc" id="L247">          Constants.setLoggingWantEnemy(true);</span>
+<span class="nc bnc" id="L248" title="All 2 branches missed.">        } else if (newButton == enemyFalse) {</span>
+<span class="nc" id="L249">          Constants.setLoggingWantEnemy(false);</span>
+        }
+<span class="nc" id="L251">      }</span>
+    });
+
+<span class="nc" id="L254">    enemyBox.getChildren().addAll(queryEnemy, enemyTrue, enemyFalse);</span>
+<span class="nc" id="L255">    currentBox.getChildren().addAll(enemyBox);</span>
+<span class="nc" id="L256">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

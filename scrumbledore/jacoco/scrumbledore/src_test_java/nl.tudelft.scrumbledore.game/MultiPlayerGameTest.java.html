@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>MultiPlayerGameTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.game</a> &gt; <span class="el_source">MultiPlayerGameTest.java</span></div><h1>MultiPlayerGameTest.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.game;
+
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+
+import org.junit.Test;
+
+import nl.tudelft.scrumbledore.level.Level;
+
+/**
+ * Test Suite for the MultiPlayerGameTest.
+ * 
+ * @author Jesse Tilro
+ *
+ */
+<span class="fc" id="L17">public class MultiPlayerGameTest extends GameTest {</span>
+
+  @Override
+  protected Game make(ArrayList&lt;Level&gt; levels) {
+<span class="fc" id="L21">    return new MultiPlayerGame(levels);</span>
+  }
+
+  /**
+   * The MultiPlayerGame should make levels with at least two players.
+   */
+  @Test
+  public void testMakeLevels() {
+<span class="fc" id="L29">    Game game = new MultiPlayerGame();</span>
+<span class="fc" id="L30">    ArrayList&lt;Level&gt; levels = game.makeLevels();</span>
+<span class="pc bpc" id="L31" title="1 of 2 branches missed.">    assertTrue(levels.get(0).getPlayers().size() &gt; 1);</span>
+<span class="fc" id="L32">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

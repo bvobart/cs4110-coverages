@@ -1,0 +1,1927 @@
+<html>
+<head>
+<style type='text/css'>
+html, body, div, span, p, blockquote, pre {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+
+body{
+	line-height: 1;
+	color: black;
+	background: white;
+	margin-left: 20px;
+}
+
+.src { 
+	border: 1px solid #dddddd;
+	padding-top: 10px;
+	padding-right: 5px;
+	padding-left: 5px;
+	font-family: Consolas, Courier, monospace;
+}
+
+
+.covered {background-color: #ddffdd}
+.uncovered {background-color: #ffdddd}
+.killed {background-color: #aaffaa}
+.survived {background-color: #ffaaaa}
+.uncertain {background-color: #dde7ef}
+.run_error {background-color: #dde7ef}
+.na {background-color: #eeeeee}
+.timed_out {background-color: #dde7ef}
+.non_viable {background-color: #aaffaa}
+.memory_error {background-color: #dde7ef}
+.not_started {background-color: #dde7ef; color : red}
+.no_coverage {background-color: #ffaaaa}
+
+
+.pop {outline:none; }
+.pop strong {line-height:30px;}
+.pop {text-decoration:none;}
+.pop span { z-index:10;display:none; padding:14px 20px; margin-top:-30px; margin-left:28px; width:800px; line-height:16px; word-wrap:break-word; }
+.pop:hover span{ display:inline; position:absolute; color:#111; border:1px solid #DCA; background:#fffAF0;}
+
+.pop span { border-radius:4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; -moz-box-shadow: 5px 5px 8px #CCC; -webkit-box-shadow: 5px 5px 8px #CCC; box-shadow: 5px 5px 8px #CCC; }
+</style>
+
+</head>
+<body>
+
+
+<h1>Fruit.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_1'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package nl.tudelft.scrumbledore.level.element;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_2'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_3'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.ArrayList;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_4'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import nl.tudelft.scrumbledore.level.Vector;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_5'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import nl.tudelft.scrumbledore.sprite.Sprite;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_6'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import nl.tudelft.scrumbledore.sprite.SpriteStore;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_7'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_8'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_9'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Class representing a Fruit in a game.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_10'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_11'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author Niels Warnars</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_12'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author Floris Doolaard</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_13'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_14'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public class Fruit extends BasicDynamicElement {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_15'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  private int value;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_16'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  private Boolean pickable;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_17'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_18'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_19'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * Create a new Fruit instance.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_20'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_21'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * @param position</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_22'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   *          Position of the fruit in the level.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_23'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   *          </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_24'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * @param size</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_25'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   *          Size of the fruit.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_26'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_27'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  public Fruit(Vector position, Vector size) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_28'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    super(position, size);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_29'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_30'/>
+30
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_30'>1</a>
+<span>
+
+1. <init> : removed call to nl/tudelft/scrumbledore/level/element/Fruit::setGravity &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    setGravity(true);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_31'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    pickable = false;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_32'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_33'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_34'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_35'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  public int hashCode() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_36'/>
+36
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_36'>1</a>
+<span>
+
+1. hashCode : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    return 0;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_37'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_38'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_39'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_40'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  public boolean equals(Object other) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_41'/>
+41
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_41'>1</a>
+<span>
+
+1. equals : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    if (other instanceof Fruit) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_42'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>      Fruit that = (Fruit) other;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_43'/>
+43
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_43'>4</a>
+<span>
+
+1. equals : negated conditional &rarr; KILLED<br/>
+
+2. equals : negated conditional &rarr; KILLED<br/>
+
+3. equals : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+4. equals : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>      return this.getPosition().equals(that.getPosition()) &#38;&#38; this.getSize().equals(that.getSize());</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_44'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_45'/>
+45
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_45'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_46'/>
+46
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_46'>1</a>
+<span>
+
+1. equals : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    return false;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_47'/>
+47
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_47'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_48'/>
+48
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_48'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_49'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_50'/>
+50
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_50'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * Get the value of a fruit.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_51'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_52'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * @return The value of a fruit</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_53'/>
+53
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_53'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_54'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  public int getValue() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_55'/>
+55
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_55'>1</a>
+<span>
+
+1. getValue : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    return value;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_56'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_57'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_58'/>
+58
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_58'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_59'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * Set the value of a fruit.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_60'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_61'/>
+61
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_61'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * @param value</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_62'/>
+62
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_62'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   *          The value of a fruit</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_63'/>
+63
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_63'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_64'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  public void setValue(int value) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_65'/>
+65
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_65'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    this.value = value;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_66'/>
+66
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_66'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_67'/>
+67
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_67'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_68'/>
+68
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_68'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_69'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * Return whether the fruit instance is pickable or not.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_70'/>
+70
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_70'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_71'/>
+71
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_71'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * @return Boolean pickable.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_72'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_73'/>
+73
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_73'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  public Boolean isPickable() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_74'/>
+74
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_74'>1</a>
+<span>
+
+1. isPickable : mutated return of Object value for nl/tudelft/scrumbledore/level/element/Fruit::isPickable to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    return pickable;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_75'/>
+75
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_75'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_76'/>
+76
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_76'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_77'/>
+77
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_77'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_78'/>
+78
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_78'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * Setting whether the fruit instance is pickable.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_79'/>
+79
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_79'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_80'/>
+80
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_80'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * @param bool</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_81'/>
+81
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_81'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   *          true or false.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_82'/>
+82
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_82'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_83'/>
+83
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_83'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  public void setPickable(Boolean bool) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_84'/>
+84
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_84'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    pickable = bool;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_85'/>
+85
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_85'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_86'/>
+86
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_86'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_87'/>
+87
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_87'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_88'/>
+88
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_88'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * Retrieve a set of Sprites to be drawn in the current cycle at the position of this Level</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_89'/>
+89
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_89'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * Element.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_90'/>
+90
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_90'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_91'/>
+91
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_91'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * @param steps</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_92'/>
+92
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_92'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   *          The absolute exact number of steps since the game was started.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_93'/>
+93
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_93'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_94'/>
+94
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_94'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * @return Sprites to be drawn.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_95'/>
+95
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_95'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_96'/>
+96
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_96'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  public ArrayList&#60;Sprite&#62; getSprites(double steps) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_97'/>
+97
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_97'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    SpriteStore store = SpriteStore.getInstance();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_98'/>
+98
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_98'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    ArrayList&#60;Sprite&#62; result = new ArrayList&#60;Sprite&#62;();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_99'/>
+99
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_99'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    result.add(store.getAnimated(&#34;fruit&#34;).getFrame(posX()));</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_100'/>
+100
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_100'>1</a>
+<span>
+
+1. getSprites : mutated return of Object value for nl/tudelft/scrumbledore/level/element/Fruit::getSprites to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    return result;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_101'/>
+101
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_101'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_102'/>
+102
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_102'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_103'/>
+103
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_103'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_104'/>
+104
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_104'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * Get the last horizontal move performed.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_105'/>
+105
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_105'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_106'/>
+106
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_106'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * @return The last move performed.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_107'/>
+107
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_107'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_108'/>
+108
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_108'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  public LevelElementAction getLastMove() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_109'/>
+109
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_109'>1</a>
+<span>
+
+1. getLastMove : mutated return of Object value for nl/tudelft/scrumbledore/level/element/Fruit::getLastMove to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    return null;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_110'/>
+110
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_110'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_111'/>
+111
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_111'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_112'/>
+112
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_112'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_113'/>
+113
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_113'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * Set the last performed horizontal move.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_114'/>
+114
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_114'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_115'/>
+115
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_115'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   * @param action</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_116'/>
+116
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_116'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   *          The last move action performed.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_117'/>
+117
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_117'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>   */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_118'/>
+118
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_118'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  public void setLastMove(LevelElementAction action) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_119'/>
+119
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_119'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_120'/>
+120
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_120'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@632241f5_121'/>
+121
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_121'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@632241f5_30'>30</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_30'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b><init><br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.element.FruitTest.testFruit(nl.tudelft.scrumbledore.level.element.FruitTest)</span></span> removed call to nl/tudelft/scrumbledore/level/element/Fruit::setGravity &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@632241f5_36'>36</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_36'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>hashCode<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.element.FruitTest.testHashCode(nl.tudelft.scrumbledore.level.element.FruitTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@632241f5_41'>41</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_41'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.element.FruitTest.testEqualsOtherObject(nl.tudelft.scrumbledore.level.element.FruitTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@632241f5_43'>43</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_43'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.element.FruitTest.testEqualsTrue(nl.tudelft.scrumbledore.level.element.FruitTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.element.FruitTest.testEqualsTrue(nl.tudelft.scrumbledore.level.element.FruitTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.element.FruitTest.testEqualsTrue(nl.tudelft.scrumbledore.level.element.FruitTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.element.FruitTest.testEqualsFalse(nl.tudelft.scrumbledore.level.element.FruitTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@632241f5_46'>46</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_46'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>equals<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.element.FruitTest.testEqualsOtherObject(nl.tudelft.scrumbledore.level.element.FruitTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@632241f5_55'>55</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_55'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getValue<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.element.FruitTest.testGetSetValue(nl.tudelft.scrumbledore.level.element.FruitTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@632241f5_74'>74</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_74'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isPickable<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.element.FruitTest.testIsPickable(nl.tudelft.scrumbledore.level.element.FruitTest)</span></span> mutated return of Object value for nl/tudelft/scrumbledore/level/element/Fruit::isPickable to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@632241f5_100'>100</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_100'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getSprites<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.element.FruitTest.testGetSprites(nl.tudelft.scrumbledore.level.element.FruitTest)</span></span> mutated return of Object value for nl/tudelft/scrumbledore/level/element/Fruit::getSprites to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@632241f5_109'>109</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@632241f5_109'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getLastMove<br/><b>Killed by : </b>nl.tudelft.scrumbledore.level.element.FruitTest.testGetLastMove(nl.tudelft.scrumbledore.level.element.FruitTest)</span></span> mutated return of Object value for nl/tudelft/scrumbledore/level/element/Fruit::getLastMove to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+
+<li class='mutator'>INCREMENTS_MUTATOR</li>
+
+<li class='mutator'>VOID_METHOD_CALL_MUTATOR</li>
+
+<li class='mutator'>RETURN_VALS_MUTATOR</li>
+
+<li class='mutator'>MATH_MUTATOR</li>
+
+<li class='mutator'>NEGATE_CONDITIONALS_MUTATOR</li>
+
+<li class='mutator'>INVERT_NEGS_MUTATOR</li>
+
+<li class='mutator'>CONDITIONALS_BOUNDARY_MUTATOR</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>nl.tudelft.scrumbledore.level.modifier.GravityLevelModifierTest.testPullExceededMaxSpeed(nl.tudelft.scrumbledore.level.modifier.GravityLevelModifierTest) (1 ms)</li><li>nl.tudelft.scrumbledore.StepTimerTest.testLoopGameStepCounter(nl.tudelft.scrumbledore.StepTimerTest) (1016 ms)</li><li>nl.tudelft.scrumbledore.level.modifier.CollisionsLevelModifierTest.testDetectPlayerBubbleWithNPCFromTop(nl.tudelft.scrumbledore.level.modifier.CollisionsLevelModifierTest) (4 ms)</li><li>nl.tudelft.scrumbledore.level.LevelTest.testAddElementFruits(nl.tudelft.scrumbledore.level.LevelTest) (1 ms)</li><li>nl.tudelft.scrumbledore.level.modifier.GravityLevelModifierTest.testPullAboutToReachMaxSpeed(nl.tudelft.scrumbledore.level.modifier.GravityLevelModifierTest) (0 ms)</li><li>nl.tudelft.scrumbledore.level.LevelTest.testAddElementNPCs(nl.tudelft.scrumbledore.level.LevelTest) (0 ms)</li><li>nl.tudelft.scrumbledore.game.SinglePlayerGameTest.testRestart(nl.tudelft.scrumbledore.game.SinglePlayerGameTest) (7 ms)</li><li>nl.tudelft.scrumbledore.game.SinglePlayerGameTest.testSteps(nl.tudelft.scrumbledore.game.SinglePlayerGameTest) (1 ms)</li><li>nl.tudelft.scrumbledore.level.LevelParserTest.testFileNotFound(nl.tudelft.scrumbledore.level.LevelParserTest) (51 ms)</li><li>nl.tudelft.scrumbledore.level.element.FruitTest.testHashCode(nl.tudelft.scrumbledore.level.element.FruitTest) (0 ms)</li><li>nl.tudelft.scrumbledore.game.MultiPlayerGameTest.testGetHighScore(nl.tudelft.scrumbledore.game.MultiPlayerGameTest) (2 ms)</li><li>nl.tudelft.scrumbledore.level.element.FruitTest.testEqualsOtherObject(nl.tudelft.scrumbledore.level.element.FruitTest) (0 ms)</li><li>nl.tudelft.scrumbledore.level.modifier.GravityLevelModifierTest.testModifyLevelAllElements(nl.tudelft.scrumbledore.level.modifier.GravityLevelModifierTest) (1 ms)</li><li>nl.tudelft.scrumbledore.level.modifier.WarpLevelModifierTest.testWarpVerticallyTopToBottom(nl.tudelft.scrumbledore.level.modifier.WarpLevelModifierTest) (0 ms)</li><li>nl.tudelft.scrumbledore.level.modifier.GravityLevelModifierTest.testPullNotReachedMaxSpeed(nl.tudelft.scrumbledore.level.modifier.GravityLevelModifierTest) (1 ms)</li><li>nl.tudelft.scrumbledore.game.SinglePlayerGameTest.testRemainingLevelsInitial(nl.tudelft.scrumbledore.game.SinglePlayerGameTest) (1 ms)</li><li>nl.tudelft.scrumbledore.game.MultiPlayerGameTest.testStep(nl.tudelft.scrumbledore.game.MultiPlayerGameTest) (16 ms)</li><li>nl.tudelft.scrumbledore.level.modifier.GravityLevelModifierTest.testPullNull(nl.tudelft.scrumbledore.level.modifier.GravityLevelModifierTest) (0 ms)</li><li>nl.tudelft.scrumbledore.game.MultiPlayerGameTest.testRemainingLevelsAfterGoingToNextLevel(nl.tudelft.scrumbledore.game.MultiPlayerGameTest) (11 ms)</li><li>nl.tudelft.scrumbledore.level.element.FruitTest.testIsPickable(nl.tudelft.scrumbledore.level.element.FruitTest) (0 ms)</li><li>nl.tudelft.scrumbledore.level.element.FruitTest.testFruit(nl.tudelft.scrumbledore.level.element.FruitTest) (1 ms)</li><li>nl.tudelft.scrumbledore.level.element.FruitTest.testGetSetValue(nl.tudelft.scrumbledore.level.element.FruitTest) (0 ms)</li><li>nl.tudelft.scrumbledore.game.MultiPlayerGameTest.testSteps(nl.tudelft.scrumbledore.game.MultiPlayerGameTest) (0 ms)</li><li>nl.tudelft.scrumbledore.game.MultiPlayerGameTest.testGetScore(nl.tudelft.scrumbledore.game.MultiPlayerGameTest) (1 ms)</li><li>nl.tudelft.scrumbledore.game.MultiPlayerGameTest.testRemainingLevelsInitial(nl.tudelft.scrumbledore.game.MultiPlayerGameTest) (1 ms)</li><li>nl.tudelft.scrumbledore.game.SinglePlayerGameTest.testGetHighScore(nl.tudelft.scrumbledore.game.SinglePlayerGameTest) (2 ms)</li><li>nl.tudelft.scrumbledore.game.SinglePlayerGameTest.testGetScore(nl.tudelft.scrumbledore.game.SinglePlayerGameTest) (3 ms)</li><li>nl.tudelft.scrumbledore.level.LevelParserTest.testReadLevelFromScanner(nl.tudelft.scrumbledore.level.LevelParserTest) (4 ms)</li><li>nl.tudelft.scrumbledore.level.modifier.GravityLevelModifierTest.testModifyLevelBoundaryValues(nl.tudelft.scrumbledore.level.modifier.GravityLevelModifierTest) (0 ms)</li><li>nl.tudelft.scrumbledore.level.modifier.WarpLevelModifierTest.testWarpHorizontallyRightToLeft(nl.tudelft.scrumbledore.level.modifier.WarpLevelModifierTest) (0 ms)</li><li>nl.tudelft.scrumbledore.level.modifier.WarpLevelModifierTest.testWarpVerticallyBottomToTop(nl.tudelft.scrumbledore.level.modifier.WarpLevelModifierTest) (0 ms)</li><li>nl.tudelft.scrumbledore.level.LevelParserTest.testListFilesInDir(nl.tudelft.scrumbledore.level.LevelParserTest) (6 ms)</li><li>nl.tudelft.scrumbledore.level.modifier.CollisionsLevelModifierTest.testDetectPlayerFruit(nl.tudelft.scrumbledore.level.modifier.CollisionsLevelModifierTest) (1 ms)</li><li>nl.tudelft.scrumbledore.level.element.FruitTest.testGetSprites(nl.tudelft.scrumbledore.level.element.FruitTest) (0 ms)</li><li>nl.tudelft.scrumbledore.level.element.FruitTest.testGetLastMove(nl.tudelft.scrumbledore.level.element.FruitTest) (0 ms)</li><li>nl.tudelft.scrumbledore.level.modifier.WarpLevelModifierTest.testWarpHorizontallyLeftToRight(nl.tudelft.scrumbledore.level.modifier.WarpLevelModifierTest) (0 ms)</li><li>nl.tudelft.scrumbledore.level.element.NPCTest.testEqualsFalseOtherClass(nl.tudelft.scrumbledore.level.element.NPCTest) (0 ms)</li><li>nl.tudelft.scrumbledore.level.LevelParserTest.testGetElementFromChar(nl.tudelft.scrumbledore.level.LevelParserTest) (6 ms)</li><li>nl.tudelft.scrumbledore.StepTimerTest.testGameGetterSetter(nl.tudelft.scrumbledore.StepTimerTest) (33 ms)</li><li>nl.tudelft.scrumbledore.game.MultiPlayerGameTest.testConstructor(nl.tudelft.scrumbledore.game.MultiPlayerGameTest) (1 ms)</li><li>nl.tudelft.scrumbledore.game.SinglePlayerGameTest.testStep(nl.tudelft.scrumbledore.game.SinglePlayerGameTest) (1 ms)</li><li>nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest.testModifyFruit(nl.tudelft.scrumbledore.level.modifier.KineticsLevelModifierTest) (0 ms)</li><li>nl.tudelft.scrumbledore.game.MultiPlayerGameTest.testMakeLevels(nl.tudelft.scrumbledore.game.MultiPlayerGameTest) (4 ms)</li><li>nl.tudelft.scrumbledore.level.element.FruitTest.testEqualsTrue(nl.tudelft.scrumbledore.level.element.FruitTest) (0 ms)</li><li>nl.tudelft.scrumbledore.level.LevelParserTest.testLoadLevelsFromDisk(nl.tudelft.scrumbledore.level.LevelParserTest) (4 ms)</li><li>nl.tudelft.scrumbledore.level.modifier.GravityLevelModifierTest.testModifyLevelUnaffected(nl.tudelft.scrumbledore.level.modifier.GravityLevelModifierTest) (1 ms)</li><li>nl.tudelft.scrumbledore.game.GameFactoryTest.testMakeSinglePlayerGame(nl.tudelft.scrumbledore.game.GameFactoryTest) (3 ms)</li><li>nl.tudelft.scrumbledore.game.SinglePlayerGameTest.testMakeLevels(nl.tudelft.scrumbledore.game.SinglePlayerGameTest) (5 ms)</li><li>nl.tudelft.scrumbledore.game.SinglePlayerGameTest.testRemainingLevelsAfterGoingToNextLevel(nl.tudelft.scrumbledore.game.SinglePlayerGameTest) (1 ms)</li><li>nl.tudelft.scrumbledore.game.GameFactoryTest.testMakeMultiPlayerGame(nl.tudelft.scrumbledore.game.GameFactoryTest) (8 ms)</li><li>nl.tudelft.scrumbledore.game.MultiPlayerGameTest.testRestart(nl.tudelft.scrumbledore.game.MultiPlayerGameTest) (6 ms)</li><li>nl.tudelft.scrumbledore.level.element.FruitTest.testEqualsFalse(nl.tudelft.scrumbledore.level.element.FruitTest) (1 ms)</li><li>nl.tudelft.scrumbledore.level.LevelParserTest.testGetBlockPosition(nl.tudelft.scrumbledore.level.LevelParserTest) (3 ms)</li><li>nl.tudelft.scrumbledore.game.SinglePlayerGameTest.testGoToNextLevel(nl.tudelft.scrumbledore.game.SinglePlayerGameTest) (1 ms)</li><li>nl.tudelft.scrumbledore.level.modifier.CollisionsLevelModifierTest.testDetectFruitPlatform(nl.tudelft.scrumbledore.level.modifier.CollisionsLevelModifierTest) (113 ms)</li><li>nl.tudelft.scrumbledore.level.VectorTest.testEqualsFalseOtherClass(nl.tudelft.scrumbledore.level.VectorTest) (1 ms)</li><li>nl.tudelft.scrumbledore.game.MultiPlayerGameTest.testGoToNextLevel(nl.tudelft.scrumbledore.game.MultiPlayerGameTest) (0 ms)</li><li>nl.tudelft.scrumbledore.level.modifier.GravityLevelModifierTest.testConstructor(nl.tudelft.scrumbledore.level.modifier.GravityLevelModifierTest) (0 ms)</li><li>nl.tudelft.scrumbledore.game.SinglePlayerGameTest.testConstructor(nl.tudelft.scrumbledore.game.SinglePlayerGameTest) (1 ms)</li><li>nl.tudelft.scrumbledore.level.element.PlayerTest.testEqualsFalseOtherClass(nl.tudelft.scrumbledore.level.element.PlayerTest) (1 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 1.1.9
+
+</body>
+</html>

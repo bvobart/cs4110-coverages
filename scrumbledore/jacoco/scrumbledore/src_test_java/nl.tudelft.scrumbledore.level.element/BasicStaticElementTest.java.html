@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>BasicStaticElementTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore.level.element</a> &gt; <span class="el_source">BasicStaticElementTest.java</span></div><h1>BasicStaticElementTest.java</h1><pre class="source lang-java linenums">package nl.tudelft.scrumbledore.level.element;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import nl.tudelft.scrumbledore.Constants;
+import nl.tudelft.scrumbledore.level.Vector;
+import nl.tudelft.scrumbledore.sprite.Sprite;
+
+/**
+ * Test case for the abstract BasicStaticElement class.
+ * 
+ * @author Niels Warnars
+ */
+<span class="fc" id="L21">public class BasicStaticElementTest {</span>
+  private ConcreteBasicStaticElement element;
+  
+  /**
+   * Set the ConcreteBasicStaticElement field to a new ConcreteBasicStaticElement instance 
+   * to use as a test object.
+   */
+  @Before
+  public void setUp() {
+<span class="fc" id="L30">    element = new ConcreteBasicStaticElement(new Vector(0, 0), new Vector(32, 32));</span>
+<span class="fc" id="L31">  }</span>
+  
+  /**
+   * Test the height property of a basic static element.
+   */
+  @Test
+  public void testHeight() {
+<span class="fc" id="L38">    assertEquals(32, element.height(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L39">  }</span>
+
+  /**
+   * Test the width property of a basic static element.
+   */
+  @Test
+  public void testWidth() {
+<span class="fc" id="L46">    assertEquals(32, element.width(), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L47">  }</span>
+  
+  /**
+   * Verify whether the distance between two basic static elements can be calculated correctly.
+   */
+  @Test
+  public void testDistance() {
+<span class="fc" id="L54">    ConcreteBasicStaticElement element2 </span>
+      = new ConcreteBasicStaticElement(new Vector(42, 0), new Vector(32, 32));
+
+<span class="fc" id="L57">    assertEquals(42d, element.distance(element2), Constants.DOUBLE_PRECISION);</span>
+<span class="fc" id="L58">  }</span>
+  
+  /**
+   * Verify whether the in radius calculation of two level elements happens correctly. 
+   * Verification should result in 'false'.
+   */
+  @Test
+  public void testInRadiusRangeOfSmaller() {
+<span class="fc" id="L66">    ConcreteBasicStaticElement element2 </span>
+      = new ConcreteBasicStaticElement(new Vector(42, 0), new Vector(32, 32));
+
+<span class="fc" id="L69">    assertFalse(element.inRadiusRangeOf(element2, 41d));</span>
+<span class="fc" id="L70">  }</span>
+  /**
+   * Verify whether the in radius calculation of two level elements happens correctly. 
+   * Verification should result in 'true'.
+   */
+  @Test
+  public void testInRadiusRangeOfEqual() {
+<span class="fc" id="L77">    ConcreteBasicStaticElement element2 </span>
+      = new ConcreteBasicStaticElement(new Vector(42, 0), new Vector(32, 32));
+
+<span class="fc" id="L80">    assertTrue(element.inRadiusRangeOf(element2, 42d));</span>
+<span class="fc" id="L81">  }</span>
+  
+  /**
+   * Verify whether the in radius calculation of two level elements happens correctly. 
+   * Verification should result in 'true'.
+   */
+  @Test
+  public void testInRadiusRangeOfEqualBigger() {
+<span class="fc" id="L89">    ConcreteBasicStaticElement element2 </span>
+      = new ConcreteBasicStaticElement(new Vector(42, 0), new Vector(32, 32));
+
+<span class="fc" id="L92">    assertTrue(element.inRadiusRangeOf(element2, 43d));</span>
+<span class="fc" id="L93">  }</span>
+  
+  /**
+   *  Dummy concrete instance of the abstract BasicDynamicElement class.
+   */
+  private static class ConcreteBasicStaticElement extends BasicDynamicElement {
+
+    ConcreteBasicStaticElement(Vector position, Vector size) {
+<span class="fc" id="L101">      super(position, size);</span>
+<span class="fc" id="L102">    }</span>
+
+    public LevelElementAction getLastMove() {
+<span class="nc" id="L105">      return null;</span>
+    }
+
+    public void setLastMove(LevelElementAction action) {      
+<span class="nc" id="L109">    }</span>
+
+    @Override
+    public ArrayList&lt;Sprite&gt; getSprites(double steps) {
+<span class="nc" id="L113">      return null;</span>
+    }
+    
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>

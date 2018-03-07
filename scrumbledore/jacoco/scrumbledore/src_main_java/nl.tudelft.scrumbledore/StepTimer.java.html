@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nl"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>StepTimer.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">scrumbledore (7-mrt-2018 16:32:47)</a> &gt; <a href="../../index.html" class="el_group">scrumbledore</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">nl.tudelft.scrumbledore</a> &gt; <span class="el_source">StepTimer.java</span></div><h1>StepTimer.java</h1><pre class="source lang-java linenums"><span class="fc" id="L1">package nl.tudelft.scrumbledore;</span>
+
+import nl.tudelft.scrumbledore.game.Game;
+
+/**
+ * Class responsible for invoking the step method at a given rate on the Game.
+ * 
+ * @author Jesse Tilro
+ * @author Jeroen Meijer
+ * @author David Alderliesten
+ */
+<span class="pc bpc" id="L12" title="1 of 2 branches missed.">public class StepTimer {</span>
+  private int rate;
+  private Game game;
+  private boolean running;
+  private boolean paused;
+  private long prevLoopTime;
+  private long optimalTime;
+
+  /**
+   * Construct a new StepTimer.
+   * 
+   * @param rate
+   *          The target number of steps to be executed a second.
+   * @param game
+   *          The game whose step should be executed.
+   */
+<span class="fc" id="L28">  public StepTimer(int rate, Game game) {</span>
+<span class="fc" id="L29">    this.game = game;</span>
+<span class="fc" id="L30">    this.prevLoopTime = System.nanoTime();</span>
+<span class="fc" id="L31">    this.optimalTime = 1000000000 / rate;</span>
+<span class="fc" id="L32">    this.rate = rate;</span>
+<span class="fc" id="L33">    this.running = false;</span>
+<span class="fc" id="L34">    this.paused = false;</span>
+<span class="fc" id="L35">  }</span>
+
+  /**
+   * Get the number of steps to be executed a second.
+   * 
+   * @return The step rate.
+   */
+  public int getRate() {
+<span class="fc" id="L43">    return rate;</span>
+  }
+
+  /**
+   * Set the number of steps to be executed a second.
+   * 
+   * @param rate
+   *          The step rate.
+   */
+  public void setRate(int rate) {
+<span class="fc" id="L53">    this.rate = rate;</span>
+<span class="fc" id="L54">    this.optimalTime = 1000000000 / rate;</span>
+<span class="fc" id="L55">  }</span>
+
+  /**
+   * Get the game whose step method should be invoked.
+   * 
+   * @return The game.
+   */
+  public Game getGame() {
+<span class="fc" id="L63">    return game;</span>
+  }
+
+  /**
+   * Set the game whose step method should be invoked.
+   * 
+   * @param game
+   *          The game.
+   */
+  public void setGame(Game game) {
+<span class="fc" id="L73">    this.game = game;</span>
+<span class="fc" id="L74">  }</span>
+
+  /**
+   * Starts the game thread.
+   */
+  public void start() {
+<span class="pc bpc" id="L80" title="3 of 4 branches missed.">    assert !running;</span>
+<span class="fc" id="L81">    running = true;</span>
+<span class="fc" id="L82">    Thread loop = new Thread() {</span>
+      public void run() {
+<span class="fc" id="L84">        loopRunner();</span>
+<span class="fc" id="L85">      }</span>
+    };
+<span class="fc" id="L87">    loop.start();</span>
+<span class="fc" id="L88">  }</span>
+
+  /**
+   * Stops the game thread.
+   */
+  public void stop() {
+<span class="fc" id="L94">    running = false;</span>
+<span class="fc" id="L95">  }</span>
+
+  /**
+   * Resumes the game.
+   */
+  public void resume() {
+<span class="fc" id="L101">    paused = false;</span>
+<span class="fc" id="L102">  }</span>
+
+  /**
+   * Pauses the game.
+   */
+  public void pause() {
+<span class="fc" id="L108">    paused = true;</span>
+<span class="fc" id="L109">  }</span>
+
+  /**
+   * Checks if the game is paused.
+   * 
+   * @return boolean true if paused
+   */
+  public boolean isPaused() {
+<span class="fc" id="L117">    return paused;</span>
+  }
+
+  /**
+   * Keeps looping over the game loop as long as the game is running.
+   */
+  public void loopRunner() {
+<span class="fc bfc" id="L124" title="All 2 branches covered.">    while (running) {</span>
+<span class="fc" id="L125">      gameLoop();</span>
+    }
+<span class="fc" id="L127">  }</span>
+
+  /**
+   * Runs the loop within the thread for the game.
+   */
+  public void gameLoop() {
+<span class="fc" id="L133">    long now = System.nanoTime();</span>
+<span class="fc" id="L134">    long elapsedTime = now - prevLoopTime;</span>
+<span class="fc" id="L135">    prevLoopTime = now;</span>
+<span class="fc" id="L136">    double d = elapsedTime / ((double) optimalTime);</span>
+
+<span class="fc bfc" id="L138" title="All 2 branches covered.">    if (!paused) {</span>
+<span class="fc" id="L139">      game.step(d);</span>
+    }
+    
+    try {
+<span class="fc" id="L143">      long timeout = (prevLoopTime - System.nanoTime() + optimalTime) / 1000000;</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">      if (timeout &lt; 0) {</span>
+<span class="nc" id="L145">        timeout = 0;</span>
+      }
+<span class="fc" id="L147">      Thread.sleep(timeout);</span>
+<span class="pc" id="L148">    } catch (InterruptedException ex) {</span>
+<span class="nc" id="L149">      ex.printStackTrace();</span>
+    }
+<span class="fc" id="L151">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>scrumbledore (7-mrt-2018 16:32:47)</div></body></html>
