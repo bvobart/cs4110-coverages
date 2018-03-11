@@ -1,0 +1,379 @@
+<html>
+<head>
+  
+    <style type='text/css'>
+   
+   .tests{ 
+     width : 50%;
+     float : left;
+   }
+   
+   .mutees{
+     float : right;
+     width : 50%;
+   }
+   
+   .unit {
+     padding-top : 20px;
+     clear : both;
+   }
+   
+   .coverage_bar {
+    display : inline-block;
+    height : 1.1em;
+    width: 130px;
+    background: #FAA;
+    margin: 0 5px;
+    vertical-align: middle;
+    border: 1px solid #AAA;
+    position : relative;
+   }
+   
+   .coverage_complete {
+    display : inline-block;
+    height : 100%;
+    background: #DFD;
+    float: left;
+   }
+   
+   .coverage_ledgend {
+        position : absolute;
+        height : 100%;
+        width : 100%;
+        left : 0;
+        top : 0;
+        text-align : center;
+   }
+   
+   .line, .mut {
+        vertical-align : middle;
+   }
+   
+   .coveragePercentage {
+    display: inline-block;
+    width: 3em;
+    text-align: right;
+   }
+  </style>
+  
+</head>
+<body>
+
+<h1>Pit Test Coverage Report</h1>
+
+<h3>Project Summary</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Number of Classes</th>
+            <th>Line Coverage</th>
+            <th>Mutation Coverage</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>511</td>
+            <td>58% <div class="coverage_bar"><div class="coverage_complete" style="width:58%"></div><div class="coverage_ledgend">30176/51924</div></div></td>
+            <td>34% <div class="coverage_bar"><div class="coverage_complete" style="width:34%"></div><div class="coverage_ledgend">11660/34647</div></div></td>
+        </tr>
+    </tbody>
+</table>
+
+
+<h3>Breakdown by Package</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Number of Classes</th>
+            <th>Line Coverage</th>
+            <th>Mutation Coverage</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td><a href="./org.jfree.chart/index.html">org.jfree.chart</a></td>
+            <td>19</td>
+            <td><div class="coveragePercentage">50% </div><div class="coverage_bar"><div class="coverage_complete" style="width:50%"></div><div class="coverage_ledgend">1712/3425</div></div></td>
+            <td><div class="coveragePercentage">22% </div><div class="coverage_bar"><div class="coverage_complete" style="width:22%"></div><div class="coverage_ledgend">450/2041</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.chart.annotations/index.html">org.jfree.chart.annotations</a></td>
+            <td>16</td>
+            <td><div class="coveragePercentage">59% </div><div class="coverage_bar"><div class="coverage_complete" style="width:59%"></div><div class="coverage_ledgend">830/1395</div></div></td>
+            <td><div class="coveragePercentage">30% </div><div class="coverage_bar"><div class="coverage_complete" style="width:30%"></div><div class="coverage_ledgend">288/958</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.chart.axis/index.html">org.jfree.chart.axis</a></td>
+            <td>42</td>
+            <td><div class="coveragePercentage">59% </div><div class="coverage_bar"><div class="coverage_complete" style="width:59%"></div><div class="coverage_ledgend">3243/5503</div></div></td>
+            <td><div class="coveragePercentage">28% </div><div class="coverage_bar"><div class="coverage_complete" style="width:28%"></div><div class="coverage_ledgend">1088/3876</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.chart.block/index.html">org.jfree.chart.block</a></td>
+            <td>16</td>
+            <td><div class="coveragePercentage">70% </div><div class="coverage_bar"><div class="coverage_complete" style="width:70%"></div><div class="coverage_ledgend">875/1255</div></div></td>
+            <td><div class="coveragePercentage">45% </div><div class="coverage_bar"><div class="coverage_complete" style="width:45%"></div><div class="coverage_ledgend">347/768</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.chart.date/index.html">org.jfree.chart.date</a></td>
+            <td>2</td>
+            <td><div class="coveragePercentage">42% </div><div class="coverage_bar"><div class="coverage_complete" style="width:42%"></div><div class="coverage_ledgend">96/230</div></div></td>
+            <td><div class="coveragePercentage">34% </div><div class="coverage_bar"><div class="coverage_complete" style="width:34%"></div><div class="coverage_ledgend">82/240</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.chart.editor/index.html">org.jfree.chart.editor</a></td>
+            <td>10</td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/837</div></div></td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/380</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.chart.encoders/index.html">org.jfree.chart.encoders</a></td>
+            <td>4</td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/90</div></div></td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/40</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.chart.entity/index.html">org.jfree.chart.entity</a></td>
+            <td>12</td>
+            <td><div class="coveragePercentage">38% </div><div class="coverage_bar"><div class="coverage_complete" style="width:38%"></div><div class="coverage_ledgend">166/434</div></div></td>
+            <td><div class="coveragePercentage">25% </div><div class="coverage_bar"><div class="coverage_complete" style="width:25%"></div><div class="coverage_ledgend">62/246</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.chart.event/index.html">org.jfree.chart.event</a></td>
+            <td>9</td>
+            <td><div class="coveragePercentage">59% </div><div class="coverage_bar"><div class="coverage_complete" style="width:59%"></div><div class="coverage_ledgend">47/80</div></div></td>
+            <td><div class="coveragePercentage">7% </div><div class="coverage_bar"><div class="coverage_complete" style="width:7%"></div><div class="coverage_ledgend">2/29</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.chart.imagemap/index.html">org.jfree.chart.imagemap</a></td>
+            <td>5</td>
+            <td><div class="coveragePercentage">52% </div><div class="coverage_bar"><div class="coverage_complete" style="width:52%"></div><div class="coverage_ledgend">42/81</div></div></td>
+            <td><div class="coveragePercentage">53% </div><div class="coverage_bar"><div class="coverage_complete" style="width:53%"></div><div class="coverage_ledgend">20/38</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.chart.labels/index.html">org.jfree.chart.labels</a></td>
+            <td>26</td>
+            <td><div class="coveragePercentage">60% </div><div class="coverage_bar"><div class="coverage_complete" style="width:60%"></div><div class="coverage_ledgend">621/1039</div></div></td>
+            <td><div class="coveragePercentage">51% </div><div class="coverage_bar"><div class="coverage_complete" style="width:51%"></div><div class="coverage_ledgend">230/452</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.chart.needle/index.html">org.jfree.chart.needle</a></td>
+            <td>10</td>
+            <td><div class="coveragePercentage">32% </div><div class="coverage_bar"><div class="coverage_complete" style="width:32%"></div><div class="coverage_ledgend">124/392</div></div></td>
+            <td><div class="coveragePercentage">21% </div><div class="coverage_bar"><div class="coverage_complete" style="width:21%"></div><div class="coverage_ledgend">68/320</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.chart.panel/index.html">org.jfree.chart.panel</a></td>
+            <td>2</td>
+            <td><div class="coveragePercentage">13% </div><div class="coverage_bar"><div class="coverage_complete" style="width:13%"></div><div class="coverage_ledgend">34/267</div></div></td>
+            <td><div class="coveragePercentage">5% </div><div class="coverage_bar"><div class="coverage_complete" style="width:5%"></div><div class="coverage_ledgend">9/165</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.chart.plot/index.html">org.jfree.chart.plot</a></td>
+            <td>39</td>
+            <td><div class="coveragePercentage">69% </div><div class="coverage_bar"><div class="coverage_complete" style="width:69%"></div><div class="coverage_ledgend">6950/10037</div></div></td>
+            <td><div class="coveragePercentage">33% </div><div class="coverage_bar"><div class="coverage_complete" style="width:33%"></div><div class="coverage_ledgend">2167/6648</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.chart.plot.dial/index.html">org.jfree.chart.plot.dial</a></td>
+            <td>12</td>
+            <td><div class="coveragePercentage">59% </div><div class="coverage_bar"><div class="coverage_complete" style="width:59%"></div><div class="coverage_ledgend">806/1357</div></div></td>
+            <td><div class="coveragePercentage">32% </div><div class="coverage_bar"><div class="coverage_complete" style="width:32%"></div><div class="coverage_ledgend">296/934</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.chart.renderer/index.html">org.jfree.chart.renderer</a></td>
+            <td>11</td>
+            <td><div class="coveragePercentage">64% </div><div class="coverage_bar"><div class="coverage_complete" style="width:64%"></div><div class="coverage_ledgend">938/1466</div></div></td>
+            <td><div class="coveragePercentage">49% </div><div class="coverage_bar"><div class="coverage_complete" style="width:49%"></div><div class="coverage_ledgend">483/985</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.chart.renderer.category/index.html">org.jfree.chart.renderer.category</a></td>
+            <td>21</td>
+            <td><div class="coveragePercentage">55% </div><div class="coverage_bar"><div class="coverage_complete" style="width:55%"></div><div class="coverage_ledgend">2027/3661</div></div></td>
+            <td><div class="coveragePercentage">18% </div><div class="coverage_bar"><div class="coverage_complete" style="width:18%"></div><div class="coverage_ledgend">454/2481</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.chart.renderer.xy/index.html">org.jfree.chart.renderer.xy</a></td>
+            <td>31</td>
+            <td><div class="coveragePercentage">42% </div><div class="coverage_bar"><div class="coverage_complete" style="width:42%"></div><div class="coverage_ledgend">2220/5342</div></div></td>
+            <td><div class="coveragePercentage">20% </div><div class="coverage_bar"><div class="coverage_complete" style="width:20%"></div><div class="coverage_ledgend">722/3580</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.chart.resources/index.html">org.jfree.chart.resources</a></td>
+            <td>1</td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/3</div></div></td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/1</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.chart.text/index.html">org.jfree.chart.text</a></td>
+            <td>8</td>
+            <td><div class="coveragePercentage">75% </div><div class="coverage_bar"><div class="coverage_complete" style="width:75%"></div><div class="coverage_ledgend">511/678</div></div></td>
+            <td><div class="coveragePercentage">26% </div><div class="coverage_bar"><div class="coverage_complete" style="width:26%"></div><div class="coverage_ledgend">116/454</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.chart.title/index.html">org.jfree.chart.title</a></td>
+            <td>10</td>
+            <td><div class="coveragePercentage">59% </div><div class="coverage_bar"><div class="coverage_complete" style="width:59%"></div><div class="coverage_ledgend">703/1199</div></div></td>
+            <td><div class="coveragePercentage">29% </div><div class="coverage_bar"><div class="coverage_complete" style="width:29%"></div><div class="coverage_ledgend">217/746</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.chart.ui/index.html">org.jfree.chart.ui</a></td>
+            <td>21</td>
+            <td><div class="coveragePercentage">37% </div><div class="coverage_bar"><div class="coverage_complete" style="width:37%"></div><div class="coverage_ledgend">309/828</div></div></td>
+            <td><div class="coveragePercentage">17% </div><div class="coverage_bar"><div class="coverage_complete" style="width:17%"></div><div class="coverage_ledgend">112/642</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.chart.urls/index.html">org.jfree.chart.urls</a></td>
+            <td>9</td>
+            <td><div class="coveragePercentage">79% </div><div class="coverage_bar"><div class="coverage_complete" style="width:79%"></div><div class="coverage_ledgend">256/325</div></div></td>
+            <td><div class="coveragePercentage">61% </div><div class="coverage_bar"><div class="coverage_complete" style="width:61%"></div><div class="coverage_ledgend">110/181</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.chart.util/index.html">org.jfree.chart.util</a></td>
+            <td>30</td>
+            <td><div class="coveragePercentage">48% </div><div class="coverage_bar"><div class="coverage_complete" style="width:48%"></div><div class="coverage_ledgend">790/1641</div></div></td>
+            <td><div class="coveragePercentage">36% </div><div class="coverage_bar"><div class="coverage_complete" style="width:36%"></div><div class="coverage_ledgend">459/1271</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.data/index.html">org.jfree.data</a></td>
+            <td>17</td>
+            <td><div class="coveragePercentage">80% </div><div class="coverage_bar"><div class="coverage_complete" style="width:80%"></div><div class="coverage_ledgend">912/1143</div></div></td>
+            <td><div class="coveragePercentage">66% </div><div class="coverage_bar"><div class="coverage_complete" style="width:66%"></div><div class="coverage_ledgend">546/826</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.data.category/index.html">org.jfree.data.category</a></td>
+            <td>4</td>
+            <td><div class="coveragePercentage">81% </div><div class="coverage_bar"><div class="coverage_complete" style="width:81%"></div><div class="coverage_ledgend">325/400</div></div></td>
+            <td><div class="coveragePercentage">73% </div><div class="coverage_bar"><div class="coverage_complete" style="width:73%"></div><div class="coverage_ledgend">225/310</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.data.function/index.html">org.jfree.data.function</a></td>
+            <td>4</td>
+            <td><div class="coveragePercentage">81% </div><div class="coverage_bar"><div class="coverage_complete" style="width:81%"></div><div class="coverage_ledgend">62/77</div></div></td>
+            <td><div class="coveragePercentage">51% </div><div class="coverage_bar"><div class="coverage_complete" style="width:51%"></div><div class="coverage_ledgend">31/61</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.data.gantt/index.html">org.jfree.data.gantt</a></td>
+            <td>5</td>
+            <td><div class="coveragePercentage">66% </div><div class="coverage_bar"><div class="coverage_complete" style="width:66%"></div><div class="coverage_ledgend">307/462</div></div></td>
+            <td><div class="coveragePercentage">47% </div><div class="coverage_bar"><div class="coverage_complete" style="width:47%"></div><div class="coverage_ledgend">139/295</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.data.general/index.html">org.jfree.data.general</a></td>
+            <td>12</td>
+            <td><div class="coveragePercentage">73% </div><div class="coverage_bar"><div class="coverage_complete" style="width:73%"></div><div class="coverage_ledgend">952/1306</div></div></td>
+            <td><div class="coveragePercentage">62% </div><div class="coverage_bar"><div class="coverage_complete" style="width:62%"></div><div class="coverage_ledgend">573/928</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.data.io/index.html">org.jfree.data.io</a></td>
+            <td>1</td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/57</div></div></td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/30</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.data.jdbc/index.html">org.jfree.data.jdbc</a></td>
+            <td>3</td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/242</div></div></td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/128</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.data.json/index.html">org.jfree.data.json</a></td>
+            <td>1</td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/70</div></div></td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/43</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.data.json.impl/index.html">org.jfree.data.json.impl</a></td>
+            <td>3</td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/185</div></div></td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/120</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.data.resources/index.html">org.jfree.data.resources</a></td>
+            <td>6</td>
+            <td><div class="coveragePercentage">17% </div><div class="coverage_bar"><div class="coverage_complete" style="width:17%"></div><div class="coverage_ledgend">3/18</div></div></td>
+            <td><div class="coveragePercentage">17% </div><div class="coverage_bar"><div class="coverage_complete" style="width:17%"></div><div class="coverage_ledgend">1/6</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.data.statistics/index.html">org.jfree.data.statistics</a></td>
+            <td>14</td>
+            <td><div class="coveragePercentage">75% </div><div class="coverage_bar"><div class="coverage_complete" style="width:75%"></div><div class="coverage_ledgend">1046/1392</div></div></td>
+            <td><div class="coveragePercentage">57% </div><div class="coverage_bar"><div class="coverage_complete" style="width:57%"></div><div class="coverage_ledgend">603/1065</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.data.time/index.html">org.jfree.data.time</a></td>
+            <td>24</td>
+            <td><div class="coveragePercentage">64% </div><div class="coverage_bar"><div class="coverage_complete" style="width:64%"></div><div class="coverage_ledgend">1616/2506</div></div></td>
+            <td><div class="coveragePercentage">51% </div><div class="coverage_bar"><div class="coverage_complete" style="width:51%"></div><div class="coverage_ledgend">865/1706</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.data.time.ohlc/index.html">org.jfree.data.time.ohlc</a></td>
+            <td>4</td>
+            <td><div class="coveragePercentage">68% </div><div class="coverage_bar"><div class="coverage_complete" style="width:68%"></div><div class="coverage_ledgend">105/155</div></div></td>
+            <td><div class="coveragePercentage">51% </div><div class="coverage_bar"><div class="coverage_complete" style="width:51%"></div><div class="coverage_ledgend">49/97</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.data.xml/index.html">org.jfree.data.xml</a></td>
+            <td>8</td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/199</div></div></td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/71</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./org.jfree.data.xy/index.html">org.jfree.data.xy</a></td>
+            <td>39</td>
+            <td><div class="coveragePercentage">72% </div><div class="coverage_bar"><div class="coverage_complete" style="width:72%"></div><div class="coverage_ledgend">1548/2147</div></div></td>
+            <td><div class="coveragePercentage">57% </div><div class="coverage_bar"><div class="coverage_complete" style="width:57%"></div><div class="coverage_ledgend">846/1485</div></div></td>
+        </tr>
+
+     </tbody>
+</table>
+<br/>
+
+
+
+<hr/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 1.1.9
+
+</body>
+</html>

@@ -1,0 +1,357 @@
+<html>
+<head>
+  
+    <style type='text/css'>
+   
+   .tests{ 
+     width : 50%;
+     float : left;
+   }
+   
+   .mutees{
+     float : right;
+     width : 50%;
+   }
+   
+   .unit {
+     padding-top : 20px;
+     clear : both;
+   }
+   
+   .coverage_bar {
+    display : inline-block;
+    height : 1.1em;
+    width: 130px;
+    background: #FAA;
+    margin: 0 5px;
+    vertical-align: middle;
+    border: 1px solid #AAA;
+    position : relative;
+   }
+   
+   .coverage_complete {
+    display : inline-block;
+    height : 100%;
+    background: #DFD;
+    float: left;
+   }
+   
+   .coverage_ledgend {
+        position : absolute;
+        height : 100%;
+        width: 100%;
+        left : 0;
+        top : 0;
+        text-align : center;
+   }
+   
+   .line, .mut {
+        vertical-align : middle;
+   }
+   
+   .coveragePercentage {
+        display: inline-block;
+        width: 3em;
+        text-align: right;
+   }
+  </style>
+  
+</head>
+<body>
+
+<h1>Pit Test Coverage Report</h1>
+<h2>Package Summary</h2>
+<h3>org.jfree.chart.axis</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Number of Classes</th>
+            <th>Line Coverage</th>
+            <th>Mutation Coverage</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>42</td>
+            <td>59% <div class="coverage_bar"><div class="coverage_complete" style="width:59%"></div><div class="coverage_ledgend">3243/5503</div></div></td>
+            <td>28% <div class="coverage_bar"><div class="coverage_complete" style="width:28%"></div><div class="coverage_ledgend">1088/3876</div></div></td>
+        </tr>
+    </tbody>
+</table>
+
+
+<h3>Breakdown by Class</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Line Coverage</th>
+            <th>Mutation Coverage</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td><a href="./Axis.java.html">Axis.java</a></td>
+            <td><div class="coveragePercentage">75% </div><div class="coverage_bar"><div class="coverage_complete" style="width:75%"></div><div class="coverage_ledgend">369/493</div></div></td>
+            <td><div class="coveragePercentage">38% </div><div class="coverage_bar"><div class="coverage_complete" style="width:38%"></div><div class="coverage_ledgend">112/295</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./AxisCollection.java.html">AxisCollection.java</a></td>
+            <td><div class="coveragePercentage">90% </div><div class="coverage_bar"><div class="coverage_complete" style="width:90%"></div><div class="coverage_ledgend">19/21</div></div></td>
+            <td><div class="coveragePercentage">40% </div><div class="coverage_bar"><div class="coverage_complete" style="width:40%"></div><div class="coverage_ledgend">4/10</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./AxisLabelLocation.java.html">AxisLabelLocation.java</a></td>
+            <td><div class="coveragePercentage">68% </div><div class="coverage_bar"><div class="coverage_complete" style="width:68%"></div><div class="coverage_ledgend">17/25</div></div></td>
+            <td><div class="coveragePercentage">56% </div><div class="coverage_bar"><div class="coverage_complete" style="width:56%"></div><div class="coverage_ledgend">10/18</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./AxisLocation.java.html">AxisLocation.java</a></td>
+            <td><div class="coveragePercentage">61% </div><div class="coverage_bar"><div class="coverage_complete" style="width:61%"></div><div class="coverage_ledgend">25/41</div></div></td>
+            <td><div class="coveragePercentage">52% </div><div class="coverage_bar"><div class="coverage_complete" style="width:52%"></div><div class="coverage_ledgend">14/27</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./AxisSpace.java.html">AxisSpace.java</a></td>
+            <td><div class="coveragePercentage">63% </div><div class="coverage_bar"><div class="coverage_complete" style="width:63%"></div><div class="coverage_ledgend">67/106</div></div></td>
+            <td><div class="coveragePercentage">28% </div><div class="coverage_bar"><div class="coverage_complete" style="width:28%"></div><div class="coverage_ledgend">23/82</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./AxisState.java.html">AxisState.java</a></td>
+            <td><div class="coveragePercentage">59% </div><div class="coverage_bar"><div class="coverage_complete" style="width:59%"></div><div class="coverage_ledgend">19/32</div></div></td>
+            <td><div class="coveragePercentage">7% </div><div class="coverage_bar"><div class="coverage_complete" style="width:7%"></div><div class="coverage_ledgend">1/15</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./CategoryAnchor.java.html">CategoryAnchor.java</a></td>
+            <td><div class="coveragePercentage">77% </div><div class="coverage_bar"><div class="coverage_complete" style="width:77%"></div><div class="coverage_ledgend">17/22</div></div></td>
+            <td><div class="coveragePercentage">67% </div><div class="coverage_bar"><div class="coverage_complete" style="width:67%"></div><div class="coverage_ledgend">10/15</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./CategoryAxis.java.html">CategoryAxis.java</a></td>
+            <td><div class="coveragePercentage">82% </div><div class="coverage_bar"><div class="coverage_complete" style="width:82%"></div><div class="coverage_ledgend">378/461</div></div></td>
+            <td><div class="coveragePercentage">22% </div><div class="coverage_bar"><div class="coverage_complete" style="width:22%"></div><div class="coverage_ledgend">71/317</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./CategoryLabelPosition.java.html">CategoryLabelPosition.java</a></td>
+            <td><div class="coveragePercentage">96% </div><div class="coverage_bar"><div class="coverage_complete" style="width:96%"></div><div class="coverage_ledgend">45/47</div></div></td>
+            <td><div class="coveragePercentage">50% </div><div class="coverage_bar"><div class="coverage_complete" style="width:50%"></div><div class="coverage_ledgend">17/34</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./CategoryLabelPositions.java.html">CategoryLabelPositions.java</a></td>
+            <td><div class="coveragePercentage">56% </div><div class="coverage_bar"><div class="coverage_complete" style="width:56%"></div><div class="coverage_ledgend">44/79</div></div></td>
+            <td><div class="coveragePercentage">29% </div><div class="coverage_bar"><div class="coverage_complete" style="width:29%"></div><div class="coverage_ledgend">14/49</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./CategoryLabelWidthType.java.html">CategoryLabelWidthType.java</a></td>
+            <td><div class="coveragePercentage">90% </div><div class="coverage_bar"><div class="coverage_complete" style="width:90%"></div><div class="coverage_ledgend">18/20</div></div></td>
+            <td><div class="coveragePercentage">79% </div><div class="coverage_bar"><div class="coverage_complete" style="width:79%"></div><div class="coverage_ledgend">11/14</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./CategoryTick.java.html">CategoryTick.java</a></td>
+            <td><div class="coveragePercentage">92% </div><div class="coverage_bar"><div class="coverage_complete" style="width:92%"></div><div class="coverage_ledgend">23/25</div></div></td>
+            <td><div class="coveragePercentage">59% </div><div class="coverage_bar"><div class="coverage_complete" style="width:59%"></div><div class="coverage_ledgend">13/22</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./CompassFormat.java.html">CompassFormat.java</a></td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/18</div></div></td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/13</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./CyclicNumberAxis.java.html">CyclicNumberAxis.java</a></td>
+            <td><div class="coveragePercentage">14% </div><div class="coverage_bar"><div class="coverage_complete" style="width:14%"></div><div class="coverage_ledgend">54/382</div></div></td>
+            <td><div class="coveragePercentage">8% </div><div class="coverage_bar"><div class="coverage_complete" style="width:8%"></div><div class="coverage_ledgend">22/274</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./DateAxis.java.html">DateAxis.java</a></td>
+            <td><div class="coveragePercentage">76% </div><div class="coverage_bar"><div class="coverage_complete" style="width:76%"></div><div class="coverage_ledgend">487/639</div></div></td>
+            <td><div class="coveragePercentage">42% </div><div class="coverage_bar"><div class="coverage_complete" style="width:42%"></div><div class="coverage_ledgend">176/416</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./DateTick.java.html">DateTick.java</a></td>
+            <td><div class="coveragePercentage">81% </div><div class="coverage_bar"><div class="coverage_complete" style="width:81%"></div><div class="coverage_ledgend">13/16</div></div></td>
+            <td><div class="coveragePercentage">50% </div><div class="coverage_bar"><div class="coverage_complete" style="width:50%"></div><div class="coverage_ledgend">5/10</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./DateTickMarkPosition.java.html">DateTickMarkPosition.java</a></td>
+            <td><div class="coveragePercentage">86% </div><div class="coverage_bar"><div class="coverage_complete" style="width:86%"></div><div class="coverage_ledgend">19/22</div></div></td>
+            <td><div class="coveragePercentage">80% </div><div class="coverage_bar"><div class="coverage_complete" style="width:80%"></div><div class="coverage_ledgend">12/15</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./DateTickUnit.java.html">DateTickUnit.java</a></td>
+            <td><div class="coveragePercentage">75% </div><div class="coverage_bar"><div class="coverage_complete" style="width:75%"></div><div class="coverage_ledgend">50/67</div></div></td>
+            <td><div class="coveragePercentage">37% </div><div class="coverage_bar"><div class="coverage_complete" style="width:37%"></div><div class="coverage_ledgend">22/60</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./DateTickUnitType.java.html">DateTickUnitType.java</a></td>
+            <td><div class="coveragePercentage">94% </div><div class="coverage_bar"><div class="coverage_complete" style="width:94%"></div><div class="coverage_ledgend">34/36</div></div></td>
+            <td><div class="coveragePercentage">92% </div><div class="coverage_bar"><div class="coverage_complete" style="width:92%"></div><div class="coverage_ledgend">22/24</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./ExtendedCategoryAxis.java.html">ExtendedCategoryAxis.java</a></td>
+            <td><div class="coveragePercentage">68% </div><div class="coverage_bar"><div class="coverage_complete" style="width:68%"></div><div class="coverage_ledgend">34/50</div></div></td>
+            <td><div class="coveragePercentage">43% </div><div class="coverage_bar"><div class="coverage_complete" style="width:43%"></div><div class="coverage_ledgend">13/30</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./LogAxis.java.html">LogAxis.java</a></td>
+            <td><div class="coveragePercentage">49% </div><div class="coverage_bar"><div class="coverage_complete" style="width:49%"></div><div class="coverage_ledgend">177/364</div></div></td>
+            <td><div class="coveragePercentage">26% </div><div class="coverage_bar"><div class="coverage_complete" style="width:26%"></div><div class="coverage_ledgend">63/240</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./LogTick.java.html">LogTick.java</a></td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/4</div></div></td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/1</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./LogarithmicAxis.java.html">LogarithmicAxis.java</a></td>
+            <td><div class="coveragePercentage">21% </div><div class="coverage_bar"><div class="coverage_complete" style="width:21%"></div><div class="coverage_ledgend">65/314</div></div></td>
+            <td><div class="coveragePercentage">13% </div><div class="coverage_bar"><div class="coverage_complete" style="width:13%"></div><div class="coverage_ledgend">46/352</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./MarkerAxisBand.java.html">MarkerAxisBand.java</a></td>
+            <td><div class="coveragePercentage">38% </div><div class="coverage_bar"><div class="coverage_complete" style="width:38%"></div><div class="coverage_ledgend">28/74</div></div></td>
+            <td><div class="coveragePercentage">27% </div><div class="coverage_bar"><div class="coverage_complete" style="width:27%"></div><div class="coverage_ledgend">14/51</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./ModuloAxis.java.html">ModuloAxis.java</a></td>
+            <td><div class="coveragePercentage">21% </div><div class="coverage_bar"><div class="coverage_complete" style="width:21%"></div><div class="coverage_ledgend">23/108</div></div></td>
+            <td><div class="coveragePercentage">5% </div><div class="coverage_bar"><div class="coverage_complete" style="width:5%"></div><div class="coverage_ledgend">7/143</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./MonthDateFormat.java.html">MonthDateFormat.java</a></td>
+            <td><div class="coveragePercentage">67% </div><div class="coverage_bar"><div class="coverage_complete" style="width:67%"></div><div class="coverage_ledgend">32/48</div></div></td>
+            <td><div class="coveragePercentage">65% </div><div class="coverage_bar"><div class="coverage_complete" style="width:65%"></div><div class="coverage_ledgend">15/23</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./NumberAxis.java.html">NumberAxis.java</a></td>
+            <td><div class="coveragePercentage">82% </div><div class="coverage_bar"><div class="coverage_complete" style="width:82%"></div><div class="coverage_ledgend">279/340</div></div></td>
+            <td><div class="coveragePercentage">38% </div><div class="coverage_bar"><div class="coverage_complete" style="width:38%"></div><div class="coverage_ledgend">96/251</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./NumberTick.java.html">NumberTick.java</a></td>
+            <td><div class="coveragePercentage">86% </div><div class="coverage_bar"><div class="coverage_complete" style="width:86%"></div><div class="coverage_ledgend">6/7</div></div></td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/1</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./NumberTickUnit.java.html">NumberTickUnit.java</a></td>
+            <td><div class="coveragePercentage">92% </div><div class="coverage_bar"><div class="coverage_complete" style="width:92%"></div><div class="coverage_ledgend">24/26</div></div></td>
+            <td><div class="coveragePercentage">53% </div><div class="coverage_bar"><div class="coverage_complete" style="width:53%"></div><div class="coverage_ledgend">9/17</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./NumberTickUnitSource.java.html">NumberTickUnitSource.java</a></td>
+            <td><div class="coveragePercentage">87% </div><div class="coverage_bar"><div class="coverage_complete" style="width:87%"></div><div class="coverage_ledgend">85/98</div></div></td>
+            <td><div class="coveragePercentage">39% </div><div class="coverage_bar"><div class="coverage_complete" style="width:39%"></div><div class="coverage_ledgend">26/66</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./PeriodAxis.java.html">PeriodAxis.java</a></td>
+            <td><div class="coveragePercentage">33% </div><div class="coverage_bar"><div class="coverage_complete" style="width:33%"></div><div class="coverage_ledgend">129/388</div></div></td>
+            <td><div class="coveragePercentage">13% </div><div class="coverage_bar"><div class="coverage_complete" style="width:13%"></div><div class="coverage_ledgend">34/267</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./PeriodAxisLabelInfo.java.html">PeriodAxisLabelInfo.java</a></td>
+            <td><div class="coveragePercentage">87% </div><div class="coverage_bar"><div class="coverage_complete" style="width:87%"></div><div class="coverage_ledgend">66/76</div></div></td>
+            <td><div class="coveragePercentage">56% </div><div class="coverage_bar"><div class="coverage_complete" style="width:56%"></div><div class="coverage_ledgend">27/48</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./QuarterDateFormat.java.html">QuarterDateFormat.java</a></td>
+            <td><div class="coveragePercentage">53% </div><div class="coverage_bar"><div class="coverage_complete" style="width:53%"></div><div class="coverage_ledgend">21/40</div></div></td>
+            <td><div class="coveragePercentage">47% </div><div class="coverage_bar"><div class="coverage_complete" style="width:47%"></div><div class="coverage_ledgend">7/15</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./StandardTickUnitSource.java.html">StandardTickUnitSource.java</a></td>
+            <td><div class="coveragePercentage">33% </div><div class="coverage_bar"><div class="coverage_complete" style="width:33%"></div><div class="coverage_ledgend">5/15</div></div></td>
+            <td><div class="coveragePercentage">11% </div><div class="coverage_bar"><div class="coverage_complete" style="width:11%"></div><div class="coverage_ledgend">1/9</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./SubCategoryAxis.java.html">SubCategoryAxis.java</a></td>
+            <td><div class="coveragePercentage">52% </div><div class="coverage_bar"><div class="coverage_complete" style="width:52%"></div><div class="coverage_ledgend">71/137</div></div></td>
+            <td><div class="coveragePercentage">22% </div><div class="coverage_bar"><div class="coverage_complete" style="width:22%"></div><div class="coverage_ledgend">18/83</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./SymbolAxis.java.html">SymbolAxis.java</a></td>
+            <td><div class="coveragePercentage">19% </div><div class="coverage_bar"><div class="coverage_complete" style="width:19%"></div><div class="coverage_ledgend">44/237</div></div></td>
+            <td><div class="coveragePercentage">10% </div><div class="coverage_bar"><div class="coverage_complete" style="width:10%"></div><div class="coverage_ledgend">15/149</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./Tick.java.html">Tick.java</a></td>
+            <td><div class="coveragePercentage">90% </div><div class="coverage_bar"><div class="coverage_complete" style="width:90%"></div><div class="coverage_ledgend">26/29</div></div></td>
+            <td><div class="coveragePercentage">67% </div><div class="coverage_bar"><div class="coverage_complete" style="width:67%"></div><div class="coverage_ledgend">14/21</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./TickType.java.html">TickType.java</a></td>
+            <td><div class="coveragePercentage">80% </div><div class="coverage_bar"><div class="coverage_complete" style="width:80%"></div><div class="coverage_ledgend">16/20</div></div></td>
+            <td><div class="coveragePercentage">73% </div><div class="coverage_bar"><div class="coverage_complete" style="width:73%"></div><div class="coverage_ledgend">8/11</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./TickUnit.java.html">TickUnit.java</a></td>
+            <td><div class="coveragePercentage">83% </div><div class="coverage_bar"><div class="coverage_complete" style="width:83%"></div><div class="coverage_ledgend">25/30</div></div></td>
+            <td><div class="coveragePercentage">24% </div><div class="coverage_bar"><div class="coverage_complete" style="width:24%"></div><div class="coverage_ledgend">6/25</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./TickUnits.java.html">TickUnits.java</a></td>
+            <td><div class="coveragePercentage">82% </div><div class="coverage_bar"><div class="coverage_complete" style="width:82%"></div><div class="coverage_ledgend">27/33</div></div></td>
+            <td><div class="coveragePercentage">50% </div><div class="coverage_bar"><div class="coverage_complete" style="width:50%"></div><div class="coverage_ledgend">12/24</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./ValueAxis.java.html">ValueAxis.java</a></td>
+            <td><div class="coveragePercentage">70% </div><div class="coverage_bar"><div class="coverage_complete" style="width:70%"></div><div class="coverage_ledgend">346/494</div></div></td>
+            <td><div class="coveragePercentage">28% </div><div class="coverage_bar"><div class="coverage_complete" style="width:28%"></div><div class="coverage_ledgend">91/328</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./ValueTick.java.html">ValueTick.java</a></td>
+            <td><div class="coveragePercentage">84% </div><div class="coverage_bar"><div class="coverage_complete" style="width:84%"></div><div class="coverage_ledgend">16/19</div></div></td>
+            <td><div class="coveragePercentage">64% </div><div class="coverage_bar"><div class="coverage_complete" style="width:64%"></div><div class="coverage_ledgend">7/11</div></div></td>
+        </tr>
+
+     </tbody>
+</table>
+<br/>
+
+
+
+<hr/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 1.1.9
+
+</body>
+</html>
