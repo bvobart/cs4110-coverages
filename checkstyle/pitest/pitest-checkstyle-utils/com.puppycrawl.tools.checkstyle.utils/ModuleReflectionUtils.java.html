@@ -1,0 +1,2900 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>ModuleReflectionUtils.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_1'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>////////////////////////////////////////////////////////////////////////////////</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_2'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// checkstyle: Checks Java source code for adherence to a set of rules.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_3'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// Copyright (C) 2001-2018 the original author or authors.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_4'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>//</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_5'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// This library is free software; you can redistribute it and/or</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_6'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// modify it under the terms of the GNU Lesser General Public</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_7'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// License as published by the Free Software Foundation; either</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_8'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// version 2.1 of the License, or (at your option) any later version.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_9'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>//</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_10'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// This library is distributed in the hope that it will be useful,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_11'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// but WITHOUT ANY WARRANTY; without even the implied warranty of</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_12'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_13'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// Lesser General Public License for more details.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_14'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>//</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_15'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// You should have received a copy of the GNU Lesser General Public</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_16'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// License along with this library; if not, write to the Free Software</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_17'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_18'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>////////////////////////////////////////////////////////////////////////////////</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_19'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_20'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package com.puppycrawl.tools.checkstyle.utils;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_21'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_22'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.io.IOException;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_23'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.lang.reflect.Constructor;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_24'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.lang.reflect.Modifier;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_25'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.Collection;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_26'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.Set;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_27'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.stream.Collectors;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_28'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_29'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.google.common.reflect.ClassPath;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_30'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.puppycrawl.tools.checkstyle.TreeWalkerFilter;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_31'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.puppycrawl.tools.checkstyle.api.AbstractCheck;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_32'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.puppycrawl.tools.checkstyle.api.AbstractFileSetCheck;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_33'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.puppycrawl.tools.checkstyle.api.AuditListener;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_34'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.puppycrawl.tools.checkstyle.api.AutomaticBean;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_35'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.puppycrawl.tools.checkstyle.api.BeforeExecutionFileFilter;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_36'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.puppycrawl.tools.checkstyle.api.Filter;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_37'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.puppycrawl.tools.checkstyle.api.RootModule;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_38'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_39'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_40'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Contains utility methods for module reflection.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_41'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author LuoLiangchen</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_42'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_43'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public final class ModuleReflectionUtils {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_44'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_45'/>
+45
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_45'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /** Prevent instantiation. */</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_46'/>
+46
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_46'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    private ModuleReflectionUtils() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_47'/>
+47
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_47'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_48'/>
+48
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_48'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_49'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_50'/>
+50
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_50'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Gets checkstyle&#39;s modules (directly, not recursively) in the given packages.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_51'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param packages the collection of package names to use</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_52'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param loader the class loader used to load Checkstyle package names</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_53'/>
+53
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_53'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return the set of checkstyle&#39;s module classes</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_54'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @throws IOException if the attempt to read class path resources failed</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_55'/>
+55
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_55'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @see #isCheckstyleModule(Class)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_56'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_57'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static Set&#60;Class&#60;?&#62;&#62; getCheckstyleModules(</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_58'/>
+58
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_58'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            Collection&#60;String&#62; packages, ClassLoader loader) throws IOException {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_59'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        final ClassPath classPath = ClassPath.from(loader);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_60'/>
+60
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_60'>1</a>
+<span>
+1. getCheckstyleModules : mutated return of Object value for com/puppycrawl/tools/checkstyle/utils/ModuleReflectionUtils::getCheckstyleModules to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return packages.stream()</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_61'/>
+61
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_61'>1</a>
+<span>
+1. lambda$getCheckstyleModules$0 : mutated return of Object value for com/puppycrawl/tools/checkstyle/utils/ModuleReflectionUtils::lambda$getCheckstyleModules$0 to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                .flatMap(pkg -&#62; classPath.getTopLevelClasses(pkg).stream())</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_62'/>
+62
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_62'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                .map(ClassPath.ClassInfo::load)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_63'/>
+63
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_63'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                .filter(ModuleReflectionUtils::isCheckstyleModule)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_64'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                .collect(Collectors.toSet());</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_65'/>
+65
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_65'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_66'/>
+66
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_66'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_67'/>
+67
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_67'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_68'/>
+68
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_68'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Checks whether a class may be considered as a checkstyle module. Checkstyle&#39;s modules are</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_69'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * non-abstract classes, which are either checkstyle&#39;s checks, file sets, filters, file filters,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_70'/>
+70
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_70'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * {@code TreeWalker} filters, audit listener, or root module.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_71'/>
+71
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_71'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param clazz class to check.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_72'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if the class may be considered as the checkstyle module.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_73'/>
+73
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_73'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_74'/>
+74
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_74'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static boolean isCheckstyleModule(Class&#60;?&#62; clazz) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_75'/>
+75
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_75'>2</a>
+<span>
+1. isCheckstyleModule : negated conditional &rarr; KILLED<br/>
+2. isCheckstyleModule : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return isValidCheckstyleClass(clazz)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_76'/>
+76
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_76'>1</a>
+<span>
+1. isCheckstyleModule : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            &#38;&#38; (isCheckstyleTreeWalkerCheck(clazz)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_77'/>
+77
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_77'>1</a>
+<span>
+1. isCheckstyleModule : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                    || isFileSetModule(clazz)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_78'/>
+78
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_78'>1</a>
+<span>
+1. isCheckstyleModule : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                    || isFilterModule(clazz)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_79'/>
+79
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_79'>1</a>
+<span>
+1. isCheckstyleModule : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                    || isFileFilterModule(clazz)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_80'/>
+80
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_80'>1</a>
+<span>
+1. isCheckstyleModule : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                    || isTreeWalkerFilterModule(clazz)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_81'/>
+81
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_81'>1</a>
+<span>
+1. isCheckstyleModule : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                    || isAuditListener(clazz)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_82'/>
+82
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_82'>1</a>
+<span>
+1. isCheckstyleModule : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                    || isRootModule(clazz));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_83'/>
+83
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_83'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_84'/>
+84
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_84'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_85'/>
+85
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_85'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_86'/>
+86
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_86'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Checks whether a class extends &#39;AutomaticBean&#39;, is non-abstract, and has a default</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_87'/>
+87
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_87'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * constructor.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_88'/>
+88
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_88'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param clazz class to check.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_89'/>
+89
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_89'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if a class may be considered a valid production class.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_90'/>
+90
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_90'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_91'/>
+91
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_91'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static boolean isValidCheckstyleClass(Class&#60;?&#62; clazz) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_92'/>
+92
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_92'>2</a>
+<span>
+1. isValidCheckstyleClass : negated conditional &rarr; KILLED<br/>
+2. isValidCheckstyleClass : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return AutomaticBean.class.isAssignableFrom(clazz)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_93'/>
+93
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_93'>1</a>
+<span>
+1. isValidCheckstyleClass : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                &#38;&#38; !Modifier.isAbstract(clazz.getModifiers())</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_94'/>
+94
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_94'>1</a>
+<span>
+1. isValidCheckstyleClass : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                &#38;&#38; hasDefaultConstructor(clazz);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_95'/>
+95
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_95'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_96'/>
+96
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_96'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_97'/>
+97
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_97'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_98'/>
+98
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_98'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Checks if the class has a default constructor.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_99'/>
+99
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_99'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param clazz class to check</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_100'/>
+100
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_100'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if the class has a default constructor.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_101'/>
+101
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_101'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_102'/>
+102
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_102'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private static boolean hasDefaultConstructor(Class&#60;?&#62; clazz) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_103'/>
+103
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_103'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        boolean result = false;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_104'/>
+104
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_104'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        for (Constructor&#60;?&#62; constructor : clazz.getDeclaredConstructors()) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_105'/>
+105
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_105'>1</a>
+<span>
+1. hasDefaultConstructor : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            if (constructor.getParameterCount() == 0) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_106'/>
+106
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_106'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                result = true;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_107'/>
+107
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_107'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                break;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_108'/>
+108
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_108'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_109'/>
+109
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_109'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_110'/>
+110
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_110'>1</a>
+<span>
+1. hasDefaultConstructor : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return result;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_111'/>
+111
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_111'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_112'/>
+112
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_112'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_113'/>
+113
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_113'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_114'/>
+114
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_114'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Checks whether a class may be considered as the checkstyle check</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_115'/>
+115
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_115'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * which has TreeWalker as a parent.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_116'/>
+116
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_116'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Checkstyle&#39;s checks are classes which implement &#39;AbstractCheck&#39; interface.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_117'/>
+117
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_117'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param clazz class to check.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_118'/>
+118
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_118'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if a class may be considered as the checkstyle check.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_119'/>
+119
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_119'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_120'/>
+120
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_120'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static boolean isCheckstyleTreeWalkerCheck(Class&#60;?&#62; clazz) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_121'/>
+121
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_121'>1</a>
+<span>
+1. isCheckstyleTreeWalkerCheck : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return AbstractCheck.class.isAssignableFrom(clazz);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_122'/>
+122
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_122'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_123'/>
+123
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_123'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_124'/>
+124
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_124'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_125'/>
+125
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_125'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Checks whether a class may be considered as the checkstyle file set.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_126'/>
+126
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_126'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Checkstyle&#39;s file sets are classes which implement &#39;AbstractFileSetCheck&#39; interface.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_127'/>
+127
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_127'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param clazz class to check.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_128'/>
+128
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_128'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if a class may be considered as the checkstyle file set.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_129'/>
+129
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_129'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_130'/>
+130
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_130'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static boolean isFileSetModule(Class&#60;?&#62; clazz) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_131'/>
+131
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_131'>1</a>
+<span>
+1. isFileSetModule : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return AbstractFileSetCheck.class.isAssignableFrom(clazz);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_132'/>
+132
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_132'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_133'/>
+133
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_133'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_134'/>
+134
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_134'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_135'/>
+135
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_135'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Checks whether a class may be considered as the checkstyle filter.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_136'/>
+136
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_136'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Checkstyle&#39;s filters are classes which implement &#39;Filter&#39; interface.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_137'/>
+137
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_137'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param clazz class to check.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_138'/>
+138
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_138'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if a class may be considered as the checkstyle filter.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_139'/>
+139
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_139'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_140'/>
+140
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_140'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static boolean isFilterModule(Class&#60;?&#62; clazz) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_141'/>
+141
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_141'>1</a>
+<span>
+1. isFilterModule : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return Filter.class.isAssignableFrom(clazz);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_142'/>
+142
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_142'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_143'/>
+143
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_143'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_144'/>
+144
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_144'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_145'/>
+145
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_145'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Checks whether a class may be considered as the checkstyle file filter.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_146'/>
+146
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_146'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Checkstyle&#39;s file filters are classes which implement &#39;BeforeExecutionFileFilter&#39; interface.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_147'/>
+147
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_147'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param clazz class to check.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_148'/>
+148
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_148'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if a class may be considered as the checkstyle file filter.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_149'/>
+149
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_149'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_150'/>
+150
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_150'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static boolean isFileFilterModule(Class&#60;?&#62; clazz) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_151'/>
+151
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_151'>1</a>
+<span>
+1. isFileFilterModule : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return BeforeExecutionFileFilter.class.isAssignableFrom(clazz);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_152'/>
+152
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_152'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_153'/>
+153
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_153'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_154'/>
+154
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_154'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_155'/>
+155
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_155'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Checks whether a class may be considered as the checkstyle audit listener module.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_156'/>
+156
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_156'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Checkstyle&#39;s audit listener modules are classes which implement &#39;AuditListener&#39; interface.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_157'/>
+157
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_157'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param clazz class to check.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_158'/>
+158
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_158'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if a class may be considered as the checkstyle audit listener module.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_159'/>
+159
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_159'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_160'/>
+160
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_160'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static boolean isAuditListener(Class&#60;?&#62; clazz) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_161'/>
+161
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_161'>1</a>
+<span>
+1. isAuditListener : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return AuditListener.class.isAssignableFrom(clazz);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_162'/>
+162
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_162'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_163'/>
+163
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_163'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_164'/>
+164
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_164'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_165'/>
+165
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_165'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Checks whether a class may be considered as the checkstyle root module.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_166'/>
+166
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_166'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Checkstyle&#39;s root modules are classes which implement &#39;RootModule&#39; interface.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_167'/>
+167
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_167'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param clazz class to check.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_168'/>
+168
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_168'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if a class may be considered as the checkstyle root module.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_169'/>
+169
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_169'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_170'/>
+170
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_170'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static boolean isRootModule(Class&#60;?&#62; clazz) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_171'/>
+171
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_171'>1</a>
+<span>
+1. isRootModule : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return RootModule.class.isAssignableFrom(clazz);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_172'/>
+172
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_172'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_173'/>
+173
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_173'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_174'/>
+174
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_174'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_175'/>
+175
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_175'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Checks whether a class may be considered as the checkstyle {@code TreeWalker} filter.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_176'/>
+176
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_176'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Checkstyle&#39;s {@code TreeWalker} filters are classes which implement &#39;TreeWalkerFilter&#39;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_177'/>
+177
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_177'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * interface.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_178'/>
+178
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_178'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param clazz class to check.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_179'/>
+179
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_179'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if a class may be considered as the checkstyle {@code TreeWalker} filter.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_180'/>
+180
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_180'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_181'/>
+181
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_181'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static boolean isTreeWalkerFilterModule(Class&#60;?&#62; clazz) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_182'/>
+182
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_182'>1</a>
+<span>
+1. isTreeWalkerFilterModule : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return TreeWalkerFilter.class.isAssignableFrom(clazz);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_183'/>
+183
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_183'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_184'/>
+184
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_184'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@bf2e303_185'/>
+185
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_185'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@bf2e303_60'>60</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_60'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getCheckstyleModules<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.PackageObjectFactoryTest.testCreateObjectFromFullModuleNamesWithExceptionByBruteForce(com.puppycrawl.tools.checkstyle.PackageObjectFactoryTest)</span></span> mutated return of Object value for com/puppycrawl/tools/checkstyle/utils/ModuleReflectionUtils::getCheckstyleModules to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@bf2e303_61'>61</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_61'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>lambda$getCheckstyleModules$0<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.PackageObjectFactoryTest.testCreateObjectFromMap(com.puppycrawl.tools.checkstyle.PackageObjectFactoryTest)</span></span> mutated return of Object value for com/puppycrawl/tools/checkstyle/utils/ModuleReflectionUtils::lambda$getCheckstyleModules$0 to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@bf2e303_75'>75</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_75'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isCheckstyleModule<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsCheckstyleModule(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>isCheckstyleModule<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsCheckstyleModule(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@bf2e303_76'>76</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_76'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isCheckstyleModule<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsCheckstyleModule(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@bf2e303_77'>77</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_77'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isCheckstyleModule<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsCheckstyleModule(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@bf2e303_78'>78</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_78'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isCheckstyleModule<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsCheckstyleModule(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@bf2e303_79'>79</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_79'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isCheckstyleModule<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsCheckstyleModule(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@bf2e303_80'>80</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_80'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isCheckstyleModule<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsCheckstyleModule(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@bf2e303_81'>81</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_81'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isCheckstyleModule<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsCheckstyleModule(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@bf2e303_82'>82</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_82'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isCheckstyleModule<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsCheckstyleModule(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@bf2e303_92'>92</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_92'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isValidCheckstyleClass<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsValidCheckstyleClass(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>isValidCheckstyleClass<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsValidCheckstyleClass(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@bf2e303_93'>93</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_93'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isValidCheckstyleClass<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsValidCheckstyleClass(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@bf2e303_94'>94</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_94'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isValidCheckstyleClass<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsValidCheckstyleClass(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@bf2e303_105'>105</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_105'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>hasDefaultConstructor<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsValidCheckstyleClass(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@bf2e303_110'>110</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_110'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>hasDefaultConstructor<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsValidCheckstyleClass(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@bf2e303_121'>121</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_121'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isCheckstyleTreeWalkerCheck<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsCheckstyleCheck(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@bf2e303_131'>131</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_131'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isFileSetModule<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsFileSetModule(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@bf2e303_141'>141</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_141'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isFilterModule<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsFilterModule(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@bf2e303_151'>151</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_151'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isFileFilterModule<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsFileFilterModule(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@bf2e303_161'>161</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_161'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isAuditListener<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsAuditListener(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@bf2e303_171'>171</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_171'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isRootModule<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsRootModule(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@bf2e303_182'>182</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@bf2e303_182'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isTreeWalkerFilterModule<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsTreeWalkerFilterModule(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>INCREMENTS_MUTATOR</li>
+<li class='mutator'>VOID_METHOD_CALL_MUTATOR</li>
+<li class='mutator'>RETURN_VALS_MUTATOR</li>
+<li class='mutator'>MATH_MUTATOR</li>
+<li class='mutator'>NEGATE_CONDITIONALS_MUTATOR</li>
+<li class='mutator'>INVERT_NEGS_MUTATOR</li>
+<li class='mutator'>CONDITIONALS_BOUNDARY_MUTATOR</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheckTest.testDefault(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheckTest) (39 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheckTest.testScopes(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheckTest) (21 ms)</li><li>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsCheckstyleModule(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest) (1 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testPositionOnlyComments(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (15 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testRequiredTokenIsNotInDefaultTokens(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (17 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testNonTightHtmlTagIntolerantCheckVisitCount(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (222 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.SingleLineJavadocCheckTest.testIgnoredTags(com.puppycrawl.tools.checkstyle.checks.javadoc.SingleLineJavadocCheckTest) (25 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheckTest.testAnother3(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheckTest) (16 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testNonTightHtmlTagIntolerantCheck(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (925 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testNoWsBeforeDescriptionInJavadocTags(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (54 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testCustomTag(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (22 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheckTest.testExcludeScope(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheckTest) (22 ms)</li><li>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsCheckstyleCheck(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest) (1 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testAntlrError(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (34 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testPositionWithSinglelineComments(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (56 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testAcceptableTokensFail(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (242 ms)</li><li>com.puppycrawl.tools.checkstyle.PackageObjectFactoryTest.testCreateModuleWithNonExistName(com.puppycrawl.tools.checkstyle.PackageObjectFactoryTest) (834 ms)</li><li>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsFileFilterModule(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest) (0 ms)</li><li>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsTreeWalkerFilterModule(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest) (1 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.SingleLineJavadocCheckTest.simpleTest(com.puppycrawl.tools.checkstyle.checks.javadoc.SingleLineJavadocCheckTest) (35 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testVisitLeaveToken(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (44 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testCheckReuseAfterParseErrorWithFollowingAntlrErrorInSingleFile(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (24 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testJavadocTagsWithoutArgs(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (39 ms)</li><li>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsFileSetModule(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest) (0 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testParsingErrors(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (18 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testAcceptableTokensPass(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (48 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testWrongSingletonTagInJavadoc(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (18 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testNonTightHtmlTagIntolerantCheckReportingNoViolation(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (227 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheckTest.testScopes2(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheckTest) (20 ms)</li><li>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsValidCheckstyleClass(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest) (1 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testNumberFormatException(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (19 ms)</li><li>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsAuditListener(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest) (1 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheckTest.testAnother2(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheckTest) (16 ms)</li><li>com.puppycrawl.tools.checkstyle.PackageObjectFactoryTest.testGenerateThirdPartyNameToFullModuleNameWithException(com.puppycrawl.tools.checkstyle.PackageObjectFactoryTest) (1492 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheckTest.testIgnoredVariableNames(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheckTest) (23 ms)</li><li>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsFilterModule(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest) (1 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheckTest.testLambdaLocalVariablesDoNotNeedJavadoc(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheckTest) (15 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testVisitCountForCheckAcceptingJavadocWithNonTightHtml(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (181 ms)</li><li>com.puppycrawl.tools.checkstyle.PackageObjectFactoryTest.testCreateObjectFromMap(com.puppycrawl.tools.checkstyle.PackageObjectFactoryTest) (434 ms)</li><li>com.puppycrawl.tools.checkstyle.PackageObjectFactoryTest.testNameToFullModuleNameMap(com.puppycrawl.tools.checkstyle.PackageObjectFactoryTest) (2827 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheckTest.testAnother4(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheckTest) (17 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheckTest.testAnother(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheckTest) (20 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheckTest.testDoNotIgnoreAnythingWhenIgnoreNamePatternIsEmpty(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheckTest) (28 ms)</li><li>com.puppycrawl.tools.checkstyle.PackageObjectFactoryTest.testCreateObjectFromFullModuleNamesWithAmbiguousException(com.puppycrawl.tools.checkstyle.PackageObjectFactoryTest) (717 ms)</li><li>com.puppycrawl.tools.checkstyle.PackageObjectFactoryTest.testCreateObjectFromFullModuleNamesWithCantInstantiateException(com.puppycrawl.tools.checkstyle.PackageObjectFactoryTest) (449 ms)</li><li>com.puppycrawl.tools.checkstyle.PackageObjectFactoryTest.testCreateObjectFromFullModuleNamesWithExceptionByBruteForce(com.puppycrawl.tools.checkstyle.PackageObjectFactoryTest) (406 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testPosition(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (68 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testCheckReuseAfterParseErrorWithFollowingAntlrErrorInTwoFiles(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (59 ms)</li><li>com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest.testIsRootModule(com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtilsTest) (1 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 1.3.2
+
+</body>
+</html>

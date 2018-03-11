@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>Comment.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_1'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>////////////////////////////////////////////////////////////////////////////////</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_2'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// checkstyle: Checks Java source code for adherence to a set of rules.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_3'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// Copyright (C) 2001-2018 the original author or authors.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_4'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>//</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_5'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// This library is free software; you can redistribute it and/or</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_6'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// modify it under the terms of the GNU Lesser General Public</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_7'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// License as published by the Free Software Foundation; either</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_8'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// version 2.1 of the License, or (at your option) any later version.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_9'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>//</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_10'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// This library is distributed in the hope that it will be useful,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_11'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// but WITHOUT ANY WARRANTY; without even the implied warranty of</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_12'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_13'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// Lesser General Public License for more details.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_14'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>//</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_15'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// You should have received a copy of the GNU Lesser General Public</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_16'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// License along with this library; if not, write to the Free Software</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_17'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_18'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>////////////////////////////////////////////////////////////////////////////////</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_19'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_20'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package com.puppycrawl.tools.checkstyle.api;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_21'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_22'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.Arrays;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_23'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_24'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_25'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Representation of the comment block.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_26'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_27'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author o_sukhodolsky</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_28'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_29'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public class Comment implements TextBlock {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_30'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_31'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /** Text of the comment. */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_32'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final String[] text;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_33'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_34'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /** Number of first line of the comment. */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_35'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final int startLineNo;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_36'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_37'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /** Number of last line of the comment. */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_38'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final int endLineNo;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_39'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_40'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /** Number of first column of the comment. */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_41'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final int startColNo;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_42'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_43'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /** Number of last column of the comment. */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_44'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final int endColNo;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_45'/>
+45
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_45'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_46'/>
+46
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_46'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_47'/>
+47
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_47'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Creates new instance.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_48'/>
+48
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_48'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param text the lines that make up the comment.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_49'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param firstCol number of the first column of the comment.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_50'/>
+50
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_50'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param lastLine number of the last line of the comment.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_51'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param lastCol number of the last column of the comment.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_52'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_53'/>
+53
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_53'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public Comment(final String[] text, final int firstCol,</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_54'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            final int lastLine, final int lastCol) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_55'/>
+55
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_55'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.text = new String[text.length];</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_56'/>
+56
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_56'>1</a>
+<span>
+1. <init> : removed call to java/lang/System::arraycopy &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        System.arraycopy(text, 0, this.text, 0, this.text.length);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_57'/>
+57
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_57'>2</a>
+<span>
+1. <init> : Replaced integer subtraction with addition &rarr; KILLED<br/>
+2. <init> : Replaced integer addition with subtraction &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        startLineNo = lastLine - this.text.length + 1;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_58'/>
+58
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_58'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        endLineNo = lastLine;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_59'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        startColNo = firstCol;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_60'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        endColNo = lastCol;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_61'/>
+61
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_61'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_62'/>
+62
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_62'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_63'/>
+63
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_63'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_64'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public final String[] getText() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_65'/>
+65
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_65'>1</a>
+<span>
+1. getText : mutated return of Object value for com/puppycrawl/tools/checkstyle/api/Comment::getText to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return text.clone();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_66'/>
+66
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_66'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_67'/>
+67
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_67'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_68'/>
+68
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_68'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_69'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public final int getStartLineNo() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_70'/>
+70
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_70'>1</a>
+<span>
+1. getStartLineNo : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return startLineNo;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_71'/>
+71
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_71'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_72'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_73'/>
+73
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_73'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_74'/>
+74
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_74'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public final int getEndLineNo() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_75'/>
+75
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_75'>1</a>
+<span>
+1. getEndLineNo : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return endLineNo;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_76'/>
+76
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_76'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_77'/>
+77
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_77'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_78'/>
+78
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_78'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_79'/>
+79
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_79'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public int getStartColNo() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_80'/>
+80
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_80'>1</a>
+<span>
+1. getStartColNo : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return startColNo;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_81'/>
+81
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_81'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_82'/>
+82
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_82'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_83'/>
+83
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_83'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_84'/>
+84
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_84'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public int getEndColNo() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_85'/>
+85
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_85'>1</a>
+<span>
+1. getEndColNo : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return endColNo;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_86'/>
+86
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_86'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_87'/>
+87
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_87'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_88'/>
+88
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_88'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_89'/>
+89
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_89'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public boolean intersects(int startLine, int startCol,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_90'/>
+90
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_90'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                              int endLine, int endCol) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_91'/>
+91
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_91'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        // compute a single number for start and end</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_92'/>
+92
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_92'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        // to simplify conditional logic</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_93'/>
+93
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_93'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        final long multiplier = Integer.MAX_VALUE;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_94'/>
+94
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_94'>2</a>
+<span>
+1. intersects : Replaced long multiplication with division &rarr; KILLED<br/>
+2. intersects : Replaced long addition with subtraction &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        final long thisStart = startLineNo * multiplier + startColNo;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_95'/>
+95
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_95'>2</a>
+<span>
+1. intersects : Replaced long multiplication with division &rarr; KILLED<br/>
+2. intersects : Replaced long addition with subtraction &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        final long thisEnd = endLineNo * multiplier + endColNo;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_96'/>
+96
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_96'>2</a>
+<span>
+1. intersects : Replaced long multiplication with division &rarr; KILLED<br/>
+2. intersects : Replaced long addition with subtraction &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        final long inStart = startLine * multiplier + startCol;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_97'/>
+97
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_97'>2</a>
+<span>
+1. intersects : Replaced long multiplication with division &rarr; KILLED<br/>
+2. intersects : Replaced long addition with subtraction &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        final long inEnd = endLine * multiplier + endCol;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_98'/>
+98
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_98'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_99'/>
+99
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_99'>5</a>
+<span>
+1. intersects : changed conditional boundary &rarr; KILLED<br/>
+2. intersects : changed conditional boundary &rarr; KILLED<br/>
+3. intersects : negated conditional &rarr; KILLED<br/>
+4. intersects : negated conditional &rarr; KILLED<br/>
+5. intersects : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return thisEnd &#62;= inStart &#38;&#38; inEnd &#62;= thisStart;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_100'/>
+100
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_100'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_101'/>
+101
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_101'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_102'/>
+102
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_102'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_103'/>
+103
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_103'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public String toString() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_104'/>
+104
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_104'>1</a>
+<span>
+1. toString : mutated return of Object value for com/puppycrawl/tools/checkstyle/api/Comment::toString to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return &#34;Comment[text=&#34; + Arrays.toString(text)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_105'/>
+105
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_105'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                + &#34;, startLineNo=&#34; + startLineNo</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_106'/>
+106
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_106'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                + &#34;, endLineNo=&#34; + endLineNo</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_107'/>
+107
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_107'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                + &#34;, startColNo=&#34; + startColNo</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_108'/>
+108
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_108'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                + &#34;, endColNo=&#34; + endColNo + &#39;]&#39;;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_109'/>
+109
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_109'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_110'/>
+110
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_110'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@422b5005_111'/>
+111
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_111'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@422b5005_56'>56</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_56'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b><init><br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest.testToString(com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest)</span></span> removed call to java/lang/System::arraycopy &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@422b5005_57'>57</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_57'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b><init><br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest.testGetCommentMeasures(com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest)</span></span> Replaced integer subtraction with addition &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b><init><br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest.testGetCommentMeasures(com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest)</span></span> Replaced integer addition with subtraction &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@422b5005_65'>65</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_65'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getText<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.api.FileContentsTest.testExtractBlockComment(com.puppycrawl.tools.checkstyle.api.FileContentsTest)</span></span> mutated return of Object value for com/puppycrawl/tools/checkstyle/api/Comment::getText to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@422b5005_70'>70</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_70'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getStartLineNo<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest.testGetCommentMeasures(com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@422b5005_75'>75</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_75'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getEndLineNo<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest.testGetCommentMeasures(com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@422b5005_80'>80</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_80'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getStartColNo<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest.testGetCommentMeasures(com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@422b5005_85'>85</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_85'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getEndColNo<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest.testGetCommentMeasures(com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@422b5005_94'>94</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_94'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>intersects<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.api.FileContentsTest.testSinglelineCommentNotIntersect(com.puppycrawl.tools.checkstyle.api.FileContentsTest)</span></span> Replaced long multiplication with division &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>intersects<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.api.FileContentsTest.testSinglelineCommentNotIntersect(com.puppycrawl.tools.checkstyle.api.FileContentsTest)</span></span> Replaced long addition with subtraction &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@422b5005_95'>95</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_95'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>intersects<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.api.FileContentsTest.testHasIntersectionWithSingleLineComment(com.puppycrawl.tools.checkstyle.api.FileContentsTest)</span></span> Replaced long multiplication with division &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>intersects<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.api.FileContentsTest.testSinglelineCommentIntersect(com.puppycrawl.tools.checkstyle.api.FileContentsTest)</span></span> Replaced long addition with subtraction &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@422b5005_96'>96</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_96'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>intersects<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.api.FileContentsTest.testHasIntersectionWithBlockComment2(com.puppycrawl.tools.checkstyle.api.FileContentsTest)</span></span> Replaced long multiplication with division &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>intersects<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest.testIntersects(com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest)</span></span> Replaced long addition with subtraction &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@422b5005_97'>97</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_97'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>intersects<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.api.FileContentsTest.testHasIntersectionWithSingleLineComment(com.puppycrawl.tools.checkstyle.api.FileContentsTest)</span></span> Replaced long multiplication with division &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>intersects<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.api.FileContentsTest.testHasIntersectionWithSingleLineComment(com.puppycrawl.tools.checkstyle.api.FileContentsTest)</span></span> Replaced long addition with subtraction &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@422b5005_99'>99</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_99'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>intersects<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest.testIntersects(com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest)</span></span> changed conditional boundary &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>intersects<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest.testIntersects(com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest)</span></span> changed conditional boundary &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>intersects<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.api.FileContentsTest.testHasIntersectionWithSingleLineComment(com.puppycrawl.tools.checkstyle.api.FileContentsTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>intersects<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.api.FileContentsTest.testHasIntersectionWithSingleLineComment(com.puppycrawl.tools.checkstyle.api.FileContentsTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>5.<span><b>5</b><br/><b>Location : </b>intersects<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.api.FileContentsTest.testHasIntersectionWithSingleLineComment(com.puppycrawl.tools.checkstyle.api.FileContentsTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@422b5005_104'>104</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@422b5005_104'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>toString<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest.testToString(com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest)</span></span> mutated return of Object value for com/puppycrawl/tools/checkstyle/api/Comment::toString to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>INCREMENTS_MUTATOR</li>
+<li class='mutator'>VOID_METHOD_CALL_MUTATOR</li>
+<li class='mutator'>RETURN_VALS_MUTATOR</li>
+<li class='mutator'>MATH_MUTATOR</li>
+<li class='mutator'>NEGATE_CONDITIONALS_MUTATOR</li>
+<li class='mutator'>INVERT_NEGS_MUTATOR</li>
+<li class='mutator'>CONDITIONALS_BOUNDARY_MUTATOR</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testNone(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (15 ms)</li><li>com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest.testCompareExpectedTreeWithInput1(com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest) (169 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.test11684083(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (14 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testStrictJavadoc(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testCheckCpp(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testScopeInnerInterfacesPublic(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (10 ms)</li><li>com.puppycrawl.tools.checkstyle.api.FileContentsTest.testSinglelineCommentIntersect(com.puppycrawl.tools.checkstyle.api.FileContentsTest) (1 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testTagIncomplete(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (12 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest.testSkipMethodsWithOverrideAnnotationTrue(com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest) (14 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testNoJavadoc(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testMessage(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (14 ms)</li><li>com.puppycrawl.tools.checkstyle.api.FileContentsTest.testHasIntersectionWithSingleLineComment(com.puppycrawl.tools.checkstyle.api.FileContentsTest) (0 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testArgumentSuppression(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (18 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testJava8ReceiverParameter(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (11 ms)</li><li>com.puppycrawl.tools.checkstyle.api.FileContentsTest.testSinglelineCommentNotIntersect(com.puppycrawl.tools.checkstyle.api.FileContentsTest) (1 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest.testCatch(com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest) (15 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testOffFormat(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (14 ms)</li><li>com.puppycrawl.tools.checkstyle.api.FileContentsTest.testExtractBlockComment(com.puppycrawl.tools.checkstyle.api.FileContentsTest) (1 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testDoubleTag(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (9 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWarningsFilterTest.testNone(com.puppycrawl.tools.checkstyle.filters.SuppressWarningsFilterTest) (20 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testUsingVariableCheckOnNextLine(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (19 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.extendAnnotationTest(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (47 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testExcludeScope(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (20 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testTagsWithResolver(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (57 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testTypeParamsTags(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (12 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testRegularExError(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (8 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testEmptyTag(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (9 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest.testDefault(com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest) (16 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testGenerics2(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (21 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testExpansion(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (15 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testAllowToSkipOverridden(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (15 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testTagsWithSubclassesAllowed(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (48 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testMissingFormat(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (9 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testTagsAreClearedEachRun(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (1 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testFindNearestMatchDontAllowSameColumn(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (1 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testVariableCheckOnVariableNumberOfLines(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (21 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testGenerics3(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (22 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testInheritDoc(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (12 ms)</li><li>com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest.testIntersects(com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest) (6 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWarningsFilterTest.testDefault(com.puppycrawl.tools.checkstyle.filters.SuppressWarningsFilterTest) (229 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest.testSpecified(com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest.testSkipMethodsWithOverrideAnnotationFalse(com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest) (10 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testInfluenceFormat(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (18 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testOffFormatCheck(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (17 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testRegularEx(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (9 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testNone(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (11 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testDefault(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (14 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testInvalidMessageFormat(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (12 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testAllowMissingJavadocTags(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (19 ms)</li><li>com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest.testToString(com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest) (1 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testUsingVariableMessage(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (21 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest.testPublicAccessModifier(com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest) (11 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testDefault(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (18 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testDefaultSettings(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (12 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.test11684082(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.api.FileContentsTest.testGetJavadocBefore(com.puppycrawl.tools.checkstyle.api.FileContentsTest) (2 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testCheckC(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (23 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testMethod(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (14 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testLogLoadErrors(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (16 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testCheckC(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testCheckCpp(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (21 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testDoAllowMissingJavadocTagsByDefault(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (22 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest.testIsOverriddenNoNullPointerException(com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest) (12 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testSeverity(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (11 ms)</li><li>com.puppycrawl.tools.checkstyle.api.FileContentsTest.testHasIntersectionWithBlockComment2(com.puppycrawl.tools.checkstyle.api.FileContentsTest) (1 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testRelaxedJavadoc(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testSuppressById(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testInvalidCheckFormat(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (12 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testScopeAnonInnerPrivate(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.CheckerTest.testClearLazyLoadCacheInDetailAST(com.puppycrawl.tools.checkstyle.CheckerTest) (37 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testScopes2(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (11 ms)</li><li>com.puppycrawl.tools.checkstyle.api.FileContentsTest.testReportCppComment(com.puppycrawl.tools.checkstyle.api.FileContentsTest) (2 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testInvalidInfluenceFormat(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.api.DetailASTTest.testManyComments(com.puppycrawl.tools.checkstyle.api.DetailASTTest) (23988 ms)</li><li>com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest.testCompareExpectedTreeWithInput2(com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest) (2 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testMethodsNotSkipWrittenJavadocs(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (11 ms)</li><li>com.puppycrawl.tools.checkstyle.api.DetailASTTest.testTreeStructure(com.puppycrawl.tools.checkstyle.api.DetailASTTest) (11816 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.newTest(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (37 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testEnumsAndAnnotations(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (10 ms)</li><li>com.puppycrawl.tools.checkstyle.api.FileContentsTest.testReportComment(com.puppycrawl.tools.checkstyle.api.FileContentsTest) (2 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testScopeAnonInnerAnonInner(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (14 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testSuppressById(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (16 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testUsingTagMessageRegexp(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (19 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testTags(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (50 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testGenerics1(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (27 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testInvalidCheckFormat(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (14 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testMissingTag(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (8 ms)</li><li>com.puppycrawl.tools.checkstyle.CheckerTest.testHaltOnExceptionOff(com.puppycrawl.tools.checkstyle.CheckerTest) (34 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testTag(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (9 ms)</li><li>com.puppycrawl.tools.checkstyle.api.FileContentsTest.testHasIntersectionWithBlockComment(com.puppycrawl.tools.checkstyle.api.FileContentsTest) (1 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testTagsAreClearedEachRun(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (1 ms)</li><li>com.puppycrawl.tools.checkstyle.api.FileContentsTest.testDeprecatedAbbreviatedMethod(com.puppycrawl.tools.checkstyle.api.FileContentsTest) (2 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.test11684081(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (26 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testScopes(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (18 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.test1379666(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.allowedAnnotationsTest(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (52 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testScopeAnonInnerWithResolver(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (12 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testUsingVariableCheckOnPreviousLine(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (20 ms)</li><li>com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest.testGetCommentMeasures(com.puppycrawl.tools.checkstyle.grammars.comments.CommentsTest) (1 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testIgnoreMissing(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (11 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testAllowMissingJavadoc(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (20 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 1.3.2
+
+</body>
+</html>

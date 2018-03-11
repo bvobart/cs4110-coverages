@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>SeverityLevel.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_1'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>////////////////////////////////////////////////////////////////////////////////</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_2'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// checkstyle: Checks Java source code for adherence to a set of rules.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_3'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// Copyright (C) 2001-2018 the original author or authors.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_4'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>//</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_5'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// This library is free software; you can redistribute it and/or</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_6'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// modify it under the terms of the GNU Lesser General Public</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_7'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// License as published by the Free Software Foundation; either</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_8'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// version 2.1 of the License, or (at your option) any later version.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_9'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>//</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_10'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// This library is distributed in the hope that it will be useful,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_11'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// but WITHOUT ANY WARRANTY; without even the implied warranty of</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_12'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_13'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// Lesser General Public License for more details.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_14'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>//</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_15'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// You should have received a copy of the GNU Lesser General Public</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_16'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// License along with this library; if not, write to the Free Software</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_17'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_18'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>////////////////////////////////////////////////////////////////////////////////</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_19'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_20'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package com.puppycrawl.tools.checkstyle.api;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_21'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_22'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.Locale;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_23'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_24'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_25'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * &#60;p&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_26'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Severity level for a check violation.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_27'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * &#60;/p&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_28'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * &#60;p&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_29'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Each violation of an audit check is assigned one of the severity levels</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_30'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * defined here.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_31'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * &#60;/p&#62;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_32'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_33'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author David Schneider</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_34'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author Travis Schneeberger</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_35'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author Mehmet Can C&#246;mert</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_36'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_37'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>public enum SeverityLevel {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_38'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_39'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /** Severity level ignore. */</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_40'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    IGNORE,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_41'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /** Severity level info. */</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_42'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    INFO,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_43'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /** Severity level warning. */</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_44'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    WARNING,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_45'/>
+45
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_45'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /** Severity level error. */</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_46'/>
+46
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_46'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    ERROR;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_47'/>
+47
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_47'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_48'/>
+48
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_48'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_49'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public String toString() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_50'/>
+50
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_50'>1</a>
+<span>
+1. toString : mutated return of Object value for com/puppycrawl/tools/checkstyle/api/SeverityLevel::toString to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return getName();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_51'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_52'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_53'/>
+53
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_53'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_54'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Returns name of severity level.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_55'/>
+55
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_55'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return the name of this severity level.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_56'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_57'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public String getName() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_58'/>
+58
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_58'>1</a>
+<span>
+1. getName : mutated return of Object value for com/puppycrawl/tools/checkstyle/api/SeverityLevel::getName to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return name().toLowerCase(Locale.ENGLISH);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_59'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_60'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_61'/>
+61
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_61'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_62'/>
+62
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_62'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * SeverityLevel factory method.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_63'/>
+63
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_63'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_64'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param securityLevelName level name, such as &#34;ignore&#34;, &#34;info&#34;, etc.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_65'/>
+65
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_65'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return the {@code SeverityLevel}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_66'/>
+66
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_66'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     *     associated with {@code securityLevelName}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_67'/>
+67
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_67'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_68'/>
+68
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_68'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static SeverityLevel getInstance(String securityLevelName) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_69'/>
+69
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_69'>1</a>
+<span>
+1. getInstance : mutated return of Object value for com/puppycrawl/tools/checkstyle/api/SeverityLevel::getInstance to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return valueOf(SeverityLevel.class, securityLevelName.trim()</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_70'/>
+70
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_70'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                .toUpperCase(Locale.ENGLISH));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_71'/>
+71
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_71'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_72'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4e853286_73'/>
+73
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_73'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4e853286_50'>50</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_50'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>toString<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.api.SeverityLevelTest.testMisc(com.puppycrawl.tools.checkstyle.api.SeverityLevelTest)</span></span> mutated return of Object value for com/puppycrawl/tools/checkstyle/api/SeverityLevel::toString to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4e853286_58'>58</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_58'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getName<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.api.SeverityLevelTest.testMisc(com.puppycrawl.tools.checkstyle.api.SeverityLevelTest)</span></span> mutated return of Object value for com/puppycrawl/tools/checkstyle/api/SeverityLevel::getName to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4e853286_69'>69</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4e853286_69'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getInstance<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.api.SeverityLevelTest.testMixedCaseSpaces(com.puppycrawl.tools.checkstyle.api.SeverityLevelTest)</span></span> mutated return of Object value for com/puppycrawl/tools/checkstyle/api/SeverityLevel::getInstance to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>INCREMENTS_MUTATOR</li>
+<li class='mutator'>VOID_METHOD_CALL_MUTATOR</li>
+<li class='mutator'>RETURN_VALS_MUTATOR</li>
+<li class='mutator'>MATH_MUTATOR</li>
+<li class='mutator'>NEGATE_CONDITIONALS_MUTATOR</li>
+<li class='mutator'>INVERT_NEGS_MUTATOR</li>
+<li class='mutator'>CONDITIONALS_BOUNDARY_MUTATOR</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testNone(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (15 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithPlainTextCommentFilterTest.testSuppressByModuleId(com.puppycrawl.tools.checkstyle.filters.SuppressWithPlainTextCommentFilterTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testSkipCertainMethods(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (16 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.test11684083(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (14 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest.testIsNotMessagesBundle(com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest) (1615 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testStrictJavadoc(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testCheckCpp(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testTwo(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (18 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest.testNullFormat(com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest) (6 ms)</li><li>com.puppycrawl.tools.checkstyle.CheckerTest.testFinishLocalSetupFullyInitialized(com.puppycrawl.tools.checkstyle.CheckerTest) (3 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testScopeInnerInterfacesPublic(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (10 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testWrong(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (15 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest.testRegexpToMatchPartOfBaseName(com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest) (1646 ms)</li><li>com.puppycrawl.tools.checkstyle.CheckerTest.testWithCacheWithNoViolation(com.puppycrawl.tools.checkstyle.CheckerTest) (196 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testSetterGetterOff(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (12 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SeverityMatchFilterTest.testAcceptOnMatch(com.puppycrawl.tools.checkstyle.filters.SeverityMatchFilterTest) (1 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testTagIncomplete(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (12 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithPlainTextCommentFilterTest.testSuppressByModuleIdWithNullModuleId(com.puppycrawl.tools.checkstyle.filters.SuppressWithPlainTextCommentFilterTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithPlainTextCommentFilterTest.testSuppressionCommentsInJavaScriptFile(com.puppycrawl.tools.checkstyle.filters.SuppressWithPlainTextCommentFilterTest) (178 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest.testSkipMethodsWithOverrideAnnotationTrue(com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest) (14 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testBroken(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (14 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testNoJavadoc(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testMessage(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (14 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testUrlInFilePropertyUnableToLoad(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (338 ms)</li><li>com.puppycrawl.tools.checkstyle.CheckerTest.testCacheAndFilterWhichDoesNotImplementExternalResourceHolderInterface(com.puppycrawl.tools.checkstyle.CheckerTest) (17 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testArgumentSuppression(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (18 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testMissing(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (12 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testJava8ReceiverParameter(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (11 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest.testTranslationFileWithLanguageCountryVariantIsMissing(com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest) (1620 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest.testOnePropertyFileSet(com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest) (1585 ms)</li><li>com.puppycrawl.tools.checkstyle.api.FileSetCheckTest.testTranslation(com.puppycrawl.tools.checkstyle.api.FileSetCheckTest) (9 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest.testCatch(com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest) (15 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testBlacklist(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (34 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testStrategyOnMismatchOne(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (18 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testOffFormat(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (14 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testPkgRegExpInParent(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (18 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testDoubleTag(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (9 ms)</li><li>com.puppycrawl.tools.checkstyle.ConfigurationLoaderTest.testConstructors(com.puppycrawl.tools.checkstyle.ConfigurationLoaderTest) (1460 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWarningsFilterTest.testNone(com.puppycrawl.tools.checkstyle.filters.SuppressWarningsFilterTest) (20 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testUsingVariableCheckOnNextLine(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (19 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.extendAnnotationTest(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (47 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testExcludeScope(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (20 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testTagsWithResolver(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (57 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testTypeParamsTags(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (12 ms)</li><li>com.puppycrawl.tools.checkstyle.ConfigurationLoaderTest.testConfigWithIgnoreUsingInputSource(com.puppycrawl.tools.checkstyle.ConfigurationLoaderTest) (1727 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testRegularExError(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (8 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testEmptyTag(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (9 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest.testDefault(com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest) (16 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testPathRegexMatchesPartially(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (19 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionFilterTest.testRemoteFileExternalResourceContentDoesNotChange(com.puppycrawl.tools.checkstyle.filters.SuppressionFilterTest) (1839 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testGenerics2(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (21 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWarningsFilterTest.testSuppressById(com.puppycrawl.tools.checkstyle.filters.SuppressWarningsFilterTest) (24 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest.testEmptyFormat(com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest) (6 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testExpansion(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (15 ms)</li><li>com.puppycrawl.tools.checkstyle.api.SeverityLevelTest.testMixedCaseSpaces(com.puppycrawl.tools.checkstyle.api.SeverityLevelTest) (1 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testAllowToSkipOverridden(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (15 ms)</li><li>com.puppycrawl.tools.checkstyle.CheckerTest.testDestroyCheckerWithWrongCacheFileNameLength(com.puppycrawl.tools.checkstyle.CheckerTest) (3 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testStrategyOnMismatchThree(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (17 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testTagsWithSubclassesAllowed(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (48 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testMissingFormat(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (9 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionFilterTest.testLocalFileExternalResourceContentDoesNotChange(com.puppycrawl.tools.checkstyle.filters.SuppressionFilterTest) (25 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testOneRegExp(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (17 ms)</li><li>com.puppycrawl.tools.checkstyle.api.SeverityLevelTest.testMisc(com.puppycrawl.tools.checkstyle.api.SeverityLevelTest) (3 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testVariableCheckOnVariableNumberOfLines(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (21 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testGenerics3(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (22 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest.testSetMessage(com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest) (22 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testInheritDoc(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (12 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest.testIgnoreCaseFalse(com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest) (9 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWarningsFilterTest.testDefault(com.puppycrawl.tools.checkstyle.filters.SuppressWarningsFilterTest) (229 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest.testSpecified(com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest.testSkipMethodsWithOverrideAnnotationFalse(com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest) (10 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithPlainTextCommentFilterTest.testSuppressionCommentsInXmlFile(com.puppycrawl.tools.checkstyle.filters.SuppressWithPlainTextCommentFilterTest) (9 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest.testMessageProperty(com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest) (7 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithPlainTextCommentFilterTest.testInvalidMessageFormat(com.puppycrawl.tools.checkstyle.filters.SuppressWithPlainTextCommentFilterTest) (8 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest.testIt(com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest) (7 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testInfluenceFormat(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (18 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testOffFormatCheck(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (17 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testCacheWhenFileExternalResourceContentDoesNotChange(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (187 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithPlainTextCommentFilterTest.testFilterWithDefaultConfig(com.puppycrawl.tools.checkstyle.filters.SuppressWithPlainTextCommentFilterTest) (9 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest.testEqualBaseNamesButDifferentExtensions(com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest) (1786 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testRegularEx(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (9 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testNone(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (11 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testUrlInFileProperty(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (16 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testDefault(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (14 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithPlainTextCommentFilterTest.testFilterWithCustomMessageFormat(com.puppycrawl.tools.checkstyle.filters.SuppressWithPlainTextCommentFilterTest) (22 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testInvalidMessageFormat(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (12 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testAllowMissingJavadocTags(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (19 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithPlainTextCommentFilterTest.testChangeOffAndOnFormat(com.puppycrawl.tools.checkstyle.filters.SuppressWithPlainTextCommentFilterTest) (189 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testPathRegexMatches(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (17 ms)</li><li>com.puppycrawl.tools.checkstyle.CheckerTest.testIgnoredFileExtensions(com.puppycrawl.tools.checkstyle.CheckerTest) (8 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest.testBundlesWithSameNameButDifferentPaths(com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest) (1702 ms)</li><li>com.puppycrawl.tools.checkstyle.filefilters.BeforeExecutionExclusionFileFilterTest.testRejectBadFile(com.puppycrawl.tools.checkstyle.filefilters.BeforeExecutionExclusionFileFilterTest) (10 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testUnknown(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (16 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testTwoRegExp(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (18 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest.testBaseNameWithSeparatorTranslationsAreMissing(com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest) (1686 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testUsingVariableMessage(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (21 ms)</li><li>com.puppycrawl.tools.checkstyle.ConfigurationLoaderTest.testConfigCheckerWithIgnore(com.puppycrawl.tools.checkstyle.ConfigurationLoaderTest) (1800 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testNull(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (14 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest.testPublicAccessModifier(com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest) (11 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest.testCarriageReturn(com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest) (177 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testDefault(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (18 ms)</li><li>com.puppycrawl.tools.checkstyle.CheckerTest.testClearExistingCache(com.puppycrawl.tools.checkstyle.CheckerTest) (10 ms)</li><li>com.puppycrawl.tools.checkstyle.CheckerTest.testSetters(com.puppycrawl.tools.checkstyle.CheckerTest) (14 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithPlainTextCommentFilterTest.testSuppressionCommentsInSqlFile(com.puppycrawl.tools.checkstyle.filters.SuppressWithPlainTextCommentFilterTest) (8 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testDefaultSettings(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (12 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest.testFileExtension(com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest) (1630 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.test11684082(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testStrategyOnMismatchFour(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (18 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testCheckC(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (23 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testMethod(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (14 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testEmpty(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testLogLoadErrors(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (16 ms)</li><li>com.puppycrawl.tools.checkstyle.CheckerTest.testFileSetCheckInitWhenAddedAsChild(com.puppycrawl.tools.checkstyle.CheckerTest) (15 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testResourceUnableToLoad(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (11 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testCheckC(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.CheckerTest.testFileExtensions(com.puppycrawl.tools.checkstyle.CheckerTest) (9 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testCheckCpp(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (21 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest.testIgnoreCaseTrue(com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest) (8 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest.testMinimum(com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest) (16 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testPathRegexDoesntMatchPartially(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (18 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testDoAllowMissingJavadocTagsByDefault(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (22 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testSetterGetterOn(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (14 ms)</li><li>com.puppycrawl.tools.checkstyle.CheckerTest.testCacheAndCheckWhichAddsNewResourceLocationButKeepsSameCheckerInstance(com.puppycrawl.tools.checkstyle.CheckerTest) (442 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest.testBaseNameOption(com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest) (1958 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest.testIsOverriddenNoNullPointerException(com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest) (12 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testSeverity(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (11 ms)</li><li>com.puppycrawl.tools.checkstyle.ConfigurationLoaderTest.testLoadConfigurationDeprecated(com.puppycrawl.tools.checkstyle.ConfigurationLoaderTest) (1325 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testRelaxedJavadoc(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest.testGoodLimit(com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest) (8 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testSuppressById(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.CheckerTest.testCacheAndCheckWhichDoesNotImplementExternalResourceHolderInterface(com.puppycrawl.tools.checkstyle.CheckerTest) (396 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest.testInvalidCheckFormat(com.puppycrawl.tools.checkstyle.filters.SuppressionCommentFilterTest) (12 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testScopeAnonInnerPrivate(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.CheckerTest.testClearLazyLoadCacheInDetailAST(com.puppycrawl.tools.checkstyle.CheckerTest) (37 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest.testMaximum(com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest) (164 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest.testReceiverParameter(com.puppycrawl.tools.checkstyle.checks.naming.ParameterNameCheckTest) (10 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testScopes2(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (11 ms)</li><li>com.puppycrawl.tools.checkstyle.CheckerTest.testCacheOnViolationSuppression(com.puppycrawl.tools.checkstyle.CheckerTest) (79 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testInvalidInfluenceFormat(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.ConfigurationLoaderTest.testLoadConfigurationFromClassPath(com.puppycrawl.tools.checkstyle.ConfigurationLoaderTest) (1254 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest.testTranslationFileWithLanguageCountryVariantArePresent(com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest) (2165 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testResource(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (18 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest.testDefaultTranslationFileIsMissing(com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest) (1703 ms)</li><li>com.puppycrawl.tools.checkstyle.api.DetailASTTest.testManyComments(com.puppycrawl.tools.checkstyle.api.DetailASTTest) (23988 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testMethodsNotSkipWrittenJavadocs(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (11 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest.testResourcesAreClosed(com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest) (3195 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SeverityMatchFilterTest.testSeverity(com.puppycrawl.tools.checkstyle.filters.SeverityMatchFilterTest) (1 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testPkgRegExpInChild(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (18 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.newTest(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (37 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testEnumsAndAnnotations(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (10 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SeverityMatchFilterTest.testDefault(com.puppycrawl.tools.checkstyle.filters.SeverityMatchFilterTest) (1 ms)</li><li>com.puppycrawl.tools.checkstyle.api.FileSetCheckTest.testProcessCallsFinishBeforeCallingDestroy(com.puppycrawl.tools.checkstyle.api.FileSetCheckTest) (20 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest.testTranslationFilesAreMissing(com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest) (1673 ms)</li><li>com.puppycrawl.tools.checkstyle.CheckerTest.testClearCache(com.puppycrawl.tools.checkstyle.CheckerTest) (23 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testPathRegexDoesntMatch(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (24 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest.testLogOutput(com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest) (2382 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testScopeAnonInnerAnonInner(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (14 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testNotSkipAnythingWhenSkipRegexDoesNotMatch(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (12 ms)</li><li>com.puppycrawl.tools.checkstyle.CheckerTest.testNoModuleFactory(com.puppycrawl.tools.checkstyle.CheckerTest) (5 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testSuppressById(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (16 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testUsingTagMessageRegexp(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (19 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testOne(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (17 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testTags(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (50 ms)</li><li>com.puppycrawl.tools.checkstyle.api.SeverityLevelTest.testMixedCaseSpacesWithDifferentLocales(com.puppycrawl.tools.checkstyle.api.SeverityLevelTest) (1 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest.testTranslation(com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest) (1645 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testPkgRegExpInBoth(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (18 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest.testIllegalFailBelowErrorLimit(com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest) (7 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testGenerics1(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (27 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest.testNoStackOverflowError(com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest) (18 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest.testStrategyOnMismatchTwo(com.puppycrawl.tools.checkstyle.checks.imports.ImportControlCheckTest) (18 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testInvalidCheckFormat(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (14 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testMissingTag(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (8 ms)</li><li>com.puppycrawl.tools.checkstyle.CheckerTest.testHaltOnExceptionOff(com.puppycrawl.tools.checkstyle.CheckerTest) (34 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testTag(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (9 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest.testDefaultConfiguration(com.puppycrawl.tools.checkstyle.checks.regexp.RegexpMultilineCheckTest) (7 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.test11684081(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (26 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testScopes(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (18 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest.testFileExtensions(com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest) (1821 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithPlainTextCommentFilterTest.testSuppressionCommentsInPropertiesFile(com.puppycrawl.tools.checkstyle.filters.SuppressWithPlainTextCommentFilterTest) (12 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest.testBaseNameWithSeparatorDefaultTranslationIsMissing(com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest) (2350 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.test1379666(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (13 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.allowedAnnotationsTest(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (52 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithPlainTextCommentFilterTest.testInvalidCheckFormat(com.puppycrawl.tools.checkstyle.filters.SuppressWithPlainTextCommentFilterTest) (8 ms)</li><li>com.puppycrawl.tools.checkstyle.CheckerTest.testDuplicatedModule(com.puppycrawl.tools.checkstyle.CheckerTest) (29 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest.testLogIoExceptionFileNotFound(com.puppycrawl.tools.checkstyle.checks.TranslationCheckTest) (1545 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testScopeAnonInnerWithResolver(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (12 ms)</li><li>com.puppycrawl.tools.checkstyle.ConfigurationLoaderTest.testConfigWithIgnore(com.puppycrawl.tools.checkstyle.ConfigurationLoaderTest) (1711 ms)</li><li>com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest.testUsingVariableCheckOnPreviousLine(com.puppycrawl.tools.checkstyle.filters.SuppressWithNearbyCommentFilterTest) (20 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest.testIgnoreMissing(com.puppycrawl.tools.checkstyle.checks.javadoc.WriteTagCheckTest) (11 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest.testAllowMissingJavadoc(com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheckTest) (20 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 1.3.2
+
+</body>
+</html>

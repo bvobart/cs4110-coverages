@@ -1,0 +1,4506 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>BlockCommentPosition.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_1'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>////////////////////////////////////////////////////////////////////////////////</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_2'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// checkstyle: Checks Java source code for adherence to a set of rules.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_3'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// Copyright (C) 2001-2018 the original author or authors.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_4'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>//</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_5'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// This library is free software; you can redistribute it and/or</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_6'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// modify it under the terms of the GNU Lesser General Public</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_7'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// License as published by the Free Software Foundation; either</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_8'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// version 2.1 of the License, or (at your option) any later version.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_9'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>//</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_10'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// This library is distributed in the hope that it will be useful,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_11'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// but WITHOUT ANY WARRANTY; without even the implied warranty of</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_12'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_13'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// Lesser General Public License for more details.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_14'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>//</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_15'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// You should have received a copy of the GNU Lesser General Public</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_16'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// License along with this library; if not, write to the Free Software</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_17'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_18'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>////////////////////////////////////////////////////////////////////////////////</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_19'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_20'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package com.puppycrawl.tools.checkstyle.utils;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_21'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_22'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.puppycrawl.tools.checkstyle.api.DetailAST;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_23'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.puppycrawl.tools.checkstyle.api.TokenTypes;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_24'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_25'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_26'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Utility class that has methods to check javadoc comment position in java file.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_27'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author bizmailov</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_28'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_29'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_30'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public final class BlockCommentPosition {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_31'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_32'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_33'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Forbid new instances.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_34'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_35'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    private BlockCommentPosition() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_36'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_37'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_38'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_39'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Node is on type definition.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_40'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param blockComment DetailAST</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_41'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if node is before class, interface, enum or annotation.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_42'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_43'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static boolean isOnType(DetailAST blockComment) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_44'/>
+44
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_44'>2</a>
+<span>
+1. isOnType : negated conditional &rarr; KILLED<br/>
+2. isOnType : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return isOnClass(blockComment)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_45'/>
+45
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_45'>1</a>
+<span>
+1. isOnType : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || isOnInterface(blockComment)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_46'/>
+46
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_46'>1</a>
+<span>
+1. isOnType : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || isOnEnum(blockComment)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_47'/>
+47
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_47'>1</a>
+<span>
+1. isOnType : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || isOnAnnotationDef(blockComment);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_48'/>
+48
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_48'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_49'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_50'/>
+50
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_50'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_51'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Node is on class definition.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_52'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param blockComment DetailAST</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_53'/>
+53
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_53'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if node is before class</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_54'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_55'/>
+55
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_55'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static boolean isOnClass(DetailAST blockComment) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_56'/>
+56
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_56'>2</a>
+<span>
+1. isOnClass : negated conditional &rarr; KILLED<br/>
+2. isOnClass : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return isOnPlainToken(blockComment, TokenTypes.CLASS_DEF, TokenTypes.LITERAL_CLASS)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_57'/>
+57
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_57'>1</a>
+<span>
+1. isOnClass : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || isOnTokenWithModifiers(blockComment, TokenTypes.CLASS_DEF)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_58'/>
+58
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_58'>1</a>
+<span>
+1. isOnClass : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || isOnTokenWithAnnotation(blockComment, TokenTypes.CLASS_DEF);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_59'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_60'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_61'/>
+61
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_61'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_62'/>
+62
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_62'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Node is on interface definition.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_63'/>
+63
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_63'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param blockComment DetailAST</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_64'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if node is before interface</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_65'/>
+65
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_65'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_66'/>
+66
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_66'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static boolean isOnInterface(DetailAST blockComment) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_67'/>
+67
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_67'>2</a>
+<span>
+1. isOnInterface : negated conditional &rarr; KILLED<br/>
+2. isOnInterface : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return isOnPlainToken(blockComment, TokenTypes.INTERFACE_DEF, TokenTypes.LITERAL_INTERFACE)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_68'/>
+68
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_68'>1</a>
+<span>
+1. isOnInterface : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || isOnTokenWithModifiers(blockComment, TokenTypes.INTERFACE_DEF)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_69'/>
+69
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_69'>1</a>
+<span>
+1. isOnInterface : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || isOnTokenWithAnnotation(blockComment, TokenTypes.INTERFACE_DEF);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_70'/>
+70
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_70'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_71'/>
+71
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_71'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_72'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_73'/>
+73
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_73'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Node is on enum definition.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_74'/>
+74
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_74'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param blockComment DetailAST</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_75'/>
+75
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_75'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if node is before enum</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_76'/>
+76
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_76'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_77'/>
+77
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_77'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static boolean isOnEnum(DetailAST blockComment) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_78'/>
+78
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_78'>2</a>
+<span>
+1. isOnEnum : negated conditional &rarr; KILLED<br/>
+2. isOnEnum : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return isOnPlainToken(blockComment, TokenTypes.ENUM_DEF, TokenTypes.ENUM)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_79'/>
+79
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_79'>1</a>
+<span>
+1. isOnEnum : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || isOnTokenWithModifiers(blockComment, TokenTypes.ENUM_DEF)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_80'/>
+80
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_80'>1</a>
+<span>
+1. isOnEnum : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || isOnTokenWithAnnotation(blockComment, TokenTypes.ENUM_DEF);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_81'/>
+81
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_81'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_82'/>
+82
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_82'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_83'/>
+83
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_83'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_84'/>
+84
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_84'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Node is on annotation definition.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_85'/>
+85
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_85'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param blockComment DetailAST</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_86'/>
+86
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_86'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if node is before annotation</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_87'/>
+87
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_87'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_88'/>
+88
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_88'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static boolean isOnAnnotationDef(DetailAST blockComment) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_89'/>
+89
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_89'>2</a>
+<span>
+1. isOnAnnotationDef : negated conditional &rarr; KILLED<br/>
+2. isOnAnnotationDef : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return isOnPlainToken(blockComment, TokenTypes.ANNOTATION_DEF, TokenTypes.AT)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_90'/>
+90
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_90'>1</a>
+<span>
+1. isOnAnnotationDef : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || isOnTokenWithModifiers(blockComment, TokenTypes.ANNOTATION_DEF)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_91'/>
+91
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_91'>1</a>
+<span>
+1. isOnAnnotationDef : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || isOnTokenWithAnnotation(blockComment, TokenTypes.ANNOTATION_DEF);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_92'/>
+92
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_92'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_93'/>
+93
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_93'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_94'/>
+94
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_94'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_95'/>
+95
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_95'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Node is on type member declaration.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_96'/>
+96
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_96'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param blockComment DetailAST</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_97'/>
+97
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_97'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if node is before method, field, constructor, enum constant</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_98'/>
+98
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_98'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     *     or annotation field</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_99'/>
+99
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_99'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_100'/>
+100
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_100'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static boolean isOnMember(DetailAST blockComment) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_101'/>
+101
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_101'>2</a>
+<span>
+1. isOnMember : negated conditional &rarr; KILLED<br/>
+2. isOnMember : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return isOnMethod(blockComment)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_102'/>
+102
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_102'>1</a>
+<span>
+1. isOnMember : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || isOnField(blockComment)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_103'/>
+103
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_103'>1</a>
+<span>
+1. isOnMember : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || isOnConstructor(blockComment)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_104'/>
+104
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_104'>1</a>
+<span>
+1. isOnMember : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || isOnEnumConstant(blockComment)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_105'/>
+105
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_105'>1</a>
+<span>
+1. isOnMember : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || isOnAnnotationField(blockComment);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_106'/>
+106
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_106'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_107'/>
+107
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_107'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_108'/>
+108
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_108'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_109'/>
+109
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_109'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Node is on method declaration.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_110'/>
+110
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_110'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param blockComment DetailAST</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_111'/>
+111
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_111'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if node is before method</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_112'/>
+112
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_112'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_113'/>
+113
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_113'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static boolean isOnMethod(DetailAST blockComment) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_114'/>
+114
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_114'>2</a>
+<span>
+1. isOnMethod : negated conditional &rarr; KILLED<br/>
+2. isOnMethod : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return isOnPlainClassMember(blockComment, TokenTypes.METHOD_DEF)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_115'/>
+115
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_115'>1</a>
+<span>
+1. isOnMethod : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || isOnTokenWithModifiers(blockComment, TokenTypes.METHOD_DEF)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_116'/>
+116
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_116'>1</a>
+<span>
+1. isOnMethod : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || isOnTokenWithAnnotation(blockComment, TokenTypes.METHOD_DEF);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_117'/>
+117
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_117'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_118'/>
+118
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_118'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_119'/>
+119
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_119'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_120'/>
+120
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_120'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Node is on field declaration.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_121'/>
+121
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_121'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param blockComment DetailAST</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_122'/>
+122
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_122'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if node is before field</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_123'/>
+123
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_123'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_124'/>
+124
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_124'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static boolean isOnField(DetailAST blockComment) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_125'/>
+125
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_125'>2</a>
+<span>
+1. isOnField : negated conditional &rarr; KILLED<br/>
+2. isOnField : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return isOnPlainClassMember(blockComment, TokenTypes.VARIABLE_DEF)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_126'/>
+126
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_126'>1</a>
+<span>
+1. isOnField : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || isOnTokenWithModifiers(blockComment, TokenTypes.VARIABLE_DEF)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_127'/>
+127
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_127'>1</a>
+<span>
+1. isOnField : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || isOnTokenWithAnnotation(blockComment, TokenTypes.VARIABLE_DEF);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_128'/>
+128
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_128'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_129'/>
+129
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_129'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_130'/>
+130
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_130'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_131'/>
+131
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_131'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Node is on constructor.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_132'/>
+132
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_132'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param blockComment DetailAST</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_133'/>
+133
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_133'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if node is before constructor</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_134'/>
+134
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_134'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_135'/>
+135
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_135'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static boolean isOnConstructor(DetailAST blockComment) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_136'/>
+136
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_136'>2</a>
+<span>
+1. isOnConstructor : negated conditional &rarr; KILLED<br/>
+2. isOnConstructor : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return isOnPlainToken(blockComment, TokenTypes.CTOR_DEF, TokenTypes.IDENT)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_137'/>
+137
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_137'>1</a>
+<span>
+1. isOnConstructor : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || isOnTokenWithModifiers(blockComment, TokenTypes.CTOR_DEF)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_138'/>
+138
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_138'>1</a>
+<span>
+1. isOnConstructor : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || isOnTokenWithAnnotation(blockComment, TokenTypes.CTOR_DEF);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_139'/>
+139
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_139'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_140'/>
+140
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_140'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_141'/>
+141
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_141'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_142'/>
+142
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_142'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Node is on enum constant.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_143'/>
+143
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_143'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param blockComment DetailAST</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_144'/>
+144
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_144'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if node is before enum constant</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_145'/>
+145
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_145'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_146'/>
+146
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_146'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static boolean isOnEnumConstant(DetailAST blockComment) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_147'/>
+147
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_147'>1</a>
+<span>
+1. isOnEnumConstant : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        final boolean isOnPlainConst = blockComment.getParent() != null</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_148'/>
+148
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_148'>1</a>
+<span>
+1. isOnEnumConstant : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                &#38;&#38; blockComment.getParent().getType() == TokenTypes.ENUM_CONSTANT_DEF</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_149'/>
+149
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_149'>1</a>
+<span>
+1. isOnEnumConstant : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                &#38;&#38; getPrevSiblingSkipComments(blockComment).getType() == TokenTypes.ANNOTATIONS</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_150'/>
+150
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_150'>1</a>
+<span>
+1. isOnEnumConstant : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                &#38;&#38; getPrevSiblingSkipComments(blockComment).getChildCount() == 0;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_151'/>
+151
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_151'>2</a>
+<span>
+1. isOnEnumConstant : negated conditional &rarr; KILLED<br/>
+2. isOnEnumConstant : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        final boolean isOnConstWithAnnotation = !isOnPlainConst &#38;&#38; blockComment.getParent() != null</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_152'/>
+152
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_152'>1</a>
+<span>
+1. isOnEnumConstant : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                &#38;&#38; blockComment.getParent().getType() == TokenTypes.ANNOTATION</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_153'/>
+153
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_153'>1</a>
+<span>
+1. isOnEnumConstant : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                &#38;&#38; blockComment.getParent().getParent().getParent().getType()</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_154'/>
+154
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_154'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                    == TokenTypes.ENUM_CONSTANT_DEF;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_155'/>
+155
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_155'>3</a>
+<span>
+1. isOnEnumConstant : negated conditional &rarr; KILLED<br/>
+2. isOnEnumConstant : negated conditional &rarr; KILLED<br/>
+3. isOnEnumConstant : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return isOnPlainConst || isOnConstWithAnnotation;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_156'/>
+156
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_156'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_157'/>
+157
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_157'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_158'/>
+158
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_158'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_159'/>
+159
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_159'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Node is on annotation field declaration.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_160'/>
+160
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_160'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param blockComment DetailAST</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_161'/>
+161
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_161'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if node is before annotation field</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_162'/>
+162
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_162'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_163'/>
+163
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_163'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public static boolean isOnAnnotationField(DetailAST blockComment) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_164'/>
+164
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_164'>2</a>
+<span>
+1. isOnAnnotationField : negated conditional &rarr; KILLED<br/>
+2. isOnAnnotationField : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return isOnPlainClassMember(blockComment, TokenTypes.ANNOTATION_FIELD_DEF)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_165'/>
+165
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_165'>1</a>
+<span>
+1. isOnAnnotationField : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || isOnTokenWithModifiers(blockComment, TokenTypes.ANNOTATION_FIELD_DEF)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_166'/>
+166
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_166'>1</a>
+<span>
+1. isOnAnnotationField : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || isOnTokenWithAnnotation(blockComment, TokenTypes.ANNOTATION_FIELD_DEF);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_167'/>
+167
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_167'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_168'/>
+168
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_168'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_169'/>
+169
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_169'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_170'/>
+170
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_170'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Checks that block comment is on specified token without any modifiers.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_171'/>
+171
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_171'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param blockComment block comment start DetailAST</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_172'/>
+172
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_172'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param parentTokenType parent token type</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_173'/>
+173
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_173'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param nextTokenType next token type</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_174'/>
+174
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_174'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if block comment is on specified token without modifiers</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_175'/>
+175
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_175'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_176'/>
+176
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_176'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private static boolean isOnPlainToken(DetailAST blockComment,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_177'/>
+177
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_177'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            int parentTokenType, int nextTokenType) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_178'/>
+178
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_178'>2</a>
+<span>
+1. isOnPlainToken : negated conditional &rarr; KILLED<br/>
+2. isOnPlainToken : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return blockComment.getParent() != null</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_179'/>
+179
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_179'>1</a>
+<span>
+1. isOnPlainToken : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                &#38;&#38; blockComment.getParent().getType() == parentTokenType</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_180'/>
+180
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_180'>1</a>
+<span>
+1. isOnPlainToken : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                &#38;&#38; getPrevSiblingSkipComments(blockComment).getChildCount() == 0</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_181'/>
+181
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_181'>1</a>
+<span>
+1. isOnPlainToken : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                &#38;&#38; getNextSiblingSkipComments(blockComment).getType() == nextTokenType;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_182'/>
+182
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_182'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_183'/>
+183
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_183'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_184'/>
+184
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_184'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_185'/>
+185
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_185'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Checks that block comment is on specified token with modifiers.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_186'/>
+186
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_186'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param blockComment block comment start DetailAST</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_187'/>
+187
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_187'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param tokenType parent token type</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_188'/>
+188
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_188'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if block comment is on specified token with modifiers</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_189'/>
+189
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_189'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_190'/>
+190
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_190'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private static boolean isOnTokenWithModifiers(DetailAST blockComment, int tokenType) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_191'/>
+191
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_191'>2</a>
+<span>
+1. isOnTokenWithModifiers : negated conditional &rarr; KILLED<br/>
+2. isOnTokenWithModifiers : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return blockComment.getParent() != null</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_192'/>
+192
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_192'>1</a>
+<span>
+1. isOnTokenWithModifiers : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                &#38;&#38; blockComment.getParent().getType() == TokenTypes.MODIFIERS</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_193'/>
+193
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_193'>1</a>
+<span>
+1. isOnTokenWithModifiers : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                &#38;&#38; blockComment.getParent().getParent().getType() == tokenType</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_194'/>
+194
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_194'>1</a>
+<span>
+1. isOnTokenWithModifiers : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                &#38;&#38; getPrevSiblingSkipComments(blockComment) == null;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_195'/>
+195
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_195'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_196'/>
+196
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_196'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_197'/>
+197
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_197'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_198'/>
+198
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_198'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Checks that block comment is on specified token with annotation.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_199'/>
+199
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_199'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param blockComment block comment start DetailAST</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_200'/>
+200
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_200'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param tokenType parent token type</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_201'/>
+201
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_201'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if block comment is on specified token with annotation</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_202'/>
+202
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_202'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_203'/>
+203
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_203'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private static boolean isOnTokenWithAnnotation(DetailAST blockComment, int tokenType) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_204'/>
+204
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_204'>2</a>
+<span>
+1. isOnTokenWithAnnotation : negated conditional &rarr; KILLED<br/>
+2. isOnTokenWithAnnotation : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return blockComment.getParent() != null</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_205'/>
+205
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_205'>1</a>
+<span>
+1. isOnTokenWithAnnotation : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                &#38;&#38; blockComment.getParent().getType() == TokenTypes.ANNOTATION</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_206'/>
+206
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_206'>1</a>
+<span>
+1. isOnTokenWithAnnotation : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                &#38;&#38; getPrevSiblingSkipComments(blockComment.getParent()) == null</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_207'/>
+207
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_207'>1</a>
+<span>
+1. isOnTokenWithAnnotation : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                &#38;&#38; blockComment.getParent().getParent().getType() == TokenTypes.MODIFIERS</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_208'/>
+208
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_208'>1</a>
+<span>
+1. isOnTokenWithAnnotation : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                &#38;&#38; blockComment.getParent().getParent().getParent().getType() == tokenType</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_209'/>
+209
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_209'>1</a>
+<span>
+1. isOnTokenWithAnnotation : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                &#38;&#38; getPrevSiblingSkipComments(blockComment) == null;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_210'/>
+210
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_210'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_211'/>
+211
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_211'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_212'/>
+212
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_212'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_213'/>
+213
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_213'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Checks that block comment is on specified class member without any modifiers.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_214'/>
+214
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_214'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param blockComment block comment start DetailAST</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_215'/>
+215
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_215'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param memberType parent token type</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_216'/>
+216
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_216'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return true if block comment is on specified token without modifiers</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_217'/>
+217
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_217'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_218'/>
+218
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_218'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private static boolean isOnPlainClassMember(DetailAST blockComment, int memberType) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_219'/>
+219
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_219'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        DetailAST parent = blockComment.getParent();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_220'/>
+220
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_220'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        // type could be in fully qualified form, so we go up to Type token</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_221'/>
+221
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_221'>2</a>
+<span>
+1. isOnPlainClassMember : negated conditional &rarr; KILLED<br/>
+2. isOnPlainClassMember : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        while (parent != null &#38;&#38; parent.getType() == TokenTypes.DOT) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_222'/>
+222
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_222'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            parent = parent.getParent();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_223'/>
+223
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_223'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_224'/>
+224
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_224'>2</a>
+<span>
+1. isOnPlainClassMember : negated conditional &rarr; KILLED<br/>
+2. isOnPlainClassMember : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return parent != null</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_225'/>
+225
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_225'>1</a>
+<span>
+1. isOnPlainClassMember : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                &#38;&#38; parent.getType() == TokenTypes.TYPE</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_226'/>
+226
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_226'>1</a>
+<span>
+1. isOnPlainClassMember : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                &#38;&#38; parent.getParent().getType() == memberType</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_227'/>
+227
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_227'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                // previous parent sibling is always TokenTypes.MODIFIERS</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_228'/>
+228
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_228'>1</a>
+<span>
+1. isOnPlainClassMember : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                &#38;&#38; parent.getPreviousSibling().getChildCount() == 0;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_229'/>
+229
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_229'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_230'/>
+230
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_230'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_231'/>
+231
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_231'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_232'/>
+232
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_232'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Get next sibling node skipping any comment nodes.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_233'/>
+233
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_233'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param node current node</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_234'/>
+234
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_234'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return next sibling</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_235'/>
+235
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_235'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_236'/>
+236
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_236'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private static DetailAST getNextSiblingSkipComments(DetailAST node) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_237'/>
+237
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_237'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        DetailAST result = node.getNextSibling();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_238'/>
+238
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_238'>1</a>
+<span>
+1. getNextSiblingSkipComments : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        while (result.getType() == TokenTypes.SINGLE_LINE_COMMENT</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_239'/>
+239
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_239'>1</a>
+<span>
+1. getNextSiblingSkipComments : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || result.getType() == TokenTypes.BLOCK_COMMENT_BEGIN) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_240'/>
+240
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_240'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            result = result.getNextSibling();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_241'/>
+241
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_241'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_242'/>
+242
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_242'>1</a>
+<span>
+1. getNextSiblingSkipComments : mutated return of Object value for com/puppycrawl/tools/checkstyle/utils/BlockCommentPosition::getNextSiblingSkipComments to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return result;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_243'/>
+243
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_243'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_244'/>
+244
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_244'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_245'/>
+245
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_245'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_246'/>
+246
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_246'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Get previous sibling node skipping any comments.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_247'/>
+247
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_247'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @param node current node</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_248'/>
+248
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_248'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * @return previous sibling</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_249'/>
+249
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_249'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_250'/>
+250
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_250'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private static DetailAST getPrevSiblingSkipComments(DetailAST node) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_251'/>
+251
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_251'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        DetailAST result = node.getPreviousSibling();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_252'/>
+252
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_252'>1</a>
+<span>
+1. getPrevSiblingSkipComments : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        while (result != null</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_253'/>
+253
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_253'>1</a>
+<span>
+1. getPrevSiblingSkipComments : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                &#38;&#38; (result.getType() == TokenTypes.SINGLE_LINE_COMMENT</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_254'/>
+254
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_254'>1</a>
+<span>
+1. getPrevSiblingSkipComments : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                || result.getType() == TokenTypes.BLOCK_COMMENT_BEGIN)) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_255'/>
+255
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_255'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            result = result.getPreviousSibling();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_256'/>
+256
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_256'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_257'/>
+257
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_257'>1</a>
+<span>
+1. getPrevSiblingSkipComments : mutated return of Object value for com/puppycrawl/tools/checkstyle/utils/BlockCommentPosition::getPrevSiblingSkipComments to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return result;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_258'/>
+258
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_258'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_259'/>
+259
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_259'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_260'/>
+260
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_260'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_44'>44</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_44'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnType<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>isOnType<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_45'>45</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_45'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnType<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_46'>46</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_46'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnType<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_47'>47</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_47'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnType<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_56'>56</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_56'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnClass<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>isOnClass<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_57'>57</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_57'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnClass<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_58'>58</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_58'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnClass<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_67'>67</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_67'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnInterface<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>isOnInterface<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_68'>68</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_68'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnInterface<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_69'>69</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_69'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnInterface<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_78'>78</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_78'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnEnum<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>isOnEnum<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_79'>79</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_79'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnEnum<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_80'>80</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_80'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnEnum<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_89'>89</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_89'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnAnnotationDef<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>isOnAnnotationDef<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_90'>90</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_90'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnAnnotationDef<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_91'>91</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_91'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnAnnotationDef<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_101'>101</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_101'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnMember<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>isOnMember<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_102'>102</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_102'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnMember<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_103'>103</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_103'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnMember<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_104'>104</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_104'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnMember<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_105'>105</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_105'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnMember<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_114'>114</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_114'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnMethod<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>isOnMethod<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_115'>115</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_115'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnMethod<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_116'>116</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_116'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnMethod<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_125'>125</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_125'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnField<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>isOnField<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_126'>126</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_126'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnField<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_127'>127</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_127'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnField<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_136'>136</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_136'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnConstructor<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>isOnConstructor<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_137'>137</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_137'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnConstructor<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_138'>138</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_138'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnConstructor<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_147'>147</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_147'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnEnumConstant<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_148'>148</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_148'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnEnumConstant<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_149'>149</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_149'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnEnumConstant<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_150'>150</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_150'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnEnumConstant<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_151'>151</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_151'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnEnumConstant<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>isOnEnumConstant<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_152'>152</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_152'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnEnumConstant<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_153'>153</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_153'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnEnumConstant<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_155'>155</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_155'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnEnumConstant<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>isOnEnumConstant<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>isOnEnumConstant<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_164'>164</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_164'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnAnnotationField<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>isOnAnnotationField<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_165'>165</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_165'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnAnnotationField<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_166'>166</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_166'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnAnnotationField<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_178'>178</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_178'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnPlainToken<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>isOnPlainToken<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_179'>179</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_179'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnPlainToken<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_180'>180</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_180'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnPlainToken<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_181'>181</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_181'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnPlainToken<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_191'>191</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_191'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnTokenWithModifiers<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>isOnTokenWithModifiers<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_192'>192</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_192'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnTokenWithModifiers<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_193'>193</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_193'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnTokenWithModifiers<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_194'>194</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_194'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnTokenWithModifiers<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_204'>204</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_204'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnTokenWithAnnotation<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>isOnTokenWithAnnotation<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_205'>205</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_205'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnTokenWithAnnotation<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_206'>206</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_206'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnTokenWithAnnotation<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_207'>207</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_207'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnTokenWithAnnotation<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_208'>208</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_208'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnTokenWithAnnotation<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_209'>209</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_209'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnTokenWithAnnotation<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_221'>221</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_221'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnPlainClassMember<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>isOnPlainClassMember<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_224'>224</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_224'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnPlainClassMember<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>isOnPlainClassMember<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_225'>225</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_225'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnPlainClassMember<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_226'>226</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_226'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnPlainClassMember<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_228'>228</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_228'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>isOnPlainClassMember<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_238'>238</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_238'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getNextSiblingSkipComments<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_239'>239</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_239'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getNextSiblingSkipComments<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_242'>242</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_242'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getNextSiblingSkipComments<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> mutated return of Object value for com/puppycrawl/tools/checkstyle/utils/BlockCommentPosition::getNextSiblingSkipComments to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_252'>252</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_252'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getPrevSiblingSkipComments<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_253'>253</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_253'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getPrevSiblingSkipComments<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_254'>254</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_254'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getPrevSiblingSkipComments<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_257'>257</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2ce8c3d4_257'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getPrevSiblingSkipComments<br/><b>Killed by : </b>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest)</span></span> mutated return of Object value for com/puppycrawl/tools/checkstyle/utils/BlockCommentPosition::getPrevSiblingSkipComments to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>INCREMENTS_MUTATOR</li>
+<li class='mutator'>VOID_METHOD_CALL_MUTATOR</li>
+<li class='mutator'>RETURN_VALS_MUTATOR</li>
+<li class='mutator'>MATH_MUTATOR</li>
+<li class='mutator'>NEGATE_CONDITIONALS_MUTATOR</li>
+<li class='mutator'>INVERT_NEGS_MUTATOR</li>
+<li class='mutator'>CONDITIONALS_BOUNDARY_MUTATOR</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>com.puppycrawl.tools.checkstyle.AstTreeStringPrinterTest.testParseFileWithJavadoc1(com.puppycrawl.tools.checkstyle.AstTreeStringPrinterTest) (314 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testNumberFormatException(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (19 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testPositionOnlyComments(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (15 ms)</li><li>com.puppycrawl.tools.checkstyle.utils.JavadocUtilsTest.testEmptyJavadocCommentAst(com.puppycrawl.tools.checkstyle.utils.JavadocUtilsTest) (1 ms)</li><li>com.puppycrawl.tools.checkstyle.AstTreeStringPrinterTest.testJavadocPosition(com.puppycrawl.tools.checkstyle.AstTreeStringPrinterTest) (8 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testNonTightHtmlTagIntolerantCheckVisitCount(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (222 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.SingleLineJavadocCheckTest.testIgnoredTags(com.puppycrawl.tools.checkstyle.checks.javadoc.SingleLineJavadocCheckTest) (25 ms)</li><li>com.puppycrawl.tools.checkstyle.AstTreeStringPrinterTest.testParseFileWithJavadoc2(com.puppycrawl.tools.checkstyle.AstTreeStringPrinterTest) (27 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testNonTightHtmlTagIntolerantCheck(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (925 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testNoWsBeforeDescriptionInJavadocTags(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (54 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testVisitCountForCheckAcceptingJavadocWithNonTightHtml(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (181 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testCustomTag(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (22 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testAntlrError(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (34 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testPositionWithSinglelineComments(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (56 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testVisitLeaveToken(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (44 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.SingleLineJavadocCheckTest.simpleTest(com.puppycrawl.tools.checkstyle.checks.javadoc.SingleLineJavadocCheckTest) (35 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testCheckReuseAfterParseErrorWithFollowingAntlrErrorInSingleFile(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (24 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testJavadocTagsWithoutArgs(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (39 ms)</li><li>com.puppycrawl.tools.checkstyle.AstTreeStringPrinterTest.testParseFileWithJavadoc3(com.puppycrawl.tools.checkstyle.AstTreeStringPrinterTest) (10 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testParsingErrors(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (18 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testAcceptableTokensPass(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (48 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testPosition(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (68 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testWrongSingletonTagInJavadoc(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (18 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testWithMultipleChecks(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (45 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testCheckReuseAfterParseErrorWithFollowingAntlrErrorInTwoFiles(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (59 ms)</li><li>com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest.testNonTightHtmlTagIntolerantCheckReportingNoViolation(com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheckTest) (227 ms)</li><li>com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest.testJavaDocsRecognition(com.puppycrawl.tools.checkstyle.utils.BlockCommentPositionTest) (214 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 1.3.2
+
+</body>
+</html>
