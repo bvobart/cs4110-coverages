@@ -1,0 +1,339 @@
+<html>
+<head>
+  
+    <style type='text/css'>
+   
+   .tests{ 
+     width : 50%;
+     float : left;
+   }
+   
+   .mutees{
+     float : right;
+     width : 50%;
+   }
+   
+   .unit {
+     padding-top : 20px;
+     clear : both;
+   }
+   
+   .coverage_bar {
+    display : inline-block;
+    height : 1.1em;
+    width: 130px;
+    background: #FAA;
+    margin: 0 5px;
+    vertical-align: middle;
+    border: 1px solid #AAA;
+    position : relative;
+   }
+   
+   .coverage_complete {
+    display : inline-block;
+    height : 100%;
+    background: #DFD;
+    float: left;
+   }
+   
+   .coverage_ledgend {
+        position : absolute;
+        height : 100%;
+        width: 100%;
+        left : 0;
+        top : 0;
+        text-align : center;
+   }
+   
+   .line, .mut {
+        vertical-align : middle;
+   }
+   
+   .coveragePercentage {
+        display: inline-block;
+        width: 3em;
+        text-align: right;
+   }
+  </style>
+  
+</head>
+<body>
+
+<h1>Pit Test Coverage Report</h1>
+<h2>Package Summary</h2>
+<h3>org.jfree.data.xy</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Number of Classes</th>
+            <th>Line Coverage</th>
+            <th>Mutation Coverage</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>39</td>
+            <td>72% <div class="coverage_bar"><div class="coverage_complete" style="width:72%"></div><div class="coverage_ledgend">1548/2147</div></div></td>
+            <td>57% <div class="coverage_bar"><div class="coverage_complete" style="width:57%"></div><div class="coverage_ledgend">846/1485</div></div></td>
+        </tr>
+    </tbody>
+</table>
+
+
+<h3>Breakdown by Class</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Line Coverage</th>
+            <th>Mutation Coverage</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td><a href="./AbstractIntervalXYDataset.java.html">AbstractIntervalXYDataset.java</a></td>
+            <td><div class="coveragePercentage">100% </div><div class="coverage_bar"><div class="coverage_complete" style="width:100%"></div><div class="coverage_ledgend">21/21</div></div></td>
+            <td><div class="coveragePercentage">100% </div><div class="coverage_bar"><div class="coverage_complete" style="width:100%"></div><div class="coverage_ledgend">8/8</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./AbstractXYDataset.java.html">AbstractXYDataset.java</a></td>
+            <td><div class="coveragePercentage">100% </div><div class="coverage_bar"><div class="coverage_complete" style="width:100%"></div><div class="coverage_ledgend">12/12</div></div></td>
+            <td><div class="coveragePercentage">80% </div><div class="coverage_bar"><div class="coverage_complete" style="width:80%"></div><div class="coverage_ledgend">4/5</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./AbstractXYZDataset.java.html">AbstractXYZDataset.java</a></td>
+            <td><div class="coveragePercentage">17% </div><div class="coverage_bar"><div class="coverage_complete" style="width:17%"></div><div class="coverage_ledgend">1/6</div></div></td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/2</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./CategoryTableXYDataset.java.html">CategoryTableXYDataset.java</a></td>
+            <td><div class="coveragePercentage">70% </div><div class="coverage_bar"><div class="coverage_complete" style="width:70%"></div><div class="coverage_ledgend">44/63</div></div></td>
+            <td><div class="coveragePercentage">52% </div><div class="coverage_bar"><div class="coverage_complete" style="width:52%"></div><div class="coverage_ledgend">24/46</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./DefaultHighLowDataset.java.html">DefaultHighLowDataset.java</a></td>
+            <td><div class="coveragePercentage">46% </div><div class="coverage_bar"><div class="coverage_complete" style="width:46%"></div><div class="coverage_ledgend">33/71</div></div></td>
+            <td><div class="coveragePercentage">46% </div><div class="coverage_bar"><div class="coverage_complete" style="width:46%"></div><div class="coverage_ledgend">21/46</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./DefaultIntervalXYDataset.java.html">DefaultIntervalXYDataset.java</a></td>
+            <td><div class="coveragePercentage">83% </div><div class="coverage_bar"><div class="coverage_complete" style="width:83%"></div><div class="coverage_ledgend">92/111</div></div></td>
+            <td><div class="coveragePercentage">76% </div><div class="coverage_bar"><div class="coverage_complete" style="width:76%"></div><div class="coverage_ledgend">53/70</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./DefaultOHLCDataset.java.html">DefaultOHLCDataset.java</a></td>
+            <td><div class="coveragePercentage">61% </div><div class="coverage_bar"><div class="coverage_complete" style="width:61%"></div><div class="coverage_ledgend">34/56</div></div></td>
+            <td><div class="coveragePercentage">61% </div><div class="coverage_bar"><div class="coverage_complete" style="width:61%"></div><div class="coverage_ledgend">20/33</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./DefaultTableXYDataset.java.html">DefaultTableXYDataset.java</a></td>
+            <td><div class="coveragePercentage">83% </div><div class="coverage_bar"><div class="coverage_complete" style="width:83%"></div><div class="coverage_ledgend">142/171</div></div></td>
+            <td><div class="coveragePercentage">59% </div><div class="coverage_bar"><div class="coverage_complete" style="width:59%"></div><div class="coverage_ledgend">76/129</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./DefaultWindDataset.java.html">DefaultWindDataset.java</a></td>
+            <td><div class="coveragePercentage">63% </div><div class="coverage_bar"><div class="coverage_complete" style="width:63%"></div><div class="coverage_ledgend">60/95</div></div></td>
+            <td><div class="coveragePercentage">49% </div><div class="coverage_bar"><div class="coverage_complete" style="width:49%"></div><div class="coverage_ledgend">31/63</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./DefaultXYDataset.java.html">DefaultXYDataset.java</a></td>
+            <td><div class="coveragePercentage">77% </div><div class="coverage_bar"><div class="coverage_complete" style="width:77%"></div><div class="coverage_ledgend">59/77</div></div></td>
+            <td><div class="coveragePercentage">73% </div><div class="coverage_bar"><div class="coverage_complete" style="width:73%"></div><div class="coverage_ledgend">37/51</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./DefaultXYZDataset.java.html">DefaultXYZDataset.java</a></td>
+            <td><div class="coveragePercentage">83% </div><div class="coverage_bar"><div class="coverage_complete" style="width:83%"></div><div class="coverage_ledgend">72/87</div></div></td>
+            <td><div class="coveragePercentage">74% </div><div class="coverage_bar"><div class="coverage_complete" style="width:74%"></div><div class="coverage_ledgend">42/57</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./IntervalXYDelegate.java.html">IntervalXYDelegate.java</a></td>
+            <td><div class="coveragePercentage">86% </div><div class="coverage_bar"><div class="coverage_complete" style="width:86%"></div><div class="coverage_ledgend">83/97</div></div></td>
+            <td><div class="coveragePercentage">76% </div><div class="coverage_bar"><div class="coverage_complete" style="width:76%"></div><div class="coverage_ledgend">51/67</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./MatrixSeries.java.html">MatrixSeries.java</a></td>
+            <td><div class="coveragePercentage">92% </div><div class="coverage_bar"><div class="coverage_complete" style="width:92%"></div><div class="coverage_ledgend">35/38</div></div></td>
+            <td><div class="coveragePercentage">75% </div><div class="coverage_bar"><div class="coverage_complete" style="width:75%"></div><div class="coverage_ledgend">27/36</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./MatrixSeriesCollection.java.html">MatrixSeriesCollection.java</a></td>
+            <td><div class="coveragePercentage">32% </div><div class="coverage_bar"><div class="coverage_complete" style="width:32%"></div><div class="coverage_ledgend">19/60</div></div></td>
+            <td><div class="coveragePercentage">14% </div><div class="coverage_bar"><div class="coverage_complete" style="width:14%"></div><div class="coverage_ledgend">6/42</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./NormalizedMatrixSeries.java.html">NormalizedMatrixSeries.java</a></td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/19</div></div></td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/8</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./OHLCDataItem.java.html">OHLCDataItem.java</a></td>
+            <td><div class="coveragePercentage">74% </div><div class="coverage_bar"><div class="coverage_complete" style="width:74%"></div><div class="coverage_ledgend">26/35</div></div></td>
+            <td><div class="coveragePercentage">63% </div><div class="coverage_bar"><div class="coverage_complete" style="width:63%"></div><div class="coverage_ledgend">15/24</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./Vector.java.html">Vector.java</a></td>
+            <td><div class="coveragePercentage">79% </div><div class="coverage_bar"><div class="coverage_complete" style="width:79%"></div><div class="coverage_ledgend">19/24</div></div></td>
+            <td><div class="coveragePercentage">32% </div><div class="coverage_bar"><div class="coverage_complete" style="width:32%"></div><div class="coverage_ledgend">8/25</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./VectorDataItem.java.html">VectorDataItem.java</a></td>
+            <td><div class="coveragePercentage">47% </div><div class="coverage_bar"><div class="coverage_complete" style="width:47%"></div><div class="coverage_ledgend">7/15</div></div></td>
+            <td><div class="coveragePercentage">33% </div><div class="coverage_bar"><div class="coverage_complete" style="width:33%"></div><div class="coverage_ledgend">3/9</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./VectorSeries.java.html">VectorSeries.java</a></td>
+            <td><div class="coveragePercentage">80% </div><div class="coverage_bar"><div class="coverage_complete" style="width:80%"></div><div class="coverage_ledgend">16/20</div></div></td>
+            <td><div class="coveragePercentage">56% </div><div class="coverage_bar"><div class="coverage_complete" style="width:56%"></div><div class="coverage_ledgend">5/9</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./VectorSeriesCollection.java.html">VectorSeriesCollection.java</a></td>
+            <td><div class="coveragePercentage">49% </div><div class="coverage_bar"><div class="coverage_complete" style="width:49%"></div><div class="coverage_ledgend">27/55</div></div></td>
+            <td><div class="coveragePercentage">30% </div><div class="coverage_bar"><div class="coverage_complete" style="width:30%"></div><div class="coverage_ledgend">11/37</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./XIntervalDataItem.java.html">XIntervalDataItem.java</a></td>
+            <td><div class="coveragePercentage">80% </div><div class="coverage_bar"><div class="coverage_complete" style="width:80%"></div><div class="coverage_ledgend">12/15</div></div></td>
+            <td><div class="coveragePercentage">70% </div><div class="coverage_bar"><div class="coverage_complete" style="width:70%"></div><div class="coverage_ledgend">7/10</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./XIntervalSeries.java.html">XIntervalSeries.java</a></td>
+            <td><div class="coveragePercentage">100% </div><div class="coverage_bar"><div class="coverage_complete" style="width:100%"></div><div class="coverage_ledgend">17/17</div></div></td>
+            <td><div class="coveragePercentage">100% </div><div class="coverage_bar"><div class="coverage_complete" style="width:100%"></div><div class="coverage_ledgend">7/7</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./XIntervalSeriesCollection.java.html">XIntervalSeriesCollection.java</a></td>
+            <td><div class="coveragePercentage">43% </div><div class="coverage_bar"><div class="coverage_complete" style="width:43%"></div><div class="coverage_ledgend">27/63</div></div></td>
+            <td><div class="coveragePercentage">26% </div><div class="coverage_bar"><div class="coverage_complete" style="width:26%"></div><div class="coverage_ledgend">11/42</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./XYBarDataset.java.html">XYBarDataset.java</a></td>
+            <td><div class="coveragePercentage">54% </div><div class="coverage_bar"><div class="coverage_complete" style="width:54%"></div><div class="coverage_ledgend">27/50</div></div></td>
+            <td><div class="coveragePercentage">24% </div><div class="coverage_bar"><div class="coverage_complete" style="width:24%"></div><div class="coverage_ledgend">10/41</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./XYCoordinate.java.html">XYCoordinate.java</a></td>
+            <td><div class="coveragePercentage">54% </div><div class="coverage_bar"><div class="coverage_complete" style="width:54%"></div><div class="coverage_ledgend">20/37</div></div></td>
+            <td><div class="coveragePercentage">26% </div><div class="coverage_bar"><div class="coverage_complete" style="width:26%"></div><div class="coverage_ledgend">9/35</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./XYDataItem.java.html">XYDataItem.java</a></td>
+            <td><div class="coveragePercentage">82% </div><div class="coverage_bar"><div class="coverage_complete" style="width:82%"></div><div class="coverage_ledgend">41/50</div></div></td>
+            <td><div class="coveragePercentage">67% </div><div class="coverage_bar"><div class="coverage_complete" style="width:67%"></div><div class="coverage_ledgend">20/30</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./XYDatasetTableModel.java.html">XYDatasetTableModel.java</a></td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/32</div></div></td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/27</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./XYInterval.java.html">XYInterval.java</a></td>
+            <td><div class="coveragePercentage">93% </div><div class="coverage_bar"><div class="coverage_complete" style="width:93%"></div><div class="coverage_ledgend">26/28</div></div></td>
+            <td><div class="coveragePercentage">90% </div><div class="coverage_bar"><div class="coverage_complete" style="width:90%"></div><div class="coverage_ledgend">18/20</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./XYIntervalDataItem.java.html">XYIntervalDataItem.java</a></td>
+            <td><div class="coveragePercentage">78% </div><div class="coverage_bar"><div class="coverage_complete" style="width:78%"></div><div class="coverage_ledgend">18/23</div></div></td>
+            <td><div class="coveragePercentage">69% </div><div class="coverage_bar"><div class="coverage_complete" style="width:69%"></div><div class="coverage_ledgend">11/16</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./XYIntervalSeries.java.html">XYIntervalSeries.java</a></td>
+            <td><div class="coveragePercentage">100% </div><div class="coverage_bar"><div class="coverage_complete" style="width:100%"></div><div class="coverage_ledgend">21/21</div></div></td>
+            <td><div class="coveragePercentage">100% </div><div class="coverage_bar"><div class="coverage_complete" style="width:100%"></div><div class="coverage_ledgend">9/9</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./XYIntervalSeriesCollection.java.html">XYIntervalSeriesCollection.java</a></td>
+            <td><div class="coveragePercentage">70% </div><div class="coverage_bar"><div class="coverage_complete" style="width:70%"></div><div class="coverage_ledgend">44/63</div></div></td>
+            <td><div class="coveragePercentage">51% </div><div class="coverage_bar"><div class="coverage_complete" style="width:51%"></div><div class="coverage_ledgend">24/47</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./XYItemKey.java.html">XYItemKey.java</a></td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/36</div></div></td>
+            <td><div class="coveragePercentage">0% </div><div class="coverage_bar"><div class="coverage_complete" style="width:0%"></div><div class="coverage_ledgend">0/22</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./XYSeries.java.html">XYSeries.java</a></td>
+            <td><div class="coveragePercentage">89% </div><div class="coverage_bar"><div class="coverage_complete" style="width:89%"></div><div class="coverage_ledgend">228/256</div></div></td>
+            <td><div class="coveragePercentage">65% </div><div class="coverage_bar"><div class="coverage_complete" style="width:65%"></div><div class="coverage_ledgend">125/191</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./XYSeriesCollection.java.html">XYSeriesCollection.java</a></td>
+            <td><div class="coveragePercentage">84% </div><div class="coverage_bar"><div class="coverage_complete" style="width:84%"></div><div class="coverage_ledgend">162/192</div></div></td>
+            <td><div class="coveragePercentage">72% </div><div class="coverage_bar"><div class="coverage_complete" style="width:72%"></div><div class="coverage_ledgend">96/134</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./YInterval.java.html">YInterval.java</a></td>
+            <td><div class="coveragePercentage">90% </div><div class="coverage_bar"><div class="coverage_complete" style="width:90%"></div><div class="coverage_ledgend">18/20</div></div></td>
+            <td><div class="coveragePercentage">86% </div><div class="coverage_bar"><div class="coverage_complete" style="width:86%"></div><div class="coverage_ledgend">12/14</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./YIntervalDataItem.java.html">YIntervalDataItem.java</a></td>
+            <td><div class="coveragePercentage">80% </div><div class="coverage_bar"><div class="coverage_complete" style="width:80%"></div><div class="coverage_ledgend">12/15</div></div></td>
+            <td><div class="coveragePercentage">70% </div><div class="coverage_bar"><div class="coverage_complete" style="width:70%"></div><div class="coverage_ledgend">7/10</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./YIntervalSeries.java.html">YIntervalSeries.java</a></td>
+            <td><div class="coveragePercentage">100% </div><div class="coverage_bar"><div class="coverage_complete" style="width:100%"></div><div class="coverage_ledgend">17/17</div></div></td>
+            <td><div class="coveragePercentage">100% </div><div class="coverage_bar"><div class="coverage_complete" style="width:100%"></div><div class="coverage_ledgend">7/7</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./YIntervalSeriesCollection.java.html">YIntervalSeriesCollection.java</a></td>
+            <td><div class="coveragePercentage">64% </div><div class="coverage_bar"><div class="coverage_complete" style="width:64%"></div><div class="coverage_ledgend">38/59</div></div></td>
+            <td><div class="coveragePercentage">45% </div><div class="coverage_bar"><div class="coverage_complete" style="width:45%"></div><div class="coverage_ledgend">19/42</div></div></td>
+        </tr>
+
+        <tr>
+            <td><a href="./YWithXInterval.java.html">YWithXInterval.java</a></td>
+            <td><div class="coveragePercentage">90% </div><div class="coverage_bar"><div class="coverage_complete" style="width:90%"></div><div class="coverage_ledgend">18/20</div></div></td>
+            <td><div class="coveragePercentage">86% </div><div class="coverage_bar"><div class="coverage_complete" style="width:86%"></div><div class="coverage_ledgend">12/14</div></div></td>
+        </tr>
+
+     </tbody>
+</table>
+<br/>
+
+
+
+<hr/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 1.1.9
+
+</body>
+</html>
